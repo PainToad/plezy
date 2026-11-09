@@ -42,7 +42,6 @@ mixin LiveTvActionsMixin<T extends StatefulWidget> on State<T> {
     required LiveTvChannel? channel,
     required String? posterThumb,
     required String? posterServerId,
-    ValueChanged<bool>? onRecordingStateChanged,
   }) {
     final effectiveContext = sheetContext ?? context;
     final multiServer = effectiveContext.read<MultiServerProvider>();
@@ -66,8 +65,6 @@ mixin LiveTvActionsMixin<T extends StatefulWidget> on State<T> {
       channel: channel,
       posterUrl: posterUrl,
       onTuneChannel: channel != null ? () => tuneChannel(channel) : null,
-      client: client,
-      onRecordingStateChanged: onRecordingStateChanged,
     );
   }
 }

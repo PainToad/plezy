@@ -1,5 +1,4 @@
 import 'dart:async';
-import '../../../media/ids.dart';
 
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ import '../../../i18n/strings.g.dart';
 import '../../../mixins/mounted_set_state_mixin.dart';
 import '../../../models/livetv_channel.dart';
 import '../../../models/livetv_program.dart';
-import '../../../models/media_grab_operation.dart';
 import '../../../providers/multi_server_provider.dart';
 import '../../../media/media_server_client.dart';
 import '../../../theme/mono_tokens.dart';
@@ -124,14 +122,6 @@ class GuideTabState extends State<GuideTab>
 
   List<LiveTvProgram> _programs = [];
   Map<String, List<LiveTvProgram>> _programsByChannelScope = const {};
-  Set<String> _scheduledRecordingKeys = const {};
-
-  /// Recording keys the user just scheduled/unscheduled from this guide.
-  /// Local actions stay authoritative until the next full grid load returns
-  /// fresh subscription attributes: the grab refresh below races the server
-  /// materializing (or tearing down) grab operations, and the rendered
-  /// programs keep their stale `subscriptionID` attributes until refetched.
-  Map<String, bool> _recordingOverrides = const {};
   bool _isLoading = true;
 
   /// Whether a load has completed at least once for this tab. Until the
@@ -323,7 +313,6 @@ class GuideTabState extends State<GuideTab>
 
   @override
   void onRefreshResumed(LiveTvRefreshResumeReason reason) {
-    unawaited(_refreshScheduledRecordingKeys());
     // Post-frame: resume fires during tab transitions/build and the catch-up
     // may setState (reload or scroll).
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -466,7 +455,6 @@ class GuideTabState extends State<GuideTab>
 
     try {
       final allPrograms = <LiveTvProgram>[];
-      final scheduledRecordingKeys = <String>{};
       final multiServer = context.read<MultiServerProvider>();
 
       await forEachLiveTvServer(
@@ -477,12 +465,6 @@ class GuideTabState extends State<GuideTab>
           final programs = await client.liveTv.fetchSchedule(from: from, to: to);
           if (!_isCurrentProgramLoad(loadGeneration)) return;
           allPrograms.addAll(programs);
-          await _addScheduledRecordingKeysForServer(
-            client: client,
-            serverId: ServerId(serverInfo.serverId),
-            keys: scheduledRecordingKeys,
-            isCurrent: () => _isCurrentProgramLoad(loadGeneration),
-          );
         },
         onError: (client, serverInfo, error, stackTrace) {
           if (!_isCurrentProgramLoad(loadGeneration)) return;
@@ -501,8 +483,6 @@ class GuideTabState extends State<GuideTab>
       setState(() {
         _programs = allPrograms;
         _programsByChannelScope = programsByChannelScope;
-        _scheduledRecordingKeys = scheduledRecordingKeys;
-        _recordingOverrides = const {};
         _isLoading = false;
         _hasLoadedOnce = true;
         // Focus tracking compares by identity, so a reload orphans the
@@ -541,119 +521,6 @@ class GuideTabState extends State<GuideTab>
       setState(() => _isLoading = false);
     }
   }
-
-  Future<void> _refreshScheduledRecordingKeys() async {
-    if (!mounted) return;
-    final multiServer = context.read<MultiServerProvider>();
-    final scheduledRecordingKeys = <String>{};
-
-    await forEachLiveTvServer(
-      multiServer,
-      resolveClient: multiServer.getClientForServer,
-      body: (client, serverInfo) => _addScheduledRecordingKeysForServer(
-        client: client,
-        serverId: ServerId(serverInfo.serverId),
-        keys: scheduledRecordingKeys,
-      ),
-    );
-
-    if (!mounted) return;
-    setState(() => _scheduledRecordingKeys = scheduledRecordingKeys);
-  }
-
-  Future<void> _addScheduledRecordingKeysForServer({
-    required MediaServerClient client,
-    required ServerId serverId,
-    required Set<String> keys,
-    bool Function()? isCurrent,
-  }) async {
-    final dvr = client.liveTvDvr;
-    if (dvr == null) return;
-    try {
-      final grabs = await dvr.fetchScheduledRecordings();
-      if (isCurrent?.call() == false) return;
-      for (final grab in grabs) {
-        _addRecordingKeysForGrab(grab, serverId: ServerId(serverId), keys: keys);
-      }
-    } catch (e) {
-      if (isCurrent?.call() == false) return;
-      appLogger.d('Failed to load scheduled recordings for $serverId', error: e);
-    }
-
-    try {
-      final rules = await dvr.fetchRecordingRules(includeGrabs: true, includeStorage: false);
-      if (isCurrent?.call() == false) return;
-      for (final rule in rules) {
-        for (final grab in rule.grabOperations) {
-          _addRecordingKeysForGrab(grab, serverId: ServerId(serverId), keys: keys);
-        }
-      }
-    } catch (e) {
-      if (isCurrent?.call() == false) return;
-      appLogger.d('Failed to load active recording grabs for $serverId', error: e);
-    }
-  }
-
-  void _addRecordingKeysForGrab(MediaGrabOperation grab, {required ServerId serverId, required Set<String> keys}) {
-    if (!_isActiveScheduledGrab(grab)) return;
-    final program = grab.program;
-    if (program == null) return;
-    keys.addAll(_recordingKeysForProgram(program, fallbackServerId: serverId));
-  }
-
-  bool _isActiveScheduledGrab(MediaGrabOperation grab) {
-    final status = grab.status?.trim().toLowerCase();
-    return status == null || status.isEmpty || status == 'scheduled' || status == 'grabbing' || status == 'recording';
-  }
-
-  bool _isRecordingScheduled(LiveTvProgram program) {
-    final keys = _recordingKeysForProgram(program);
-    for (final key in keys) {
-      final override = _recordingOverrides[key];
-      if (override != null) return override;
-    }
-    // The grid response tags subscribed airings itself (subscriptionID /
-    // grandparentSubscriptionID) — the signal the official client renders
-    // its record badges from. Grab matching below stays as the secondary
-    // signal for airings the server did not tag.
-    if (program.recordingRuleKey != null) return true;
-    return keys.any(_scheduledRecordingKeys.contains);
-  }
-
-  void _handleRecordingStateChanged(LiveTvProgram program, bool isScheduled) {
-    final keys = _recordingKeysForProgram(program);
-    if (keys.isNotEmpty) {
-      setState(() {
-        _recordingOverrides = {..._recordingOverrides, for (final key in keys) key: isScheduled};
-      });
-    }
-    unawaited(_refreshScheduledRecordingKeys());
-  }
-
-  Set<String> _recordingKeysForProgram(LiveTvProgram program, {String? fallbackServerId}) {
-    final serverId = liveTvNonEmpty(program.serverId) ?? liveTvNonEmpty(fallbackServerId);
-    if (serverId == null) return const <String>{};
-
-    final keys = <String>{};
-    void addMediaId(String? value) {
-      final normalized = liveTvNonEmpty(value);
-      if (normalized != null) keys.add(_recordingKey(ServerId(serverId), 'media', normalized));
-    }
-
-    addMediaId(program.ratingKey);
-    addMediaId(program.guid);
-    addMediaId(program.key);
-
-    final channelIdentifier = liveTvNonEmpty(program.channelIdentifier);
-    final beginsAt = program.beginsAt;
-    if (channelIdentifier != null && beginsAt != null) {
-      keys.add(_recordingKey(ServerId(serverId), 'slot', '$channelIdentifier|$beginsAt|${program.endsAt ?? ''}'));
-    }
-
-    return keys;
-  }
-
-  String _recordingKey(ServerId serverId, String type, String value) => '$serverId\u0000$type\u0000$value';
 
   List<_GuideRow> get _guideRows {
     final groups = groupLiveTvChannelsBySource(widget.channels);
@@ -1711,7 +1578,6 @@ class GuideTabState extends State<GuideTab>
         final tk = tokens(context);
         final isCurrentlyAiring = program.isCurrentlyAiring;
         final isPast = program.endsAt != null && program.endsAt! < DateTime.now().millisecondsSinceEpoch ~/ 1000;
-        final isRecordingScheduled = _isRecordingScheduled(program);
 
         final Color fillColor;
         final Color titleColor;
@@ -1762,10 +1628,6 @@ class GuideTabState extends State<GuideTab>
                   children: [
                     Row(
                       children: [
-                        if (isRecordingScheduled) ...[
-                          _RecordingDot(color: Colors.red, tooltip: t.liveTv.recordingScheduled),
-                          const SizedBox(width: 5),
-                        ],
                         if (program.premiere == true) ...[
                           StatusPill(label: t.liveTv.premiereBadge, color: titleColor, dense: true),
                           const SizedBox(width: 5),
@@ -1810,7 +1672,6 @@ class GuideTabState extends State<GuideTab>
       channel: channel,
       posterThumb: program.thumb,
       posterServerId: channel.serverId,
-      onRecordingStateChanged: (isScheduled) => _handleRecordingStateChanged(program, isScheduled),
     );
   }
 }
@@ -1860,28 +1721,6 @@ class _GuideFocusSelectorState extends State<_GuideFocusSelector> {
 
   @override
   Widget build(BuildContext context) => widget.builder(context, _isSelected);
-}
-
-class _RecordingDot extends StatelessWidget {
-  final Color color;
-  final String tooltip;
-
-  const _RecordingDot({required this.color, required this.tooltip});
-
-  @override
-  Widget build(BuildContext context) {
-    return Tooltip(
-      message: tooltip,
-      child: Semantics(
-        label: tooltip,
-        child: Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-      ),
-    );
-  }
 }
 
 class _ChannelCell extends StatefulWidget {

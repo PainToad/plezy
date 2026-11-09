@@ -1,6 +1,5 @@
-// Regression coverage for issue #2009: the guide's recording indicator and
-// the program sheet's Record/Manage state. Fixtures mirror the reporter's
-// PMS 1.43.3 JSON captures. Also covers the premiere badge (issue #2186).
+// Recording UI stays hidden even when Plex returns scheduled airings.
+// Premiere badges and program details remain available.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -110,117 +109,26 @@ void main() {
     ],
   };
 
-  testWidgets('scheduled grab with matching grid identifiers produces the dot', (tester) async {
-    await pumpGuide(tester, gridJson: subscribedEpisodeGrid, grabs: [MediaGrabOperation.fromJson(_scheduledGrabJson)]);
-
-    expect(find.text("Motorway Cops: Catching Britain's Speeders"), findsOneWidget);
-    expect(recordingDot(), findsOneWidget);
-  });
-
-  testWidgets('grid airing tagged with grandparentSubscriptionID shows the dot without any grabs', (tester) async {
-    // The reporter's grid tags subscribed airings itself; the dot must not
-    // depend on cross-matching grab metadata (issue #2009).
-    await pumpGuide(
-      tester,
-      gridJson: (beginsAt) => {...subscribedEpisodeGrid(beginsAt), 'grandparentSubscriptionID': '1106'},
-    );
-
-    expect(recordingDot(), findsOneWidget);
-  });
-
-  testWidgets('active grab nesting its airing under Video still produces the dot', (tester) async {
-    // Non-scheduled statuses render the airing under `Video` in PMS JSON.
-    final grab = MediaGrabOperation.fromJson({
-      'id': 'grab-2',
-      'mediaSubscriptionID': 1106,
-      'status': 'recording',
-      'Video': (_scheduledGrabJson['Metadata'] as Map<String, dynamic>),
-    });
-    await pumpGuide(tester, gridJson: subscribedEpisodeGrid, grabs: [grab]);
-
-    expect(recordingDot(), findsOneWidget);
-  });
-
-  testWidgets('recording scheduled from the sheet keeps its dot after an empty grab refresh', (tester) async {
-    // The reporter saw no indicator even for a moment: the optimistic key was
-    // wiped by the follow-up grab refresh racing the server materializing the
-    // grab. The local action must stay authoritative until a grid reload.
-    final harness = await pumpGuide(tester, gridJson: subscribedEpisodeGrid);
-
-    await tester.longPress(find.text("Motorway Cops: Catching Britain's Speeders"));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.text(t.liveTv.record));
-    await tester.pumpAndSettle();
-    expect(find.text(t.liveTv.recordOptions), findsOneWidget);
-
-    await tester.tap(find.widgetWithText(FilledButton, t.liveTv.record).last);
-    await tester.pumpAndSettle();
-
-    expect(harness.client.dvrSupport.createdRequests, hasLength(1));
-    expect(harness.client.dvrSupport.scheduledFetches, greaterThan(0));
-    expect(recordingDot(), findsOneWidget);
-
-    // Let the success snackbar's dismiss timer elapse.
-    await tester.pump(const Duration(seconds: 5));
-    await tester.pumpAndSettle();
-    expect(recordingDot(), findsOneWidget);
-  });
-
-  testWidgets('sheet shows Manage recording for a tagged airing without a mapping call', (tester) async {
-    // Previously the sheet always issued the identifier-scoped mapping call,
-    // which 404s on PMS, so the button always read "Record" (issue #2009).
+  testWidgets('scheduled airings have no recording badges or recording actions', (tester) async {
     final harness = await pumpGuide(
       tester,
       gridJson: (beginsAt) => {...subscribedEpisodeGrid(beginsAt), 'grandparentSubscriptionID': '1106'},
-    );
-
-    await tester.longPress(find.text("Motorway Cops: Catching Britain's Speeders"));
-    await tester.pumpAndSettle();
-
-    expect(find.text(t.liveTv.manageRecording), findsOneWidget);
-    expect(find.text(t.liveTv.record), findsNothing);
-    expect(harness.client.dvrSupport.mappingCalls, 0);
-  });
-
-  testWidgets('sheet falls back to the mapping endpoint for an untagged airing', (tester) async {
-    final harness = await pumpGuide(
-      tester,
-      gridJson: subscribedEpisodeGrid,
+      grabs: [MediaGrabOperation.fromJson(_scheduledGrabJson)],
       mappingResult: const [MediaSubscription(key: '1106', title: 'All Episodes')],
     );
 
+    expect(recordingDot(), findsNothing);
+    expect(harness.client.dvrSupport.scheduledFetches, 0);
+    expect(harness.client.dvrSupport.ruleFetches, 0);
     await tester.longPress(find.text("Motorway Cops: Catching Britain's Speeders"));
     await tester.pumpAndSettle();
 
-    expect(harness.client.dvrSupport.mappingCalls, 1);
-    expect(find.text(t.liveTv.manageRecording), findsOneWidget);
-  });
-
-  testWidgets('cancelling from the sheet hides the dot despite stale grid attributes', (tester) async {
-    // The rendered programs keep their subscriptionID attributes until the
-    // next grid load; the local cancel must win over the stale positive.
-    final harness = await pumpGuide(
-      tester,
-      gridJson: (beginsAt) => {...subscribedEpisodeGrid(beginsAt), 'grandparentSubscriptionID': '1106'},
-    );
-    expect(recordingDot(), findsOneWidget);
-
-    await tester.longPress(find.text("Motorway Cops: Catching Britain's Speeders"));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.text(t.liveTv.manageRecording));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text(t.liveTv.deleteRule).last);
-    await tester.pumpAndSettle();
-
-    expect(harness.client.dvrSupport.deletedRules, ['1106']);
-    expect(recordingDot(), findsNothing);
-
-    // Let the success snackbar's dismiss timer elapse.
-    await tester.pump(const Duration(seconds: 5));
-    await tester.pumpAndSettle();
-    expect(recordingDot(), findsNothing);
+    expect(find.text(t.liveTv.record), findsNothing);
+    expect(find.text(t.liveTv.manageRecording), findsNothing);
+    expect(find.text(t.liveTv.watchChannel), findsOneWidget);
+    expect(harness.client.dvrSupport.mappingCalls, 0);
+    expect(harness.client.dvrSupport.createdRequests, isEmpty);
+    expect(harness.client.dvrSupport.deletedRules, isEmpty);
   });
 
   Map<String, dynamic> premiereGrid(int beginsAt) {
@@ -319,6 +227,7 @@ final class _FakeDvr implements LiveTvDvrSupport {
   final List<MediaSubscriptionCreateRequest> createdRequests = [];
   final List<String> deletedRules = [];
   int scheduledFetches = 0;
+  int ruleFetches = 0;
   int mappingCalls = 0;
 
   @override
@@ -328,8 +237,10 @@ final class _FakeDvr implements LiveTvDvrSupport {
   }
 
   @override
-  Future<List<MediaSubscription>> fetchRecordingRules({bool includeGrabs = true, bool includeStorage = true}) async =>
-      const [];
+  Future<List<MediaSubscription>> fetchRecordingRules({bool includeGrabs = true, bool includeStorage = true}) async {
+    ruleFetches++;
+    return const [];
+  }
 
   @override
   Future<List<MediaSubscription>> fetchSubscriptionMapping({

@@ -23,6 +23,7 @@ import 'package:plezy/screens/livetv/tabs/guide_tab.dart';
 import 'package:plezy/services/multi_server_manager.dart';
 import 'package:plezy/services/settings_service.dart';
 import 'package:plezy/theme/mono_theme.dart';
+import 'package:plezy/widgets/focusable_tab_chip.dart';
 import 'package:provider/provider.dart';
 
 import '../../test_helpers/multi_server_fixtures.dart';
@@ -221,7 +222,7 @@ void main() {
     ]);
   });
 
-  testWidgets('What\'s On is hidden when no Live TV server is Plex', (tester) async {
+  testWidgets('Live TV opens directly to Guide without tabs or recording actions', (tester) async {
     final harness = await _pumpLiveTvScreen(tester);
     addTearDown(() async {
       await tester.pumpWidget(const SizedBox.shrink());
@@ -230,8 +231,13 @@ void main() {
     harness.liveTv.favorites.complete(const []);
     await tester.pumpAndSettle();
 
-    expect(find.text(t.liveTv.guide), findsWidgets);
+    expect(find.text(t.liveTv.title), findsOneWidget);
+    expect(find.byType(FocusableTabChip), findsNothing);
+    expect(find.byType(TabBarView), findsNothing);
+    expect(find.text(t.liveTv.guide), findsNothing);
     expect(find.text(t.liveTv.whatsOn), findsNothing);
+    expect(find.text(t.liveTv.recordings), findsNothing);
+    expect(find.byTooltip(t.liveTv.processRecordingRules), findsNothing);
   });
 
   testWidgets('a refresh that fails on every server keeps the loaded channels', (tester) async {
@@ -462,7 +468,7 @@ class _FakeLiveTvDvrSupport implements LiveTvDvrSupport {
     if (reloadFailure != null) throw reloadFailure!;
   }
 
-  // The Recordings tab is built alongside the guide once a DVR exists.
+  // Recording APIs must remain unused by the guide-only screen.
   @override
   Future<List<MediaGrabOperation>> fetchScheduledRecordings() async => const [];
 

@@ -3,41 +3,31 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../focus/focusable_button.dart';
 import '../../i18n/strings.g.dart';
-import '../../media/media_server_client.dart';
 import '../../mixins/mounted_set_state_mixin.dart';
 import '../../models/livetv_channel.dart';
 import '../../models/livetv_program.dart';
-import '../../models/media_subscription.dart';
 import '../../theme/mono_tokens.dart';
-import '../../utils/app_logger.dart';
 import '../../utils/formatters.dart';
 import '../../utils/media_image_helper.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/collapsible_text.dart';
 import '../../widgets/overlay_sheet.dart';
 import '../../widgets/optimized_media_image.dart' show blurArtwork;
-import 'livetv_recording_actions.dart';
 import 'livetv_styles.dart';
 
-/// Shows a bottom sheet with program details and actions (Play / Watch Channel /
-/// Record / Manage recording).
+/// Shows a bottom sheet with program details and Play / Watch Channel actions.
 ///
 /// [posterUrl] must arrive fully resolved (the caller already applied
 /// [MediaImageHelper.getOptimizedImageUrl] for the 80x120 slot); re-optimizing
 /// an absolute URL would route Plex transcode output back through
 /// `externalImageUrl` and ask the server to re-transcode its own transcode.
 ///
-/// [client] is the resolved [MediaServerClient] for the program's owning server.
-/// Recording affordances appear only when the client supports DVR
-/// (`capabilities.liveTvDvr`) and the program has a recordable guid.
 void showProgramDetailsSheet(
   BuildContext context, {
   required LiveTvProgram program,
   required LiveTvChannel? channel,
   required String? posterUrl,
   required VoidCallback? onTuneChannel,
-  MediaServerClient? client,
-  ValueChanged<bool>? onRecordingStateChanged,
 }) {
   OverlaySheetController.showAdaptive(
     context,
@@ -48,8 +38,6 @@ void showProgramDetailsSheet(
         channel: channel,
         posterUrl: posterUrl,
         onTuneChannel: onTuneChannel,
-        client: client,
-        onRecordingStateChanged: onRecordingStateChanged,
       );
     },
   );
@@ -76,16 +64,12 @@ class _ProgramDetailsSheetContent extends StatefulWidget {
   final LiveTvChannel? channel;
   final String? posterUrl;
   final VoidCallback? onTuneChannel;
-  final MediaServerClient? client;
-  final ValueChanged<bool>? onRecordingStateChanged;
 
   const _ProgramDetailsSheetContent({
     required this.program,
     required this.channel,
     required this.posterUrl,
     required this.onTuneChannel,
-    required this.client,
-    required this.onRecordingStateChanged,
   });
 
   @override
@@ -95,27 +79,7 @@ class _ProgramDetailsSheetContent extends StatefulWidget {
 class _ProgramDetailsSheetContentState extends State<_ProgramDetailsSheetContent> with MountedSetStateMixin {
   final List<FocusNode> _focusNodes = [];
   final FocusNode _summaryFocusNode = FocusNode(debugLabel: 'program_sheet_summary');
-  MediaSubscription? _existingSubscription;
-  bool _checkedMapping = false;
   bool _summaryOverflows = false;
-
-  bool get _canRecord {
-    final client = widget.client;
-    if (client == null) return false;
-    if (client.liveTvDvr == null) return false;
-    final guid = widget.program.guid;
-    return guid != null && guid.isNotEmpty;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (_canRecord) {
-      _loadMapping();
-    } else {
-      _checkedMapping = true;
-    }
-  }
 
   @override
   void dispose() {
@@ -124,52 +88,6 @@ class _ProgramDetailsSheetContentState extends State<_ProgramDetailsSheetContent
     }
     _summaryFocusNode.dispose();
     super.dispose();
-  }
-
-  Future<void> _loadMapping() async {
-    final client = widget.client;
-    final program = widget.program;
-
-    // The grid/metadata responses tag subscribed airings with the owning
-    // rule key (subscriptionID / grandparentSubscriptionID) — the official
-    // client's source of truth for the Record vs Manage state. When present
-    // there is nothing to fetch: the rule key is all Manage (delete) needs.
-    final taggedRuleKey = program.recordingRuleKey;
-    if (taggedRuleKey != null) {
-      setStateIfMounted(() {
-        _existingSubscription = MediaSubscription(key: taggedRuleKey, title: program.grandparentTitle ?? program.title);
-        _checkedMapping = true;
-      });
-      return;
-    }
-
-    // Untagged airing: fall back to the provider-scoped mapping endpoint for
-    // programs whose source response omits the attributes (hub entries, grid
-    // data that predates a schedule made elsewhere).
-    final providerId = program.providerIdentifier;
-    final ratingKey = program.ratingKey;
-    if (client == null || providerId == null || providerId.isEmpty || ratingKey == null || ratingKey.isEmpty) {
-      setStateIfMounted(() => _checkedMapping = true);
-      return;
-    }
-    try {
-      final dvr = client.liveTvDvr;
-      if (dvr == null) {
-        setStateIfMounted(() => _checkedMapping = true);
-        return;
-      }
-      final mapped = await dvr.fetchSubscriptionMapping(providerId: providerId, ratingKeys: [ratingKey]);
-      final match = mapped.where((s) => s.key.isNotEmpty).firstOrNull;
-      if (!mounted) return;
-      setState(() {
-        _existingSubscription = match;
-        _checkedMapping = true;
-      });
-    } catch (e) {
-      // 403 (no DVR access) or transient — treat as unscheduled.
-      appLogger.d('Subscription mapping check failed: $e');
-      setStateIfMounted(() => _checkedMapping = true);
-    }
   }
 
   void _ensureFocusNodes(int needed) {
@@ -196,7 +114,6 @@ class _ProgramDetailsSheetContentState extends State<_ProgramDetailsSheetContent
 
   List<_SheetAction> _buildActions() {
     final program = widget.program;
-    final client = widget.client;
     final actions = <_SheetAction>[];
 
     if (widget.onTuneChannel != null) {
@@ -212,42 +129,6 @@ class _ProgramDetailsSheetContentState extends State<_ProgramDetailsSheetContent
           },
         ),
       );
-    }
-
-    if (_canRecord && client != null && _checkedMapping) {
-      final existing = _existingSubscription;
-      if (existing != null) {
-        actions.add(
-          _SheetAction(
-            label: t.liveTv.manageRecording,
-            icon: Symbols.fiber_manual_record_rounded,
-            style: _ActionStyle.filled,
-            onPressed: () async {
-              final deleted = await confirmDeleteRule(context, client, existing);
-              if (deleted && mounted) {
-                widget.onRecordingStateChanged?.call(false);
-                _closeSheet();
-              }
-            },
-          ),
-        );
-      } else {
-        actions.add(
-          _SheetAction(
-            label: t.liveTv.record,
-            icon: Symbols.fiber_manual_record_rounded,
-            style: _ActionStyle.filled,
-            onPressed: () async {
-              final outcome = await recordProgram(context, client, program);
-              if (!mounted) return;
-              if (outcome == RecordOutcome.scheduled || outcome == RecordOutcome.alreadyScheduled) {
-                widget.onRecordingStateChanged?.call(true);
-                _closeSheet();
-              }
-            },
-          ),
-        );
-      }
     }
 
     return actions;

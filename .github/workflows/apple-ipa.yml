@@ -36,6 +36,10 @@ jobs:
           flutter test test/mpv/player_open_test.dart
           test/screens/video_player/live_media_session_test.dart
           test/screens/video_player/live_tv_session_state_test.dart
+          test/screens/livetv/live_tv_screen_test.dart
+          test/screens/livetv/guide_tab_test.dart
+          test/screens/livetv/guide_search_sheet_test.dart
+          test/screens/livetv/guide_recording_indicator_test.dart
 
   build:
     name: Unsigned ${{ matrix.platform }} IPA
