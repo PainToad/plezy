@@ -40,6 +40,9 @@ jobs:
           test/screens/livetv/guide_tab_test.dart
           test/screens/livetv/guide_search_sheet_test.dart
           test/screens/livetv/guide_recording_indicator_test.dart
+          test/screens/libraries/libraries_screen_test.dart
+          test/screens/libraries/library_browse_tab_test.dart
+          test/screens/libraries/library_browse_music_test.dart
 
   build:
     name: Unsigned ${{ matrix.platform }} IPA
@@ -127,3 +130,4 @@ jobs:
           path: artifacts/plezy-${{ matrix.platform }}-unsigned.ipa
           if-no-files-found: error
           retention-days: 14
+

@@ -1,47 +1,35 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:plezy/exceptions/media_server_exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plezy/focus/input_mode_tracker.dart';
 import 'package:plezy/i18n/strings.g.dart';
 import 'package:plezy/media/ids.dart';
 import 'package:plezy/media/library_filter_result.dart';
-import 'package:plezy/media/library_genre.dart';
 import 'package:plezy/media/library_query.dart';
 import 'package:plezy/media/media_backend.dart';
 import 'package:plezy/media/media_hub.dart';
 import 'package:plezy/media/media_item.dart';
-import 'package:plezy/media/media_filter.dart';
 import 'package:plezy/media/media_kind.dart';
 import 'package:plezy/media/media_library.dart';
 import 'package:plezy/media/media_server_client.dart';
 import 'package:plezy/media/media_sort.dart';
 import 'package:plezy/media/server_capabilities.dart';
 import 'package:plezy/mixins/refreshable.dart';
-import 'package:plezy/mixins/tab_visibility_aware.dart';
-import 'package:plezy/providers/discover_provider.dart';
 import 'package:plezy/providers/download_provider.dart';
 import 'package:plezy/providers/hidden_libraries_provider.dart';
 import 'package:plezy/providers/libraries_provider.dart';
 import 'package:plezy/providers/multi_server_provider.dart';
 import 'package:plezy/screens/libraries/libraries_screen.dart';
-import 'package:plezy/screens/collection_detail_screen.dart';
 import 'package:plezy/screens/libraries/tabs/library_browse_tab.dart';
-import 'package:plezy/screens/libraries/tabs/library_recommended_tab.dart';
 import 'package:plezy/screens/libraries/tabs/base_library_tab.dart';
 import 'package:plezy/services/multi_server_manager.dart';
-import 'package:plezy/services/library_events/library_event_service.dart';
 import 'package:plezy/services/settings_service.dart';
 import 'package:plezy/services/storage_service.dart';
 import 'package:plezy/theme/mono_theme.dart';
 import 'package:plezy/utils/media_server_http_client.dart';
-import 'package:plezy/utils/library_content_notifier.dart';
-import 'package:plezy/media/library_change_event.dart';
-import 'package:plezy/widgets/hub_section.dart';
 import 'package:plezy/widgets/overlay_sheet.dart';
+import 'package:plezy/widgets/focusable_tab_chip.dart';
 import 'package:plezy/utils/platform_detector.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
@@ -68,8 +56,7 @@ const _libraryB = MediaLibrary(
   kind: MediaKind.show,
   serverId: 'server',
 );
-// Shared libraries show only Browse and Playlists, so switching to one
-// rebuilds the tab set.
+// Shared libraries also open Browse directly.
 const _sharedLibrary = MediaLibrary(
   id: 'shared',
   backend: MediaBackend.plex,
@@ -87,16 +74,6 @@ const _musicLibrary = MediaLibrary(
   kind: MediaKind.artist,
   serverId: 'server-c',
 );
-// A movie library on the live fake server, so its Genres tab and the Browse
-// tab it hands off to both load.
-const _jellyfinMovies = MediaLibrary(
-  id: 'jf-movies',
-  backend: MediaBackend.jellyfin,
-  title: 'Movies',
-  kind: MediaKind.movie,
-  serverId: 'server-c',
-);
-
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -181,7 +158,7 @@ void main() {
     final selected = <String>[];
 
     await harness.pump(tester, onLibrarySelected: selected.add);
-    expect(harness.controller(tester).index, 1);
+    expect(find.byType(LibraryBrowseTab), findsOneWidget);
 
     preferences.blockNextSelectedLibraryWrite(_libraryA.globalKey);
     final loadable = tester.state(find.byType(LibrariesScreen)) as LibraryLoadable;
@@ -191,15 +168,15 @@ void main() {
     loadable.loadLibraryByKey(_libraryB.globalKey);
     await tester.pumpAndSettle();
     expect(selected.last, _libraryB.globalKey);
-    expect(harness.controller(tester).index, 1);
+    expect(find.byType(LibraryBrowseTab), findsOneWidget);
 
     preferences.release();
     await tester.pumpAndSettle();
     expect(selected.last, _libraryB.globalKey);
-    expect(harness.controller(tester).index, 1);
+    expect(find.byType(LibraryBrowseTab), findsOneWidget);
   });
 
-  testWidgets('a tab set change restores the destination library saved tab', (tester) async {
+  testWidgets('shared libraries open Browse despite an older saved tab', (tester) async {
     final preferences = _GatedPreferences({
       'selected_library_key': _libraryA.globalKey,
       'library_tab_${_libraryA.globalKey}': LibraryTabType.playlists.name,
@@ -209,19 +186,17 @@ void main() {
     addTearDown(harness.dispose);
 
     await harness.pump(tester);
-    expect(harness.controller(tester).index, LibraryTabType.playlists.index);
+    expect(find.byType(LibraryBrowseTab), findsOneWidget);
 
-    // Playlists carries over to index 1 of the two shared tabs; that carry-over
-    // must not overwrite the Browse tab the shared library saved.
     (tester.state(find.byType(LibrariesScreen)) as LibraryLoadable).loadLibraryByKey(_sharedLibrary.globalKey);
     await tester.pumpAndSettle();
 
-    expect(harness.controller(tester).index, 0);
+    expect(find.byType(LibraryBrowseTab), findsOneWidget);
     final storage = await StorageService.getInstance();
     expect(storage.getLibraryTab(_sharedLibrary.globalKey), LibraryTabType.browse.name);
   });
 
-  testWidgets('restoration applies a saved first tab', (tester) async {
+  testWidgets('saved Recommended choices open Browse', (tester) async {
     final preferences = _GatedPreferences({
       'selected_library_key': _libraryB.globalKey,
       'library_tab_${_libraryA.globalKey}': LibraryTabType.recommended.name,
@@ -231,13 +206,13 @@ void main() {
     addTearDown(harness.dispose);
 
     await harness.pump(tester);
-    expect(harness.controller(tester).index, 1);
+    expect(find.byType(LibraryBrowseTab), findsOneWidget);
 
     final loadable = tester.state(find.byType(LibrariesScreen)) as LibraryLoadable;
     loadable.loadLibraryByKey(_libraryA.globalKey);
     await tester.pumpAndSettle();
 
-    expect(harness.controller(tester).index, 0);
+    expect(find.byType(LibraryBrowseTab), findsOneWidget);
   });
 
   testWidgets('disposal rejects a pending saved-tab continuation', (tester) async {
@@ -289,279 +264,32 @@ void main() {
     expect(selected.length, selectionsBefore);
   });
 
-  testWidgets('opening a genre shows Browse filtered to that genre alone, built or not', (tester) async {
-    final client = _GenresClient();
-    final preferences = _GatedPreferences({
-      'selected_library_key': _jellyfinMovies.globalKey,
-      'library_tab_${_jellyfinMovies.globalKey}': LibraryTabType.genres.name,
+  for (final isTv in [false, true]) {
+    testWidgets('libraries show Browse without a tab bar (TV: $isTv)', (tester) async {
+      TvDetectionService.debugSetAppleTVOverride(isTv);
+      final client = _HubClient();
+      final harness = await _Harness.create(
+        _GatedPreferences({
+          'selected_library_key': _libraryA.globalKey,
+          'library_tab_${_libraryA.globalKey}': LibraryTabType.recommended.name,
+        }),
+        clients: [client],
+        libraryOrder: const [_libraryA],
+      );
+      addTearDown(harness.dispose);
+      await harness.pump(tester, settle: false, size: isTv ? const Size(1280, 720) : const Size(390, 844));
+      await pumpRequestFrames(tester);
+
+      expect(find.byType(LibraryBrowseTab), findsOneWidget);
+      expect(find.byType(FocusableTabChip), findsNothing);
+      expect(find.byType(TabBarView), findsNothing);
+      expect(client.pageRequestCount, greaterThan(0));
+      expect(client.libraryHubCalls, 0);
+      expect(visibleLibraryTabs(_libraryA), [LibraryTabType.browse]);
+      expect(visibleLibraryTabs(_sharedLibrary), [LibraryTabType.browse]);
+      expect(visibleLibraryTabs(_musicLibrary), [LibraryTabType.browse]);
     });
-    final harness = await _Harness.create(preferences, clients: [client], libraryOrder: const [_jellyfinMovies]);
-    addTearDown(harness.dispose);
-    final storage = await StorageService.getInstance();
-    await storage.saveLibraryFilters([
-      LibraryFilter(field: MediaFilterField.year, values: ['1999']),
-    ], sectionId: _jellyfinMovies.globalKey);
-
-    await harness.pump(tester, settle: false);
-    await pumpRequestFrames(tester);
-    expect(client.queries, isEmpty, reason: 'Browse has not been built yet');
-
-    await tester.tap(find.text('Comedy'));
-    await pumpRequestFrames(tester);
-    await pumpRequestFrames(tester);
-
-    expect(harness.controller(tester).index, LibraryTabType.browse.index);
-    expect(client.queries.last.filters, [
-      LibraryFilter(field: MediaFilterField.genre, values: ['Comedy']),
-    ]);
-    expect(storage.getLibraryTab(_jellyfinMovies.globalKey), LibraryTabType.browse.name);
-
-    // Browse is now built and showing Comedy: the next genre must replace it.
-    harness.controller(tester).index = LibraryTabType.genres.index;
-    await pumpRequestFrames(tester);
-    await tester.tap(find.text('Action'));
-    await pumpRequestFrames(tester);
-    await pumpRequestFrames(tester);
-
-    expect(harness.controller(tester).index, LibraryTabType.browse.index);
-    expect(client.queries.last.filters, [
-      LibraryFilter(field: MediaFilterField.genre, values: ['Action']),
-    ]);
-  });
-  testWidgets('switching through the TV Recommended backdrop keeps sibling tabs mounted', (tester) async {
-    TvDetectionService.debugSetAppleTVOverride(true);
-    final client = _HubClient();
-    final harness = await _Harness.create(
-      _GatedPreferences({'selected_library_key': _libraryA.globalKey}),
-      clients: [client],
-      libraryOrder: const [_libraryA],
-    );
-    addTearDown(harness.dispose);
-    await harness.pump(tester, settle: false);
-    await pumpRequestFrames(tester);
-    final controller = harness.controller(tester);
-    expect(controller.index, LibraryTabType.recommended.index);
-
-    controller.index = LibraryTabType.browse.index;
-    await pumpRequestFrames(tester);
-    final browse = tester.state(find.byType(LibraryBrowseTab));
-    final loads = client.pageRequestCount;
-    expect(loads, greaterThan(0));
-
-    controller.index = LibraryTabType.recommended.index;
-    await pumpRequestFrames(tester);
-    controller.index = LibraryTabType.browse.index;
-    await pumpRequestFrames(tester);
-
-    expect(tester.state(find.byType(LibraryBrowseTab)), same(browse));
-    expect(client.pageRequestCount, loads, reason: 'a kept-alive tab must not reload');
-  });
-
-  testWidgets('Recommended keeps navigation and selection through pending, failed and successful refreshes', (
-    tester,
-  ) async {
-    final client = _HubClient();
-    final harness = await _Harness.create(
-      _GatedPreferences({'selected_library_key': _libraryA.globalKey}),
-      clients: [client],
-      libraryOrder: const [_libraryA],
-    );
-    addTearDown(harness.dispose);
-    await harness.pump(tester);
-    await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
-    await tester.pumpAndSettle();
-    _rowState(tester, 'A').requestFocusAt(1);
-    await tester.pumpAndSettle();
-
-    for (final failure in [
-      StateError('fetch failed'),
-      MediaServerHttpException(type: MediaServerHttpErrorType.cancelled, message: 'cancelled'),
-      null,
-    ]) {
-      final gate = Completer<List<MediaHub>>();
-      client.nextHubs = gate.future;
-      LibraryContentNotifier().notifyChanged(
-        LibraryChangeEvent(serverId: ServerId('server'), libraryIds: const {'movies'}, itemsAdded: true),
-      );
-      await tester.pump(const Duration(seconds: 4));
-      await tester.pump(const Duration(minutes: 2, seconds: 1));
-      // Pointer scrolling can realize a previously lazy row while the same
-      // request is pending; its builder must use that rendered key snapshot.
-      await tester.drag(find.byType(LibraryRecommendedTab), const Offset(0, -200));
-      await tester.pumpAndSettle();
-      _rowState(tester, 'A').requestFocusAt(1);
-      await tester.pumpAndSettle();
-      await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
-      await tester.pumpAndSettle();
-      expect(_focusedHub(), 'B', reason: 'pending rows retain their real vertical destinations');
-      _rowState(tester, 'B').requestFocusAt(1);
-      await tester.pumpAndSettle();
-      final parked = FocusManager.instance.primaryFocus;
-      if (failure == null) {
-        gate.complete([_recommendationHub('C'), _recommendationHub('A'), _recommendationHub('B')]);
-      } else {
-        gate.completeError(failure);
-      }
-      await tester.pumpAndSettle();
-      expect(_focusedHub(), 'B');
-      expect(
-        FocusManager.instance.primaryFocus,
-        same(parked),
-        reason: 'successful parent callback must not reset focus',
-      );
-      await tester.sendKeyEvent(LogicalKeyboardKey.arrowUp);
-      await tester.pumpAndSettle();
-      expect(_focusedHub(), 'A', reason: 'failed or reordered rows remain interactive');
-    }
-
-    _rowState(tester, 'B').requestFocusFromMemory();
-    await tester.pumpAndSettle();
-    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
-    await tester.pumpAndSettle();
-    expect(tester.widget<CollectionDetailScreen>(find.byType(CollectionDetailScreen)).collection.id, 'B-1');
-  });
-
-  testWidgets('Recommended live completion does not reclaim focus from a hosted cover', (tester) async {
-    final client = _HubClient();
-    final harness = await _Harness.create(
-      _GatedPreferences({'selected_library_key': _libraryA.globalKey}),
-      clients: [client],
-      libraryOrder: const [_libraryA],
-    );
-    addTearDown(harness.dispose);
-    await harness.pump(tester);
-    await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
-    await tester.pumpAndSettle();
-    _rowState(tester, 'B').requestFocusAt(1);
-    await tester.pumpAndSettle();
-    final gate = Completer<List<MediaHub>>();
-    client.nextHubs = gate.future;
-    LibraryContentNotifier().notifyChanged(
-      LibraryChangeEvent(serverId: ServerId('server'), libraryIds: const {'movies'}, itemsAdded: true),
-    );
-    await tester.pump(const Duration(seconds: 4));
-    await tester.pump(const Duration(minutes: 2, seconds: 1));
-    final cover = FocusNode();
-    addTearDown(cover.dispose);
-    final controller = OverlaySheetController.of(tester.element(find.byType(LibrariesScreen)));
-    unawaited(
-      controller.show<void>(
-        initialFocusNode: cover,
-        builder: (_) => Focus(
-          focusNode: cover,
-          child: const SizedBox(height: 100, child: Text('Cover')),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    gate.complete([_recommendationHub('A'), _recommendationHub('B'), _recommendationHub('C')]);
-    await tester.pumpAndSettle();
-    expect(cover.hasPrimaryFocus, isTrue);
-    controller.close();
-    await tester.pumpAndSettle();
-    expect(_focusedHub(), 'B');
-  });
-
-  testWidgets('entering the screen while its tab loads focuses the content once it lands', (tester) async {
-    final client = _HubClient();
-    final harness = await _Harness.create(
-      _GatedPreferences({'selected_library_key': _libraryA.globalKey}),
-      clients: [client],
-      libraryOrder: const [_libraryA],
-    );
-    addTearDown(harness.dispose);
-    await harness.pump(tester);
-    await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
-    await tester.pumpAndSettle();
-
-    final gate = Completer<List<MediaHub>>();
-    client.nextHubs = gate.future;
-    final screen = tester.state(find.byType(LibrariesScreen));
-    (screen as Refreshable).refresh();
-    await tester.pump();
-    (screen as FocusableTab).focusActiveTabIfReady();
-    // The loading tab renders a spinner, so it never settles.
-    await tester.pump();
-    await tester.pump();
-
-    gate.complete([_recommendationHub('A'), _recommendationHub('B')]);
-    await tester.pumpAndSettle();
-
-    expect(_focusedHub(), 'A', reason: 'focus must not stay parked on the tab bar');
-  });
-
-  testWidgets('service removals evict Discover and Recommended without bypassing their pacers', (tester) async {
-    final client = _HubClient();
-    final harness = await _Harness.create(
-      _GatedPreferences({'selected_library_key': _libraryA.globalKey}),
-      clients: [client],
-      libraryOrder: const [_libraryA],
-    );
-    addTearDown(harness.dispose);
-    final enabled = ValueNotifier(true);
-    addTearDown(enabled.dispose);
-    await harness.pump(tester, enabled: enabled);
-    final discover = DiscoverProvider(
-      harness.multiServer,
-      harness.hiddenLibraries,
-      harness.libraries,
-      profileId: 'profile',
-      isProfileBinding: () => false,
-      syncSystemShelf: (_, _) async {},
-    );
-    addTearDown(discover.dispose);
-    await discover.load();
-    final service = LibraryEventService(harness.multiServer.serverManager)..sync();
-    addTearDown(service.dispose);
-    final hubCalls = client.libraryHubCalls;
-    final onDeckCalls = client.onDeckCalls;
-    client.channel.emit(
-      LibraryChangeEvent(
-        serverId: ServerId('server'),
-        libraryIds: const {'movies'},
-        itemsRemoved: true,
-        removedItemIds: const {'A-0'},
-      ),
-    );
-    await tester.pump();
-    await tester.pump();
-    expect(_rowState(tester, 'A').widget.hub.items.map((item) => item.id), ['A-1']);
-    expect(discover.onDeck.map((item) => item.id), ['A-1']);
-    expect(client.libraryHubCalls, hubCalls);
-    expect(client.onDeckCalls, onDeckCalls);
-    expect(find.text('B-0'), findsOneWidget, reason: 'surviving rows never enter the loading state');
-    await tester.pump(const Duration(seconds: 4));
-    expect(client.libraryHubCalls, hubCalls);
-    expect(client.onDeckCalls, onDeckCalls);
-
-    enabled.value = false;
-    await tester.pump();
-    client.channel.emit(
-      LibraryChangeEvent(
-        serverId: ServerId('server'),
-        libraryIds: const {'movies'},
-        itemsRemoved: true,
-        removedItemIds: const {'A-1'},
-      ),
-    );
-    await tester.pump();
-    await tester.pump();
-    expect(find.byWidgetPredicate((widget) => widget is HubSection && widget.hub.id == 'A'), findsNothing);
-    expect(discover.onDeck, isEmpty);
-    expect(client.libraryHubCalls, hubCalls);
-    expect(client.onDeckCalls, onDeckCalls);
-    client.hubs = [_recommendationHub('B'), _recommendationHub('C')];
-    await tester.pump(const Duration(minutes: 2, seconds: 1));
-    await tester.pump();
-    expect(client.libraryHubCalls, hubCalls, reason: 'hidden Recommended must not reconcile in the background');
-    expect(client.onDeckCalls, onDeckCalls + 1);
-    enabled.value = true;
-    await tester.pump();
-    (tester.state(find.byType(LibrariesScreen)) as TabVisibilityAware).onTabShown();
-    await tester.pumpAndSettle();
-    expect(client.libraryHubCalls, hubCalls + 1, reason: 'activation consumes the push-marked library epoch');
-    expect(_rowState(tester, 'B').widget.hub.items.map((item) => item.id), ['B-0', 'B-1']);
-  });
+  }
 }
 
 final class _Harness {
@@ -596,11 +324,11 @@ final class _Harness {
     ValueChanged<String>? onLibrarySelected,
     bool settle = true,
     VoidCallback? onFirstPostFrame,
-    ValueListenable<bool>? enabled,
+    Size size = const Size(1280, 720),
   }) async {
     final downloads = NoSyncRulesDownloadProvider();
     addTearDown(downloads.dispose);
-    tester.view.physicalSize = const Size(1280, 720);
+    tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
@@ -624,13 +352,7 @@ final class _Harness {
             theme: monoTheme(MonoPalette.dark),
             home: OverlaySheetHost(
               child: FocusScope(
-                child: enabled == null
-                    ? LibrariesScreen(onLibrarySelected: onLibrarySelected)
-                    : ValueListenableBuilder<bool>(
-                        valueListenable: enabled,
-                        child: LibrariesScreen(onLibrarySelected: onLibrarySelected),
-                        builder: (_, value, child) => TickerMode(enabled: value, child: child!),
-                      ),
+                child: LibrariesScreen(onLibrarySelected: onLibrarySelected),
               ),
             ),
           ),
@@ -638,11 +360,6 @@ final class _Harness {
       ),
     );
     if (settle) await tester.pumpAndSettle();
-  }
-
-  TabController controller(WidgetTester tester) {
-    final dynamic state = tester.state(find.byType(LibrariesScreen));
-    return state.tabController as TabController;
   }
 
   void dispose() {
@@ -742,87 +459,16 @@ class _PagedClient implements MediaServerClient {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-/// Movie-library client whose Genres tab lists two genres, recording the
-/// queries Browse runs.
-class _GenresClient extends _PagedClient {
-  _GenresClient() : super('server-c');
-
-  final queries = <LibraryQuery>[];
-
-  @override
-  Future<List<LibraryGenre>> fetchLibraryGenres(String libraryId, {required MediaKind libraryKind}) async => const [
-    LibraryGenre(title: 'Action', filterValue: 'Action'),
-    LibraryGenre(title: 'Comedy', filterValue: 'Comedy'),
-  ];
-
-  @override
-  Future<LibraryPage<MediaItem>> fetchLibraryPagedContent(
-    String libraryId, {
-    required LibraryQuery query,
-    MediaKind? libraryKind,
-    AbortController? abort,
-  }) {
-    queries.add(query);
-    return super.fetchLibraryPagedContent(libraryId, query: query, libraryKind: libraryKind, abort: abort);
-  }
-}
-
-HubSectionState _rowState(WidgetTester tester, String id) =>
-    tester.state<HubSectionState>(find.byWidgetPredicate((widget) => widget is HubSection && widget.hub.id == id));
-
-String? _focusedHub() =>
-    FocusManager.instance.primaryFocus?.context?.findAncestorWidgetOfExactType<HubSection>()?.hub.id;
-
-MediaHub _recommendationHub(String id) => MediaHub(
-  id: id,
-  identifier: id,
-  title: 'Hub $id',
-  type: 'collection',
-  serverId: 'server',
-  libraryId: 'movies',
-  size: 2,
-  items: [
-    for (var i = 0; i < 2; i++)
-      testMediaItem(
-        id: '$id-$i',
-        title: '$id-$i',
-        kind: MediaKind.collection,
-        backend: MediaBackend.plex,
-        serverId: 'server',
-      ),
-  ],
-);
-
 class _HubClient extends _PagedClient {
   _HubClient() : super('server');
 
-  @override
-  final Object authenticationSessionId = Object();
+  int libraryHubCalls = 0;
 
   @override
   MediaBackend get backend => MediaBackend.plex;
 
   @override
   ServerCapabilities get capabilities => ServerCapabilities.plex;
-
-  List<MediaHub> hubs = [_recommendationHub('A'), _recommendationHub('B'), _recommendationHub('C')];
-  Future<List<MediaHub>>? nextHubs;
-  int libraryHubCalls = 0;
-  int onDeckCalls = 0;
-  final channel = _HubPushChannel();
-
-  @override
-  LibraryEventChannel createLibraryEventChannel() => channel;
-
-  @override
-  Future<LibraryPage<MediaItem>> fetchCollectionPage(
-    String collectionId, {
-    int? start,
-    int? size,
-    AbortController? abort,
-    String? libraryId,
-    String? libraryTitle,
-  }) async => const LibraryPage(items: [], totalCount: 0);
 
   @override
   Future<List<MediaLibrary>> fetchLibraries() async => const [_libraryA];
@@ -837,39 +483,6 @@ class _HubClient extends _PagedClient {
     HubFetchDiagnostics? diagnostics,
   }) async {
     libraryHubCalls++;
-    final pending = nextHubs;
-    nextHubs = null;
-    return pending == null ? List.of(hubs) : await pending;
+    return const [];
   }
-
-  @override
-  Future<List<MediaHub>> fetchGlobalHubs({
-    int limit = defaultHubPreviewLimit,
-    bool includePlaybackHubs = true,
-    HubFetchDiagnostics? diagnostics,
-  }) async => List.of(hubs);
-
-  @override
-  Future<List<MediaItem>> fetchContinueWatching({int? count = 20, Set<String> excludedLibraryIds = const {}}) async {
-    onDeckCalls++;
-    return hubs.first.items;
-  }
-}
-
-class _HubPushChannel implements LibraryEventChannel {
-  final _events = StreamController<LibraryChangeEvent>.broadcast();
-
-  @override
-  Stream<LibraryChangeEvent> get events => _events.stream;
-
-  void emit(LibraryChangeEvent event) => _events.add(event);
-
-  @override
-  void start() {}
-
-  @override
-  void stop() {}
-
-  @override
-  void dispose() => unawaited(_events.close());
 }
