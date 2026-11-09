@@ -634,11 +634,7 @@ class _LiveTvScreenState extends State<LiveTvScreen> implements FocusableTab, Ma
                   tooltip: t.liveTv.reorderFavorites,
                   onPressed: _showReorderFavorites,
                 ),
-              FocusableAction(
-                icon: Symbols.refresh_rounded,
-                tooltip: t.liveTv.reloadGuide,
-                onPressed: manualRefresh,
-              ),
+              FocusableAction(icon: Symbols.refresh_rounded, tooltip: t.liveTv.reloadGuide, onPressed: manualRefresh),
             ],
           ),
         ]),
