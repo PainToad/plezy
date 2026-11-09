@@ -1,16 +1,22 @@
 import 'dart:convert';
+
 import '../media/ids.dart';
 import '../media/playback_rate.dart';
 import '../media/video_zoom.dart';
 import '../media/media_version_preference.dart';
 import '../media/media_source_info.dart' show PlaybackExtras;
+
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+
 import '../models/hotkey_model.dart';
 import 'image_cache_service.dart';
+
 import 'package:plezy/utils/app_logger.dart';
+
 import '../i18n/app_locale_utils.dart';
 import '../i18n/strings.g.dart';
 import '../models/mpv_config_models.dart';
@@ -653,6 +659,9 @@ class SettingsService extends BaseSharedPreferencesService {
   static const seekTimeSmall = IntPref('seek_time_small', defaultValue: 10);
   static const seekTimeLarge = IntPref('seek_time_large', defaultValue: 30);
   static const rewindOnResume = IntPref('rewind_on_resume');
+  static const homeSectionOrder = StringListPref('home_section_order');
+  static const hiddenHomeSections = StringListPref('hidden_home_sections');
+
   static const showHeroSection = BoolPref('show_hero_section', defaultValue: true);
   static const tvFullCardLayout = BoolPref('tv_full_card_layout', defaultValue: false);
   static const focusGlow = BoolPref('focus_glow', defaultValue: true);
@@ -1494,6 +1503,8 @@ class SettingsService extends BaseSharedPreferencesService {
     seekTimeSmall,
     seekTimeLarge,
     showHeroSection,
+    homeSectionOrder,
+    hiddenHomeSections,
     sleepTimerDuration,
     audioSyncOffset,
     subtitleSyncOffset,
@@ -1620,7 +1631,6 @@ class SettingsService extends BaseSharedPreferencesService {
     matchRefreshRate,
     matchDynamicRange,
     displaySwitchDelay,
-    enableCompanionRemoteServer,
     startInFullscreen,
     exitFullscreenOnPlayerClose,
   ];
@@ -1639,7 +1649,6 @@ class SettingsService extends BaseSharedPreferencesService {
     selectedExternalPlayer,
     customExternalPlayers,
     watchPartyRelayUrl,
-    companionRemoteLastHostAddress,
     rememberedBrightnessLevel,
     refusedVideoCodecs,
     audioOutputDevice,

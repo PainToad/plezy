@@ -1,13 +1,20 @@
+import '../utils/home_sections.dart';
+
 import 'dart:async';
+
 import '../media/ids.dart';
+
 import 'dart:io' show Platform;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:plezy/widgets/app_icon.dart';
+
 import '../widgets/server_activities_button.dart';
+
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
+
 import '../focus/focusable_action_bar.dart';
 import '../focus/hub_vertical_navigation.dart';
 import '../focus/locked_hub_controller.dart';
@@ -64,9 +71,6 @@ import 'libraries/state_messages.dart';
 import 'main_screen.dart';
 import '../navigation/settings_shortcut.dart';
 import '../watch_together/watch_together.dart';
-import '../providers/companion_remote_provider.dart';
-import '../widgets/companion_remote/remote_session_dialog.dart';
-import 'companion_remote/mobile_remote_screen.dart';
 
 class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
@@ -91,7 +95,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
   bool get _hasMoreContinueWatching => _discover.hasMoreContinueWatching;
   bool get _isLoading => _discover.isLoading;
   bool get _areHubsLoading => _discover.areHubsLoading;
-  String? get _errorMessage => _discover.errorMessage == null ? null : t.errors.unableToLoad(context: t.discover.title);
+  String? get _errorMessage => _discover.errorMessage == null ? null : t.errors.unableToLoad(context: t.common.home);
 
   bool _switchingProfile = false;
   final PageController _heroController = PageController();
@@ -116,7 +120,6 @@ class _DiscoverScreenState extends State<DiscoverScreen>
   /// Primary focus when the rail claim was armed; see [_railClaimAbandoned].
   FocusNode? _railClaimFocusOrigin;
 
-  GlobalKey<HubSectionState>? _continueWatchingHubKey;
   final Map<String, GlobalKey<HubSectionState>> _hubKeysByIdentity = {};
   List<GlobalKey<HubSectionState>> _orderedHubKeys = const [];
   final _tvBrowseRailKey = GlobalKey<TvBrowseRailState>();
@@ -138,7 +141,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     return context.tryGetMediaClientForServer(ServerId(serverId));
   }
 
-  String _hubIdentity(MediaHub hub) => '${hub.serverId ?? ''}:${hub.identifier ?? hub.id}';
+  String _hubIdentity(MediaHub hub) => homeSectionKey(hub);
 
   /// Rebuild the per-hub focus keys, keyed by hub *identity* rather than
   /// list position so a row's focus memory follows it when the provider
@@ -150,7 +153,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     final occurrences = <String, int>{};
     final liveIdentities = <String>{};
     final ordered = <GlobalKey<HubSectionState>>[];
-    for (final hub in _hubs) {
+    for (final hub in _homeHubs) {
       var identity = _hubIdentity(hub);
       final occurrence = occurrences.update(identity, (n) => n + 1, ifAbsent: () => 0);
       if (occurrence > 0) identity = '$identity#$occurrence';
@@ -159,39 +162,37 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     }
     _hubKeysByIdentity.removeWhere((identity, _) => !liveIdentities.contains(identity));
     _orderedHubKeys = ordered;
-    _continueWatchingHubKey ??= GlobalKey<HubSectionState>();
   }
 
-  List<GlobalKey<HubSectionState>> get _allHubKeys {
-    final keys = <GlobalKey<HubSectionState>>[];
-    if (_continueWatchingHubKey != null && _onDeck.isNotEmpty) {
-      keys.add(_continueWatchingHubKey!);
-    }
-    keys.addAll(_orderedHubKeys);
-    return keys;
-  }
+  List<GlobalKey<HubSectionState>> get _allHubKeys => _orderedHubKeys;
 
   bool get _isHeroSectionVisible => _onDeck.isNotEmpty && context.settingsRead(SettingsService.showHeroSection);
 
-  // Memoized on provider list identity (the provider always replaces _onDeck/
-  // _hubs with fresh instances on change, never mutates in place) so unrelated
-  // rebuilds hand TvBrowseRail the same hubs list and its didUpdateWidget
-  // fast path — and the cached rail widget below — kick in.
   List<MediaHub>? _tvBrowseHubsCache;
-  (List<MediaItem>, List<MediaHub>, bool, String)? _tvBrowseHubsCacheKey;
+  Object? _tvBrowseHubsCacheKey;
 
-  List<MediaHub> get _tvBrowseHubs {
-    final key = (_onDeck, _hubs, _hasMoreContinueWatching, t.discover.continueWatching);
+  List<MediaHub> get _homeHubs {
+    final settings = SettingsService.instance;
+    final order = settings.read(SettingsService.homeSectionOrder);
+    final hidden = settings.read(SettingsService.hiddenHomeSections);
+    final key = (
+      _onDeck,
+      _hubs,
+      _hasMoreContinueWatching,
+      t.discover.continueWatching,
+      order.join('\u0000'),
+      hidden.join('\u0000'),
+    );
     if (_tvBrowseHubsCache != null && key == _tvBrowseHubsCacheKey) return _tvBrowseHubsCache!;
-    final hubs = <MediaHub>[];
-    if (_onDeck.isNotEmpty) {
-      hubs.add(_continueWatchingHub);
-    }
-    hubs.addAll(_hubs.where((hub) => hub.items.isNotEmpty));
-    _tvBrowseHubsCache = hubs;
     _tvBrowseHubsCacheKey = key;
-    return hubs;
+    return _tvBrowseHubsCache = arrangeHomeSections(
+      [if (_onDeck.isNotEmpty) _continueWatchingHub, ..._hubs.where((hub) => hub.items.isNotEmpty)],
+      order,
+      hidden,
+    );
   }
+
+  List<MediaHub> get _tvBrowseHubs => _homeHubs;
 
   /// The synthesized Continue Watching row, rendered ahead of the backend hubs
   /// on both the mobile list and the TV rail.
@@ -634,7 +635,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     if (!mounted) return;
     switch (outcome) {
       case DiscoverRefreshOutcome.failed:
-        showErrorSnackBar(context, t.errors.unableToLoad(context: t.discover.title));
+        showErrorSnackBar(context, t.errors.unableToLoad(context: t.common.home));
       case DiscoverRefreshOutcome.degraded:
         appLogger.w('Discover refresh completed with partial server failures');
       case DiscoverRefreshOutcome.cancelled:
@@ -804,7 +805,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
         children: [
           if (!PlatformDetector.isTV())
             Text(
-              t.discover.title,
+              t.common.home,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(color: foregroundColor, fontWeight: .bold),
             ),
           const Spacer(),
@@ -816,18 +817,10 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             ),
             const SizedBox(width: 12),
           ],
-          Consumer2<WatchTogetherProvider, CompanionRemoteProvider>(
-            builder: (context, watchTogether, companionRemote, _) {
-              final isDesktop = PlatformDetector.shouldActAsRemoteHost(context);
+          Consumer<WatchTogetherProvider>(
+            builder: (context, watchTogether, _) {
               void openWatchTogether() =>
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const WatchTogetherScreen()));
-              void openCompanionRemote() {
-                if (isDesktop) {
-                  RemoteSessionDialog.show(context);
-                } else {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MobileRemoteScreen()));
-                }
-              }
 
               return FocusableActionBar(
                 key: _actionBarKey,
@@ -872,39 +865,6 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                       ],
                     ),
                   ),
-                  // Companion Remote
-                  FocusableAction(
-                    onPressed: openCompanionRemote,
-                    child: Stack(
-                      children: [
-                        IconButton(
-                          icon: AppIcon(
-                            Symbols.phone_android_rounded,
-                            fill: companionRemote.isConnected ? 1 : 0,
-                            color: companionRemote.isConnected ? colorScheme.primary : foregroundColor,
-                          ),
-                          onPressed: openCompanionRemote,
-                          tooltip: t.companionRemote.title,
-                        ),
-                        if (companionRemote.isConnected)
-                          Positioned(
-                            top: 6,
-                            right: 6,
-                            child: IgnorePointer(
-                              child: Container(
-                                width: 8,
-                                height: 8,
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  shape: BoxShape.circle,
-                                  border: Border.fromBorderSide(BorderSide(color: foregroundColor, width: 1)),
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
                   // Server Tasks — Plex-only (`/activities` API has no
                   // Jellyfin equivalent), hide the button entirely on
                   // Jellyfin-only profiles so the chrome doesn't show
@@ -932,6 +892,8 @@ class _DiscoverScreenState extends State<DiscoverScreen>
       prefs: const [
         SettingsService.showServerNameOnHubs,
         SettingsService.showHeroSection,
+        SettingsService.homeSectionOrder,
+        SettingsService.hiddenHomeSections,
         SettingsService.hideSpoilers,
         SettingsService.libraryDensity,
         SettingsService.episodePosterMode,
@@ -941,6 +903,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
   }
 
   Widget _buildContent(BuildContext context) {
+    _updateHubKeys();
     final svc = SettingsService.instance;
     final showHeroSection = svc.read(SettingsService.showHeroSection);
 
@@ -953,7 +916,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
     final bottomPadding = MediaQuery.paddingOf(context).bottom;
     final theme = Theme.of(context);
-    final continueWatchingHub = _onDeck.isEmpty ? null : _continueWatchingHub;
+    final homeHubs = _homeHubs;
     return Material(
       color: theme.scaffoldBackgroundColor,
       child: Stack(
@@ -976,36 +939,22 @@ class _DiscoverScreenState extends State<DiscoverScreen>
               if (_isLoading) LoadingIndicatorBox.sliver,
               if (_errorMessage != null) SliverErrorState(message: _errorMessage!, onRetry: _discover.load),
               if (!_isLoading && _errorMessage == null) ...[
-                if (continueWatchingHub != null)
+                for (var i = 0; i < homeHubs.length; i++)
                   SliverToBoxAdapter(
                     child: HubSection(
-                      key: _continueWatchingHubKey,
-                      hub: continueWatchingHub,
+                      key: _orderedHubKeys[i],
+                      hub: homeHubs[i],
                       focusMemory: _hubFocusMemory,
-                      icon: hubIconFor(continueWatchingHub),
-                      onRefresh: _discover.updateItem,
-                      onRemoveFromContinueWatching: _discover.refreshContinueWatching,
-                      isInContinueWatching: true,
-                      loadMoreItems: _discover.loadAllContinueWatching,
-                      onVerticalNavigation: (isUp) => _handleVerticalNavigation(0, isUp),
-                      onNavigateUp: _focusTopBoundary,
-                      onNavigateToSidebar: _navigateToSidebar,
-                    ),
-                  ),
-
-                // Recommendation Hubs (Trending, Top in Genre, etc.)
-                for (int i = 0; i < _hubs.length; i++)
-                  SliverToBoxAdapter(
-                    child: HubSection(
-                      key: i < _orderedHubKeys.length ? _orderedHubKeys[i] : null,
-                      hub: _hubs[i],
-                      focusMemory: _hubFocusMemory,
-                      icon: hubIconFor(_hubs[i]),
+                      icon: hubIconFor(homeHubs[i]),
                       showServerName: showServerNameOnHubs || hubsSpanMultipleServers,
                       onRefresh: _discover.updateItem,
-                      // Hub index is i + 1 if continue watching exists, otherwise i
-                      onVerticalNavigation: (isUp) => _handleVerticalNavigation(_onDeck.isNotEmpty ? i + 1 : i, isUp),
-                      onNavigateUp: (i == 0 && _onDeck.isEmpty) ? _focusTopBoundary : null,
+                      onRemoveFromContinueWatching: homeHubs[i].isContinueWatchingHub
+                          ? _discover.refreshContinueWatching
+                          : null,
+                      isInContinueWatching: homeHubs[i].isContinueWatchingHub,
+                      loadMoreItems: homeHubs[i].isContinueWatchingHub ? _discover.loadAllContinueWatching : null,
+                      onVerticalNavigation: (isUp) => _handleVerticalNavigation(i, isUp),
+                      onNavigateUp: i == 0 ? _focusTopBoundary : null,
                       onNavigateToSidebar: _navigateToSidebar,
                     ),
                   ),
@@ -1050,7 +999,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                       ),
                     ),
 
-                if (_onDeck.isEmpty && _hubs.isEmpty && !_areHubsLoading)
+                if (homeHubs.isEmpty && !_areHubsLoading)
                   SliverEmptyState(
                     message: t.discover.noContentAvailable,
                     subtitle: t.discover.addMediaToLibraries,
@@ -1084,7 +1033,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     return _tvBrowseRailWidget = TvBrowseRail(
       key: _tvBrowseRailKey,
       hubs: browseHubs,
-      initialHubId: 'continue_watching',
+      initialHubId: browseHubs.firstOrNull?.id,
       focusMemory: _hubFocusMemory,
       showServerName: showServerName,
       iconForHub: (hub, _) => hubIconFor(hub),

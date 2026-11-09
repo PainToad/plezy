@@ -13,7 +13,6 @@ import '../profiles/active_profile_provider.dart';
 import '../profiles/plex_home_service.dart';
 import '../profiles/profile_connection_registry.dart';
 import '../providers/catalog_sources_provider.dart';
-import '../providers/companion_remote_provider.dart';
 import '../providers/discover_provider.dart';
 import '../providers/explore_provider.dart';
 import '../providers/hidden_libraries_provider.dart';
@@ -279,21 +278,6 @@ class _ProfileSessionScreenState extends State<ProfileSessionScreen> {
                     displayName: () => activeProfile.active?.displayName ?? 'Plezy',
                     profileId: () => activeProfile.activeId,
                   );
-                },
-              ),
-              ChangeNotifierProvider(
-                create: (context) {
-                  final provider = CompanionRemoteProvider();
-                  // Keep a running host's crypto identity live: a home user
-                  // removed or a borrowed connection revoked mid-session must
-                  // stop controlling the broadcast.
-                  provider.bindProfileServices(
-                    connections: context.read<ConnectionRegistry>(),
-                    activeProfile: context.read<ActiveProfileProvider>(),
-                    profileConnections: context.read<ProfileConnectionRegistry>(),
-                    plexHome: context.read<PlexHomeService>(),
-                  );
-                  return provider;
                 },
               ),
             ],

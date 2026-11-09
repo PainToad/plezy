@@ -1,9 +1,9 @@
 part of '../../video_player_screen.dart';
 
-/// Subtitle/audio cycling for companion-remote and keyboard shortcuts.
+/// Subtitle/audio cycling for keyboard shortcuts.
 /// Stays on the State: the drain loop coalesces queued presses into
 /// [_switchPlaybackSource] reopens and is bound to the transition lease.
-extension _VideoPlayerCompanionRemoteMethods on VideoPlayerScreenState {
+extension _VideoPlayerTrackShortcutMethods on VideoPlayerScreenState {
   void _cycleSubtitleTrack() {
     final sourceTracks = _sourceSubtitleTracksForControls();
     if (!_isOfflinePlayback && sourceTracks.isNotEmpty) {

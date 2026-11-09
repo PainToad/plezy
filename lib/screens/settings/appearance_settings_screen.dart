@@ -1,3 +1,5 @@
+import '../../providers/discover_provider.dart';
+
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ import '../../widgets/settings_page.dart';
 import '../../widgets/settings_builder.dart';
 import '../../widgets/settings_section.dart';
 import 'app_icon_setting.dart';
+import 'home_sections_screen.dart';
 import 'settings_utils.dart';
 import 'theme_settings_screen.dart';
 
@@ -108,6 +111,13 @@ class AppearanceSettingsScreen extends StatelessWidget {
         SettingsGroup(
           title: t.settings.homeScreen,
           children: [
+            if (context.read<DiscoverProvider?>() != null)
+              SettingNavigationTile(
+                icon: Symbols.view_list_rounded,
+                title: 'Home screen sections',
+                subtitle: 'Hide and reorder Continue Watching and library rows',
+                destinationBuilder: (context) => const HomeSectionsScreen(),
+              ),
             if (!PlatformDetector.isTV())
               SettingSwitchTile(
                 pref: SettingsService.showHeroSection,

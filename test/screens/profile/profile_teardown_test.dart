@@ -17,7 +17,6 @@ import 'package:plezy/profiles/profile_connection.dart';
 import 'package:plezy/profiles/profile_connection_registry.dart';
 import 'package:plezy/profiles/profile_registry.dart';
 import 'package:plezy/providers/account_preferences_controller.dart';
-import 'package:plezy/providers/companion_remote_provider.dart';
 import 'package:plezy/providers/download_provider.dart';
 import 'package:plezy/providers/multi_server_provider.dart';
 import 'package:plezy/providers/playback_state_provider.dart';
@@ -75,22 +74,14 @@ class _Downloads extends ChangeNotifier implements DownloadProvider {
   }
 
   @override
-  Future<void> releaseDownloadsForProfileServers(String profileId, Set<String> serverIds) async {
-    events.add('release-downloads:$profileId:${serverIds.toList()..sort()}');
+  Future<void> detachDownloadsForLogout() async {
+    events.add('detach-downloads');
+    throw StateError('stop after logout identity teardown');
   }
 
   @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class _Companion extends ChangeNotifier implements CompanionRemoteProvider {
-  _Companion(this.events);
-  final List<String> events;
-
-  @override
-  Future<void> resetForLogout() async {
-    events.add('companion-reset');
-    throw StateError('stop after first logout mutation');
+  Future<void> releaseDownloadsForProfileServers(String profileId, Set<String> serverIds) async {
+    events.add('release-downloads:$profileId:${serverIds.toList()..sort()}');
   }
 
   @override
@@ -256,14 +247,14 @@ void main() {
     expect(await harness.connections.get(account.id), isNotNull);
   });
 
-  testWidgets('full logout clears shelf before companion, identity, or credential teardown', (tester) async {
+  testWidgets('full logout clears shelf before identity or credential teardown', (tester) async {
     final events = <String>[];
     final harness = await _pumpHarness(tester, events: events, channel: channel);
     addTearDown(harness.dispose);
 
     await expectLater(logoutAllProfiles(harness.context), throwsStateError);
 
-    expect(events.take(2), ['clear:active', 'companion-reset']);
+    expect(events.take(2), ['clear:active', 'detach-downloads']);
   });
 }
 
@@ -349,7 +340,6 @@ Future<_Harness> _pumpHarness(
         Provider<ActiveProfileBinder>.value(value: _Binder(events)),
         ChangeNotifierProvider<MultiServerProvider>.value(value: multiServer),
         ChangeNotifierProvider<DownloadProvider>.value(value: _Downloads(events)),
-        ChangeNotifierProvider<CompanionRemoteProvider>.value(value: _Companion(events)),
         ChangeNotifierProvider<AccountPreferencesController>.value(value: accountPreferences),
         ChangeNotifierProvider<PlaybackStateProvider>.value(value: _Playback()),
       ],

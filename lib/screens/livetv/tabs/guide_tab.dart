@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import '../../../media/ids.dart';
 
 import 'package:flutter/foundation.dart' show ValueListenable;
@@ -288,6 +289,8 @@ class GuideTabState extends State<GuideTab>
     _initTimeRange();
     _loadPrograms();
 
+    _channelVerticalController.addListener(_syncChannelToGrid);
+    _gridVerticalController.addListener(_syncGridToChannel);
     _gridHorizontalController.addListener(_syncGridToHeader);
     _headerHorizontalController.addListener(_syncHeaderToGrid);
   }
@@ -374,6 +377,23 @@ class GuideTabState extends State<GuideTab>
   }
 
   void _resetSelectLongPressState() => _selectLongPressController.reset();
+
+  bool _syncingVerticalScroll = false;
+
+  void _syncVerticalScroll(ScrollController source, ScrollController target) {
+    if (_syncingVerticalScroll || !source.hasClients || !target.hasClients) return;
+    final offset = source.offset.clamp(target.position.minScrollExtent, target.position.maxScrollExtent);
+    if ((target.offset - offset).abs() < 0.01) return;
+    _syncingVerticalScroll = true;
+    try {
+      target.jumpTo(offset);
+    } finally {
+      _syncingVerticalScroll = false;
+    }
+  }
+
+  void _syncChannelToGrid() => _syncVerticalScroll(_channelVerticalController, _gridVerticalController);
+  void _syncGridToChannel() => _syncVerticalScroll(_gridVerticalController, _channelVerticalController);
 
   void _syncGridToHeader() {
     if (_syncingScroll) return;
@@ -965,13 +985,6 @@ class GuideTabState extends State<GuideTab>
     if (newOffset != null) {
       final clamped = newOffset.clamp(0.0, _gridVerticalController.position.maxScrollExtent);
       _gridVerticalController.animateTo(clamped, duration: const Duration(milliseconds: 150), curve: Curves.easeOut);
-      if (_channelVerticalController.hasClients) {
-        _channelVerticalController.animateTo(
-          clamped.clamp(0.0, _channelVerticalController.position.maxScrollExtent),
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeOut,
-        );
-      }
     }
   }
 
@@ -1064,7 +1077,6 @@ class GuideTabState extends State<GuideTab>
                         width: _channelColumnWidth,
                         child: CustomScrollView(
                           controller: _channelVerticalController,
-                          physics: const NeverScrollableScrollPhysics(),
                           slivers: [
                             SliverVariedExtentList.builder(
                               itemCount: rows.length,
@@ -1085,43 +1097,32 @@ class GuideTabState extends State<GuideTab>
                         ),
                       ),
                       Expanded(
-                        child: NotificationListener<ScrollNotification>(
-                          onNotification: (notification) {
-                            if (notification is ScrollUpdateNotification &&
-                                notification.metrics.axis == Axis.vertical) {
-                              if (_channelVerticalController.hasClients) {
-                                _channelVerticalController.jumpTo(notification.metrics.pixels);
-                              }
-                            }
-                            return false;
-                          },
-                          child: SingleChildScrollView(
-                            controller: _gridHorizontalController,
-                            scrollDirection: Axis.horizontal,
-                            physics: const ClampingScrollPhysics(),
-                            child: SizedBox(
-                              width: _totalGridWidth(),
-                              child: CustomScrollView(
-                                controller: _gridVerticalController,
-                                slivers: [
-                                  SliverVariedExtentList.builder(
-                                    itemCount: rows.length,
-                                    itemExtentBuilder: (index, _) => _guideRowHeight(rows[index]),
-                                    itemBuilder: (context, index) {
-                                      final row = rows[index];
-                                      return switch (row) {
-                                        _GuideSourceHeaderRow(:final label) => _buildSourceHeaderGridRow(label, theme),
-                                        _GuideChannelRow(:final channel, :final channelIndex) => _buildProgramRow(
-                                          channel,
-                                          _getProgramsForChannel(channel),
-                                          theme,
-                                          channelIndex: channelIndex,
-                                        ),
-                                      };
-                                    },
-                                  ),
-                                ],
-                              ),
+                        child: SingleChildScrollView(
+                          controller: _gridHorizontalController,
+                          scrollDirection: Axis.horizontal,
+                          physics: const ClampingScrollPhysics(),
+                          child: SizedBox(
+                            width: _totalGridWidth(),
+                            child: CustomScrollView(
+                              controller: _gridVerticalController,
+                              slivers: [
+                                SliverVariedExtentList.builder(
+                                  itemCount: rows.length,
+                                  itemExtentBuilder: (index, _) => _guideRowHeight(rows[index]),
+                                  itemBuilder: (context, index) {
+                                    final row = rows[index];
+                                    return switch (row) {
+                                      _GuideSourceHeaderRow(:final label) => _buildSourceHeaderGridRow(label, theme),
+                                      _GuideChannelRow(:final channel, :final channelIndex) => _buildProgramRow(
+                                        channel,
+                                        _getProgramsForChannel(channel),
+                                        theme,
+                                        channelIndex: channelIndex,
+                                      ),
+                                    };
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         ),

@@ -123,6 +123,39 @@ void main() {
     });
   });
 
+  testWidgets('dragging channel logos scrolls both EPG columns together', (tester) async {
+    final channels = [
+      for (var i = 0; i < 30; i++)
+        LiveTvChannel(
+          key: 'channel/$i',
+          identifier: 'station-$i',
+          callSign: 'Channel $i',
+          serverId: 'server-a',
+          liveDvrKey: 'dvr-a',
+        ),
+    ];
+    final harness = _GuideHarness.twoServersWithChannels(channels);
+    addTearDown(harness.dispose);
+    await harness.pump(tester);
+    await harness.completeInitial(tester);
+    final scrollViews = tester
+        .widgetList<CustomScrollView>(find.byType(CustomScrollView))
+        .where((view) => view.controller != null)
+        .toList();
+    expect(scrollViews, hasLength(2));
+    final logos = scrollViews[0].controller!;
+    final timeline = scrollViews[1].controller!;
+    final logoFinder = find.byWidgetPredicate((widget) => identical(widget, scrollViews[0]));
+    await tester.drag(logoFinder, const Offset(0, -220));
+    await tester.pumpAndSettle();
+    expect(logos.offset, greaterThan(0));
+    expect(timeline.offset, closeTo(logos.offset, 0.1));
+    final timelineFinder = find.byWidgetPredicate((widget) => identical(widget, scrollViews[1]));
+    await tester.drag(timelineFinder, const Offset(0, -100));
+    await tester.pumpAndSettle();
+    expect(timeline.offset, closeTo(logos.offset, 0.1));
+  });
+
   testWidgets('superseded guide load keeps one interval and cannot replace current programs', (tester) async {
     final harness = _GuideHarness.twoServers();
     addTearDown(harness.dispose);

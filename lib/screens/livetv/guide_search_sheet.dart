@@ -12,7 +12,6 @@ import '../../mixins/controller_disposer_mixin.dart';
 import '../../models/livetv_channel.dart';
 import '../../models/livetv_program.dart';
 import '../../providers/multi_server_provider.dart';
-import '../../services/companion_remote/companion_remote_receiver.dart';
 import '../../utils/app_logger.dart';
 import '../../utils/formatters.dart';
 import '../../utils/live_tv_matching.dart';
@@ -60,27 +59,16 @@ class _GuideSearchSheetState extends State<GuideSearchSheet> with ControllerDisp
   List<LiveTvChannel> _channelResults = const [];
   List<({LiveTvProgram program, LiveTvChannel channel})> _programResults = const [];
 
-  void Function(String? query)? _savedOnSearchAction;
-
   @override
   void initState() {
     super.initState();
     _channelResults = widget.channels;
-
-    // While the sheet is open, companion-remote search queries land here
-    // instead of the global Search tab (save/restore idiom, see the video
-    // player's companion remote overrides).
-    final receiver = CompanionRemoteReceiver.instance;
-    _savedOnSearchAction = receiver.onSearchAction;
-    receiver.onSearchAction = _handleRemoteQuery;
 
     unawaited(_loadPrograms());
   }
 
   @override
   void dispose() {
-    CompanionRemoteReceiver.instance.onSearchAction = _savedOnSearchAction;
-    _savedOnSearchAction = null;
     _searchFocusNode.dispose();
     _firstResultFocusNode.dispose();
     super.dispose();
@@ -183,20 +171,6 @@ class _GuideSearchSheetState extends State<GuideSearchSheet> with ControllerDisp
       if (!mounted) return;
       _focusFirstResult();
     });
-  }
-
-  /// Apply a complete query submitted from the companion remote: set the text,
-  /// dismiss any open on-screen keyboard, and land focus on the results. A
-  /// programmatic controller write does not fire onChanged, so filter directly.
-  void _handleRemoteQuery(String? query) {
-    if (!mounted) return;
-    final trimmed = query?.trim() ?? '';
-    _searchController.text = trimmed;
-    _applyFilter(trimmed);
-    _tvTextInputController.closeTextInput();
-    if (trimmed.isEmpty) return;
-    _tvTextInputController.focusInputWithoutOpening();
-    _focusFirstResultAfterSubmit();
   }
 
   void _selectChannel(LiveTvChannel channel) {

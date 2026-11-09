@@ -7,14 +7,12 @@ import 'package:provider/provider.dart';
 import '../i18n/app_locale_utils.dart';
 import '../i18n/strings.g.dart';
 import '../profiles/active_profile_provider.dart';
-import '../providers/companion_remote_provider.dart';
 import '../providers/discover_provider.dart';
 import '../providers/download_provider.dart';
 import '../providers/multi_server_provider.dart';
 import '../utils/platform_detector.dart';
 import 'device_performance.dart';
 import 'discord_rpc_service.dart';
-import 'companion_remote/companion_remote_host_controller.dart';
 import 'music/music_playback_service.dart';
 import 'settings_service.dart';
 import 'trackers/anilist/anilist_tracker.dart';
@@ -39,9 +37,8 @@ class _SettingsEffect {
 
 /// A stored setting was saved but its runtime effect declined to apply.
 ///
-/// This is an expected outcome, not a programming error: the companion host
-/// refuses when crypto is not ready and logs the reason itself. Effects report
-/// it instead of throwing past their caller, because a bulk reset or import
+/// Effects report expected failures instead of throwing past their caller,
+/// because a bulk reset or import
 /// replays the whole table and must not abandon the remaining effects — and
 /// because the settings tiles await their write from an `onChanged` nobody
 /// watches, where a throw becomes an unhandled async error.
@@ -94,7 +91,6 @@ class SettingsMutationService {
           TraktTracker.instance.setWatchedSyncEnabled(settings.read(SettingsService.enableTraktWatchedSync)),
     ),
     for (final service in TrackerService.values) _scrobbleEffect(service),
-    _SettingsEffect(SettingsService.enableCompanionRemoteServer, _applyCompanionRemoteServer),
     // Home hubs are fetched in the chosen layout, so a switch only shows once
     // they are fetched again. The load runs in the background: the setting is
     // already saved, and the home screen shows its own loading state.
@@ -138,25 +134,6 @@ class SettingsMutationService {
     checkCurrent?.call();
     if (context.mounted) {
       context.read<MultiServerProvider?>()?.serverManager.updatePlexLanguage(locale.plexLanguageCode);
-    }
-  }
-
-  static Future<void> _applyCompanionRemoteServer(
-    BuildContext context,
-    SettingsService settings,
-    void Function()? checkCurrent,
-  ) async {
-    final owner = context.read<CompanionRemoteProvider?>();
-    if (owner == null) return;
-    final enabled = settings.read(SettingsService.enableCompanionRemoteServer);
-    if (enabled && context.read<ActiveProfileProvider?>()?.active == null) return;
-    final applied = await applyCompanionRemoteServerSetting(context, enabled, checkCurrent: checkCurrent);
-    checkCurrent?.call();
-    if (!applied) {
-      throw SettingsEffectFailure(
-        SettingsService.enableCompanionRemoteServer,
-        enabled ? t.settings.companionRemoteServerStartFailed : t.settings.companionRemoteServerStopFailed,
-      );
     }
   }
 

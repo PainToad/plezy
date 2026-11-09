@@ -1,4 +1,8 @@
+import 'package:plezy/screens/settings/home_sections_screen.dart';
+import 'package:plezy/utils/home_sections.dart';
+
 import 'dart:async';
+
 import 'package:drift/native.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -28,7 +32,6 @@ import 'package:plezy/profiles/profile.dart';
 import 'package:plezy/profiles/profile_connection.dart';
 import 'package:plezy/profiles/profile_connection_registry.dart';
 import 'package:plezy/profiles/profile_registry.dart';
-import 'package:plezy/providers/companion_remote_provider.dart';
 import 'package:plezy/providers/discover_provider.dart';
 import 'package:plezy/providers/hidden_libraries_provider.dart';
 import 'package:plezy/providers/libraries_provider.dart';
@@ -69,6 +72,35 @@ void main() {
     TvDetectionService.debugSetAppleTVOverride(null);
   });
 
+  testWidgets('Home has its new title and no companion remote action', (tester) async {
+    await _pumpDiscoverShell(tester, isTv: false);
+    expect(find.text(t.common.home), findsOneWidget);
+    expect(find.byTooltip(t.companionRemote.title), findsNothing);
+  });
+
+  testWidgets('Home settings save visibility and reorder rows with the TV remote', (tester) async {
+    await _pumpDiscoverShell(
+      tester,
+      isTv: true,
+      hubs: [
+        MediaHub(id: 'first', title: 'First row', type: 'movie', items: const []),
+        MediaHub(id: 'second', title: 'Second row', type: 'movie', items: const []),
+      ],
+    );
+    final context = tester.element(find.byType(DiscoverScreen));
+    unawaited(Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HomeSectionsScreen())));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Hide section').first);
+    await tester.pumpAndSettle();
+    final settings = SettingsService.instance;
+    expect(settings.read(SettingsService.hiddenHomeSections), contains(continueWatchingSectionKey));
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pumpAndSettle();
+    expect(settings.read(SettingsService.homeSectionOrder).take(2), [':first', continueWatchingSectionKey]);
+  });
+
   testWidgets('TV tab focus returns to discover browse rail instead of reload action', (tester) async {
     final settings = await SettingsService.getInstance();
     await settings.write(SettingsService.libraryDensity, LibraryDensity.max);
@@ -94,7 +126,6 @@ void main() {
     final hiddenLibrariesProvider = HiddenLibrariesProvider();
     final librariesProvider = LibrariesProvider();
     final watchTogetherProvider = WatchTogetherProvider();
-    final companionRemoteProvider = CompanionRemoteProvider();
 
     final db = AppDatabase.forTesting(NativeDatabase.memory());
     final profileRegistry = _FakeProfileRegistry(db);
@@ -129,7 +160,6 @@ void main() {
     addTearDown(() async {
       discoverProvider.dispose();
       activeProfileProvider.dispose();
-      companionRemoteProvider.dispose();
       watchTogetherProvider.dispose();
       librariesProvider.dispose();
       hiddenLibrariesProvider.dispose();
@@ -146,7 +176,6 @@ void main() {
             ChangeNotifierProvider<HiddenLibrariesProvider>.value(value: hiddenLibrariesProvider),
             ChangeNotifierProvider<LibrariesProvider>.value(value: librariesProvider),
             ChangeNotifierProvider<WatchTogetherProvider>.value(value: watchTogetherProvider),
-            ChangeNotifierProvider<CompanionRemoteProvider>.value(value: companionRemoteProvider),
             ChangeNotifierProvider<ActiveProfileProvider>.value(value: activeProfileProvider),
             ChangeNotifierProvider<DiscoverProvider>.value(value: discoverProvider),
           ],
@@ -268,7 +297,6 @@ void main() {
     final hiddenLibrariesProvider = HiddenLibrariesProvider();
     final librariesProvider = LibrariesProvider();
     final watchTogetherProvider = WatchTogetherProvider();
-    final companionRemoteProvider = CompanionRemoteProvider();
     final db = AppDatabase.forTesting(NativeDatabase.memory());
     final connectionRegistry = _FakeConnectionRegistry(db);
     final profileConnectionRegistry = _FakeProfileConnectionRegistry(db);
@@ -296,7 +324,6 @@ void main() {
     addTearDown(() async {
       discoverProvider.dispose();
       activeProfileProvider.dispose();
-      companionRemoteProvider.dispose();
       watchTogetherProvider.dispose();
       librariesProvider.dispose();
       hiddenLibrariesProvider.dispose();
@@ -314,7 +341,6 @@ void main() {
             ChangeNotifierProvider<LibrariesProvider>.value(value: librariesProvider),
             ChangeNotifierProvider<DiscoverProvider>.value(value: discoverProvider),
             ChangeNotifierProvider<WatchTogetherProvider>.value(value: watchTogetherProvider),
-            ChangeNotifierProvider<CompanionRemoteProvider>.value(value: companionRemoteProvider),
             ChangeNotifierProvider<ActiveProfileProvider>.value(value: activeProfileProvider),
           ],
           child: MaterialApp(
@@ -381,7 +407,6 @@ void main() {
     final hiddenLibrariesProvider = HiddenLibrariesProvider();
     final librariesProvider = LibrariesProvider();
     final watchTogetherProvider = WatchTogetherProvider();
-    final companionRemoteProvider = CompanionRemoteProvider();
     final db = AppDatabase.forTesting(NativeDatabase.memory());
     final connectionRegistry = _FakeConnectionRegistry(db);
     final profileConnectionRegistry = _FakeProfileConnectionRegistry(db);
@@ -410,7 +435,6 @@ void main() {
     addTearDown(() async {
       discoverProvider.dispose();
       activeProfileProvider.dispose();
-      companionRemoteProvider.dispose();
       watchTogetherProvider.dispose();
       librariesProvider.dispose();
       hiddenLibrariesProvider.dispose();
@@ -428,7 +452,6 @@ void main() {
             ChangeNotifierProvider<LibrariesProvider>.value(value: librariesProvider),
             ChangeNotifierProvider<DiscoverProvider>.value(value: discoverProvider),
             ChangeNotifierProvider<WatchTogetherProvider>.value(value: watchTogetherProvider),
-            ChangeNotifierProvider<CompanionRemoteProvider>.value(value: companionRemoteProvider),
             ChangeNotifierProvider<ActiveProfileProvider>.value(value: activeProfileProvider),
           ],
           child: MaterialApp(
@@ -511,7 +534,6 @@ void main() {
     final hiddenLibrariesProvider = HiddenLibrariesProvider();
     final librariesProvider = LibrariesProvider();
     final watchTogetherProvider = WatchTogetherProvider();
-    final companionRemoteProvider = CompanionRemoteProvider();
 
     final db = AppDatabase.forTesting(NativeDatabase.memory());
     final profileRegistry = _FakeProfileRegistry(db);
@@ -543,7 +565,6 @@ void main() {
     addTearDown(() async {
       discoverProvider.dispose();
       activeProfileProvider.dispose();
-      companionRemoteProvider.dispose();
       watchTogetherProvider.dispose();
       librariesProvider.dispose();
       hiddenLibrariesProvider.dispose();
@@ -560,7 +581,6 @@ void main() {
             ChangeNotifierProvider<HiddenLibrariesProvider>.value(value: hiddenLibrariesProvider),
             ChangeNotifierProvider<LibrariesProvider>.value(value: librariesProvider),
             ChangeNotifierProvider<WatchTogetherProvider>.value(value: watchTogetherProvider),
-            ChangeNotifierProvider<CompanionRemoteProvider>.value(value: companionRemoteProvider),
             ChangeNotifierProvider<ActiveProfileProvider>.value(value: activeProfileProvider),
             ChangeNotifierProvider<DiscoverProvider>.value(value: discoverProvider),
           ],
@@ -621,7 +641,6 @@ void main() {
     final hiddenLibrariesProvider = HiddenLibrariesProvider();
     final librariesProvider = LibrariesProvider();
     final watchTogetherProvider = WatchTogetherProvider();
-    final companionRemoteProvider = CompanionRemoteProvider();
 
     final db = AppDatabase.forTesting(NativeDatabase.memory());
     final profileRegistry = _FakeProfileRegistry(db);
@@ -652,7 +671,6 @@ void main() {
     addTearDown(() async {
       discoverProvider.dispose();
       activeProfileProvider.dispose();
-      companionRemoteProvider.dispose();
       watchTogetherProvider.dispose();
       librariesProvider.dispose();
       hiddenLibrariesProvider.dispose();
@@ -669,7 +687,6 @@ void main() {
             ChangeNotifierProvider<HiddenLibrariesProvider>.value(value: hiddenLibrariesProvider),
             ChangeNotifierProvider<LibrariesProvider>.value(value: librariesProvider),
             ChangeNotifierProvider<WatchTogetherProvider>.value(value: watchTogetherProvider),
-            ChangeNotifierProvider<CompanionRemoteProvider>.value(value: companionRemoteProvider),
             ChangeNotifierProvider<ActiveProfileProvider>.value(value: activeProfileProvider),
             ChangeNotifierProvider<DiscoverProvider>.value(value: discoverProvider),
           ],
@@ -924,7 +941,6 @@ Future<_GatedDiscover> _pumpGatedDiscover(WidgetTester tester, {bool underRootCo
   final hiddenLibrariesProvider = HiddenLibrariesProvider();
   final librariesProvider = LibrariesProvider();
   final watchTogetherProvider = WatchTogetherProvider();
-  final companionRemoteProvider = CompanionRemoteProvider();
   final db = AppDatabase.forTesting(NativeDatabase.memory());
   final connectionRegistry = _FakeConnectionRegistry(db);
   final profileConnectionRegistry = _FakeProfileConnectionRegistry(db);
@@ -959,7 +975,6 @@ Future<_GatedDiscover> _pumpGatedDiscover(WidgetTester tester, {bool underRootCo
     cover.dispose();
     discoverProvider.dispose();
     activeProfileProvider.dispose();
-    companionRemoteProvider.dispose();
     watchTogetherProvider.dispose();
     librariesProvider.dispose();
     hiddenLibrariesProvider.dispose();
@@ -996,7 +1011,6 @@ Future<_GatedDiscover> _pumpGatedDiscover(WidgetTester tester, {bool underRootCo
           ChangeNotifierProvider<LibrariesProvider>.value(value: librariesProvider),
           ChangeNotifierProvider<DiscoverProvider>.value(value: discoverProvider),
           ChangeNotifierProvider<WatchTogetherProvider>.value(value: watchTogetherProvider),
-          ChangeNotifierProvider<CompanionRemoteProvider>.value(value: companionRemoteProvider),
           ChangeNotifierProvider<ActiveProfileProvider>.value(value: activeProfileProvider),
         ],
         child: InputModeTracker(
@@ -1042,7 +1056,12 @@ Future<_GatedDiscover> _pumpGatedDiscover(WidgetTester tester, {bool underRootCo
 /// Mounts [DiscoverScreen] in the smallest graph both layout branches need, so
 /// one test can compare the TV and non-TV chrome without rebuilding it twice.
 /// Takes ownership of [watchTogether].
-Future<void> _pumpDiscoverShell(WidgetTester tester, {required bool isTv, WatchTogetherProvider? watchTogether}) async {
+Future<void> _pumpDiscoverShell(
+  WidgetTester tester, {
+  required bool isTv,
+  WatchTogetherProvider? watchTogether,
+  List<MediaHub> hubs = const [],
+}) async {
   TvDetectionService.debugSetAppleTVOverride(isTv);
   await SettingsService.getInstance();
   tester.view.devicePixelRatio = 1.0;
@@ -1052,13 +1071,12 @@ Future<void> _pumpDiscoverShell(WidgetTester tester, {required bool isTv, WatchT
     tester.view.resetPhysicalSize();
   });
 
-  final client = _FakeMediaServerClient(hubs: const []);
+  final client = _FakeMediaServerClient(hubs: hubs);
   final manager = MultiServerManager()..debugRegisterClientForTesting(client);
   final multiServerProvider = testMultiServerProvider(manager);
   final hiddenLibrariesProvider = HiddenLibrariesProvider();
   final librariesProvider = LibrariesProvider();
   final watchTogetherProvider = watchTogether ?? WatchTogetherProvider();
-  final companionRemoteProvider = CompanionRemoteProvider();
 
   final db = AppDatabase.forTesting(NativeDatabase.memory());
   final storage = await StorageService.getInstance();
@@ -1088,7 +1106,6 @@ Future<void> _pumpDiscoverShell(WidgetTester tester, {required bool isTv, WatchT
   addTearDown(() async {
     discoverProvider.dispose();
     activeProfileProvider.dispose();
-    companionRemoteProvider.dispose();
     watchTogetherProvider.dispose();
     librariesProvider.dispose();
     hiddenLibrariesProvider.dispose();
@@ -1105,7 +1122,6 @@ Future<void> _pumpDiscoverShell(WidgetTester tester, {required bool isTv, WatchT
           ChangeNotifierProvider<HiddenLibrariesProvider>.value(value: hiddenLibrariesProvider),
           ChangeNotifierProvider<LibrariesProvider>.value(value: librariesProvider),
           ChangeNotifierProvider<WatchTogetherProvider>.value(value: watchTogetherProvider),
-          ChangeNotifierProvider<CompanionRemoteProvider>.value(value: companionRemoteProvider),
           ChangeNotifierProvider<ActiveProfileProvider>.value(value: activeProfileProvider),
           ChangeNotifierProvider<DiscoverProvider>.value(value: discoverProvider),
         ],
