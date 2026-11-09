@@ -1,0 +1,125 @@
+name: Apple IPA builds
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FLUTTER_VERSION: "3.47.1"
+
+jobs:
+  playback-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+          pub-cache: false
+      - run: flutter pub get --enforce-lockfile --no-example
+      - name: Verify Dart formatting
+        run: |
+          find lib test -name '*.dart' ! -name '*.g.dart' ! -name '*.freezed.dart' -type f -print0 |
+            xargs -0 -r dart format
+          git diff --exit-code -- lib test
+      - name: Verify live playback opens and time-shift sessions
+        run: >-
+          flutter test test/mpv/player_open_test.dart
+          test/screens/video_player/live_media_session_test.dart
+          test/screens/video_player/live_tv_session_state_test.dart
+
+  build:
+    name: Unsigned ${{ matrix.platform }} IPA
+    needs: playback-tests
+    runs-on: macos-26
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: ios
+            app_directory: build/ios/iphoneos
+          - platform: tvos
+            app_directory: build/tvos/Build/Products/Release-appletvos
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+          pub-cache: false
+      - name: Install locked Dart dependencies
+        run: flutter pub get --enforce-lockfile --no-example
+
+      - name: Build iPhone and iPad app
+        if: matrix.platform == 'ios'
+        run: >-
+          flutter build ios --release --no-codesign --no-pub
+          --dart-define=GIT_COMMIT=${{ github.sha }}
+          --split-debug-info=debug-info/ios
+
+      - name: Fetch verified tvOS Flutter engine
+        if: matrix.platform == 'tvos'
+        run: tvos/scripts/fetch_engine.sh
+      - name: Install tvOS pods and wire native plugins
+        if: matrix.platform == 'tvos'
+        run: |
+          tvos/scripts/pod_install.sh
+          ruby tvos/scripts/wire_mpv.rb
+          ruby tvos/scripts/wire_plugins.rb
+          ruby tvos/scripts/wire_top_shelf.rb
+          ruby tvos/scripts/test_wire_mpv.rb
+          ruby tvos/scripts/test_wire_top_shelf.rb
+      - name: Build Apple TV app
+        if: matrix.platform == 'tvos'
+        run: |
+          xcodebuild build \
+            -workspace tvos/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -sdk appletvos \
+            -destination 'generic/platform=tvOS' \
+            -derivedDataPath build/tvos \
+            -disableAutomaticPackageResolution \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            COMPILER_INDEX_STORE_ENABLE=NO
+
+      - name: Package unsigned IPA
+        env:
+          APP_DIRECTORY: ${{ matrix.app_directory }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          set -euo pipefail
+          apps=("$APP_DIRECTORY"/*.app)
+          if [[ ${#apps[@]} -ne 1 || ! -d "${apps[0]}" ]]; then
+            echo "::error::Expected exactly one built app in $APP_DIRECTORY"
+            exit 1
+          fi
+          mkdir -p "build/ipa-$PLATFORM/Payload" artifacts
+          ditto "${apps[0]}" "build/ipa-$PLATFORM/Payload/$(basename "${apps[0]}")"
+          ipa="$GITHUB_WORKSPACE/artifacts/plezy-$PLATFORM-unsigned.ipa"
+          (cd "build/ipa-$PLATFORM" && zip -qry "$ipa" Payload)
+          unzip -tq "$ipa"
+          echo "Unsigned IPA: sign with your sideloading tool before installing." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          archive: false
+          path: artifacts/plezy-${{ matrix.platform }}-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 14
