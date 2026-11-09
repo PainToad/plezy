@@ -141,7 +141,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     return context.tryGetMediaClientForServer(ServerId(serverId));
   }
 
-  String _hubIdentity(MediaHub hub) => homeSectionKey(hub);
+  String _hubIdentity(MediaHub hub) => homeRowKey(hub);
 
   /// Rebuild the per-hub focus keys, keyed by hub *identity* rather than
   /// list position so a row's focus memory follows it when the provider

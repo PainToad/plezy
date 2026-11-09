@@ -66,7 +66,8 @@ class _HomeSectionsScreenState extends State<HomeSectionsScreen>
           type: 'mixed',
           items: const [],
         ),
-        ...discover.hubs,
+        ...discover.hubs.where((hub) => !isMusicHomeHub(hub)),
+        const MediaHub(id: musicSectionKey, title: 'Music', type: 'music', items: []),
       ].where((hub) => seen.add(homeSectionKey(hub))).toList(),
       _savedOrder,
       const [],
@@ -151,7 +152,9 @@ class _HomeSectionsScreenState extends State<HomeSectionsScreen>
                       child: AppIcon(movingIndex == index ? Symbols.swap_vert_rounded : Symbols.drag_handle_rounded),
                     ),
                     title: Text(section.title),
-                    subtitle: Text(shown ? 'Shown' : 'Hidden'),
+                    subtitle: Text(homeSectionKey(section) == musicSectionKey
+                        ? (shown ? 'All music sections shown' : 'All music sections hidden')
+                        : (shown ? 'Shown' : 'Hidden')),
                     onTap: () => _toggle(index),
                     trailing: IconButton(
                       tooltip: shown ? 'Hide section' : 'Show section',

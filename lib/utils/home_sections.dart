@@ -1,11 +1,23 @@
 import '../media/media_hub.dart';
+import '../media/media_kind.dart';
 
 const continueWatchingSectionKey = '_continue_watching_';
+const musicSectionKey = '_music_';
+
+/// Use media metadata rather than personalized or translated row titles.
+bool isMusicHomeHub(MediaHub hub) =>
+    hub.type.toLowerCase() == 'music' ||
+    MediaKind.fromString(hub.type).isMusic ||
+    (hub.items.isNotEmpty && hub.items.every((item) => item.kind.isMusic));
+
 
 /// Stable per-source identity: titles and translated labels may change.
-String homeSectionKey(MediaHub hub) => hub.isContinueWatchingHub
+String homeRowKey(MediaHub hub) => hub.isContinueWatchingHub
     ? continueWatchingSectionKey
     : '${hub.serverId ?? ''}:${hub.libraryId == null ? '' : '${hub.libraryId}:'}${hub.identifier ?? hub.id}';
+
+/// One persistent Music setting covers rows that appear or change over time.
+String homeSectionKey(MediaHub hub) => isMusicHomeHub(hub) ? musicSectionKey : homeRowKey(hub);
 
 /// Missing sections keep their saved slot; newly discovered rows append.
 List<MediaHub> arrangeHomeSections(List<MediaHub> hubs, List<String> order, List<String> hidden) {
