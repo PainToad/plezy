@@ -50,7 +50,7 @@ void main() {
   setUpAll(() => initializeDateFormatting('en'));
   setUp(() => LocaleSettings.setLocaleSync(AppLocale.en));
 
-  Finder recordingDot() => find.byTooltip(t.liveTv.recordingScheduled);
+  Finder recordingDot() => find.byTooltip('Recording scheduled');
 
   Future<_Harness> pumpGuide(
     WidgetTester tester, {
@@ -123,8 +123,8 @@ void main() {
     await tester.longPress(find.text("Motorway Cops: Catching Britain's Speeders"));
     await tester.pumpAndSettle();
 
-    expect(find.text(t.liveTv.record), findsNothing);
-    expect(find.text(t.liveTv.manageRecording), findsNothing);
+    expect(find.text('Record'), findsNothing);
+    expect(find.text('Manage recording'), findsNothing);
     expect(find.text(t.liveTv.watchChannel), findsOneWidget);
     expect(harness.client.dvrSupport.mappingCalls, 0);
     expect(harness.client.dvrSupport.createdRequests, isEmpty);

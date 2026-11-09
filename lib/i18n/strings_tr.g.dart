@@ -1606,7 +1606,6 @@ class _Translations$liveTv$tr extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'Canlı TV';
-	@override String get guide => 'Rehber';
 	@override String get noChannels => 'Kullanılabilir kanal yok';
 	@override String get noDvr => 'Hiçbir sunucuda DVR yapılandırılmadı';
 	@override String get serverUnavailable => 'Canlı TV sunucusu kullanılabilir değil.';
@@ -1634,7 +1633,6 @@ class _Translations$liveTv$tr extends Translations$liveTv$en {
 	@override String get daytime => 'Gündüz';
 	@override String get evening => 'Akşam';
 	@override String get lateNight => 'Gece Geç Saatler';
-	@override String get whatsOn => 'Şimdi Ne Var?';
 	@override String get watchChannel => 'Kanalı İzle';
 	@override String get favorites => 'Favoriler';
 	@override String get reorderFavorites => 'Favorileri Yeniden Sırala';
@@ -1647,44 +1645,12 @@ class _Translations$liveTv$tr extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Baştan izle (${minutes} dk önce)';
 	@override String get watchLive => 'Canlı İzle';
 	@override String get goToLive => 'Canlıya Git';
-	@override String get record => 'Kaydet';
 	@override String get recordEpisode => 'Bölümü Kaydet';
 	@override String get recordSeries => 'Diziyi Kaydet';
-	@override String get recordOptions => 'Kayıt Seçenekleri';
-	@override String get saveTo => 'Şuraya kaydet';
-	@override String get recordings => 'Kayıtlar';
-	@override String get scheduledRecordings => 'Planlananlar';
-	@override String get recordingRules => 'Kayıt Kuralları';
-	@override String get noScheduledRecordings => 'Kaydedilecek planlanmış bir şey yok';
-	@override String get manageRecording => 'Kaydı yönet';
-	@override String get cancelRecording => 'Kaydı iptal et';
-	@override String get cancelRecordingTitle => 'Bu kayıt iptal edilsin mi?';
-	@override String cancelRecordingMessage({required Object title}) => '${title} artık kaydedilmeyecek.';
-	@override String get deleteRule => 'Kuralı sil';
-	@override String get deleteRuleTitle => 'Kayıt kuralı silinsin mi?';
-	@override String deleteRuleMessage({required Object title}) => '${title} dizisinin gelecek bölümleri kaydedilmeyecek.';
-	@override String get recordingScheduled => 'Kayıt planlandı';
-	@override String get alreadyScheduled => 'Bu program zaten planlanmış';
 	@override String get dvrAdminRequired => 'DVR ayarları bir yönetici hesabı gerektirir';
-	@override String get recordingFailed => 'Kayıt planlanamadı';
-	@override String get recordingTargetMissing => 'Kayıt kitaplığı belirlenemedi';
-	@override String get recordNotAvailable => 'Bu program için kayıt kullanılamıyor';
-	@override String get recordingCancelled => 'Kayıt iptal edildi';
-	@override String get recordingRuleDeleted => 'Kayıt kuralı silindi';
-	@override String get processRecordingRules => 'Kuralları yeniden değerlendir';
-	@override String get recordingInProgress => 'Şimdi kaydediliyor';
-	@override String recordingsCount({required Object count}) => '${count} planlandı';
-	@override String get editRule => 'Kuralı düzenle';
-	@override String get editRuleAction => 'Düzenle';
-	@override String get recordingRuleUpdated => 'Kayıt kuralı güncellendi';
 	@override String get guideReloadRequested => 'Rehber yenilemesi istendi';
 	@override String get guideReloadFailed => 'Rehber yenilenemedi';
-	@override String get rulesProcessRequested => 'Kuralın yeniden değerlendirilmesi istendi';
-	@override String get rulesProcessFailed => 'Kayıt kuralları yeniden değerlendirilemedi';
-	@override String get recordShow => 'Programı kaydet';
 	@override late final _Translations$liveTv$recordSettings$tr recordSettings = _Translations$liveTv$recordSettings$tr._(_root);
-	@override String startingInMinutes({required Object minutes}) => '${minutes} dk içinde başlıyor';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} saat ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} geçersiz Canlı TV oynatma verileri döndürdü';
 	@override String get failedToStartChannel => 'Canlı kanal başlatılamadı';
 	@override String get failedToBuildStreamUrl => 'Akış URL\'si oluşturulamadı';
@@ -4855,7 +4821,6 @@ extension on TranslationsTr {
 			'explore.detail.background' => 'Arka plan',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('tr'))(n, one: '${n} sonuç', other: '${n} sonuç', ), 
 			'liveTv.title' => 'Canlı TV',
-			'liveTv.guide' => 'Rehber',
 			'liveTv.noChannels' => 'Kullanılabilir kanal yok',
 			'liveTv.noDvr' => 'Hiçbir sunucuda DVR yapılandırılmadı',
 			'liveTv.serverUnavailable' => 'Canlı TV sunucusu kullanılabilir değil.',
@@ -4883,7 +4848,6 @@ extension on TranslationsTr {
 			'liveTv.daytime' => 'Gündüz',
 			'liveTv.evening' => 'Akşam',
 			'liveTv.lateNight' => 'Gece Geç Saatler',
-			'liveTv.whatsOn' => 'Şimdi Ne Var?',
 			'liveTv.watchChannel' => 'Kanalı İzle',
 			'liveTv.favorites' => 'Favoriler',
 			'liveTv.reorderFavorites' => 'Favorileri Yeniden Sırala',
@@ -4896,41 +4860,11 @@ extension on TranslationsTr {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Baştan izle (${minutes} dk önce)',
 			'liveTv.watchLive' => 'Canlı İzle',
 			'liveTv.goToLive' => 'Canlıya Git',
-			'liveTv.record' => 'Kaydet',
 			'liveTv.recordEpisode' => 'Bölümü Kaydet',
 			'liveTv.recordSeries' => 'Diziyi Kaydet',
-			'liveTv.recordOptions' => 'Kayıt Seçenekleri',
-			'liveTv.saveTo' => 'Şuraya kaydet',
-			'liveTv.recordings' => 'Kayıtlar',
-			'liveTv.scheduledRecordings' => 'Planlananlar',
-			'liveTv.recordingRules' => 'Kayıt Kuralları',
-			'liveTv.noScheduledRecordings' => 'Kaydedilecek planlanmış bir şey yok',
-			'liveTv.manageRecording' => 'Kaydı yönet',
-			'liveTv.cancelRecording' => 'Kaydı iptal et',
-			'liveTv.cancelRecordingTitle' => 'Bu kayıt iptal edilsin mi?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} artık kaydedilmeyecek.',
-			'liveTv.deleteRule' => 'Kuralı sil',
-			'liveTv.deleteRuleTitle' => 'Kayıt kuralı silinsin mi?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '${title} dizisinin gelecek bölümleri kaydedilmeyecek.',
-			'liveTv.recordingScheduled' => 'Kayıt planlandı',
-			'liveTv.alreadyScheduled' => 'Bu program zaten planlanmış',
 			'liveTv.dvrAdminRequired' => 'DVR ayarları bir yönetici hesabı gerektirir',
-			'liveTv.recordingFailed' => 'Kayıt planlanamadı',
-			'liveTv.recordingTargetMissing' => 'Kayıt kitaplığı belirlenemedi',
-			'liveTv.recordNotAvailable' => 'Bu program için kayıt kullanılamıyor',
-			'liveTv.recordingCancelled' => 'Kayıt iptal edildi',
-			'liveTv.recordingRuleDeleted' => 'Kayıt kuralı silindi',
-			'liveTv.processRecordingRules' => 'Kuralları yeniden değerlendir',
-			'liveTv.recordingInProgress' => 'Şimdi kaydediliyor',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} planlandı',
-			'liveTv.editRule' => 'Kuralı düzenle',
-			'liveTv.editRuleAction' => 'Düzenle',
-			'liveTv.recordingRuleUpdated' => 'Kayıt kuralı güncellendi',
 			'liveTv.guideReloadRequested' => 'Rehber yenilemesi istendi',
 			'liveTv.guideReloadFailed' => 'Rehber yenilenemedi',
-			'liveTv.rulesProcessRequested' => 'Kuralın yeniden değerlendirilmesi istendi',
-			'liveTv.rulesProcessFailed' => 'Kayıt kuralları yeniden değerlendirilemedi',
-			'liveTv.recordShow' => 'Programı kaydet',
 			'liveTv.recordSettings.startEarly' => 'Erken başlat (saniye)',
 			'liveTv.recordSettings.endLate' => 'Geç bitir (saniye)',
 			'liveTv.recordSettings.newOnly' => 'Yalnızca yeni bölümler',
@@ -4941,8 +4875,6 @@ extension on TranslationsTr {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 tüm bölümleri saklar',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} dk içinde başlıyor',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} saat ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} geçersiz Canlı TV oynatma verileri döndürdü',
 			'liveTv.failedToStartChannel' => 'Canlı kanal başlatılamadı',
 			'liveTv.failedToBuildStreamUrl' => 'Akış URL\'si oluşturulamadı',

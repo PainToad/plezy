@@ -1598,7 +1598,6 @@ class Translations$liveTv$zh extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => '直播电视';
-	@override String get guide => '节目指南';
 	@override String get noChannels => '没有可用的频道';
 	@override String get noDvr => '没有服务器配置 DVR';
 	@override String get serverUnavailable => '直播电视服务器不可用。';
@@ -1626,7 +1625,6 @@ class Translations$liveTv$zh extends Translations$liveTv$en {
 	@override String get daytime => '白天';
 	@override String get evening => '晚上';
 	@override String get lateNight => '深夜';
-	@override String get whatsOn => '正在播出';
 	@override String get watchChannel => '观看频道';
 	@override String get favorites => '收藏';
 	@override String get reorderFavorites => '重新排序收藏';
@@ -1639,44 +1637,12 @@ class Translations$liveTv$zh extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => '从头观看（${minutes}分钟前开始）';
 	@override String get watchLive => '观看直播';
 	@override String get goToLive => '跳至直播';
-	@override String get record => '录制';
 	@override String get recordEpisode => '录制单集';
 	@override String get recordSeries => '录制系列节目';
-	@override String get recordOptions => '录制选项';
-	@override String get saveTo => '保存到';
-	@override String get recordings => '录制内容';
-	@override String get scheduledRecordings => '计划录制';
-	@override String get recordingRules => '录制规则';
-	@override String get noScheduledRecordings => '没有安排的录制';
-	@override String get manageRecording => '管理录制';
-	@override String get cancelRecording => '取消录制';
-	@override String get cancelRecordingTitle => '取消此次录制？';
-	@override String cancelRecordingMessage({required Object title}) => '将不再录制 ${title}。';
-	@override String get deleteRule => '删除规则';
-	@override String get deleteRuleTitle => '删除录制规则？';
-	@override String deleteRuleMessage({required Object title}) => '今后将不再录制 ${title} 的剧集。';
-	@override String get recordingScheduled => '录制已安排';
-	@override String get alreadyScheduled => '此节目已安排录制';
 	@override String get dvrAdminRequired => 'DVR 设置需要管理员账户';
-	@override String get recordingFailed => '无法安排录制';
-	@override String get recordingTargetMissing => '无法确定录制库';
-	@override String get recordNotAvailable => '此节目无法录制';
-	@override String get recordingCancelled => '录制已取消';
-	@override String get recordingRuleDeleted => '录制规则已删除';
-	@override String get processRecordingRules => '重新评估规则';
-	@override String get recordingInProgress => '正在录制';
-	@override String recordingsCount({required Object count}) => '已安排 ${count} 项录制';
-	@override String get editRule => '编辑规则';
-	@override String get editRuleAction => '编辑';
-	@override String get recordingRuleUpdated => '录制规则已更新';
 	@override String get guideReloadRequested => '已请求更新节目指南';
 	@override String get guideReloadFailed => '无法刷新节目指南';
-	@override String get rulesProcessRequested => '已请求重新评估规则';
-	@override String get rulesProcessFailed => '无法重新评估录制规则';
-	@override String get recordShow => '录制节目';
 	@override late final Translations$liveTv$recordSettings$zh recordSettings = Translations$liveTv$recordSettings$zh.internal(_root);
-	@override String startingInMinutes({required Object minutes}) => '${minutes} 分钟后开始';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} 返回了无效的直播电视播放数据';
 	@override String get failedToStartChannel => '无法播放直播频道';
 	@override String get failedToBuildStreamUrl => '无法生成视频流 URL';
@@ -4843,7 +4809,6 @@ extension on TranslationsZh {
 			'explore.detail.background' => '背景',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '${n} 条结果', ), 
 			'liveTv.title' => '直播电视',
-			'liveTv.guide' => '节目指南',
 			'liveTv.noChannels' => '没有可用的频道',
 			'liveTv.noDvr' => '没有服务器配置 DVR',
 			'liveTv.serverUnavailable' => '直播电视服务器不可用。',
@@ -4871,7 +4836,6 @@ extension on TranslationsZh {
 			'liveTv.daytime' => '白天',
 			'liveTv.evening' => '晚上',
 			'liveTv.lateNight' => '深夜',
-			'liveTv.whatsOn' => '正在播出',
 			'liveTv.watchChannel' => '观看频道',
 			'liveTv.favorites' => '收藏',
 			'liveTv.reorderFavorites' => '重新排序收藏',
@@ -4884,41 +4848,11 @@ extension on TranslationsZh {
 			'liveTv.watchFromStart' => ({required Object minutes}) => '从头观看（${minutes}分钟前开始）',
 			'liveTv.watchLive' => '观看直播',
 			'liveTv.goToLive' => '跳至直播',
-			'liveTv.record' => '录制',
 			'liveTv.recordEpisode' => '录制单集',
 			'liveTv.recordSeries' => '录制系列节目',
-			'liveTv.recordOptions' => '录制选项',
-			'liveTv.saveTo' => '保存到',
-			'liveTv.recordings' => '录制内容',
-			'liveTv.scheduledRecordings' => '计划录制',
-			'liveTv.recordingRules' => '录制规则',
-			'liveTv.noScheduledRecordings' => '没有安排的录制',
-			'liveTv.manageRecording' => '管理录制',
-			'liveTv.cancelRecording' => '取消录制',
-			'liveTv.cancelRecordingTitle' => '取消此次录制？',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '将不再录制 ${title}。',
-			'liveTv.deleteRule' => '删除规则',
-			'liveTv.deleteRuleTitle' => '删除录制规则？',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '今后将不再录制 ${title} 的剧集。',
-			'liveTv.recordingScheduled' => '录制已安排',
-			'liveTv.alreadyScheduled' => '此节目已安排录制',
 			'liveTv.dvrAdminRequired' => 'DVR 设置需要管理员账户',
-			'liveTv.recordingFailed' => '无法安排录制',
-			'liveTv.recordingTargetMissing' => '无法确定录制库',
-			'liveTv.recordNotAvailable' => '此节目无法录制',
-			'liveTv.recordingCancelled' => '录制已取消',
-			'liveTv.recordingRuleDeleted' => '录制规则已删除',
-			'liveTv.processRecordingRules' => '重新评估规则',
-			'liveTv.recordingInProgress' => '正在录制',
-			'liveTv.recordingsCount' => ({required Object count}) => '已安排 ${count} 项录制',
-			'liveTv.editRule' => '编辑规则',
-			'liveTv.editRuleAction' => '编辑',
-			'liveTv.recordingRuleUpdated' => '录制规则已更新',
 			'liveTv.guideReloadRequested' => '已请求更新节目指南',
 			'liveTv.guideReloadFailed' => '无法刷新节目指南',
-			'liveTv.rulesProcessRequested' => '已请求重新评估规则',
-			'liveTv.rulesProcessFailed' => '无法重新评估录制规则',
-			'liveTv.recordShow' => '录制节目',
 			'liveTv.recordSettings.startEarly' => '提前开始（秒）',
 			'liveTv.recordSettings.endLate' => '延后结束（秒）',
 			'liveTv.recordSettings.newOnly' => '仅新剧集',
@@ -4929,8 +4863,6 @@ extension on TranslationsZh {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 表示保留全部剧集',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} 分钟后开始',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} 返回了无效的直播电视播放数据',
 			'liveTv.failedToStartChannel' => '无法播放直播频道',
 			'liveTv.failedToBuildStreamUrl' => '无法生成视频流 URL',

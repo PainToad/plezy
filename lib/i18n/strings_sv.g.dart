@@ -1606,7 +1606,6 @@ class _Translations$liveTv$sv extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'Live-TV';
-	@override String get guide => 'Programguide';
 	@override String get noChannels => 'Inga kanaler tillgängliga';
 	@override String get noDvr => 'Ingen DVR har konfigurerats på någon server';
 	@override String get serverUnavailable => 'Live-TV-servern är inte tillgänglig.';
@@ -1634,7 +1633,6 @@ class _Translations$liveTv$sv extends Translations$liveTv$en {
 	@override String get daytime => 'Dagtid';
 	@override String get evening => 'Kväll';
 	@override String get lateNight => 'Sen kväll';
-	@override String get whatsOn => 'På TV nu';
 	@override String get watchChannel => 'Titta på kanal';
 	@override String get favorites => 'Favoriter';
 	@override String get reorderFavorites => 'Ordna om favoriter';
@@ -1647,44 +1645,12 @@ class _Translations$liveTv$sv extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Titta från början (${minutes} min sedan)';
 	@override String get watchLive => 'Titta live';
 	@override String get goToLive => 'Gå till live';
-	@override String get record => 'Spela in';
 	@override String get recordEpisode => 'Spela in avsnitt';
 	@override String get recordSeries => 'Spela in serie';
-	@override String get recordOptions => 'Inspelningsalternativ';
-	@override String get saveTo => 'Spara till';
-	@override String get recordings => 'Inspelningar';
-	@override String get scheduledRecordings => 'Schemalagda';
-	@override String get recordingRules => 'Inspelningsregler';
-	@override String get noScheduledRecordings => 'Inga schemalagda inspelningar';
-	@override String get manageRecording => 'Hantera inspelning';
-	@override String get cancelRecording => 'Avbryt inspelning';
-	@override String get cancelRecordingTitle => 'Avbryt denna inspelning?';
-	@override String cancelRecordingMessage({required Object title}) => '${title} kommer inte längre att spelas in.';
-	@override String get deleteRule => 'Ta bort regel';
-	@override String get deleteRuleTitle => 'Ta bort inspelningsregel?';
-	@override String deleteRuleMessage({required Object title}) => 'Kommande avsnitt av ${title} kommer inte att spelas in.';
-	@override String get recordingScheduled => 'Inspelning schemalagd';
-	@override String get alreadyScheduled => 'Detta program är redan schemalagt';
 	@override String get dvrAdminRequired => 'DVR-inställningar kräver ett administratörskonto';
-	@override String get recordingFailed => 'Det gick inte att schemalägga inspelning';
-	@override String get recordingTargetMissing => 'Det gick inte att hitta inspelningsbibliotek';
-	@override String get recordNotAvailable => 'Inspelning är inte tillgänglig för detta program';
-	@override String get recordingCancelled => 'Inspelningen har avbrutits';
-	@override String get recordingRuleDeleted => 'Inspelningsregeln har tagits bort';
-	@override String get processRecordingRules => 'Utvärdera regler igen';
-	@override String get recordingInProgress => 'Spelar in nu';
-	@override String recordingsCount({required Object count}) => '${count} schemalagda';
-	@override String get editRule => 'Redigera regel';
-	@override String get editRuleAction => 'Redigera';
-	@override String get recordingRuleUpdated => 'Inspelningsregel uppdaterad';
 	@override String get guideReloadRequested => 'Uppdatering av programguiden har begärts';
 	@override String get guideReloadFailed => 'Programguiden kunde inte uppdateras';
-	@override String get rulesProcessRequested => 'Ny regelutvärdering har begärts';
-	@override String get rulesProcessFailed => 'Inspelningsreglerna kunde inte köras om';
-	@override String get recordShow => 'Spela in program';
 	@override late final _Translations$liveTv$recordSettings$sv recordSettings = _Translations$liveTv$recordSettings$sv._(_root);
-	@override String startingInMinutes({required Object minutes}) => 'Börjar om ${minutes} min';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} kl. ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} returnerade ogiltiga uppspelningsdata för Live-TV';
 	@override String get failedToStartChannel => 'Kunde inte starta livekanalen';
 	@override String get failedToBuildStreamUrl => 'Kunde inte skapa strömmens URL';
@@ -4855,7 +4821,6 @@ extension on TranslationsSv {
 			'explore.detail.background' => 'Bakgrund',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('sv'))(n, one: '${n} resultat', other: '${n} resultat', ), 
 			'liveTv.title' => 'Live-TV',
-			'liveTv.guide' => 'Programguide',
 			'liveTv.noChannels' => 'Inga kanaler tillgängliga',
 			'liveTv.noDvr' => 'Ingen DVR har konfigurerats på någon server',
 			'liveTv.serverUnavailable' => 'Live-TV-servern är inte tillgänglig.',
@@ -4883,7 +4848,6 @@ extension on TranslationsSv {
 			'liveTv.daytime' => 'Dagtid',
 			'liveTv.evening' => 'Kväll',
 			'liveTv.lateNight' => 'Sen kväll',
-			'liveTv.whatsOn' => 'På TV nu',
 			'liveTv.watchChannel' => 'Titta på kanal',
 			'liveTv.favorites' => 'Favoriter',
 			'liveTv.reorderFavorites' => 'Ordna om favoriter',
@@ -4896,41 +4860,11 @@ extension on TranslationsSv {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Titta från början (${minutes} min sedan)',
 			'liveTv.watchLive' => 'Titta live',
 			'liveTv.goToLive' => 'Gå till live',
-			'liveTv.record' => 'Spela in',
 			'liveTv.recordEpisode' => 'Spela in avsnitt',
 			'liveTv.recordSeries' => 'Spela in serie',
-			'liveTv.recordOptions' => 'Inspelningsalternativ',
-			'liveTv.saveTo' => 'Spara till',
-			'liveTv.recordings' => 'Inspelningar',
-			'liveTv.scheduledRecordings' => 'Schemalagda',
-			'liveTv.recordingRules' => 'Inspelningsregler',
-			'liveTv.noScheduledRecordings' => 'Inga schemalagda inspelningar',
-			'liveTv.manageRecording' => 'Hantera inspelning',
-			'liveTv.cancelRecording' => 'Avbryt inspelning',
-			'liveTv.cancelRecordingTitle' => 'Avbryt denna inspelning?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} kommer inte längre att spelas in.',
-			'liveTv.deleteRule' => 'Ta bort regel',
-			'liveTv.deleteRuleTitle' => 'Ta bort inspelningsregel?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'Kommande avsnitt av ${title} kommer inte att spelas in.',
-			'liveTv.recordingScheduled' => 'Inspelning schemalagd',
-			'liveTv.alreadyScheduled' => 'Detta program är redan schemalagt',
 			'liveTv.dvrAdminRequired' => 'DVR-inställningar kräver ett administratörskonto',
-			'liveTv.recordingFailed' => 'Det gick inte att schemalägga inspelning',
-			'liveTv.recordingTargetMissing' => 'Det gick inte att hitta inspelningsbibliotek',
-			'liveTv.recordNotAvailable' => 'Inspelning är inte tillgänglig för detta program',
-			'liveTv.recordingCancelled' => 'Inspelningen har avbrutits',
-			'liveTv.recordingRuleDeleted' => 'Inspelningsregeln har tagits bort',
-			'liveTv.processRecordingRules' => 'Utvärdera regler igen',
-			'liveTv.recordingInProgress' => 'Spelar in nu',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} schemalagda',
-			'liveTv.editRule' => 'Redigera regel',
-			'liveTv.editRuleAction' => 'Redigera',
-			'liveTv.recordingRuleUpdated' => 'Inspelningsregel uppdaterad',
 			'liveTv.guideReloadRequested' => 'Uppdatering av programguiden har begärts',
 			'liveTv.guideReloadFailed' => 'Programguiden kunde inte uppdateras',
-			'liveTv.rulesProcessRequested' => 'Ny regelutvärdering har begärts',
-			'liveTv.rulesProcessFailed' => 'Inspelningsreglerna kunde inte köras om',
-			'liveTv.recordShow' => 'Spela in program',
 			'liveTv.recordSettings.startEarly' => 'Börja tidigare (sekunder)',
 			'liveTv.recordSettings.endLate' => 'Sluta senare (sekunder)',
 			'liveTv.recordSettings.newOnly' => 'Endast nya avsnitt',
@@ -4941,8 +4875,6 @@ extension on TranslationsSv {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 behåller alla avsnitt',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => 'Börjar om ${minutes} min',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} kl. ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} returnerade ogiltiga uppspelningsdata för Live-TV',
 			'liveTv.failedToStartChannel' => 'Kunde inte starta livekanalen',
 			'liveTv.failedToBuildStreamUrl' => 'Kunde inte skapa strömmens URL',

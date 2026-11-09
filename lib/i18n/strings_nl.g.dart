@@ -1606,7 +1606,6 @@ class _Translations$liveTv$nl extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'Live-tv';
-	@override String get guide => 'Gids';
 	@override String get noChannels => 'Geen zenders beschikbaar';
 	@override String get noDvr => 'Geen DVR geconfigureerd op een server';
 	@override String get serverUnavailable => 'De live-tv-server is niet beschikbaar.';
@@ -1634,7 +1633,6 @@ class _Translations$liveTv$nl extends Translations$liveTv$en {
 	@override String get daytime => 'Overdag';
 	@override String get evening => 'Avond';
 	@override String get lateNight => 'Late avond';
-	@override String get whatsOn => 'Nu op tv';
 	@override String get watchChannel => 'Kanaal bekijken';
 	@override String get favorites => 'Favorieten';
 	@override String get reorderFavorites => 'Favorieten herordenen';
@@ -1647,44 +1645,12 @@ class _Translations$liveTv$nl extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Vanaf het begin kijken (${minutes} min geleden)';
 	@override String get watchLive => 'Live kijken';
 	@override String get goToLive => 'Naar live-uitzending';
-	@override String get record => 'Opnemen';
 	@override String get recordEpisode => 'Aflevering opnemen';
 	@override String get recordSeries => 'Serie opnemen';
-	@override String get recordOptions => 'Opnameopties';
-	@override String get saveTo => 'Opslaan in';
-	@override String get recordings => 'Opnames';
-	@override String get scheduledRecordings => 'Gepland';
-	@override String get recordingRules => 'Opnameregels';
-	@override String get noScheduledRecordings => 'Geen geplande opnames';
-	@override String get manageRecording => 'Opname beheren';
-	@override String get cancelRecording => 'Opname annuleren';
-	@override String get cancelRecordingTitle => 'Deze opname annuleren?';
-	@override String cancelRecordingMessage({required Object title}) => '${title} wordt niet meer opgenomen.';
-	@override String get deleteRule => 'Regel verwijderen';
-	@override String get deleteRuleTitle => 'Opnameregel verwijderen?';
-	@override String deleteRuleMessage({required Object title}) => 'Toekomstige afleveringen van ${title} worden niet opgenomen.';
-	@override String get recordingScheduled => 'Opname gepland';
-	@override String get alreadyScheduled => 'Dit programma is al gepland';
 	@override String get dvrAdminRequired => 'DVR-instellingen vereisen een beheerdersaccount';
-	@override String get recordingFailed => 'Kon opname niet plannen';
-	@override String get recordingTargetMissing => 'Kon opnamebibliotheek niet bepalen';
-	@override String get recordNotAvailable => 'Opname niet beschikbaar voor dit programma';
-	@override String get recordingCancelled => 'Opname geannuleerd';
-	@override String get recordingRuleDeleted => 'Opnameregel verwijderd';
-	@override String get processRecordingRules => 'Regels opnieuw evalueren';
-	@override String get recordingInProgress => 'Nu aan het opnemen';
-	@override String recordingsCount({required Object count}) => '${count} gepland';
-	@override String get editRule => 'Regel bewerken';
-	@override String get editRuleAction => 'Bewerken';
-	@override String get recordingRuleUpdated => 'Opnameregel bijgewerkt';
 	@override String get guideReloadRequested => 'Vernieuwing van de gids aangevraagd';
 	@override String get guideReloadFailed => 'Gids herladen mislukt';
-	@override String get rulesProcessRequested => 'Nieuwe evaluatie van regels aangevraagd';
-	@override String get rulesProcessFailed => 'Opnameregels opnieuw uitvoeren mislukt';
-	@override String get recordShow => 'Programma opnemen';
 	@override late final _Translations$liveTv$recordSettings$nl recordSettings = _Translations$liveTv$recordSettings$nl._(_root);
-	@override String startingInMinutes({required Object minutes}) => 'Begint over ${minutes} min';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} om ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} heeft ongeldige afspeelgegevens voor Live-tv geretourneerd';
 	@override String get failedToStartChannel => 'Kon de livezender niet starten';
 	@override String get failedToBuildStreamUrl => 'Kon de stream-URL niet samenstellen';
@@ -4855,7 +4821,6 @@ extension on TranslationsNl {
 			'explore.detail.background' => 'Achtergrond',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: '${n} resultaat', other: '${n} resultaten', ), 
 			'liveTv.title' => 'Live-tv',
-			'liveTv.guide' => 'Gids',
 			'liveTv.noChannels' => 'Geen zenders beschikbaar',
 			'liveTv.noDvr' => 'Geen DVR geconfigureerd op een server',
 			'liveTv.serverUnavailable' => 'De live-tv-server is niet beschikbaar.',
@@ -4883,7 +4848,6 @@ extension on TranslationsNl {
 			'liveTv.daytime' => 'Overdag',
 			'liveTv.evening' => 'Avond',
 			'liveTv.lateNight' => 'Late avond',
-			'liveTv.whatsOn' => 'Nu op tv',
 			'liveTv.watchChannel' => 'Kanaal bekijken',
 			'liveTv.favorites' => 'Favorieten',
 			'liveTv.reorderFavorites' => 'Favorieten herordenen',
@@ -4896,41 +4860,11 @@ extension on TranslationsNl {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Vanaf het begin kijken (${minutes} min geleden)',
 			'liveTv.watchLive' => 'Live kijken',
 			'liveTv.goToLive' => 'Naar live-uitzending',
-			'liveTv.record' => 'Opnemen',
 			'liveTv.recordEpisode' => 'Aflevering opnemen',
 			'liveTv.recordSeries' => 'Serie opnemen',
-			'liveTv.recordOptions' => 'Opnameopties',
-			'liveTv.saveTo' => 'Opslaan in',
-			'liveTv.recordings' => 'Opnames',
-			'liveTv.scheduledRecordings' => 'Gepland',
-			'liveTv.recordingRules' => 'Opnameregels',
-			'liveTv.noScheduledRecordings' => 'Geen geplande opnames',
-			'liveTv.manageRecording' => 'Opname beheren',
-			'liveTv.cancelRecording' => 'Opname annuleren',
-			'liveTv.cancelRecordingTitle' => 'Deze opname annuleren?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} wordt niet meer opgenomen.',
-			'liveTv.deleteRule' => 'Regel verwijderen',
-			'liveTv.deleteRuleTitle' => 'Opnameregel verwijderen?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'Toekomstige afleveringen van ${title} worden niet opgenomen.',
-			'liveTv.recordingScheduled' => 'Opname gepland',
-			'liveTv.alreadyScheduled' => 'Dit programma is al gepland',
 			'liveTv.dvrAdminRequired' => 'DVR-instellingen vereisen een beheerdersaccount',
-			'liveTv.recordingFailed' => 'Kon opname niet plannen',
-			'liveTv.recordingTargetMissing' => 'Kon opnamebibliotheek niet bepalen',
-			'liveTv.recordNotAvailable' => 'Opname niet beschikbaar voor dit programma',
-			'liveTv.recordingCancelled' => 'Opname geannuleerd',
-			'liveTv.recordingRuleDeleted' => 'Opnameregel verwijderd',
-			'liveTv.processRecordingRules' => 'Regels opnieuw evalueren',
-			'liveTv.recordingInProgress' => 'Nu aan het opnemen',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} gepland',
-			'liveTv.editRule' => 'Regel bewerken',
-			'liveTv.editRuleAction' => 'Bewerken',
-			'liveTv.recordingRuleUpdated' => 'Opnameregel bijgewerkt',
 			'liveTv.guideReloadRequested' => 'Vernieuwing van de gids aangevraagd',
 			'liveTv.guideReloadFailed' => 'Gids herladen mislukt',
-			'liveTv.rulesProcessRequested' => 'Nieuwe evaluatie van regels aangevraagd',
-			'liveTv.rulesProcessFailed' => 'Opnameregels opnieuw uitvoeren mislukt',
-			'liveTv.recordShow' => 'Programma opnemen',
 			'liveTv.recordSettings.startEarly' => 'Eerder beginnen (seconden)',
 			'liveTv.recordSettings.endLate' => 'Later stoppen (seconden)',
 			'liveTv.recordSettings.newOnly' => 'Alleen nieuwe afleveringen',
@@ -4941,8 +4875,6 @@ extension on TranslationsNl {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 bewaart alle afleveringen',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => 'Begint over ${minutes} min',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} om ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} heeft ongeldige afspeelgegevens voor Live-tv geretourneerd',
 			'liveTv.failedToStartChannel' => 'Kon de livezender niet starten',
 			'liveTv.failedToBuildStreamUrl' => 'Kon de stream-URL niet samenstellen',

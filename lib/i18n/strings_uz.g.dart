@@ -1606,7 +1606,6 @@ class _Translations$liveTv$uz extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'Jonli TV';
-	@override String get guide => 'Dasturlar jadvali';
 	@override String get noChannels => 'Mavjud kanallar yoʻq';
 	@override String get noDvr => 'Serverda DVR sozlanmagan';
 	@override String get serverUnavailable => 'Jonli TV serveri mavjud emas.';
@@ -1634,7 +1633,6 @@ class _Translations$liveTv$uz extends Translations$liveTv$en {
 	@override String get daytime => 'Kunduzi';
 	@override String get evening => 'Kechqurun';
 	@override String get lateNight => 'Tunda';
-	@override String get whatsOn => 'Hozir nima efirda?';
 	@override String get watchChannel => 'Kanalni tomosha qilish';
 	@override String get favorites => 'Tanlanganlar';
 	@override String get reorderFavorites => 'Tanlanganlarni tartiblash';
@@ -1647,44 +1645,12 @@ class _Translations$liveTv$uz extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Boshidan tomosha qilish (${minutes} daq ilgari)';
 	@override String get watchLive => 'Jonli efirni tomosha qilish';
 	@override String get goToLive => 'Jonli efirga oʻtish';
-	@override String get record => 'Yozib olish';
 	@override String get recordEpisode => 'Qismni yozib olish';
 	@override String get recordSeries => 'Serialni yozib olish';
-	@override String get recordOptions => 'Yozib olish parametrlari';
-	@override String get saveTo => 'Shu yerga saqlash';
-	@override String get recordings => 'Yozib olinganlar';
-	@override String get scheduledRecordings => 'Rejalashtirilganlar';
-	@override String get recordingRules => 'Yozib olish qoidalari';
-	@override String get noScheduledRecordings => 'Rejalashtirilgan yozuvlar yoʻq';
-	@override String get manageRecording => 'Yozuvni boshqarish';
-	@override String get cancelRecording => 'Yozishni bekor qilish';
-	@override String get cancelRecordingTitle => 'Yozish toʻxtatilsinmi?';
-	@override String cancelRecordingMessage({required Object title}) => '${title} endi yozib olinmaydi.';
-	@override String get deleteRule => 'Qoidani oʻchirish';
-	@override String get deleteRuleTitle => 'Yozib olish qoidasi oʻchirilsinmi?';
-	@override String deleteRuleMessage({required Object title}) => '${title} serialining keyingi qismlari yozib olinmaydi.';
-	@override String get recordingScheduled => 'Yozib olish rejalashtirildi';
-	@override String get alreadyScheduled => 'Ushbu dastur avvaldan rejalashtirilgan';
 	@override String get dvrAdminRequired => 'DVR sozlamalari administrator huquqini talab qiladi';
-	@override String get recordingFailed => 'Yozib olishni rejalashtirib boʻlmadi';
-	@override String get recordingTargetMissing => 'Yozib olinadigan kutubxona aniqlanmadi';
-	@override String get recordNotAvailable => 'Ushbu dasturni yozib olib boʻlmaydi';
-	@override String get recordingCancelled => 'Yozib olish bekor qilindi';
-	@override String get recordingRuleDeleted => 'Yozib olish qoidasi oʻchirildi';
-	@override String get processRecordingRules => 'Qoidalarni qayta baholash';
-	@override String get recordingInProgress => 'Hozir yozib olinmoqda';
-	@override String recordingsCount({required Object count}) => '${count} rejalashtirilgan';
-	@override String get editRule => 'Qoidani tahrirlash';
-	@override String get editRuleAction => 'Tahrirlash';
-	@override String get recordingRuleUpdated => 'Yozib olish qoidasi yangilandi';
 	@override String get guideReloadRequested => 'Jadvalni yangilash soʻraldi';
 	@override String get guideReloadFailed => 'Dasturlar jadvalini yangilab boʻlmadi';
-	@override String get rulesProcessRequested => 'Qoidalarni qayta baholash soʻraldi';
-	@override String get rulesProcessFailed => 'Yozib olish qoidalarini qayta baholab boʻlmadi';
-	@override String get recordShow => 'Shouni yozib olish';
 	@override late final _Translations$liveTv$recordSettings$uz recordSettings = _Translations$liveTv$recordSettings$uz._(_root);
-	@override String startingInMinutes({required Object minutes}) => '${minutes} daqiqadan keyin boshlanadi';
-	@override String dayAtTime({required Object day, required Object time}) => '${day}, soat ${time} da';
 	@override String invalidPlaybackData({required Object product}) => '${product} Jonli TV ijrosi uchun notoʻgʻri maʼlumot qaytardi';
 	@override String get failedToStartChannel => 'Jonli kanalni boshlab boʻlmadi';
 	@override String get failedToBuildStreamUrl => 'Oqim URL-ini tuzib boʻlmadi';
@@ -4855,7 +4821,6 @@ extension on TranslationsUz {
 			'explore.detail.background' => 'Orqa fon',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('uz'))(n, one: '${n} ta natija', other: '${n} ta natija', ), 
 			'liveTv.title' => 'Jonli TV',
-			'liveTv.guide' => 'Dasturlar jadvali',
 			'liveTv.noChannels' => 'Mavjud kanallar yoʻq',
 			'liveTv.noDvr' => 'Serverda DVR sozlanmagan',
 			'liveTv.serverUnavailable' => 'Jonli TV serveri mavjud emas.',
@@ -4883,7 +4848,6 @@ extension on TranslationsUz {
 			'liveTv.daytime' => 'Kunduzi',
 			'liveTv.evening' => 'Kechqurun',
 			'liveTv.lateNight' => 'Tunda',
-			'liveTv.whatsOn' => 'Hozir nima efirda?',
 			'liveTv.watchChannel' => 'Kanalni tomosha qilish',
 			'liveTv.favorites' => 'Tanlanganlar',
 			'liveTv.reorderFavorites' => 'Tanlanganlarni tartiblash',
@@ -4896,41 +4860,11 @@ extension on TranslationsUz {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Boshidan tomosha qilish (${minutes} daq ilgari)',
 			'liveTv.watchLive' => 'Jonli efirni tomosha qilish',
 			'liveTv.goToLive' => 'Jonli efirga oʻtish',
-			'liveTv.record' => 'Yozib olish',
 			'liveTv.recordEpisode' => 'Qismni yozib olish',
 			'liveTv.recordSeries' => 'Serialni yozib olish',
-			'liveTv.recordOptions' => 'Yozib olish parametrlari',
-			'liveTv.saveTo' => 'Shu yerga saqlash',
-			'liveTv.recordings' => 'Yozib olinganlar',
-			'liveTv.scheduledRecordings' => 'Rejalashtirilganlar',
-			'liveTv.recordingRules' => 'Yozib olish qoidalari',
-			'liveTv.noScheduledRecordings' => 'Rejalashtirilgan yozuvlar yoʻq',
-			'liveTv.manageRecording' => 'Yozuvni boshqarish',
-			'liveTv.cancelRecording' => 'Yozishni bekor qilish',
-			'liveTv.cancelRecordingTitle' => 'Yozish toʻxtatilsinmi?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} endi yozib olinmaydi.',
-			'liveTv.deleteRule' => 'Qoidani oʻchirish',
-			'liveTv.deleteRuleTitle' => 'Yozib olish qoidasi oʻchirilsinmi?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '${title} serialining keyingi qismlari yozib olinmaydi.',
-			'liveTv.recordingScheduled' => 'Yozib olish rejalashtirildi',
-			'liveTv.alreadyScheduled' => 'Ushbu dastur avvaldan rejalashtirilgan',
 			'liveTv.dvrAdminRequired' => 'DVR sozlamalari administrator huquqini talab qiladi',
-			'liveTv.recordingFailed' => 'Yozib olishni rejalashtirib boʻlmadi',
-			'liveTv.recordingTargetMissing' => 'Yozib olinadigan kutubxona aniqlanmadi',
-			'liveTv.recordNotAvailable' => 'Ushbu dasturni yozib olib boʻlmaydi',
-			'liveTv.recordingCancelled' => 'Yozib olish bekor qilindi',
-			'liveTv.recordingRuleDeleted' => 'Yozib olish qoidasi oʻchirildi',
-			'liveTv.processRecordingRules' => 'Qoidalarni qayta baholash',
-			'liveTv.recordingInProgress' => 'Hozir yozib olinmoqda',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} rejalashtirilgan',
-			'liveTv.editRule' => 'Qoidani tahrirlash',
-			'liveTv.editRuleAction' => 'Tahrirlash',
-			'liveTv.recordingRuleUpdated' => 'Yozib olish qoidasi yangilandi',
 			'liveTv.guideReloadRequested' => 'Jadvalni yangilash soʻraldi',
 			'liveTv.guideReloadFailed' => 'Dasturlar jadvalini yangilab boʻlmadi',
-			'liveTv.rulesProcessRequested' => 'Qoidalarni qayta baholash soʻraldi',
-			'liveTv.rulesProcessFailed' => 'Yozib olish qoidalarini qayta baholab boʻlmadi',
-			'liveTv.recordShow' => 'Shouni yozib olish',
 			'liveTv.recordSettings.startEarly' => 'Erta boshlash (soniya)',
 			'liveTv.recordSettings.endLate' => 'Kech tugatish (soniya)',
 			'liveTv.recordSettings.newOnly' => 'Faqat yangi epizodlar',
@@ -4941,8 +4875,6 @@ extension on TranslationsUz {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 barcha epizodlarni saqlaydi',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} daqiqadan keyin boshlanadi',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day}, soat ${time} da',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} Jonli TV ijrosi uchun notoʻgʻri maʼlumot qaytardi',
 			'liveTv.failedToStartChannel' => 'Jonli kanalni boshlab boʻlmadi',
 			'liveTv.failedToBuildStreamUrl' => 'Oqim URL-ini tuzib boʻlmadi',

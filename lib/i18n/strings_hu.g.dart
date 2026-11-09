@@ -1606,7 +1606,6 @@ class _Translations$liveTv$hu extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'Élő TV';
-	@override String get guide => 'Műsorújság';
 	@override String get noChannels => 'Nincsenek elérhető csatornák';
 	@override String get noDvr => 'Egyik szerveren sincs beállítva DVR';
 	@override String get serverUnavailable => 'Az Élő TV szerver nem érhető el.';
@@ -1634,7 +1633,6 @@ class _Translations$liveTv$hu extends Translations$liveTv$en {
 	@override String get daytime => 'Napközben';
 	@override String get evening => 'Este';
 	@override String get lateNight => 'Éjszaka';
-	@override String get whatsOn => 'Mi megy most?';
 	@override String get watchChannel => 'Csatorna nézése';
 	@override String get favorites => 'Kedvencek';
 	@override String get reorderFavorites => 'Kedvencek rendezése';
@@ -1647,44 +1645,12 @@ class _Translations$liveTv$hu extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Nézés az elejétől (${minutes} perce megy)';
 	@override String get watchLive => 'Élő adás nézése';
 	@override String get goToLive => 'Ugrás az élő adásra';
-	@override String get record => 'Felvétel';
 	@override String get recordEpisode => 'Epizód rögzítése';
 	@override String get recordSeries => 'Sorozat rögzítése';
-	@override String get recordOptions => 'Felvételi beállítások';
-	@override String get saveTo => 'Mentés ide';
-	@override String get recordings => 'Felvételek';
-	@override String get scheduledRecordings => 'Ütemezve';
-	@override String get recordingRules => 'Felvételi szabályok';
-	@override String get noScheduledRecordings => 'Nincs semmi felvételre ütemezve';
-	@override String get manageRecording => 'Felvétel kezelése';
-	@override String get cancelRecording => 'Felvétel megszakítása';
-	@override String get cancelRecordingTitle => 'Megszakítod ezt a felvételt?';
-	@override String cancelRecordingMessage({required Object title}) => 'A(z) ${title} nem kerül rögzítésre.';
-	@override String get deleteRule => 'Szabály törlése';
-	@override String get deleteRuleTitle => 'Törlöd a felvételi szabályt?';
-	@override String deleteRuleMessage({required Object title}) => 'A(z) ${title} jövőbeli epizódjai nem kerülnek rögzítésre.';
-	@override String get recordingScheduled => 'Felvétel ütemezve';
-	@override String get alreadyScheduled => 'Ez a műsor már ütemezve van';
 	@override String get dvrAdminRequired => 'A DVR beállításokhoz adminisztrátori fiók szükséges';
-	@override String get recordingFailed => 'Nem sikerült a felvétel ütemezése';
-	@override String get recordingTargetMissing => 'Nem sikerült meghatározni a felvételi könyvtárat';
-	@override String get recordNotAvailable => 'A felvétel nem érhető el ehhez a műsorhoz';
-	@override String get recordingCancelled => 'Felvétel megszakítva';
-	@override String get recordingRuleDeleted => 'Felvételi szabály törölve';
-	@override String get processRecordingRules => 'Szabályok újraértékelése';
-	@override String get recordingInProgress => 'Rögzítés folyamatban';
-	@override String recordingsCount({required Object count}) => '${count} ütemezve';
-	@override String get editRule => 'Szabály szerkesztése';
-	@override String get editRuleAction => 'Szerkesztés';
-	@override String get recordingRuleUpdated => 'Felvételi szabály frissítve';
 	@override String get guideReloadRequested => 'Műsorújság frissítése kérve';
 	@override String get guideReloadFailed => 'Nem sikerült frissíteni a műsorújságot';
-	@override String get rulesProcessRequested => 'Szabályok újraértékelése kérve';
-	@override String get rulesProcessFailed => 'Nem sikerült újra kiértékelni a felvételi szabályokat';
-	@override String get recordShow => 'Műsor rögzítése';
 	@override late final _Translations$liveTv$recordSettings$hu recordSettings = _Translations$liveTv$recordSettings$hu._(_root);
-	@override String startingInMinutes({required Object minutes}) => '${minutes} perc múlva kezdődik';
-	@override String dayAtTime({required Object day, required Object time}) => '${day}, ${time}';
 	@override String invalidPlaybackData({required Object product}) => 'A(z) ${product} érvénytelen Élő TV-lejátszási adatokat adott vissza';
 	@override String get failedToStartChannel => 'Nem sikerült elindítani az élő csatornát';
 	@override String get failedToBuildStreamUrl => 'Nem sikerült összeállítani a stream URL-címét';
@@ -4855,7 +4821,6 @@ extension on TranslationsHu {
 			'explore.detail.background' => 'Háttér',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} találat', other: '${n} találat', ), 
 			'liveTv.title' => 'Élő TV',
-			'liveTv.guide' => 'Műsorújság',
 			'liveTv.noChannels' => 'Nincsenek elérhető csatornák',
 			'liveTv.noDvr' => 'Egyik szerveren sincs beállítva DVR',
 			'liveTv.serverUnavailable' => 'Az Élő TV szerver nem érhető el.',
@@ -4883,7 +4848,6 @@ extension on TranslationsHu {
 			'liveTv.daytime' => 'Napközben',
 			'liveTv.evening' => 'Este',
 			'liveTv.lateNight' => 'Éjszaka',
-			'liveTv.whatsOn' => 'Mi megy most?',
 			'liveTv.watchChannel' => 'Csatorna nézése',
 			'liveTv.favorites' => 'Kedvencek',
 			'liveTv.reorderFavorites' => 'Kedvencek rendezése',
@@ -4896,41 +4860,11 @@ extension on TranslationsHu {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Nézés az elejétől (${minutes} perce megy)',
 			'liveTv.watchLive' => 'Élő adás nézése',
 			'liveTv.goToLive' => 'Ugrás az élő adásra',
-			'liveTv.record' => 'Felvétel',
 			'liveTv.recordEpisode' => 'Epizód rögzítése',
 			'liveTv.recordSeries' => 'Sorozat rögzítése',
-			'liveTv.recordOptions' => 'Felvételi beállítások',
-			'liveTv.saveTo' => 'Mentés ide',
-			'liveTv.recordings' => 'Felvételek',
-			'liveTv.scheduledRecordings' => 'Ütemezve',
-			'liveTv.recordingRules' => 'Felvételi szabályok',
-			'liveTv.noScheduledRecordings' => 'Nincs semmi felvételre ütemezve',
-			'liveTv.manageRecording' => 'Felvétel kezelése',
-			'liveTv.cancelRecording' => 'Felvétel megszakítása',
-			'liveTv.cancelRecordingTitle' => 'Megszakítod ezt a felvételt?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => 'A(z) ${title} nem kerül rögzítésre.',
-			'liveTv.deleteRule' => 'Szabály törlése',
-			'liveTv.deleteRuleTitle' => 'Törlöd a felvételi szabályt?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'A(z) ${title} jövőbeli epizódjai nem kerülnek rögzítésre.',
-			'liveTv.recordingScheduled' => 'Felvétel ütemezve',
-			'liveTv.alreadyScheduled' => 'Ez a műsor már ütemezve van',
 			'liveTv.dvrAdminRequired' => 'A DVR beállításokhoz adminisztrátori fiók szükséges',
-			'liveTv.recordingFailed' => 'Nem sikerült a felvétel ütemezése',
-			'liveTv.recordingTargetMissing' => 'Nem sikerült meghatározni a felvételi könyvtárat',
-			'liveTv.recordNotAvailable' => 'A felvétel nem érhető el ehhez a műsorhoz',
-			'liveTv.recordingCancelled' => 'Felvétel megszakítva',
-			'liveTv.recordingRuleDeleted' => 'Felvételi szabály törölve',
-			'liveTv.processRecordingRules' => 'Szabályok újraértékelése',
-			'liveTv.recordingInProgress' => 'Rögzítés folyamatban',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} ütemezve',
-			'liveTv.editRule' => 'Szabály szerkesztése',
-			'liveTv.editRuleAction' => 'Szerkesztés',
-			'liveTv.recordingRuleUpdated' => 'Felvételi szabály frissítve',
 			'liveTv.guideReloadRequested' => 'Műsorújság frissítése kérve',
 			'liveTv.guideReloadFailed' => 'Nem sikerült frissíteni a műsorújságot',
-			'liveTv.rulesProcessRequested' => 'Szabályok újraértékelése kérve',
-			'liveTv.rulesProcessFailed' => 'Nem sikerült újra kiértékelni a felvételi szabályokat',
-			'liveTv.recordShow' => 'Műsor rögzítése',
 			'liveTv.recordSettings.startEarly' => 'Korábbi kezdés (másodperc)',
 			'liveTv.recordSettings.endLate' => 'Későbbi befejezés (másodperc)',
 			'liveTv.recordSettings.newOnly' => 'Csak új epizódok',
@@ -4941,8 +4875,6 @@ extension on TranslationsHu {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => 'A 0 minden epizódot megtart',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} perc múlva kezdődik',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day}, ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => 'A(z) ${product} érvénytelen Élő TV-lejátszási adatokat adott vissza',
 			'liveTv.failedToStartChannel' => 'Nem sikerült elindítani az élő csatornát',
 			'liveTv.failedToBuildStreamUrl' => 'Nem sikerült összeállítani a stream URL-címét',

@@ -234,10 +234,10 @@ void main() {
     expect(find.text(t.liveTv.title), findsOneWidget);
     expect(find.byType(FocusableTabChip), findsNothing);
     expect(find.byType(TabBarView), findsNothing);
-    expect(find.text(t.liveTv.guide), findsNothing);
-    expect(find.text(t.liveTv.whatsOn), findsNothing);
-    expect(find.text(t.liveTv.recordings), findsNothing);
-    expect(find.byTooltip(t.liveTv.processRecordingRules), findsNothing);
+    expect(find.text('Guide'), findsNothing);
+    expect(find.text('What\'s On'), findsNothing);
+    expect(find.text('Recordings'), findsNothing);
+    expect(find.byTooltip('Re-evaluate rules'), findsNothing);
   });
 
   testWidgets('a refresh that fails on every server keeps the loaded channels', (tester) async {

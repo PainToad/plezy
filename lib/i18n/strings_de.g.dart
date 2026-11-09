@@ -1606,7 +1606,6 @@ class _Translations$liveTv$de extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'Live-TV';
-	@override String get guide => 'TV-Programm';
 	@override String get noChannels => 'Keine Kanäle verfügbar';
 	@override String get noDvr => 'Auf keinem Server ist ein DVR konfiguriert';
 	@override String get serverUnavailable => 'Der Live-TV-Server ist nicht verfügbar.';
@@ -1634,7 +1633,6 @@ class _Translations$liveTv$de extends Translations$liveTv$en {
 	@override String get daytime => 'Tagsüber';
 	@override String get evening => 'Abend';
 	@override String get lateNight => 'Spätnacht';
-	@override String get whatsOn => 'Jetzt im TV';
 	@override String get watchChannel => 'Kanal ansehen';
 	@override String get favorites => 'Favoriten';
 	@override String get reorderFavorites => 'Favoriten sortieren';
@@ -1647,44 +1645,12 @@ class _Translations$liveTv$de extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Von Anfang an ansehen (vor ${minutes} Min.)';
 	@override String get watchLive => 'Live ansehen';
 	@override String get goToLive => 'Zum Live-Bild';
-	@override String get record => 'Aufnehmen';
 	@override String get recordEpisode => 'Episode aufnehmen';
 	@override String get recordSeries => 'Serie aufnehmen';
-	@override String get recordOptions => 'Aufnahmeoptionen';
-	@override String get saveTo => 'Speichern in';
-	@override String get recordings => 'Aufnahmen';
-	@override String get scheduledRecordings => 'Geplant';
-	@override String get recordingRules => 'Aufnahmeregeln';
-	@override String get noScheduledRecordings => 'Keine geplanten Aufnahmen';
-	@override String get manageRecording => 'Aufnahme verwalten';
-	@override String get cancelRecording => 'Aufnahme abbrechen';
-	@override String get cancelRecordingTitle => 'Diese Aufnahme abbrechen?';
-	@override String cancelRecordingMessage({required Object title}) => '${title} wird nicht mehr aufgenommen.';
-	@override String get deleteRule => 'Regel löschen';
-	@override String get deleteRuleTitle => 'Aufnahmeregel löschen?';
-	@override String deleteRuleMessage({required Object title}) => 'Zukünftige Episoden von ${title} werden nicht aufgenommen.';
-	@override String get recordingScheduled => 'Aufnahme geplant';
-	@override String get alreadyScheduled => 'Dieses Programm ist bereits geplant';
 	@override String get dvrAdminRequired => 'DVR-Einstellungen erfordern ein Administratorkonto';
-	@override String get recordingFailed => 'Aufnahme konnte nicht geplant werden';
-	@override String get recordingTargetMissing => 'Aufnahmebibliothek konnte nicht ermittelt werden';
-	@override String get recordNotAvailable => 'Aufnahme für dieses Programm nicht verfügbar';
-	@override String get recordingCancelled => 'Aufnahme abgebrochen';
-	@override String get recordingRuleDeleted => 'Aufnahmeregel gelöscht';
-	@override String get processRecordingRules => 'Regeln neu bewerten';
-	@override String get recordingInProgress => 'Wird jetzt aufgenommen';
-	@override String recordingsCount({required Object count}) => '${count} geplant';
-	@override String get editRule => 'Regel bearbeiten';
-	@override String get editRuleAction => 'Bearbeiten';
-	@override String get recordingRuleUpdated => 'Aufnahmeregel aktualisiert';
 	@override String get guideReloadRequested => 'Aktualisierung des TV-Programms angefordert';
 	@override String get guideReloadFailed => 'TV-Programm konnte nicht aktualisiert werden';
-	@override String get rulesProcessRequested => 'Regelauswertung angefordert';
-	@override String get rulesProcessFailed => 'Aufnahmeregeln konnten nicht neu ausgewertet werden';
-	@override String get recordShow => 'Sendung aufnehmen';
 	@override late final _Translations$liveTv$recordSettings$de recordSettings = _Translations$liveTv$recordSettings$de._(_root);
-	@override String startingInMinutes({required Object minutes}) => 'Beginnt in ${minutes} Min.';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} um ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} hat ungültige Live-TV-Wiedergabedaten zurückgegeben';
 	@override String get failedToStartChannel => 'Der Live-Sender konnte nicht gestartet werden';
 	@override String get failedToBuildStreamUrl => 'Die Stream-URL konnte nicht erstellt werden';
@@ -4855,7 +4821,6 @@ extension on TranslationsDe {
 			'explore.detail.background' => 'Hintergrund',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('de'))(n, one: '${n} Ergebnis', other: '${n} Ergebnisse', ), 
 			'liveTv.title' => 'Live-TV',
-			'liveTv.guide' => 'TV-Programm',
 			'liveTv.noChannels' => 'Keine Kanäle verfügbar',
 			'liveTv.noDvr' => 'Auf keinem Server ist ein DVR konfiguriert',
 			'liveTv.serverUnavailable' => 'Der Live-TV-Server ist nicht verfügbar.',
@@ -4883,7 +4848,6 @@ extension on TranslationsDe {
 			'liveTv.daytime' => 'Tagsüber',
 			'liveTv.evening' => 'Abend',
 			'liveTv.lateNight' => 'Spätnacht',
-			'liveTv.whatsOn' => 'Jetzt im TV',
 			'liveTv.watchChannel' => 'Kanal ansehen',
 			'liveTv.favorites' => 'Favoriten',
 			'liveTv.reorderFavorites' => 'Favoriten sortieren',
@@ -4896,41 +4860,11 @@ extension on TranslationsDe {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Von Anfang an ansehen (vor ${minutes} Min.)',
 			'liveTv.watchLive' => 'Live ansehen',
 			'liveTv.goToLive' => 'Zum Live-Bild',
-			'liveTv.record' => 'Aufnehmen',
 			'liveTv.recordEpisode' => 'Episode aufnehmen',
 			'liveTv.recordSeries' => 'Serie aufnehmen',
-			'liveTv.recordOptions' => 'Aufnahmeoptionen',
-			'liveTv.saveTo' => 'Speichern in',
-			'liveTv.recordings' => 'Aufnahmen',
-			'liveTv.scheduledRecordings' => 'Geplant',
-			'liveTv.recordingRules' => 'Aufnahmeregeln',
-			'liveTv.noScheduledRecordings' => 'Keine geplanten Aufnahmen',
-			'liveTv.manageRecording' => 'Aufnahme verwalten',
-			'liveTv.cancelRecording' => 'Aufnahme abbrechen',
-			'liveTv.cancelRecordingTitle' => 'Diese Aufnahme abbrechen?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} wird nicht mehr aufgenommen.',
-			'liveTv.deleteRule' => 'Regel löschen',
-			'liveTv.deleteRuleTitle' => 'Aufnahmeregel löschen?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'Zukünftige Episoden von ${title} werden nicht aufgenommen.',
-			'liveTv.recordingScheduled' => 'Aufnahme geplant',
-			'liveTv.alreadyScheduled' => 'Dieses Programm ist bereits geplant',
 			'liveTv.dvrAdminRequired' => 'DVR-Einstellungen erfordern ein Administratorkonto',
-			'liveTv.recordingFailed' => 'Aufnahme konnte nicht geplant werden',
-			'liveTv.recordingTargetMissing' => 'Aufnahmebibliothek konnte nicht ermittelt werden',
-			'liveTv.recordNotAvailable' => 'Aufnahme für dieses Programm nicht verfügbar',
-			'liveTv.recordingCancelled' => 'Aufnahme abgebrochen',
-			'liveTv.recordingRuleDeleted' => 'Aufnahmeregel gelöscht',
-			'liveTv.processRecordingRules' => 'Regeln neu bewerten',
-			'liveTv.recordingInProgress' => 'Wird jetzt aufgenommen',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} geplant',
-			'liveTv.editRule' => 'Regel bearbeiten',
-			'liveTv.editRuleAction' => 'Bearbeiten',
-			'liveTv.recordingRuleUpdated' => 'Aufnahmeregel aktualisiert',
 			'liveTv.guideReloadRequested' => 'Aktualisierung des TV-Programms angefordert',
 			'liveTv.guideReloadFailed' => 'TV-Programm konnte nicht aktualisiert werden',
-			'liveTv.rulesProcessRequested' => 'Regelauswertung angefordert',
-			'liveTv.rulesProcessFailed' => 'Aufnahmeregeln konnten nicht neu ausgewertet werden',
-			'liveTv.recordShow' => 'Sendung aufnehmen',
 			'liveTv.recordSettings.startEarly' => 'Früher starten (Sekunden)',
 			'liveTv.recordSettings.endLate' => 'Später beenden (Sekunden)',
 			'liveTv.recordSettings.newOnly' => 'Nur neue Episoden',
@@ -4941,8 +4875,6 @@ extension on TranslationsDe {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 behält alle Episoden',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => 'Beginnt in ${minutes} Min.',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} um ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} hat ungültige Live-TV-Wiedergabedaten zurückgegeben',
 			'liveTv.failedToStartChannel' => 'Der Live-Sender konnte nicht gestartet werden',
 			'liveTv.failedToBuildStreamUrl' => 'Die Stream-URL konnte nicht erstellt werden',

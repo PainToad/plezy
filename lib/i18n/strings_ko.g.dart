@@ -1598,7 +1598,6 @@ class _Translations$liveTv$ko extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => '실시간 TV';
-	@override String get guide => '편성표';
 	@override String get noChannels => '사용 가능한 채널이 없습니다';
 	@override String get noDvr => '서버에 DVR이 구성되어 있지 않습니다';
 	@override String get serverUnavailable => '라이브 TV 서버를 사용할 수 없습니다.';
@@ -1626,7 +1625,6 @@ class _Translations$liveTv$ko extends Translations$liveTv$en {
 	@override String get daytime => '낮';
 	@override String get evening => '저녁';
 	@override String get lateNight => '심야 방송';
-	@override String get whatsOn => '지금 방송 중';
 	@override String get watchChannel => '채널 시청';
 	@override String get favorites => '즐겨찾기';
 	@override String get reorderFavorites => '즐겨찾기 순서 변경';
@@ -1639,44 +1637,12 @@ class _Translations$liveTv$ko extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => '처음부터 시청 (${minutes}분 전 시작)';
 	@override String get watchLive => '실시간 시청';
 	@override String get goToLive => '실시간으로 이동';
-	@override String get record => '녹화';
 	@override String get recordEpisode => '에피소드 녹화';
 	@override String get recordSeries => '시리즈 녹화';
-	@override String get recordOptions => '녹화 옵션';
-	@override String get saveTo => '저장 위치';
-	@override String get recordings => '녹화';
-	@override String get scheduledRecordings => '예약됨';
-	@override String get recordingRules => '녹화 규칙';
-	@override String get noScheduledRecordings => '예약된 녹화 없음';
-	@override String get manageRecording => '녹화 관리';
-	@override String get cancelRecording => '녹화 취소';
-	@override String get cancelRecordingTitle => '이 녹화를 취소할까요?';
-	@override String cancelRecordingMessage({required Object title}) => '${title}이(가) 더 이상 녹화되지 않습니다.';
-	@override String get deleteRule => '규칙 삭제';
-	@override String get deleteRuleTitle => '녹화 규칙을 삭제할까요?';
-	@override String deleteRuleMessage({required Object title}) => '${title}의 향후 에피소드는 녹화되지 않습니다.';
-	@override String get recordingScheduled => '녹화 예약됨';
-	@override String get alreadyScheduled => '이 프로그램은 이미 예약되어 있습니다';
 	@override String get dvrAdminRequired => 'DVR 설정은 관리자 계정이 필요합니다';
-	@override String get recordingFailed => '녹화를 예약할 수 없습니다';
-	@override String get recordingTargetMissing => '녹화 라이브러리를 확인할 수 없습니다';
-	@override String get recordNotAvailable => '이 프로그램은 녹화할 수 없습니다';
-	@override String get recordingCancelled => '녹화 취소됨';
-	@override String get recordingRuleDeleted => '녹화 규칙 삭제됨';
-	@override String get processRecordingRules => '규칙 재평가';
-	@override String get recordingInProgress => '녹화 중';
-	@override String recordingsCount({required Object count}) => '${count}개 예약됨';
-	@override String get editRule => '규칙 편집';
-	@override String get editRuleAction => '편집';
-	@override String get recordingRuleUpdated => '녹화 규칙 업데이트됨';
 	@override String get guideReloadRequested => '가이드 새로고침 요청됨';
 	@override String get guideReloadFailed => '편성표를 새로고침할 수 없습니다';
-	@override String get rulesProcessRequested => '규칙 재평가 요청됨';
-	@override String get rulesProcessFailed => '녹화 규칙을 다시 적용할 수 없습니다';
-	@override String get recordShow => '프로그램 녹화';
 	@override late final _Translations$liveTv$recordSettings$ko recordSettings = _Translations$liveTv$recordSettings$ko._(_root);
-	@override String startingInMinutes({required Object minutes}) => '${minutes}분 후 시작';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product}에서 잘못된 실시간 TV 재생 데이터를 반환했습니다';
 	@override String get failedToStartChannel => '실시간 채널을 시작할 수 없습니다';
 	@override String get failedToBuildStreamUrl => '스트림 URL을 생성할 수 없습니다';
@@ -4843,7 +4809,6 @@ extension on TranslationsKo {
 			'explore.detail.background' => '배경',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '결과 ${n}개', ), 
 			'liveTv.title' => '실시간 TV',
-			'liveTv.guide' => '편성표',
 			'liveTv.noChannels' => '사용 가능한 채널이 없습니다',
 			'liveTv.noDvr' => '서버에 DVR이 구성되어 있지 않습니다',
 			'liveTv.serverUnavailable' => '라이브 TV 서버를 사용할 수 없습니다.',
@@ -4871,7 +4836,6 @@ extension on TranslationsKo {
 			'liveTv.daytime' => '낮',
 			'liveTv.evening' => '저녁',
 			'liveTv.lateNight' => '심야 방송',
-			'liveTv.whatsOn' => '지금 방송 중',
 			'liveTv.watchChannel' => '채널 시청',
 			'liveTv.favorites' => '즐겨찾기',
 			'liveTv.reorderFavorites' => '즐겨찾기 순서 변경',
@@ -4884,41 +4848,11 @@ extension on TranslationsKo {
 			'liveTv.watchFromStart' => ({required Object minutes}) => '처음부터 시청 (${minutes}분 전 시작)',
 			'liveTv.watchLive' => '실시간 시청',
 			'liveTv.goToLive' => '실시간으로 이동',
-			'liveTv.record' => '녹화',
 			'liveTv.recordEpisode' => '에피소드 녹화',
 			'liveTv.recordSeries' => '시리즈 녹화',
-			'liveTv.recordOptions' => '녹화 옵션',
-			'liveTv.saveTo' => '저장 위치',
-			'liveTv.recordings' => '녹화',
-			'liveTv.scheduledRecordings' => '예약됨',
-			'liveTv.recordingRules' => '녹화 규칙',
-			'liveTv.noScheduledRecordings' => '예약된 녹화 없음',
-			'liveTv.manageRecording' => '녹화 관리',
-			'liveTv.cancelRecording' => '녹화 취소',
-			'liveTv.cancelRecordingTitle' => '이 녹화를 취소할까요?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title}이(가) 더 이상 녹화되지 않습니다.',
-			'liveTv.deleteRule' => '규칙 삭제',
-			'liveTv.deleteRuleTitle' => '녹화 규칙을 삭제할까요?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '${title}의 향후 에피소드는 녹화되지 않습니다.',
-			'liveTv.recordingScheduled' => '녹화 예약됨',
-			'liveTv.alreadyScheduled' => '이 프로그램은 이미 예약되어 있습니다',
 			'liveTv.dvrAdminRequired' => 'DVR 설정은 관리자 계정이 필요합니다',
-			'liveTv.recordingFailed' => '녹화를 예약할 수 없습니다',
-			'liveTv.recordingTargetMissing' => '녹화 라이브러리를 확인할 수 없습니다',
-			'liveTv.recordNotAvailable' => '이 프로그램은 녹화할 수 없습니다',
-			'liveTv.recordingCancelled' => '녹화 취소됨',
-			'liveTv.recordingRuleDeleted' => '녹화 규칙 삭제됨',
-			'liveTv.processRecordingRules' => '규칙 재평가',
-			'liveTv.recordingInProgress' => '녹화 중',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count}개 예약됨',
-			'liveTv.editRule' => '규칙 편집',
-			'liveTv.editRuleAction' => '편집',
-			'liveTv.recordingRuleUpdated' => '녹화 규칙 업데이트됨',
 			'liveTv.guideReloadRequested' => '가이드 새로고침 요청됨',
 			'liveTv.guideReloadFailed' => '편성표를 새로고침할 수 없습니다',
-			'liveTv.rulesProcessRequested' => '규칙 재평가 요청됨',
-			'liveTv.rulesProcessFailed' => '녹화 규칙을 다시 적용할 수 없습니다',
-			'liveTv.recordShow' => '프로그램 녹화',
 			'liveTv.recordSettings.startEarly' => '일찍 시작 (초)',
 			'liveTv.recordSettings.endLate' => '늦게 종료 (초)',
 			'liveTv.recordSettings.newOnly' => '새 에피소드만',
@@ -4929,8 +4863,6 @@ extension on TranslationsKo {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0이면 모든 에피소드 보관',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes}분 후 시작',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product}에서 잘못된 실시간 TV 재생 데이터를 반환했습니다',
 			'liveTv.failedToStartChannel' => '실시간 채널을 시작할 수 없습니다',
 			'liveTv.failedToBuildStreamUrl' => '스트림 URL을 생성할 수 없습니다',

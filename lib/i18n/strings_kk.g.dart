@@ -1606,7 +1606,6 @@ class _Translations$liveTv$kk extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'Тікелей TV';
-	@override String get guide => 'Телебағдарлама';
 	@override String get noChannels => 'Қолжетімді арналар жоқ';
 	@override String get noDvr => 'Серверде DVR бапталмаған';
 	@override String get serverUnavailable => 'Тікелей TV сервері қолжетімсіз.';
@@ -1634,7 +1633,6 @@ class _Translations$liveTv$kk extends Translations$liveTv$en {
 	@override String get daytime => 'Күндіз';
 	@override String get evening => 'Кешке';
 	@override String get lateNight => 'Түнде';
-	@override String get whatsOn => 'Қазір не болып жатыр?';
 	@override String get watchChannel => 'Арнаны көру';
 	@override String get favorites => 'Таңдаулылар';
 	@override String get reorderFavorites => 'Таңдаулыларды қайта реттеу';
@@ -1647,44 +1645,12 @@ class _Translations$liveTv$kk extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Басынан бастап көру (${minutes} мин бұрын)';
 	@override String get watchLive => 'Тікелей эфирді көру';
 	@override String get goToLive => 'Тікелей эфирге өту';
-	@override String get record => 'Жазу';
 	@override String get recordEpisode => 'Бөлімді жазу';
 	@override String get recordSeries => 'Сериалды жазу';
-	@override String get recordOptions => 'Жазу параметрлері';
-	@override String get saveTo => 'Мұнда сақтау';
-	@override String get recordings => 'Жазылғандар';
-	@override String get scheduledRecordings => 'Жоспарланғандар';
-	@override String get recordingRules => 'Жазу ережелері';
-	@override String get noScheduledRecordings => 'Жоспарланған жазбалар жоқ';
-	@override String get manageRecording => 'Жазбаны басқару';
-	@override String get cancelRecording => 'Жазудан бас тарту';
-	@override String get cancelRecordingTitle => 'Жазу тоқтатылсын ба?';
-	@override String cancelRecordingMessage({required Object title}) => '${title} енді жазылмайды.';
-	@override String get deleteRule => 'Ережені өшіру';
-	@override String get deleteRuleTitle => 'Жазу ережесі өшірілсін бе?';
-	@override String deleteRuleMessage({required Object title}) => '${title} сериалының келесі бөлімдері жазылмайды.';
-	@override String get recordingScheduled => 'Жазу жоспарланды';
-	@override String get alreadyScheduled => 'Бұл бағдарлама бұрыннан жоспарланған';
 	@override String get dvrAdminRequired => 'DVR баптаулары администратор құқығын талап етеді';
-	@override String get recordingFailed => 'Жазуды жоспарлау мүмкін болмады';
-	@override String get recordingTargetMissing => 'Жазатын кітапхана анықталмады';
-	@override String get recordNotAvailable => 'Бұл бағдарламаны жазу мүмкін емес';
-	@override String get recordingCancelled => 'Жазу тоқтатылды';
-	@override String get recordingRuleDeleted => 'Жазу ережесі өшірілді';
-	@override String get processRecordingRules => 'Ережелерді қайта бағалау';
-	@override String get recordingInProgress => 'Қазір жазылуда';
-	@override String recordingsCount({required Object count}) => '${count} жоспарланған';
-	@override String get editRule => 'Ережені өңдеу';
-	@override String get editRuleAction => 'Өңдеу';
-	@override String get recordingRuleUpdated => 'Жазу ережесі жаңартылды';
 	@override String get guideReloadRequested => 'Бағдарламаны жаңарту сұралды';
 	@override String get guideReloadFailed => 'Телебағдарламаны жаңарту мүмкін болмады';
-	@override String get rulesProcessRequested => 'Ережелерді қайта бағалау сұралды';
-	@override String get rulesProcessFailed => 'Жазу ережелерін қайта тексеру мүмкін болмады';
-	@override String get recordShow => 'Шоуды жазу';
 	@override late final _Translations$liveTv$recordSettings$kk recordSettings = _Translations$liveTv$recordSettings$kk._(_root);
-	@override String startingInMinutes({required Object minutes}) => '${minutes} мин кейін басталады';
-	@override String dayAtTime({required Object day, required Object time}) => '${day}, ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} жарамсыз тікелей TV ойнату деректерін қайтарды';
 	@override String get failedToStartChannel => 'Тікелей эфир арнасын іске қосу мүмкін болмады';
 	@override String get failedToBuildStreamUrl => 'Ағын URL-ін құру мүмкін болмады';
@@ -4855,7 +4821,6 @@ extension on TranslationsKk {
 			'explore.detail.background' => 'Фон',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('kk'))(n, one: '${n} нәтиже', other: '${n} нәтиже', ), 
 			'liveTv.title' => 'Тікелей TV',
-			'liveTv.guide' => 'Телебағдарлама',
 			'liveTv.noChannels' => 'Қолжетімді арналар жоқ',
 			'liveTv.noDvr' => 'Серверде DVR бапталмаған',
 			'liveTv.serverUnavailable' => 'Тікелей TV сервері қолжетімсіз.',
@@ -4883,7 +4848,6 @@ extension on TranslationsKk {
 			'liveTv.daytime' => 'Күндіз',
 			'liveTv.evening' => 'Кешке',
 			'liveTv.lateNight' => 'Түнде',
-			'liveTv.whatsOn' => 'Қазір не болып жатыр?',
 			'liveTv.watchChannel' => 'Арнаны көру',
 			'liveTv.favorites' => 'Таңдаулылар',
 			'liveTv.reorderFavorites' => 'Таңдаулыларды қайта реттеу',
@@ -4896,41 +4860,11 @@ extension on TranslationsKk {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Басынан бастап көру (${minutes} мин бұрын)',
 			'liveTv.watchLive' => 'Тікелей эфирді көру',
 			'liveTv.goToLive' => 'Тікелей эфирге өту',
-			'liveTv.record' => 'Жазу',
 			'liveTv.recordEpisode' => 'Бөлімді жазу',
 			'liveTv.recordSeries' => 'Сериалды жазу',
-			'liveTv.recordOptions' => 'Жазу параметрлері',
-			'liveTv.saveTo' => 'Мұнда сақтау',
-			'liveTv.recordings' => 'Жазылғандар',
-			'liveTv.scheduledRecordings' => 'Жоспарланғандар',
-			'liveTv.recordingRules' => 'Жазу ережелері',
-			'liveTv.noScheduledRecordings' => 'Жоспарланған жазбалар жоқ',
-			'liveTv.manageRecording' => 'Жазбаны басқару',
-			'liveTv.cancelRecording' => 'Жазудан бас тарту',
-			'liveTv.cancelRecordingTitle' => 'Жазу тоқтатылсын ба?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} енді жазылмайды.',
-			'liveTv.deleteRule' => 'Ережені өшіру',
-			'liveTv.deleteRuleTitle' => 'Жазу ережесі өшірілсін бе?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '${title} сериалының келесі бөлімдері жазылмайды.',
-			'liveTv.recordingScheduled' => 'Жазу жоспарланды',
-			'liveTv.alreadyScheduled' => 'Бұл бағдарлама бұрыннан жоспарланған',
 			'liveTv.dvrAdminRequired' => 'DVR баптаулары администратор құқығын талап етеді',
-			'liveTv.recordingFailed' => 'Жазуды жоспарлау мүмкін болмады',
-			'liveTv.recordingTargetMissing' => 'Жазатын кітапхана анықталмады',
-			'liveTv.recordNotAvailable' => 'Бұл бағдарламаны жазу мүмкін емес',
-			'liveTv.recordingCancelled' => 'Жазу тоқтатылды',
-			'liveTv.recordingRuleDeleted' => 'Жазу ережесі өшірілді',
-			'liveTv.processRecordingRules' => 'Ережелерді қайта бағалау',
-			'liveTv.recordingInProgress' => 'Қазір жазылуда',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} жоспарланған',
-			'liveTv.editRule' => 'Ережені өңдеу',
-			'liveTv.editRuleAction' => 'Өңдеу',
-			'liveTv.recordingRuleUpdated' => 'Жазу ережесі жаңартылды',
 			'liveTv.guideReloadRequested' => 'Бағдарламаны жаңарту сұралды',
 			'liveTv.guideReloadFailed' => 'Телебағдарламаны жаңарту мүмкін болмады',
-			'liveTv.rulesProcessRequested' => 'Ережелерді қайта бағалау сұралды',
-			'liveTv.rulesProcessFailed' => 'Жазу ережелерін қайта тексеру мүмкін болмады',
-			'liveTv.recordShow' => 'Шоуды жазу',
 			'liveTv.recordSettings.startEarly' => 'Ертерек бастау (секунд)',
 			'liveTv.recordSettings.endLate' => 'Кешірек аяқтау (секунд)',
 			'liveTv.recordSettings.newOnly' => 'Тек жаңа эпизодтар',
@@ -4941,8 +4875,6 @@ extension on TranslationsKk {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 барлық эпизодты сақтайды',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} мин кейін басталады',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day}, ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} жарамсыз тікелей TV ойнату деректерін қайтарды',
 			'liveTv.failedToStartChannel' => 'Тікелей эфир арнасын іске қосу мүмкін болмады',
 			'liveTv.failedToBuildStreamUrl' => 'Ағын URL-ін құру мүмкін болмады',

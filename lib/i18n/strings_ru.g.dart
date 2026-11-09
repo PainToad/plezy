@@ -1622,7 +1622,6 @@ class _Translations$liveTv$ru extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'ТВ в прямом эфире';
-	@override String get guide => 'Программа';
 	@override String get noChannels => 'Нет доступных каналов';
 	@override String get noDvr => 'DVR не настроен ни на одном сервере';
 	@override String get serverUnavailable => 'Сервер прямого эфира недоступен.';
@@ -1650,7 +1649,6 @@ class _Translations$liveTv$ru extends Translations$liveTv$en {
 	@override String get daytime => 'День';
 	@override String get evening => 'Вечер';
 	@override String get lateNight => 'Поздний вечер';
-	@override String get whatsOn => 'Что идёт';
 	@override String get watchChannel => 'Смотреть канал';
 	@override String get favorites => 'Избранное';
 	@override String get reorderFavorites => 'Изменить порядок избранного';
@@ -1663,44 +1661,12 @@ class _Translations$liveTv$ru extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Смотреть сначала (${minutes} мин. назад)';
 	@override String get watchLive => 'Смотреть в прямом эфире';
 	@override String get goToLive => 'К прямому эфиру';
-	@override String get record => 'Запись';
 	@override String get recordEpisode => 'Записать эпизод';
 	@override String get recordSeries => 'Записать сериал';
-	@override String get recordOptions => 'Параметры записи';
-	@override String get saveTo => 'Сохранить в';
-	@override String get recordings => 'Записи';
-	@override String get scheduledRecordings => 'Запланировано';
-	@override String get recordingRules => 'Правила записи';
-	@override String get noScheduledRecordings => 'Нет запланированных записей';
-	@override String get manageRecording => 'Управление записью';
-	@override String get cancelRecording => 'Отменить запись';
-	@override String get cancelRecordingTitle => 'Отменить эту запись?';
-	@override String cancelRecordingMessage({required Object title}) => '${title} больше не будет записываться.';
-	@override String get deleteRule => 'Удалить правило';
-	@override String get deleteRuleTitle => 'Удалить правило записи?';
-	@override String deleteRuleMessage({required Object title}) => 'Будущие эпизоды ${title} не будут записаны.';
-	@override String get recordingScheduled => 'Запись запланирована';
-	@override String get alreadyScheduled => 'Эта передача уже запланирована';
 	@override String get dvrAdminRequired => 'Настройки DVR требуют учётной записи администратора';
-	@override String get recordingFailed => 'Не удалось запланировать запись';
-	@override String get recordingTargetMissing => 'Не удалось определить библиотеку записи';
-	@override String get recordNotAvailable => 'Запись недоступна для этой передачи';
-	@override String get recordingCancelled => 'Запись отменена';
-	@override String get recordingRuleDeleted => 'Правило записи удалено';
-	@override String get processRecordingRules => 'Пересчитать правила';
-	@override String get recordingInProgress => 'Идёт запись';
-	@override String recordingsCount({required Object count}) => 'Запланировано: ${count}';
-	@override String get editRule => 'Изменить правило';
-	@override String get editRuleAction => 'Изменить';
-	@override String get recordingRuleUpdated => 'Правило записи обновлено';
 	@override String get guideReloadRequested => 'Запрошено обновление гайда';
 	@override String get guideReloadFailed => 'Не удалось обновить программу';
-	@override String get rulesProcessRequested => 'Запрошен пересчёт правил';
-	@override String get rulesProcessFailed => 'Не удалось повторно применить правила записи';
-	@override String get recordShow => 'Записать передачу';
 	@override late final _Translations$liveTv$recordSettings$ru recordSettings = _Translations$liveTv$recordSettings$ru._(_root);
-	@override String startingInMinutes({required Object minutes}) => 'Начало через ${minutes} мин';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} в ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} вернул некорректные данные для воспроизведения ТВ в прямом эфире';
 	@override String get failedToStartChannel => 'Не удалось запустить канал в прямом эфире';
 	@override String get failedToBuildStreamUrl => 'Не удалось сформировать URL потока';
@@ -4879,7 +4845,6 @@ extension on TranslationsRu {
 			'explore.detail.background' => 'Фон',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ru'))(n, one: '${n} результат', few: '${n} результата', many: '${n} результатов', other: '${n} результатов', ), 
 			'liveTv.title' => 'ТВ в прямом эфире',
-			'liveTv.guide' => 'Программа',
 			'liveTv.noChannels' => 'Нет доступных каналов',
 			'liveTv.noDvr' => 'DVR не настроен ни на одном сервере',
 			'liveTv.serverUnavailable' => 'Сервер прямого эфира недоступен.',
@@ -4907,7 +4872,6 @@ extension on TranslationsRu {
 			'liveTv.daytime' => 'День',
 			'liveTv.evening' => 'Вечер',
 			'liveTv.lateNight' => 'Поздний вечер',
-			'liveTv.whatsOn' => 'Что идёт',
 			'liveTv.watchChannel' => 'Смотреть канал',
 			'liveTv.favorites' => 'Избранное',
 			'liveTv.reorderFavorites' => 'Изменить порядок избранного',
@@ -4920,41 +4884,11 @@ extension on TranslationsRu {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Смотреть сначала (${minutes} мин. назад)',
 			'liveTv.watchLive' => 'Смотреть в прямом эфире',
 			'liveTv.goToLive' => 'К прямому эфиру',
-			'liveTv.record' => 'Запись',
 			'liveTv.recordEpisode' => 'Записать эпизод',
 			'liveTv.recordSeries' => 'Записать сериал',
-			'liveTv.recordOptions' => 'Параметры записи',
-			'liveTv.saveTo' => 'Сохранить в',
-			'liveTv.recordings' => 'Записи',
-			'liveTv.scheduledRecordings' => 'Запланировано',
-			'liveTv.recordingRules' => 'Правила записи',
-			'liveTv.noScheduledRecordings' => 'Нет запланированных записей',
-			'liveTv.manageRecording' => 'Управление записью',
-			'liveTv.cancelRecording' => 'Отменить запись',
-			'liveTv.cancelRecordingTitle' => 'Отменить эту запись?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} больше не будет записываться.',
-			'liveTv.deleteRule' => 'Удалить правило',
-			'liveTv.deleteRuleTitle' => 'Удалить правило записи?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'Будущие эпизоды ${title} не будут записаны.',
-			'liveTv.recordingScheduled' => 'Запись запланирована',
-			'liveTv.alreadyScheduled' => 'Эта передача уже запланирована',
 			'liveTv.dvrAdminRequired' => 'Настройки DVR требуют учётной записи администратора',
-			'liveTv.recordingFailed' => 'Не удалось запланировать запись',
-			'liveTv.recordingTargetMissing' => 'Не удалось определить библиотеку записи',
-			'liveTv.recordNotAvailable' => 'Запись недоступна для этой передачи',
-			'liveTv.recordingCancelled' => 'Запись отменена',
-			'liveTv.recordingRuleDeleted' => 'Правило записи удалено',
-			'liveTv.processRecordingRules' => 'Пересчитать правила',
-			'liveTv.recordingInProgress' => 'Идёт запись',
-			'liveTv.recordingsCount' => ({required Object count}) => 'Запланировано: ${count}',
-			'liveTv.editRule' => 'Изменить правило',
-			'liveTv.editRuleAction' => 'Изменить',
-			'liveTv.recordingRuleUpdated' => 'Правило записи обновлено',
 			'liveTv.guideReloadRequested' => 'Запрошено обновление гайда',
 			'liveTv.guideReloadFailed' => 'Не удалось обновить программу',
-			'liveTv.rulesProcessRequested' => 'Запрошен пересчёт правил',
-			'liveTv.rulesProcessFailed' => 'Не удалось повторно применить правила записи',
-			'liveTv.recordShow' => 'Записать передачу',
 			'liveTv.recordSettings.startEarly' => 'Начинать раньше (секунды)',
 			'liveTv.recordSettings.endLate' => 'Заканчивать позже (секунды)',
 			'liveTv.recordSettings.newOnly' => 'Только новые эпизоды',
@@ -4965,8 +4899,6 @@ extension on TranslationsRu {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 — хранить все эпизоды',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => 'Начало через ${minutes} мин',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} в ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} вернул некорректные данные для воспроизведения ТВ в прямом эфире',
 			'liveTv.failedToStartChannel' => 'Не удалось запустить канал в прямом эфире',
 			'liveTv.failedToBuildStreamUrl' => 'Не удалось сформировать URL потока',

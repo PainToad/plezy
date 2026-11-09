@@ -1599,7 +1599,6 @@ class _Translations$liveTv$zh_Hant extends Translations$liveTv$zh {
 
 	// Translations
 	@override String get title => '直播電視';
-	@override String get guide => '節目表指南';
 	@override String get noChannels => '沒有可用的頻道';
 	@override String get noDvr => '沒有伺服器設定 DVR 錄影機';
 	@override String get serverUnavailable => '直播電視伺服器無法使用。';
@@ -1627,7 +1626,6 @@ class _Translations$liveTv$zh_Hant extends Translations$liveTv$zh {
 	@override String get daytime => '白天';
 	@override String get evening => '晚上';
 	@override String get lateNight => '深夜';
-	@override String get whatsOn => '正在播出';
 	@override String get watchChannel => '觀看頻道';
 	@override String get favorites => '最愛';
 	@override String get reorderFavorites => '重新排序最愛頻道';
@@ -1640,44 +1638,12 @@ class _Translations$liveTv$zh_Hant extends Translations$liveTv$zh {
 	@override String watchFromStart({required Object minutes}) => '從頭觀看（自 ${minutes} 分鐘前開始）';
 	@override String get watchLive => '觀看直播';
 	@override String get goToLive => '跳至直播點';
-	@override String get record => '錄製';
 	@override String get recordEpisode => '錄製單集';
 	@override String get recordSeries => '錄製整部影集';
-	@override String get recordOptions => '錄製選項';
-	@override String get saveTo => '儲存至';
-	@override String get recordings => '已錄製內容';
-	@override String get scheduledRecordings => '已排程錄製';
-	@override String get recordingRules => '錄製規則';
-	@override String get noScheduledRecordings => '沒有排程的錄製任務';
-	@override String get manageRecording => '管理錄製';
-	@override String get cancelRecording => '取消錄製';
-	@override String get cancelRecordingTitle => '取消此次錄製？';
-	@override String cancelRecordingMessage({required Object title}) => '將不再錄製 ${title}。';
-	@override String get deleteRule => '刪除規則';
-	@override String get deleteRuleTitle => '刪除錄製規則？';
-	@override String deleteRuleMessage({required Object title}) => '將不再錄製 ${title} 的後續單集。';
-	@override String get recordingScheduled => '錄製已排程';
-	@override String get alreadyScheduled => '此節目已安排排程錄製';
 	@override String get dvrAdminRequired => 'DVR 設定需要管理員帳戶';
-	@override String get recordingFailed => '無法安排錄製任務';
-	@override String get recordingTargetMissing => '無法確定錄製媒體庫';
-	@override String get recordNotAvailable => '此節目無法錄製';
-	@override String get recordingCancelled => '錄製已取消';
-	@override String get recordingRuleDeleted => '錄製規則已刪除';
-	@override String get processRecordingRules => '重新評估規則';
-	@override String get recordingInProgress => '正在錄製';
-	@override String recordingsCount({required Object count}) => '已排程 ${count} 個';
-	@override String get editRule => '編輯規則';
-	@override String get editRuleAction => '編輯';
-	@override String get recordingRuleUpdated => '錄製規則已更新';
 	@override String get guideReloadRequested => '已要求更新節目表指南';
 	@override String get guideReloadFailed => '無法重新載入節目表指南';
-	@override String get rulesProcessRequested => '已要求重新評估規則';
-	@override String get rulesProcessFailed => '無法重新評估錄影規則';
-	@override String get recordShow => '錄製節目';
 	@override late final _Translations$liveTv$recordSettings$zh_Hant recordSettings = _Translations$liveTv$recordSettings$zh_Hant._(_root);
-	@override String startingInMinutes({required Object minutes}) => '${minutes} 分鐘後開始';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} 傳回了無效的直播電視播放資料';
 	@override String get failedToStartChannel => '無法啟動直播頻道';
 	@override String get failedToBuildStreamUrl => '無法建立串流 URL';
@@ -4844,7 +4810,6 @@ extension on TranslationsZhHant {
 			'explore.detail.background' => '背景介紹',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '${n} 筆結果', ), 
 			'liveTv.title' => '直播電視',
-			'liveTv.guide' => '節目表指南',
 			'liveTv.noChannels' => '沒有可用的頻道',
 			'liveTv.noDvr' => '沒有伺服器設定 DVR 錄影機',
 			'liveTv.serverUnavailable' => '直播電視伺服器無法使用。',
@@ -4872,7 +4837,6 @@ extension on TranslationsZhHant {
 			'liveTv.daytime' => '白天',
 			'liveTv.evening' => '晚上',
 			'liveTv.lateNight' => '深夜',
-			'liveTv.whatsOn' => '正在播出',
 			'liveTv.watchChannel' => '觀看頻道',
 			'liveTv.favorites' => '最愛',
 			'liveTv.reorderFavorites' => '重新排序最愛頻道',
@@ -4885,41 +4849,11 @@ extension on TranslationsZhHant {
 			'liveTv.watchFromStart' => ({required Object minutes}) => '從頭觀看（自 ${minutes} 分鐘前開始）',
 			'liveTv.watchLive' => '觀看直播',
 			'liveTv.goToLive' => '跳至直播點',
-			'liveTv.record' => '錄製',
 			'liveTv.recordEpisode' => '錄製單集',
 			'liveTv.recordSeries' => '錄製整部影集',
-			'liveTv.recordOptions' => '錄製選項',
-			'liveTv.saveTo' => '儲存至',
-			'liveTv.recordings' => '已錄製內容',
-			'liveTv.scheduledRecordings' => '已排程錄製',
-			'liveTv.recordingRules' => '錄製規則',
-			'liveTv.noScheduledRecordings' => '沒有排程的錄製任務',
-			'liveTv.manageRecording' => '管理錄製',
-			'liveTv.cancelRecording' => '取消錄製',
-			'liveTv.cancelRecordingTitle' => '取消此次錄製？',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '將不再錄製 ${title}。',
-			'liveTv.deleteRule' => '刪除規則',
-			'liveTv.deleteRuleTitle' => '刪除錄製規則？',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '將不再錄製 ${title} 的後續單集。',
-			'liveTv.recordingScheduled' => '錄製已排程',
-			'liveTv.alreadyScheduled' => '此節目已安排排程錄製',
 			'liveTv.dvrAdminRequired' => 'DVR 設定需要管理員帳戶',
-			'liveTv.recordingFailed' => '無法安排錄製任務',
-			'liveTv.recordingTargetMissing' => '無法確定錄製媒體庫',
-			'liveTv.recordNotAvailable' => '此節目無法錄製',
-			'liveTv.recordingCancelled' => '錄製已取消',
-			'liveTv.recordingRuleDeleted' => '錄製規則已刪除',
-			'liveTv.processRecordingRules' => '重新評估規則',
-			'liveTv.recordingInProgress' => '正在錄製',
-			'liveTv.recordingsCount' => ({required Object count}) => '已排程 ${count} 個',
-			'liveTv.editRule' => '編輯規則',
-			'liveTv.editRuleAction' => '編輯',
-			'liveTv.recordingRuleUpdated' => '錄製規則已更新',
 			'liveTv.guideReloadRequested' => '已要求更新節目表指南',
 			'liveTv.guideReloadFailed' => '無法重新載入節目表指南',
-			'liveTv.rulesProcessRequested' => '已要求重新評估規則',
-			'liveTv.rulesProcessFailed' => '無法重新評估錄影規則',
-			'liveTv.recordShow' => '錄製節目',
 			'liveTv.recordSettings.startEarly' => '提早開始（秒）',
 			'liveTv.recordSettings.endLate' => '延後結束（秒）',
 			'liveTv.recordSettings.newOnly' => '僅新劇集',
@@ -4930,8 +4864,6 @@ extension on TranslationsZhHant {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 表示保留所有劇集',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} 分鐘後開始',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} 傳回了無效的直播電視播放資料',
 			'liveTv.failedToStartChannel' => '無法啟動直播頻道',
 			'liveTv.failedToBuildStreamUrl' => '無法建立串流 URL',

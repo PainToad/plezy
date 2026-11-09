@@ -1606,7 +1606,6 @@ class _Translations$liveTv$da extends Translations$liveTv$en {
 
 	// Translations
 	@override String get title => 'Live TV';
-	@override String get guide => 'Guide';
 	@override String get noChannels => 'Ingen kanaler tilgængelige';
 	@override String get noDvr => 'Der er ikke konfigureret DVR på nogen server';
 	@override String get serverUnavailable => 'Live-tv-serveren er ikke tilgængelig.';
@@ -1634,7 +1633,6 @@ class _Translations$liveTv$da extends Translations$liveTv$en {
 	@override String get daytime => 'Dagtid';
 	@override String get evening => 'Aften';
 	@override String get lateNight => 'Sen aften';
-	@override String get whatsOn => 'Hvad vises der?';
 	@override String get watchChannel => 'Se kanal';
 	@override String get favorites => 'Favoritter';
 	@override String get reorderFavorites => 'Omarranger favoritter';
@@ -1647,44 +1645,12 @@ class _Translations$liveTv$da extends Translations$liveTv$en {
 	@override String watchFromStart({required Object minutes}) => 'Se fra start (${minutes} min siden)';
 	@override String get watchLive => 'Se live';
 	@override String get goToLive => 'Gå til live';
-	@override String get record => 'Optag';
 	@override String get recordEpisode => 'Optag episode';
 	@override String get recordSeries => 'Optag serie';
-	@override String get recordOptions => 'Optageindstillinger';
-	@override String get saveTo => 'Gem i';
-	@override String get recordings => 'Optagelser';
-	@override String get scheduledRecordings => 'Planlagt';
-	@override String get recordingRules => 'Optagelsesregler';
-	@override String get noScheduledRecordings => 'Ingen optagelser planlagt';
-	@override String get manageRecording => 'Administrer optagelse';
-	@override String get cancelRecording => 'Annuller optagelse';
-	@override String get cancelRecordingTitle => 'Annuller denne optagelse?';
-	@override String cancelRecordingMessage({required Object title}) => '${title} bliver ikke længere optaget.';
-	@override String get deleteRule => 'Slet regel';
-	@override String get deleteRuleTitle => 'Slet optagelsesregel?';
-	@override String deleteRuleMessage({required Object title}) => 'Fremtidige episoder af ${title} bliver ikke optaget.';
-	@override String get recordingScheduled => 'Optagelse planlagt';
-	@override String get alreadyScheduled => 'Dette program er allerede planlagt';
 	@override String get dvrAdminRequired => 'DVR-indstillinger kræver en administratorkonto';
-	@override String get recordingFailed => 'Kunne ikke planlægge optagelse';
-	@override String get recordingTargetMissing => 'Kunne ikke bestemme optagelsesbibliotek';
-	@override String get recordNotAvailable => 'Optagelse er ikke tilgængelig for dette program';
-	@override String get recordingCancelled => 'Optagelse annulleret';
-	@override String get recordingRuleDeleted => 'Optagelsesregel slettet';
-	@override String get processRecordingRules => 'Evaluer regler igen';
-	@override String get recordingInProgress => 'Optager nu';
-	@override String recordingsCount({required Object count}) => '${count} planlagt';
-	@override String get editRule => 'Rediger regel';
-	@override String get editRuleAction => 'Rediger';
-	@override String get recordingRuleUpdated => 'Optagelsesregel opdateret';
 	@override String get guideReloadRequested => 'Der er anmodet om en opdatering af guiden';
 	@override String get guideReloadFailed => 'Kunne ikke opdatere guiden';
-	@override String get rulesProcessRequested => 'Der er anmodet om en ny evaluering af reglerne';
-	@override String get rulesProcessFailed => 'Kunne ikke behandle optagelsesreglerne igen';
-	@override String get recordShow => 'Optag program';
 	@override late final _Translations$liveTv$recordSettings$da recordSettings = _Translations$liveTv$recordSettings$da._(_root);
-	@override String startingInMinutes({required Object minutes}) => 'Starter om ${minutes} min';
-	@override String dayAtTime({required Object day, required Object time}) => '${day} kl. ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} returnerede ugyldige afspilningsdata for Live TV';
 	@override String get failedToStartChannel => 'Kunne ikke starte livekanalen';
 	@override String get failedToBuildStreamUrl => 'Kunne ikke oprette stream-URL\'en';
@@ -4855,7 +4821,6 @@ extension on TranslationsDa {
 			'explore.detail.background' => 'Baggrund',
 			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('da'))(n, one: '${n} resultat', other: '${n} resultater', ), 
 			'liveTv.title' => 'Live TV',
-			'liveTv.guide' => 'Guide',
 			'liveTv.noChannels' => 'Ingen kanaler tilgængelige',
 			'liveTv.noDvr' => 'Der er ikke konfigureret DVR på nogen server',
 			'liveTv.serverUnavailable' => 'Live-tv-serveren er ikke tilgængelig.',
@@ -4883,7 +4848,6 @@ extension on TranslationsDa {
 			'liveTv.daytime' => 'Dagtid',
 			'liveTv.evening' => 'Aften',
 			'liveTv.lateNight' => 'Sen aften',
-			'liveTv.whatsOn' => 'Hvad vises der?',
 			'liveTv.watchChannel' => 'Se kanal',
 			'liveTv.favorites' => 'Favoritter',
 			'liveTv.reorderFavorites' => 'Omarranger favoritter',
@@ -4896,41 +4860,11 @@ extension on TranslationsDa {
 			'liveTv.watchFromStart' => ({required Object minutes}) => 'Se fra start (${minutes} min siden)',
 			'liveTv.watchLive' => 'Se live',
 			'liveTv.goToLive' => 'Gå til live',
-			'liveTv.record' => 'Optag',
 			'liveTv.recordEpisode' => 'Optag episode',
 			'liveTv.recordSeries' => 'Optag serie',
-			'liveTv.recordOptions' => 'Optageindstillinger',
-			'liveTv.saveTo' => 'Gem i',
-			'liveTv.recordings' => 'Optagelser',
-			'liveTv.scheduledRecordings' => 'Planlagt',
-			'liveTv.recordingRules' => 'Optagelsesregler',
-			'liveTv.noScheduledRecordings' => 'Ingen optagelser planlagt',
-			'liveTv.manageRecording' => 'Administrer optagelse',
-			'liveTv.cancelRecording' => 'Annuller optagelse',
-			'liveTv.cancelRecordingTitle' => 'Annuller denne optagelse?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} bliver ikke længere optaget.',
-			'liveTv.deleteRule' => 'Slet regel',
-			'liveTv.deleteRuleTitle' => 'Slet optagelsesregel?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'Fremtidige episoder af ${title} bliver ikke optaget.',
-			'liveTv.recordingScheduled' => 'Optagelse planlagt',
-			'liveTv.alreadyScheduled' => 'Dette program er allerede planlagt',
 			'liveTv.dvrAdminRequired' => 'DVR-indstillinger kræver en administratorkonto',
-			'liveTv.recordingFailed' => 'Kunne ikke planlægge optagelse',
-			'liveTv.recordingTargetMissing' => 'Kunne ikke bestemme optagelsesbibliotek',
-			'liveTv.recordNotAvailable' => 'Optagelse er ikke tilgængelig for dette program',
-			'liveTv.recordingCancelled' => 'Optagelse annulleret',
-			'liveTv.recordingRuleDeleted' => 'Optagelsesregel slettet',
-			'liveTv.processRecordingRules' => 'Evaluer regler igen',
-			'liveTv.recordingInProgress' => 'Optager nu',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} planlagt',
-			'liveTv.editRule' => 'Rediger regel',
-			'liveTv.editRuleAction' => 'Rediger',
-			'liveTv.recordingRuleUpdated' => 'Optagelsesregel opdateret',
 			'liveTv.guideReloadRequested' => 'Der er anmodet om en opdatering af guiden',
 			'liveTv.guideReloadFailed' => 'Kunne ikke opdatere guiden',
-			'liveTv.rulesProcessRequested' => 'Der er anmodet om en ny evaluering af reglerne',
-			'liveTv.rulesProcessFailed' => 'Kunne ikke behandle optagelsesreglerne igen',
-			'liveTv.recordShow' => 'Optag program',
 			'liveTv.recordSettings.startEarly' => 'Start tidligere (sekunder)',
 			'liveTv.recordSettings.endLate' => 'Slut senere (sekunder)',
 			'liveTv.recordSettings.newOnly' => 'Kun nye afsnit',
@@ -4941,8 +4875,6 @@ extension on TranslationsDa {
 			_ => null,
 		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 beholder alle afsnit',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => 'Starter om ${minutes} min',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} kl. ${time}',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} returnerede ugyldige afspilningsdata for Live TV',
 			'liveTv.failedToStartChannel' => 'Kunne ikke starte livekanalen',
 			'liveTv.failedToBuildStreamUrl' => 'Kunne ikke oprette stream-URL\'en',
