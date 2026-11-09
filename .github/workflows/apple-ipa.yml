@@ -1,4 +1,4 @@
-name: Apple IPA builds
+name: Apple app builds
 
 on:
   push:
@@ -136,3 +136,49 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  build-macos:
+    name: macOS app
+    needs: playback-tests
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+          pub-cache: false
+      - name: Install locked Dart dependencies
+        run: flutter pub get --enforce-lockfile --no-example
+      - name: Build macOS app
+        run: >-
+          flutter build macos --release --no-pub
+          --dart-define=GIT_COMMIT=${{ github.sha }}
+          --split-debug-info=debug-info/macos
+      - name: Sign locally and package DMG
+        run: |
+          set -euo pipefail
+          apps=(build/macos/Build/Products/Release/*.app)
+          if [[ ${#apps[@]} -ne 1 || ! -d "${apps[0]}" ]]; then
+            echo "::error::Expected exactly one built macOS app"
+            exit 1
+          fi
+          app="${apps[0]}"
+          codesign --force --deep --sign - --entitlements macos/Runner/Release.entitlements "$app"
+          codesign --verify --deep --strict --verbose=2 "$app"
+          mkdir -p build/macos-dmg artifacts
+          ditto "$app" "build/macos-dmg/$(basename "$app")"
+          ln -s /Applications build/macos-dmg/Applications
+          hdiutil create -format UDZO -srcfolder build/macos-dmg -volname "Plezy" artifacts/plezy-macos.dmg
+          hdiutil verify artifacts/plezy-macos.dmg
+          echo "macOS DMG: ad-hoc signed for local use; not Apple-notarized." >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload macOS DMG
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          archive: false
+          path: artifacts/plezy-macos.dmg
+          if-no-files-found: error
+          retention-days: 14
