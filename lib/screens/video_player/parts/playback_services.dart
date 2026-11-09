@@ -810,11 +810,14 @@ extension _VideoPlayerPlaybackServiceMethods on VideoPlayerScreenState {
       return;
     }
 
-    // Hold the screen awake only while media advances. Parked at the end (the
+    // Keep a foreground server DVR session alive even during a long pause.
+    // Otherwise hold the screen awake only while media advances. Parked at the end (the
     // Play Next prompt) a play press still reports playing while nothing
     // advances, and a lock taken there keeps a finished item lit until
     // someone comes back.
-    unawaited(_wakelockController.setEnabled(isPlaying && !(player?.state.completed ?? false)));
+    unawaited(
+      _wakelockController.setEnabled(_keepServerTimeShiftAwake || (isPlaying && !(player?.state.completed ?? false))),
+    );
 
     if (isPlaying) {
       // Force a texture refresh on resume to unstick stale frames

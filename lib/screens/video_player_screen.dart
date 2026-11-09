@@ -989,6 +989,13 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   int _profileSelectionHolds = 0;
   bool get _playbackHeldForProfileSelection => _profileSelectionHolds > 0;
 
+  // A paused Plex DVR still needs foreground heartbeats to retain its session.
+  bool get _keepServerTimeShiftAwake =>
+      widget.isLive &&
+      _useServerTimeShift &&
+      (WidgetsBinding.instance.lifecycleState == null ||
+          WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed);
+
   MediaControlsManager? _mediaControlsManager;
 
   /// [_initializeServices] ran while the open had already failed and left the
@@ -1216,6 +1223,28 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     _http503Watchdog.disarm();
   }
 
+  Future<void>? _serverResumeFuture;
+  LiveTvPlaybackSession? _serverResumeSession;
+
+  Future<void> _resumeServerTimeShift(Player currentPlayer, int epoch) async {
+    final session = _live.session;
+    try {
+      if (!await _seekLivePosition(epoch, play: true)) {
+        throw StateError('Could not resume the paused server stream');
+      }
+      if (_playbackIntentShouldPlay) {
+        _live.serverPausedEpoch = null;
+        _live.serverPausedTimelineMs = null;
+        if (!currentPlayer.state.playing) await currentPlayer.play();
+      } else {
+        await _pauseWithPlaybackIntent(currentPlayer);
+      }
+    } catch (_) {
+      if (mounted && player == currentPlayer && identical(_live.session, session)) _live.rememberServerPause(epoch);
+      rethrow;
+    }
+  }
+
   Future<void> _playWithPlaybackIntent(Player currentPlayer) {
     if (_shuttingDown) return Future<void>.value();
     if (!automotivePlaybackAllowedNow()) {
@@ -1232,6 +1261,20 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     if (widget.isLive && _live.retryFailed) {
       return _retryLiveStreamForPlayIntent();
     }
+    if (widget.isLive && _useServerTimeShift) {
+      if (_serverResumeFuture != null && identical(_serverResumeSession, _live.session)) return _serverResumeFuture!;
+      final pausedEpoch = _live.serverPausedEpoch;
+      if (pausedEpoch != null) {
+        _live.serverPausedEpoch = null;
+        _serverResumeSession = _live.session;
+        late final Future<void> resume;
+        resume = _resumeServerTimeShift(currentPlayer, pausedEpoch).whenComplete(() {
+          if (identical(_serverResumeFuture, resume)) _serverResumeFuture = null;
+        });
+        _serverResumeFuture = resume;
+        return resume;
+      }
+    }
     if (_eofRecovery.parked && _transitionGate.transition == PlaybackTransition.idle) {
       // Parked on a dead stream: play/pause on a drained cache is a no-op
       // (mpv doesn't even flip `pause` on EOF), so any press means "get my
@@ -1242,6 +1285,9 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   }
 
   Future<void> _pauseWithPlaybackIntent(Player currentPlayer) {
+    if (widget.isLive && _useServerTimeShift && currentPlayer.state.playing) {
+      _live.rememberServerPause(_currentPositionEpoch);
+    }
     _playbackIntentShouldPlay = false;
     return currentPlayer.pause();
   }
@@ -1259,9 +1305,17 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     if (widget.isLive && _live.retryFailed) {
       return _playWithPlaybackIntent(currentPlayer);
     }
+    if (widget.isLive && _useServerTimeShift && !currentPlayer.state.playing && _live.serverPausedEpoch != null) {
+      return _playWithPlaybackIntent(currentPlayer);
+    }
     if (_eofRecovery.parked && _transitionGate.transition == PlaybackTransition.idle) {
       _playbackIntentShouldPlay = true;
       return _eofRecovery.retry(reason: 'play/pause pressed');
+    }
+    if (widget.isLive && _useServerTimeShift) {
+      return currentPlayer.state.playing
+          ? _pauseWithPlaybackIntent(currentPlayer)
+          : _playWithPlaybackIntent(currentPlayer);
     }
     _playbackIntentShouldPlay = !currentPlayer.state.playing;
     return currentPlayer.playOrPause();
@@ -1371,6 +1425,19 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   /// and its display negotiation outlives the zap's own transition.
   @visibleForTesting
   Future<void> debugSwitchLiveChannelForTesting(int delta) => _switchLiveChannel(delta);
+
+  @visibleForTesting
+  Future<bool> debugSeekLivePositionForTesting(int epoch) => _seekLivePosition(epoch);
+
+  @visibleForTesting
+  void debugAdoptLiveSessionForTesting(LiveTvPlaybackSession session, {required double streamStartEpoch}) {
+    _live.adoptSession(session);
+    _live.streamStartEpoch = streamStartEpoch;
+  }
+
+  @visibleForTesting
+  Future<void> debugLiveTransportForTesting({required bool play}) =>
+      play ? _playWithPlaybackIntent(player!) : _pauseWithPlaybackIntent(player!);
 
   /// Adjacency otherwise arrives from the backend's queue containers, which
   /// no widget test stands up; this seeds what [_loadAdjacentEpisodes] would

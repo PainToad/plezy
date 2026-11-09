@@ -74,6 +74,21 @@ class LiveTvSessionState {
   double streamStartEpoch = 0;
   bool atLiveEdge = true;
 
+  /// A user pause in server DVR mode: independent of expiring HLS segments.
+  int? serverPausedEpoch;
+  int? serverPausedTimelineMs;
+
+  int timelinePositionMs({required bool serverTimeShift}) {
+    if (serverTimeShift && serverPausedTimelineMs != null) return serverPausedTimelineMs!;
+    final started = playbackStartTime;
+    return started == null ? 0 : DateTime.now().difference(started).inMilliseconds.clamp(0, 1 << 53).toInt();
+  }
+
+  void rememberServerPause(int epoch) {
+    serverPausedEpoch = epoch;
+    serverPausedTimelineMs = timelinePositionMs(serverTimeShift: false);
+  }
+
   /// Bumped on every stream open. A heartbeat snapshots it when dispatched so
   /// a response describing a stream that has since been replaced cannot
   /// re-anchor the clock of its replacement.
@@ -304,6 +319,8 @@ class LiveTvSessionState {
   /// zap) adopts it here, so a field can't be forgotten in one copy.
   void adoptSession(LiveTvPlaybackSession newSession) {
     if (!identical(session, newSession)) timelineReports = LiveTimelineReportQueue();
+    serverPausedEpoch = null;
+    serverPausedTimelineMs = null;
     session = newSession;
     captureBuffer = newSession.captureBuffer;
     selectedSubtitle = null;

@@ -68,6 +68,42 @@ void main() {
     messenger.setMockMethodCallHandler(mediaControlEvents, null);
   });
 
+  testWidgets('server DVR seeks and resumes at the paused server offset', (tester) async {
+    final channel = LiveTvChannel(key: 'ch-1', title: 'Channel 5', serverId: 'srv-1');
+    final shell = _LiveShell();
+    await withMockPlayerChannels(
+      methodChannelName: 'com.plezy/mpv_player',
+      eventChannelName: 'com.plezy/mpv_player/events',
+      methodHandler: (call) async => call.method == 'initialize' ? false : null,
+      testBody: () async {
+        final key = GlobalKey<VideoPlayerScreenState>();
+        await tester.pumpWidget(shell.screen(key: key, channel: channel));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 100));
+        final player = _ServerBufferPlayer();
+        final session = _ServerBufferSession();
+        key.currentState!.player = player;
+        key.currentState!.debugAdoptLiveSessionForTesting(session, streamStartEpoch: 1000);
+        expect(await key.currentState!.debugSeekLivePositionForTesting(1600), isTrue);
+        expect(session.offsets, [600]);
+        expect(player.openModes, [false], reason: 'seeking while paused stays paused');
+        await key.currentState!.debugLiveTransportForTesting(play: true);
+        expect(session.offsets, [600, 600]);
+        expect(player.openModes, [false, true]);
+        expect(
+          player.directPlays,
+          0,
+          reason: 'resume must refresh the server URL rather than play an expired client HLS',
+        );
+        await key.currentState!.debugLiveTransportForTesting(play: false);
+        await key.currentState!.debugLiveTransportForTesting(play: true);
+        expect(session.offsets, [600, 600, 600]);
+        expect(player.seekTargets, isEmpty);
+        await tester.pumpWidget(const SizedBox.shrink());
+      },
+    );
+  });
+
   testWidgets('a live channel registers a media session titled after the channel', (tester) async {
     final channel = LiveTvChannel(key: 'ch-1', title: 'Channel 5', serverId: 'srv-1');
     final player = _LiveMediaSessionPlayer();
@@ -495,6 +531,59 @@ class _LiveShell {
         ),
       ),
     );
+  }
+}
+
+class _ServerBufferPlayer extends _LiveMediaSessionPlayer {
+  bool playing = false;
+  final List<bool> openModes = [];
+  int directPlays = 0;
+
+  @override
+  Duration get currentPosition => Duration.zero;
+
+  @override
+  PlayerState get state => PlayerState(
+    playing: playing,
+    bufferRanges: const [BufferRange(start: Duration.zero, end: Duration(hours: 1))],
+  );
+
+  @override
+  Future<void> open(
+    Media media, {
+    bool play = true,
+    bool isLive = false,
+    List<SubtitleTrack>? externalSubtitles,
+    Duration? timelineDuration,
+    Duration timelineOffset = Duration.zero,
+  }) async {
+    playing = play;
+    openModes.add(play);
+  }
+
+  @override
+  Future<void> play() async {
+    directPlays++;
+    playing = true;
+  }
+
+  @override
+  Future<void> pause() async => playing = false;
+}
+
+class _ServerBufferSession extends _RecoveringLiveSession {
+  final List<int?> offsets = [];
+
+  @override
+  CaptureBuffer get captureBuffer => const CaptureBuffer(startedAt: 1000, seekStartSeconds: 0, seekEndSeconds: 3600);
+
+  @override
+  bool get canTimeShift => true;
+
+  @override
+  Future<String?> streamUrlAt({int? offsetSeconds, MediaSubtitleTrack? subtitleTrack}) async {
+    offsets.add(offsetSeconds);
+    return 'https://example.test/server.m3u8?offset=$offsetSeconds';
   }
 }
 

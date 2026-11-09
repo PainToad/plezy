@@ -11,6 +11,19 @@ MediaSubtitleTrack _track({required int id, int? index, String? languageCode}) =
     MediaSubtitleTrack(id: id, index: index, languageCode: languageCode, selected: false, forced: false);
 
 void main() {
+  test('server pause freezes timeline heartbeats until the stream is reopened', () {
+    final state = LiveTvSessionState(null)..playbackStartTime = DateTime.now().subtract(const Duration(minutes: 5));
+    state.rememberServerPause(1600);
+    final pausedTime = state.timelinePositionMs(serverTimeShift: true);
+    state.playbackStartTime = DateTime.now().subtract(const Duration(minutes: 35));
+    expect(state.timelinePositionMs(serverTimeShift: true), pausedTime);
+    expect(state.serverPausedEpoch, 1600);
+    expect(state.timelinePositionMs(serverTimeShift: false), greaterThan(pausedTime));
+    state.adoptSession(_FakeSession());
+    expect(state.serverPausedEpoch, isNull);
+    expect(state.serverPausedTimelineMs, isNull);
+  });
+
   group('LiveTvSessionState replacement failure deferral', () {
     test('a failure of the stream being replaced is not deferred', () {
       final state = LiveTvSessionState(null);

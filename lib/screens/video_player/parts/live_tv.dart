@@ -3,6 +3,8 @@ part of '../../video_player_screen.dart';
 const _liveClockReadyTimeout = Duration(seconds: 15);
 
 extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
+  bool get _useServerTimeShift => _live.captureBuffer != null || (_live.session?.canTimeShift ?? false);
+
   /// Start periodic timeline heartbeats for live TV transcode session.
   void _startLiveTimelineUpdates() {
     if (_shuttingDown) return;
@@ -113,9 +115,7 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
     // For live TV, player position/duration are unreliable (often 0). Use
     // elapsed wall-clock as the position and the program duration from tune
     // metadata; the per-backend session owns the wire mapping.
-    final playbackTime = _live.playbackStartTime != null
-        ? DateTime.now().difference(_live.playbackStartTime!).inMilliseconds
-        : 0;
+    final playbackTime = _live.timelinePositionMs(serverTimeShift: _useServerTimeShift);
 
     try {
       await _live.timelineReports.send(
@@ -149,6 +149,11 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
             // capture buffer a beat after the tune): the session can now
             // advertise ±skip through it.
             if (!hadSeekWindow && _live.captureBuffer != null) {
+              final currentPlayer = player;
+              if (currentPlayer != null && !currentPlayer.state.playing && _firstFrame.rendered) {
+                _live.rememberServerPause(_currentPositionEpoch);
+              }
+              if (_keepServerTimeShiftAwake) unawaited(_wakelockController.setEnabled(true));
               unawaited(_mediaControls.syncAvailability());
             }
           },
@@ -322,8 +327,10 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
   }) async {
     if (_shuttingDown || !_launchCurrent) return false;
     _live.streamGeneration++;
+    _live.serverPausedEpoch = null;
     final media = Media(streamUrl, headers: const {'Accept-Language': 'en'});
     final playNow = play ?? automotivePlaybackAllowedNow();
+    _live.serverPausedTimelineMs = _useServerTimeShift && !playNow ? 0 : null;
     if (targetEpoch == null || player is! PlayerNative) {
       if (applyOptions) await _setLiveStreamOptions(player);
       if (_shuttingDown || !_launchCurrent) return false;
@@ -418,7 +425,8 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
     }
   }
 
-  int _liveEpochForPosition(Duration position) => _liveSeek.pendingEpoch ?? _live.epochForPosition(position);
+  int _liveEpochForPosition(Duration position) =>
+      _liveSeek.pendingEpoch ?? _live.serverPausedEpoch ?? _live.epochForPosition(position);
 
   /// Current playback position in absolute epoch seconds.
   int get _rawPositionEpoch => _live.epochForPosition(player?.currentPosition ?? Duration.zero);
@@ -445,7 +453,7 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
   /// stream at the target offset. The session returns null when the backend
   /// can't time-shift (Jellyfin), and its capture buffer is null there too,
   /// so both guards cover it. Returns whether the rebuilt stream was opened.
-  Future<bool> _seekLivePosition(int targetEpochSeconds) async {
+  Future<bool> _seekLivePosition(int targetEpochSeconds, {bool? play}) async {
     final currentPlayer = player;
     if (_shuttingDown || currentPlayer == null) return false;
     final session = _live.session;
@@ -453,10 +461,19 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
     if (session == null || buffer == null) return false;
 
     final clamped = targetEpochSeconds.clamp(buffer.seekableStartEpoch, buffer.seekableEndEpoch);
+    final streamGeneration = _live.streamGeneration;
+    final playNow = play ?? currentPlayer.state.playing;
     final offsetSeconds = clamped - buffer.startedAt.round();
 
     final streamUrl = await session.streamUrlAt(offsetSeconds: offsetSeconds, subtitleTrack: _live.selectedSubtitle);
-    if (streamUrl == null || !mounted || _shuttingDown || player != currentPlayer) return false;
+    if (streamUrl == null ||
+        !mounted ||
+        _shuttingDown ||
+        player != currentPlayer ||
+        _live.session != session ||
+        _live.streamGeneration != streamGeneration) {
+      return false;
+    }
 
     if (currentPlayer is! PlayerNative) {
       _live.streamStartEpoch = buffer.startedAt + offsetSeconds;
@@ -468,10 +485,17 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       currentPlayer,
       streamUrl,
       targetEpoch: clamped,
+      play: playNow,
       awaitClock: currentPlayer is PlayerNative,
       timeShifted: true,
     );
-    if (!mounted || player != currentPlayer) return false;
+    if (!mounted ||
+        player != currentPlayer ||
+        _live.session != session ||
+        _live.streamGeneration != streamGeneration + 1) {
+      return false;
+    }
+    if (opened && !playNow) _live.serverPausedEpoch = clamped;
     _setPlayerState(() {});
     return opened;
   }

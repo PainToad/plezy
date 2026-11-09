@@ -215,6 +215,7 @@ extension _VideoPlayerLifecycleMethods on VideoPlayerScreenState {
     if (_isPlayerInitialized && mounted && !_shuttingDown) {
       _mediaControls.resumeAfterTvBackground('app_resumed');
       await _mediaControls.restoreAfterResume();
+      if (_keepServerTimeShiftAwake) await _wakelockController.setEnabled(true);
     }
 
     _resumeLiveTimelineAfterBackgroundIfNeeded();
