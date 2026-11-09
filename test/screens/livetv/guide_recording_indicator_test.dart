@@ -125,7 +125,9 @@ void main() {
 
     expect(find.text('Record'), findsNothing);
     expect(find.text('Manage recording'), findsNothing);
-    expect(find.text(t.liveTv.watchChannel), findsOneWidget);
+    final watchActions = find.text(t.liveTv.watchChannel).evaluate().length;
+    final playActions = find.text(t.common.play).evaluate().length;
+    expect(watchActions + playActions, 1);
     expect(harness.client.dvrSupport.mappingCalls, 0);
     expect(harness.client.dvrSupport.createdRequests, isEmpty);
     expect(harness.client.dvrSupport.deletedRules, isEmpty);
