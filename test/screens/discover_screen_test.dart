@@ -757,7 +757,7 @@ void main() {
 
   testWidgets('the home clock is TV-only chrome', (tester) async {
     await _pumpDiscoverShell(tester, isTv: false);
-    expect(find.text(t.discover.title), findsOneWidget);
+    expect(find.text(t.common.home), findsOneWidget);
     expect(
       find.byType(SystemClock),
       findsNothing,

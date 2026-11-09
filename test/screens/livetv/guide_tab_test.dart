@@ -137,7 +137,7 @@ void main() {
     final harness = _GuideHarness.twoServersWithChannels(channels);
     addTearDown(harness.dispose);
     await harness.pump(tester);
-    await harness.completeInitial(tester);
+    await harness.completeInitialEmpty(tester);
     final scrollViews = tester
         .widgetList<CustomScrollView>(find.byType(CustomScrollView))
         .where((view) => view.controller != null)

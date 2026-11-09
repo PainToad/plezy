@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../i18n/app_locale_utils.dart';
 import '../i18n/strings.g.dart';
-import '../profiles/active_profile_provider.dart';
 import '../providers/discover_provider.dart';
 import '../providers/download_provider.dart';
 import '../providers/multi_server_provider.dart';

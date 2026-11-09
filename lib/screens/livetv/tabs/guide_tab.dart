@@ -343,6 +343,8 @@ class GuideTabState extends State<GuideTab>
     _programLoadGeneration++;
     _selectLongPressController.dispose();
     _guideFocusNode.dispose();
+    _gridVerticalController.removeListener(_syncGridToChannel);
+    _channelVerticalController.removeListener(_syncChannelToGrid);
     _gridVerticalController.dispose();
     _gridHorizontalController.removeListener(_syncGridToHeader);
     _headerHorizontalController.removeListener(_syncHeaderToGrid);
@@ -1077,6 +1079,7 @@ class GuideTabState extends State<GuideTab>
                         width: _channelColumnWidth,
                         child: CustomScrollView(
                           controller: _channelVerticalController,
+                          physics: const ClampingScrollPhysics(),
                           slivers: [
                             SliverVariedExtentList.builder(
                               itemCount: rows.length,
@@ -1105,6 +1108,7 @@ class GuideTabState extends State<GuideTab>
                             width: _totalGridWidth(),
                             child: CustomScrollView(
                               controller: _gridVerticalController,
+                              physics: const ClampingScrollPhysics(),
                               slivers: [
                                 SliverVariedExtentList.builder(
                                   itemCount: rows.length,

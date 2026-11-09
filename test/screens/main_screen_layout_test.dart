@@ -152,27 +152,22 @@ void main() {
     );
   });
 
-  test('resume prompt is suppressed during companion sessions (#2087)', () {
+  test('resume prompts require a mobile foreground transition', () {
     bool should({
       bool resumedFromBackground = true,
       bool isOffline = false,
       bool alreadyShowingProfileSelection = false,
       bool isMobilePlatform = true,
-      bool hasActiveCompanionRemoteSession = false,
     }) {
       return shouldShowProfileSelectionOnResume(
         resumedFromBackground: resumedFromBackground,
         isOffline: isOffline,
         alreadyShowingProfileSelection: alreadyShowingProfileSelection,
         isMobilePlatform: isMobilePlatform,
-        hasActiveCompanionRemoteSession: hasActiveCompanionRemoteSession,
       );
     }
 
     expect(should(), isTrue);
-    // A phone driving another device backgrounds constantly; the picker +
-    // PIN would bury the live remote session.
-    expect(should(hasActiveCompanionRemoteSession: true), isFalse);
     expect(should(resumedFromBackground: false), isFalse);
     expect(should(isOffline: true), isFalse);
     expect(should(alreadyShowingProfileSelection: true), isFalse);

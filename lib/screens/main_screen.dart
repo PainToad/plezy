@@ -119,23 +119,15 @@ bool shouldHandleDesktopRootEscape({
 /// that (#2195). The player stays paused under the picker
 /// ([VideoPlayerScreenState.holdActivePlaybackUntil]). A session that kept
 /// playing in Picture in Picture never left the user's sight, so it never
-/// arms [ProfileSelectionResumeGate]. Never during a live companion-remote
-/// session: a phone driving another device backgrounds and sleeps
-/// constantly, and the picker + PIN would bury a session that already
-/// belongs to the profile that started it (#2087).
+/// arms [ProfileSelectionResumeGate].
 @visibleForTesting
 bool shouldShowProfileSelectionOnResume({
   required bool resumedFromBackground,
   required bool isOffline,
   required bool alreadyShowingProfileSelection,
   required bool isMobilePlatform,
-  required bool hasActiveCompanionRemoteSession,
 }) {
-  return resumedFromBackground &&
-      !isOffline &&
-      !alreadyShowingProfileSelection &&
-      isMobilePlatform &&
-      !hasActiveCompanionRemoteSession;
+  return resumedFromBackground && !isOffline && !alreadyShowingProfileSelection && isMobilePlatform;
 }
 
 /// Latches whether the app has genuinely left the foreground since the last
@@ -1063,7 +1055,6 @@ class _MainScreenState extends State<MainScreen>
       isOffline: _isOffline,
       alreadyShowingProfileSelection: _isShowingProfileSelection,
       isMobilePlatform: Platform.isAndroid || Platform.isIOS,
-      hasActiveCompanionRemoteSession: false,
     )) {
       _showProfileSelectionOnResume();
     }
