@@ -351,9 +351,7 @@ final class _Harness {
           child: MaterialApp(
             theme: monoTheme(MonoPalette.dark),
             home: OverlaySheetHost(
-              child: FocusScope(
-                child: LibrariesScreen(onLibrarySelected: onLibrarySelected),
-              ),
+              child: FocusScope(child: LibrariesScreen(onLibrarySelected: onLibrarySelected)),
             ),
           ),
         ),

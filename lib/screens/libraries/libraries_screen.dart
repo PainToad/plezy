@@ -46,13 +46,7 @@ class LibrariesScreen extends StatefulWidget {
 }
 
 class _LibrariesScreenState extends State<LibrariesScreen>
-    with
-        Refreshable,
-        ManualRefreshable,
-        FullRefreshable,
-        FocusableTab,
-        LibraryLoadable,
-        TabVisibilityAware {
+    with Refreshable, ManualRefreshable, FullRefreshable, FocusableTab, LibraryLoadable, TabVisibilityAware {
   final _browseTabKey = GlobalKey();
 
   String? _selectedLibraryGlobalKey;
@@ -707,4 +701,3 @@ class _LibrariesScreenState extends State<LibrariesScreen>
     return Scaffold(body: scrollBody);
   }
 }
-
