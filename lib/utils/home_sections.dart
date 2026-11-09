@@ -10,7 +10,6 @@ bool isMusicHomeHub(MediaHub hub) =>
     MediaKind.fromString(hub.type).isMusic ||
     (hub.items.isNotEmpty && hub.items.every((item) => item.kind.isMusic));
 
-
 /// Stable per-source identity: titles and translated labels may change.
 String homeRowKey(MediaHub hub) => hub.isContinueWatchingHub
     ? continueWatchingSectionKey

@@ -152,9 +152,11 @@ class _HomeSectionsScreenState extends State<HomeSectionsScreen>
                       child: AppIcon(movingIndex == index ? Symbols.swap_vert_rounded : Symbols.drag_handle_rounded),
                     ),
                     title: Text(section.title),
-                    subtitle: Text(homeSectionKey(section) == musicSectionKey
-                        ? (shown ? 'All music sections shown' : 'All music sections hidden')
-                        : (shown ? 'Shown' : 'Hidden')),
+                    subtitle: Text(
+                      homeSectionKey(section) == musicSectionKey
+                          ? (shown ? 'All music sections shown' : 'All music sections hidden')
+                          : (shown ? 'Shown' : 'Hidden'),
+                    ),
                     onTap: () => _toggle(index),
                     trailing: IconButton(
                       tooltip: shown ? 'Hide section' : 'Show section',
