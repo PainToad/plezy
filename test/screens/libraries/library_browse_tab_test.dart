@@ -218,7 +218,7 @@ void main() {
         kind: kind,
         serverId: harness.clientA.serverId,
       );
-      await _pumpHarness(tester, settle: false);
+      await _pumpHarness(tester, harness, settle: false);
       await pumpRequestFrames(tester);
       expect(find.byType(FocusableFilterChip), findsNothing);
       expect(tester.takeException(), isNull);

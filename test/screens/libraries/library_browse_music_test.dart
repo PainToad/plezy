@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -19,9 +18,11 @@ import 'package:plezy/services/jellyfin_client.dart';
 import 'package:plezy/services/storage_service.dart';
 import 'package:plezy/services/multi_server_manager.dart';
 import 'package:plezy/services/settings_service.dart';
+import 'package:plezy/theme/mono_theme.dart';
 import 'package:plezy/utils/platform_detector.dart';
 import 'package:plezy/widgets/focusable_filter_chip.dart';
 import 'package:plezy/widgets/media_card.dart';
+import 'package:plezy/widgets/overlay_sheet.dart';
 
 import '../../test_helpers/backend_client_fixtures.dart';
 import '../../test_helpers/library_tab_scaffold.dart';
@@ -53,10 +54,9 @@ void main() {
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
     for (final size in [const Size(390, 844), const Size(1024, 768)]) {
       testWidgets('music grouping is visible on $platform at $size', (tester) async {
-        debugDefaultTargetPlatformOverride = platform;
         final harness = _MusicBrowseHarness();
         addTearDown(harness.dispose);
-        await _pumpBrowseTab(tester, harness, size: size);
+        await _pumpBrowseTab(tester, harness, size: size, platform: platform);
         final chip = find.widgetWithText(FocusableFilterChip, t.libraries.groupings.artists);
         expect(chip, findsOneWidget);
         await tester.tap(chip);
@@ -68,7 +68,6 @@ void main() {
         expect(find.widgetWithText(FocusableFilterChip, t.libraries.groupings.albums), findsOneWidget);
         final storage = await StorageService.getInstance();
         expect(storage.getLibraryGrouping(_musicLibrary.globalKey), 'albums');
-        debugDefaultTargetPlatformOverride = null;
       });
     }
   }
@@ -141,16 +140,22 @@ Future<void> _pumpBrowseTab(
   _MusicBrowseHarness harness, {
   MediaLibrary? library,
   Size size = const Size(1280, 720),
+  TargetPlatform? platform,
 }) async {
   await pumpLibraryTab(
     tester,
     provider: harness.provider,
     size: size,
-    tab: LibraryBrowseTab(
-      library: library ?? _musicLibrary,
-      canGroupByFolders: true,
-      suppressAutoFocus: true,
-      onBack: () {},
+    tab: Theme(
+      data: monoTheme(MonoPalette.dark).copyWith(platform: platform),
+      child: OverlaySheetHost(
+        child: LibraryBrowseTab(
+          library: library ?? _musicLibrary,
+          canGroupByFolders: true,
+          suppressAutoFocus: true,
+          onBack: () {},
+        ),
+      ),
     ),
   );
   await pumpRequestFrames(tester);
