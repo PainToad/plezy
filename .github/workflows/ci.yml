@@ -62,6 +62,8 @@ jobs:
           channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
+          # Dependencies use the explicit cache step below; do not restore twice.
+          pub-cache: false
           pub-cache: false
 
       - name: Cache Pub dependencies
