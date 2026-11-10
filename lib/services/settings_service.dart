@@ -518,11 +518,6 @@ class _AudioPassthroughPref extends Pref<bool> {
   Future<void> writeTo(BaseSharedPreferencesService svc, bool value) => svc.writeBool(key, value);
 }
 
-String? _trimEmptyAsNull(String? v) {
-  final t = v?.trim();
-  return (t == null || t.isEmpty) ? null : t;
-}
-
 String? _normalizeRelayBaseUrl(String? value) {
   if (value == null || value.trim().isEmpty) return null;
   final base = canonicalRelayBaseUrl(value);
