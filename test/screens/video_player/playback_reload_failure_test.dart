@@ -20,7 +20,6 @@ import 'package:plezy/models/livetv_channel.dart';
 import 'package:plezy/mpv/mpv.dart';
 import 'package:plezy/providers/account_preferences_controller.dart';
 import 'package:plezy/providers/multi_server_provider.dart';
-import 'package:plezy/providers/companion_remote_provider.dart';
 import 'package:plezy/providers/playback_state_provider.dart';
 import 'package:plezy/screens/video_player_screen.dart';
 import 'package:plezy/screens/video_player/live_tv_session_args.dart';
@@ -699,7 +698,6 @@ void main() {
           ChangeNotifierProvider<AccountPreferencesController>.value(value: accountPreferences),
           ChangeNotifierProvider<WatchTogetherProvider>.value(value: watchTogether ?? WatchTogetherProvider()),
           Provider<AppDatabase>.value(value: db),
-          ChangeNotifierProvider(create: (_) => CompanionRemoteProvider()),
         ],
         child: MaterialApp(
           home: VideoPlayerScreen(
@@ -1145,7 +1143,6 @@ void main() {
                 ChangeNotifierProvider<OfflineWatchSyncService>.value(value: offlineWatch),
                 ChangeNotifierProvider<AccountPreferencesController>.value(value: accountPreferences),
                 Provider<AppDatabase>.value(value: db),
-                ChangeNotifierProvider(create: (_) => CompanionRemoteProvider()),
               ],
               child: MaterialApp(
                 home: VideoPlayerScreen(

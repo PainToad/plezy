@@ -76,7 +76,6 @@
     "shuffle": "Losowo",
     "addTo": "Dodaj do...",
     "createNew": "Utwórz",
-    "connect": "Połącz",
     "disconnect": "Rozłącz",
     "play": "Odtwórz",
     "pause": "Pauza",
@@ -86,7 +85,6 @@
     "home": "Start",
     "back": "Wstecz",
     "settings": "Ustawienia",
-    "mute": "Wycisz",
     "ok": "OK",
     "off": "Wył.",
     "options": "Opcje",
@@ -1287,15 +1285,11 @@
     "content": "zawartość biblioteki",
     "selectLibrary": "Wybierz bibliotekę",
     "filtersWithCount": "Filtry (${count})",
-    "noRecommendations": "Brak dostępnych rekomendacji",
     "noCollections": "Brak kolekcji w tej bibliotece",
-    "noGenres": "",
     "noFoldersFound": "Nie znaleziono folderów",
     "folders": "foldery",
     "tabs": {
-      "recommended": "Polecane",
       "collections": "Kolekcje",
-      "genres": "",
       "playlists": "Playlisty"
     },
     "groupings": {
@@ -1699,7 +1693,6 @@
     "channelSwitchFailed": "Nie udało się przełączyć kanału: ${reason}"
   },
   "collections": {
-    "title": "Kolekcje",
     "collection": "Kolekcja",
     "empty": "Kolekcja jest pusta",
     "deleteCollection": "Usuń kolekcję",
@@ -1721,7 +1714,6 @@
     "searchCollections": "Szukaj kolekcji..."
   },
   "playlists": {
-    "title": "Playlisty",
     "playlist": "Playlista",
     "noPlaylists": "Nie znaleziono playlist",
     "create": "Utwórz playlistę",
@@ -2097,80 +2089,12 @@
     "deleteShaderConfirm": "Usunąć \"${name}\"?"
   },
   "companionRemote": {
-    "title": "Pilot",
-    "connectedTo": "Połączono z ${name}",
-    "unknownDevice": "Nieznane urządzenie",
-    "session": {
-      "startingServer": "Uruchamianie serwera zdalnego...",
-      "hostAddress": "Adres hosta",
-      "connected": "Połączono",
-      "serverRunning": "Serwer zdalny aktywny",
-      "serverStopped": "Serwer zdalny zatrzymany",
-      "serverRunningDescription": "Urządzenia mobilne w Twojej sieci mogą łączyć się z tą aplikacją",
-      "serverStoppedDescription": "Uruchom serwer, aby umożliwić połączenie urządzeń mobilnych",
-      "usePhoneToControl": "Użyj urządzenia mobilnego, aby sterować tą aplikacją",
-      "startServer": "Uruchom serwer",
-      "stopServer": "Zatrzymaj serwer",
-      "minimize": "Minimalizuj",
-      "manualAddressHint": "Ręczny adres połączenia:"
-    },
-    "pairing": {
-      "discoveryDescription": "Urządzenia Plezy z tym samym kontem Plex pojawią się tutaj",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Łączenie...",
-      "searchingForDevices": "Szukanie urządzeń...",
-      "noDevicesFound": "Nie znaleziono urządzeń w sieci",
-      "noDevicesHint": "Otwórz Plezy na komputerze i połącz oba urządzenia z tą samą siecią Wi-Fi",
-      "availableDevices": "Dostępne urządzenia",
-      "manualConnection": "Połączenie ręczne",
-      "cryptoInitFailed": "Nie udało się uruchomić bezpiecznego połączenia. Najpierw zaloguj się do Plex.",
-      "validationHostRequired": "Wprowadź adres hosta",
-      "validationHostFormat": "Format musi być IP:port (np. 192.168.1.100:48632)",
-      "connectionTimedOut": "Limit czasu połączenia. Użyj tej samej sieci na obu urządzeniach.",
-      "sessionNotFound": "Nie znaleziono urządzenia. Upewnij się, że Plezy działa na hoście.",
-      "authFailed": "Uwierzytelnianie nie powiodło się. Oba urządzenia muszą używać tego samego konta Plex.",
-      "failedToConnect": "Nie udało się połączyć: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Czy chcesz się rozłączyć od sesji zdalnej?",
-      "reconnecting": "Ponowne łączenie...",
-      "attemptOf": "Próba ${current} z 5",
-      "retryNow": "Ponów teraz",
-      "tabRemote": "Pilot",
-      "tabPlay": "Odtwórz",
-      "tabMore": "Więcej",
-      "menu": "Menu",
-      "tabNavigation": "Nawigacja",
-      "tabDiscover": "Odkryj",
-      "tabLibraries": "Biblioteki",
-      "tabSearch": "Szukaj",
-      "tabDownloads": "Pobrania",
-      "tabSettings": "Ustawienia",
-      "previous": "Poprzedni",
-      "playPause": "Odtwórz/wstrzymaj",
-      "next": "Następny",
-      "seekBack": "Przewiń wstecz",
-      "stop": "Zatrzymaj",
-      "seekForward": "Przewiń w przód",
-      "volume": "Głośność",
-      "volumeDown": "Ciszej",
-      "volumeUp": "Głośniej",
-      "fullscreen": "Pełny ekran",
-      "subtitles": "Napisy",
-      "audio": "Audio",
-      "searchHint": "Szukaj na komputerze..."
+      "next": "Następny"
     },
-    "errors": {
-      "noNetworkInterface": "Nie znaleziono interfejsu sieciowego",
-      "authenticationFailed": "Uwierzytelnianie nie powiodło się",
-      "serverStartFailed": "Nie udało się uruchomić serwera zdalnego: ${error}",
-      "commandFailed": "Nie udało się wysłać polecenia zdalnego: ${error}",
-      "joinTimedOut": "Upłynął limit czasu dołączania do sesji",
-      "failedToConnectAnyAddress": "Nie udało się połączyć z żadnym adresem",
-      "connectionLostAfterAttempts": "Połączenie utracone po ${attempts} próbach",
-      "connectionLost": "Połączenie utracone"
-    },
-    "closedBeforeAuth": "Połączenie zostało zamknięte przed uwierzytelnieniem"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Prędkość odtwarzania",

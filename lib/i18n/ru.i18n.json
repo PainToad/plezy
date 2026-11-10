@@ -76,7 +76,6 @@
     "shuffle": "Перемешать",
     "addTo": "Добавить в...",
     "createNew": "Создать новый",
-    "connect": "Подключить",
     "disconnect": "Отключить",
     "play": "Воспроизвести",
     "pause": "Пауза",
@@ -86,7 +85,6 @@
     "home": "Главная",
     "back": "Назад",
     "settings": "Настройки",
-    "mute": "Без звука",
     "ok": "OK",
     "off": "Выкл.",
     "options": "Параметры",
@@ -1287,15 +1285,11 @@
     "content": "содержимое библиотеки",
     "selectLibrary": "Выбрать библиотеку",
     "filtersWithCount": "Фильтры (${count})",
-    "noRecommendations": "Рекомендации недоступны",
     "noCollections": "В этой библиотеке нет коллекций",
-    "noGenres": "",
     "noFoldersFound": "Папки не найдены",
     "folders": "папки",
     "tabs": {
-      "recommended": "Рекомендуемые",
       "collections": "Коллекции",
-      "genres": "",
       "playlists": "Плейлисты"
     },
     "groupings": {
@@ -1699,7 +1693,6 @@
     "channelSwitchFailed": "Не удалось переключить канал: ${reason}"
   },
   "collections": {
-    "title": "Коллекции",
     "collection": "Коллекция",
     "empty": "Коллекция пуста",
     "deleteCollection": "Удалить коллекцию",
@@ -1721,7 +1714,6 @@
     "searchCollections": "Поиск коллекций..."
   },
   "playlists": {
-    "title": "Плейлисты",
     "playlist": "Плейлист",
     "noPlaylists": "Плейлисты не найдены",
     "create": "Создать плейлист",
@@ -2097,80 +2089,12 @@
     "deleteShaderConfirm": "Удалить \"${name}\"?"
   },
   "companionRemote": {
-    "title": "Пульт управления",
-    "connectedTo": "Подключено к ${name}",
-    "unknownDevice": "Неизвестное устройство",
-    "session": {
-      "startingServer": "Запуск удалённого сервера...",
-      "hostAddress": "Адрес хоста",
-      "connected": "Подключено",
-      "serverRunning": "Удалённый сервер активен",
-      "serverStopped": "Удалённый сервер остановлен",
-      "serverRunningDescription": "Мобильные устройства в вашей сети могут подключаться к этому приложению",
-      "serverStoppedDescription": "Запустите сервер, чтобы разрешить подключение мобильных устройств",
-      "usePhoneToControl": "Используйте мобильное устройство для управления этим приложением",
-      "startServer": "Запустить сервер",
-      "stopServer": "Остановить сервер",
-      "minimize": "Свернуть",
-      "manualAddressHint": "Адрес для подключения вручную:"
-    },
-    "pairing": {
-      "discoveryDescription": "Устройства Plezy с тем же аккаунтом Plex появятся здесь",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Подключение...",
-      "searchingForDevices": "Поиск устройств...",
-      "noDevicesFound": "Устройства в вашей сети не найдены",
-      "noDevicesHint": "Откройте Plezy на компьютере и подключите оба устройства к одной сети Wi-Fi",
-      "availableDevices": "Доступные устройства",
-      "manualConnection": "Ручное подключение",
-      "cryptoInitFailed": "Не удалось установить защищённое соединение. Сначала войдите в Plex.",
-      "validationHostRequired": "Введите адрес хоста",
-      "validationHostFormat": "Формат должен быть IP:порт (например, 192.168.1.100:48632)",
-      "connectionTimedOut": "Время подключения истекло. Используйте одну сеть на обоих устройствах.",
-      "sessionNotFound": "Устройство не найдено. Убедитесь, что Plezy запущен на хосте.",
-      "authFailed": "Аутентификация не удалась. На обоих устройствах нужен один аккаунт Plex.",
-      "failedToConnect": "Не удалось подключиться: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Отключиться от удалённой сессии?",
-      "reconnecting": "Переподключение...",
-      "attemptOf": "Попытка ${current} из 5",
-      "retryNow": "Повторить сейчас",
-      "tabRemote": "Пульт",
-      "tabPlay": "Воспроизведение",
-      "tabMore": "Ещё",
-      "menu": "Меню",
-      "tabNavigation": "Навигация",
-      "tabDiscover": "Обзор",
-      "tabLibraries": "Библиотеки",
-      "tabSearch": "Поиск",
-      "tabDownloads": "Загрузки",
-      "tabSettings": "Настройки",
-      "previous": "Предыдущий",
-      "playPause": "Воспроизведение/Пауза",
-      "next": "Следующий",
-      "seekBack": "Назад",
-      "stop": "Стоп",
-      "seekForward": "Вперёд",
-      "volume": "Громкость",
-      "volumeDown": "Тише",
-      "volumeUp": "Громче",
-      "fullscreen": "Полноэкранный",
-      "subtitles": "Субтитры",
-      "audio": "Аудио",
-      "searchHint": "Поиск на десктопе..."
+      "next": "Следующий"
     },
-    "errors": {
-      "noNetworkInterface": "Сетевой интерфейс не найден",
-      "authenticationFailed": "Ошибка аутентификации",
-      "serverStartFailed": "Не удалось запустить удалённый сервер: ${error}",
-      "commandFailed": "Не удалось отправить удалённую команду: ${error}",
-      "joinTimedOut": "Время подключения к сеансу истекло",
-      "failedToConnectAnyAddress": "Не удалось подключиться ни к одному адресу",
-      "connectionLostAfterAttempts": "Соединение потеряно после ${attempts} попыток",
-      "connectionLost": "Соединение потеряно"
-    },
-    "closedBeforeAuth": "Соединение было закрыто до аутентификации"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Скорость воспроизведения",

@@ -175,7 +175,6 @@ class _Translations$common$az extends Translations$common$en {
 	@override String get shuffle => 'Qarışdır';
 	@override String get addTo => 'Əlavə et...';
 	@override String get createNew => 'Yenisini yarat';
-	@override String get connect => 'Qoşul';
 	@override String get disconnect => 'Əlaqəni kəs';
 	@override String get play => 'Oynat';
 	@override String get pause => 'Fasilə';
@@ -185,7 +184,6 @@ class _Translations$common$az extends Translations$common$en {
 	@override String get home => 'Ana səhifə';
 	@override String get back => 'Geri';
 	@override String get settings => 'Tənzimləmələr';
-	@override String get mute => 'Səsi söndür';
 	@override String get ok => 'Oldu';
 	@override String get off => 'Söndürülüb';
 	@override String get options => 'Seçimlər';
@@ -1413,7 +1411,6 @@ class _Translations$libraries$az extends Translations$libraries$en {
 	@override String get content => 'kitabxana məzmunu';
 	@override String get selectLibrary => 'Kitabxana seç';
 	@override String filtersWithCount({required Object count}) => 'Filtrlər (${count})';
-	@override String get noRecommendations => 'Tövsiyə yoxdur';
 	@override String get noCollections => 'Bu kitabxanada kolleksiya yoxdur';
 	@override String get noFoldersFound => 'Qovluq tapılmadı';
 	@override String get folders => 'qovluqlar';
@@ -1660,7 +1657,6 @@ class _Translations$collections$az extends Translations$collections$en {
 	final TranslationsAz _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Kolleksiyalar';
 	@override String get collection => 'Kolleksiya';
 	@override String get empty => 'Kolleksiya boşdur';
 	@override String get deleteCollection => 'Kolleksiyanı sil';
@@ -1689,7 +1685,6 @@ class _Translations$playlists$az extends Translations$playlists$en {
 	final TranslationsAz _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Oynatma siyahıları';
 	@override String get playlist => 'Oynatma siyahısı';
 	@override String get noPlaylists => 'Oynatma siyahısı tapılmadı';
 	@override String get create => 'Oynatma siyahısı yarat';
@@ -2015,14 +2010,7 @@ class _Translations$companionRemote$az extends Translations$companionRemote$en {
 	final TranslationsAz _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Köməkçi pult';
-	@override String connectedTo({required Object name}) => '${name} cihazına qoşuldu';
-	@override String get unknownDevice => 'Bilinməyən cihaz';
-	@override late final _Translations$companionRemote$session$az session = _Translations$companionRemote$session$az._(_root);
-	@override late final _Translations$companionRemote$pairing$az pairing = _Translations$companionRemote$pairing$az._(_root);
 	@override late final _Translations$companionRemote$remote$az remote = _Translations$companionRemote$remote$az._(_root);
-	@override late final _Translations$companionRemote$errors$az errors = _Translations$companionRemote$errors$az._(_root);
-	@override String get closedBeforeAuth => 'Bağlantı autentifikasiyadan əvvəl bağlandı';
 }
 
 // Path: videoSettings
@@ -2696,7 +2684,6 @@ class _Translations$libraries$tabs$az extends Translations$libraries$tabs$en {
 	final TranslationsAz _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => 'Tövsiyə olunanlar';
 	@override String get collections => 'Kolleksiyalar';
 	@override String get playlists => 'Oynatma siyahıları';
 }
@@ -3168,51 +3155,6 @@ class _Translations$downloads$groupings$az extends Translations$downloads$groupi
 	@override String get collections => 'Kolleksiyalar';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$az extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$az._(TranslationsAz root) : this._root = root, super.internal(root);
-
-	final TranslationsAz _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => 'Pult serveri başladılır...';
-	@override String get hostAddress => 'Əsas cihaz ünvanı';
-	@override String get connected => 'Qoşuldu';
-	@override String get serverRunning => 'Pult serveri aktivdir';
-	@override String get serverStopped => 'Pult serveri dayandırıldı';
-	@override String get serverRunningDescription => 'Şəbəkənizdəki mobil cihazlar qoşula bilər';
-	@override String get serverStoppedDescription => 'Mobil cihazların qoşulmasına icazə vermək üçün serveri başladın';
-	@override String get usePhoneToControl => 'Bu tətbiqi idarə etmək üçün mobil cihazınızı istifadə edin';
-	@override String get startServer => 'Serveri başlat';
-	@override String get stopServer => 'Serveri dayandır';
-	@override String get minimize => 'Yığ';
-	@override String get manualAddressHint => 'Əl ilə bağlantı ünvanı:';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$az extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$az._(TranslationsAz root) : this._root = root, super.internal(root);
-
-	final TranslationsAz _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => 'Eyni Plex hesabına sahib Plezy cihazları burada görünür';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => 'Qoşulunur...';
-	@override String get searchingForDevices => 'Cihazlar axtarılır...';
-	@override String get noDevicesFound => 'Şəbəkənizdə cihaz tapılmadı';
-	@override String get noDevicesHint => 'Masaüstündə Plezy-ni açın və eyni Wi-Fi-dan istifadə edin';
-	@override String get availableDevices => 'Əlçatan cihazlar';
-	@override String get manualConnection => 'Əl ilə qoşulma';
-	@override String get cryptoInitFailed => 'Təhlükəsiz qoşulma başladılarkən xəta. Əvvəlcə Plex-ə daxil olun.';
-	@override String get validationHostRequired => 'Lütfən əsas cihaz ünvanını daxil edin';
-	@override String get validationHostFormat => 'Format IP:port şəklində olmalıdır';
-	@override String get connectionTimedOut => 'Qoşulma vaxtı bitdi. Hər iki cihazda eyni şəbəkədən istifadə edin.';
-	@override String get sessionNotFound => 'Cihaz tapılmadı.';
-	@override String get authFailed => 'Kimlik doğrulanması uğursuz oldu.';
-	@override String failedToConnect({required Object error}) => 'Qoşulma uğursuz oldu: ${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$az extends Translations$companionRemote$remote$en {
 	_Translations$companionRemote$remote$az._(TranslationsAz root) : this._root = root, super.internal(root);
@@ -3220,50 +3162,7 @@ class _Translations$companionRemote$remote$az extends Translations$companionRemo
 	final TranslationsAz _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => 'Pult seansından ayrılmaq istəyirsiniz?';
-	@override String get reconnecting => 'Yenidən qoşulunur...';
-	@override String attemptOf({required Object current}) => 'Cəhd ${current} / 5';
-	@override String get retryNow => 'İndi təzədən cəhd et';
-	@override String get tabRemote => 'Pult';
-	@override String get tabPlay => 'Oynat';
-	@override String get tabMore => 'Daha çox';
-	@override String get menu => 'Menyu';
-	@override String get tabNavigation => 'Naviqasiya';
-	@override String get tabDiscover => 'Kəşf et';
-	@override String get tabLibraries => 'Kitabxanalar';
-	@override String get tabSearch => 'Axtar';
-	@override String get tabDownloads => 'Yükləmələr';
-	@override String get tabSettings => 'Tənzimləmələr';
-	@override String get previous => 'Əvvəlki';
-	@override String get playPause => 'Oynat/Fasilə';
 	@override String get next => 'Növbəti';
-	@override String get seekBack => 'Geri sar';
-	@override String get stop => 'Saxla';
-	@override String get seekForward => 'İrəli sar';
-	@override String get volume => 'Səs';
-	@override String get volumeDown => 'Azalt';
-	@override String get volumeUp => 'Artır';
-	@override String get fullscreen => 'Tam ekran';
-	@override String get subtitles => 'Altyazılar';
-	@override String get audio => 'Səs';
-	@override String get searchHint => 'Masaüstündə axtar...';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$az extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$az._(TranslationsAz root) : this._root = root, super.internal(root);
-
-	final TranslationsAz _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => 'Şəbəkə interfeysi tapılmadı';
-	@override String get authenticationFailed => 'Kimlik doğrulanması uğursuz oldu';
-	@override String serverStartFailed({required Object error}) => 'Pult serveri başladıla bilmədi: ${error}';
-	@override String commandFailed({required Object error}) => 'Pult əmri göndərilə bilmədi: ${error}';
-	@override String get joinTimedOut => 'Seansa qoşulma vaxtı bitdi';
-	@override String get failedToConnectAnyAddress => 'Heç bir ünvana qoşuluna bilmədi';
-	@override String connectionLostAfterAttempts({required Object attempts}) => '${attempts} cəhddən sonra əlaqə kəsildi';
-	@override String get connectionLost => 'Əlaqə kəsildi';
 }
 
 // Path: services.names
@@ -3426,7 +3325,6 @@ extension on TranslationsAz {
 			'common.shuffle' => 'Qarışdır',
 			'common.addTo' => 'Əlavə et...',
 			'common.createNew' => 'Yenisini yarat',
-			'common.connect' => 'Qoşul',
 			'common.disconnect' => 'Əlaqəni kəs',
 			'common.play' => 'Oynat',
 			'common.pause' => 'Fasilə',
@@ -3436,7 +3334,6 @@ extension on TranslationsAz {
 			'common.home' => 'Ana səhifə',
 			'common.back' => 'Geri',
 			'common.settings' => 'Tənzimləmələr',
-			'common.mute' => 'Səsi söndür',
 			'common.ok' => 'Oldu',
 			'common.off' => 'Söndürülüb',
 			'common.options' => 'Seçimlər',
@@ -3870,10 +3767,10 @@ extension on TranslationsAz {
 			'themeEditor.opacity' => 'Şəffaflıq',
 			'themeEditor.hexHint' => '#RRGGBB və ya #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Digər mövzulardan',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme}: ${color}',
 			'themeEditor.contrast.textOnBg' => 'Arxa fonda mətn',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'Səthdə mətn',
 			'themeEditor.contrast.textMutedOnBg' => 'Arxa fonda köməkçi mətn',
 			'themeEditor.contrast.textMutedOnSurface' => 'Səthdə köməkçi mətn',
@@ -4384,10 +4281,10 @@ extension on TranslationsAz {
 			'connections.addConnectionSubtitleNoProfile' => 'Plex ilə daxil olun və ya Jellyfin yaxud Emby serverinə qoşulun',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName} profilinə əlavə et: Plex, Jellyfin, Emby və ya başqa profil qoşulması',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} üçün seansın vaxtı bitdi',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} server üçün seansın vaxtı bitdi',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} bu hesaba girişi rədd etdi',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} server bu hesaba girişi rədd etdi',
 			'connections.signInAgain' => 'Yenidən daxil ol',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => '${product} qoşulmasını düzəliş et',
@@ -4534,11 +4431,9 @@ extension on TranslationsAz {
 			'libraries.content' => 'kitabxana məzmunu',
 			'libraries.selectLibrary' => 'Kitabxana seç',
 			'libraries.filtersWithCount' => ({required Object count}) => 'Filtrlər (${count})',
-			'libraries.noRecommendations' => 'Tövsiyə yoxdur',
 			'libraries.noCollections' => 'Bu kitabxanada kolleksiya yoxdur',
 			'libraries.noFoldersFound' => 'Qovluq tapılmadı',
 			'libraries.folders' => 'qovluqlar',
-			'libraries.tabs.recommended' => 'Tövsiyə olunanlar',
 			'libraries.tabs.collections' => 'Kolleksiyalar',
 			'libraries.tabs.playlists' => 'Oynatma siyahıları',
 			'libraries.groupings.title' => 'Qruplaşdırma',
@@ -4866,7 +4761,6 @@ extension on TranslationsAz {
 			'liveTv.failedToBuildStreamUrl' => 'Yayım URL-i yaratmaq olmadı',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Kanal başladıla bilmədi: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Kanal dəyişdirilə bilmədi: ${reason}',
-			'collections.title' => 'Kolleksiyalar',
 			'collections.collection' => 'Kolleksiya',
 			'collections.empty' => 'Kolleksiya boşdur',
 			'collections.deleteCollection' => 'Kolleksiyanı sil',
@@ -4886,7 +4780,6 @@ extension on TranslationsAz {
 			'collections.removeFromCollectionFailed' => 'Kolleksiyadan silinə bilmədi',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'Kolleksiyadan silinərkən xəta: ${error}',
 			'collections.searchCollections' => 'Kolleksiyalarda axtar...',
-			'playlists.title' => 'Oynatma siyahıları',
 			'playlists.playlist' => 'Oynatma siyahısı',
 			'playlists.noPlaylists' => 'Oynatma siyahısı tapılmadı',
 			'playlists.create' => 'Oynatma siyahısı yarat',
@@ -4898,14 +4791,14 @@ extension on TranslationsAz {
 			'playlists.itemCount' => ({required Object count}) => '${count} element',
 			'playlists.oneItem' => '1 element',
 			'playlists.emptyPlaylist' => 'Bu oynatma siyahısı boşdur',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Oynatma siyahısı silinsin?',
 			'playlists.deleteMessage' => ({required Object name}) => '"${name}" siyahısını silmək istədiyinizdən əminsiniz?',
 			'playlists.created' => 'Oynatma siyahısı yaradıldı',
 			'playlists.deleted' => 'Oynatma siyahısı silindi',
 			'playlists.itemAdded' => 'Oynatma siyahısına əlavə edildi',
 			'playlists.itemRemoved' => 'Oynatma siyahısından silindi',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => 'Oynatma siyahısı seç',
 			'playlists.searchPlaylists' => 'Oynatma siyahılarında axtar...',
 			'playlists.errorCreating' => 'Oynatma siyahısı yaradıla bilmədi',
@@ -5232,72 +5125,7 @@ extension on TranslationsAz {
 			'shaders.shaderImportFailed' => 'Şeyder idxal edilə bilmədi',
 			'shaders.deleteShader' => 'Şeyderi sil',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => '"${name}" silinsin?',
-			'companionRemote.title' => 'Köməkçi pult',
-			'companionRemote.connectedTo' => ({required Object name}) => '${name} cihazına qoşuldu',
-			'companionRemote.unknownDevice' => 'Bilinməyən cihaz',
-			'companionRemote.session.startingServer' => 'Pult serveri başladılır...',
-			'companionRemote.session.hostAddress' => 'Əsas cihaz ünvanı',
-			'companionRemote.session.connected' => 'Qoşuldu',
-			'companionRemote.session.serverRunning' => 'Pult serveri aktivdir',
-			'companionRemote.session.serverStopped' => 'Pult serveri dayandırıldı',
-			'companionRemote.session.serverRunningDescription' => 'Şəbəkənizdəki mobil cihazlar qoşula bilər',
-			'companionRemote.session.serverStoppedDescription' => 'Mobil cihazların qoşulmasına icazə vermək üçün serveri başladın',
-			'companionRemote.session.usePhoneToControl' => 'Bu tətbiqi idarə etmək üçün mobil cihazınızı istifadə edin',
-			'companionRemote.session.startServer' => 'Serveri başlat',
-			'companionRemote.session.stopServer' => 'Serveri dayandır',
-			'companionRemote.session.minimize' => 'Yığ',
-			'companionRemote.session.manualAddressHint' => 'Əl ilə bağlantı ünvanı:',
-			'companionRemote.pairing.discoveryDescription' => 'Eyni Plex hesabına sahib Plezy cihazları burada görünür',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Qoşulunur...',
-			'companionRemote.pairing.searchingForDevices' => 'Cihazlar axtarılır...',
-			'companionRemote.pairing.noDevicesFound' => 'Şəbəkənizdə cihaz tapılmadı',
-			'companionRemote.pairing.noDevicesHint' => 'Masaüstündə Plezy-ni açın və eyni Wi-Fi-dan istifadə edin',
-			'companionRemote.pairing.availableDevices' => 'Əlçatan cihazlar',
-			'companionRemote.pairing.manualConnection' => 'Əl ilə qoşulma',
-			'companionRemote.pairing.cryptoInitFailed' => 'Təhlükəsiz qoşulma başladılarkən xəta. Əvvəlcə Plex-ə daxil olun.',
-			'companionRemote.pairing.validationHostRequired' => 'Lütfən əsas cihaz ünvanını daxil edin',
-			'companionRemote.pairing.validationHostFormat' => 'Format IP:port şəklində olmalıdır',
-			'companionRemote.pairing.connectionTimedOut' => 'Qoşulma vaxtı bitdi. Hər iki cihazda eyni şəbəkədən istifadə edin.',
-			'companionRemote.pairing.sessionNotFound' => 'Cihaz tapılmadı.',
-			'companionRemote.pairing.authFailed' => 'Kimlik doğrulanması uğursuz oldu.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Qoşulma uğursuz oldu: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Pult seansından ayrılmaq istəyirsiniz?',
-			'companionRemote.remote.reconnecting' => 'Yenidən qoşulunur...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Cəhd ${current} / 5',
-			'companionRemote.remote.retryNow' => 'İndi təzədən cəhd et',
-			'companionRemote.remote.tabRemote' => 'Pult',
-			'companionRemote.remote.tabPlay' => 'Oynat',
-			'companionRemote.remote.tabMore' => 'Daha çox',
-			'companionRemote.remote.menu' => 'Menyu',
-			'companionRemote.remote.tabNavigation' => 'Naviqasiya',
-			'companionRemote.remote.tabDiscover' => 'Kəşf et',
-			'companionRemote.remote.tabLibraries' => 'Kitabxanalar',
-			'companionRemote.remote.tabSearch' => 'Axtar',
-			'companionRemote.remote.tabDownloads' => 'Yükləmələr',
-			'companionRemote.remote.tabSettings' => 'Tənzimləmələr',
-			'companionRemote.remote.previous' => 'Əvvəlki',
-			'companionRemote.remote.playPause' => 'Oynat/Fasilə',
 			'companionRemote.remote.next' => 'Növbəti',
-			'companionRemote.remote.seekBack' => 'Geri sar',
-			'companionRemote.remote.stop' => 'Saxla',
-			'companionRemote.remote.seekForward' => 'İrəli sar',
-			'companionRemote.remote.volume' => 'Səs',
-			'companionRemote.remote.volumeDown' => 'Azalt',
-			'companionRemote.remote.volumeUp' => 'Artır',
-			'companionRemote.remote.fullscreen' => 'Tam ekran',
-			'companionRemote.remote.subtitles' => 'Altyazılar',
-			'companionRemote.remote.audio' => 'Səs',
-			'companionRemote.remote.searchHint' => 'Masaüstündə axtar...',
-			'companionRemote.errors.noNetworkInterface' => 'Şəbəkə interfeysi tapılmadı',
-			'companionRemote.errors.authenticationFailed' => 'Kimlik doğrulanması uğursuz oldu',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Pult serveri başladıla bilmədi: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Pult əmri göndərilə bilmədi: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Seansa qoşulma vaxtı bitdi',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Heç bir ünvana qoşuluna bilmədi',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '${attempts} cəhddən sonra əlaqə kəsildi',
-			'companionRemote.errors.connectionLost' => 'Əlaqə kəsildi',
-			'companionRemote.closedBeforeAuth' => 'Bağlantı autentifikasiyadan əvvəl bağlandı',
 			'videoSettings.playbackSpeed' => 'Oynatma sürəti',
 			'videoSettings.normalSpeed' => 'Normal',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Aktivdir (${duration})',
@@ -5412,8 +5240,6 @@ extension on TranslationsAz {
 			'metadataEdit.selectBackground' => 'Arxa fon seç',
 			'metadataEdit.selectLogo' => 'Loqo seç',
 			'metadataEdit.selectSquareArt' => 'Kvadrat şəkil seç',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URL-dən',
 			'metadataEdit.uploadFile' => 'Fayl yüklə',
 			'metadataEdit.enterImageUrl' => 'Şəkil URL-i daxil edin',
@@ -5485,6 +5311,8 @@ extension on TranslationsAz {
 			'serverTasks.noTasks' => 'İcra olunan tapşırıq yoxdur',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Qoşuldu',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '@${username} olaraq qoşuldu',
 			'trakt.disconnectConfirm' => 'Trakt hesabı ayırılsın?',
 			'trakt.disconnectConfirmBody' => 'Plezy Trakt-a məlumat göndərməyi dayandıracaq.',

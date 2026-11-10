@@ -175,7 +175,6 @@ class _Translations$common$nb extends Translations$common$en {
 	@override String get shuffle => 'Tilfeldig';
 	@override String get addTo => 'Legg til i...';
 	@override String get createNew => 'Opprett ny';
-	@override String get connect => 'Koble til';
 	@override String get disconnect => 'Koble fra';
 	@override String get play => 'Spill av';
 	@override String get pause => 'Pause';
@@ -185,7 +184,6 @@ class _Translations$common$nb extends Translations$common$en {
 	@override String get home => 'Hjem';
 	@override String get back => 'Tilbake';
 	@override String get settings => 'Innstillinger';
-	@override String get mute => 'Demp';
 	@override String get ok => 'OK';
 	@override String get off => 'Av';
 	@override String get options => 'Valg';
@@ -1413,7 +1411,6 @@ class _Translations$libraries$nb extends Translations$libraries$en {
 	@override String get content => 'bibliotekinnhold';
 	@override String get selectLibrary => 'Velg bibliotek';
 	@override String filtersWithCount({required Object count}) => 'Filtre (${count})';
-	@override String get noRecommendations => 'Ingen anbefalinger tilgjengelig';
 	@override String get noCollections => 'Ingen samlinger i dette biblioteket';
 	@override String get noFoldersFound => 'Ingen mapper funnet';
 	@override String get folders => 'mapper';
@@ -1660,7 +1657,6 @@ class _Translations$collections$nb extends Translations$collections$en {
 	final TranslationsNb _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Samlinger';
 	@override String get collection => 'Samling';
 	@override String get empty => 'Samlingen er tom';
 	@override String get deleteCollection => 'Slett samling';
@@ -1689,7 +1685,6 @@ class _Translations$playlists$nb extends Translations$playlists$en {
 	final TranslationsNb _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Spillelister';
 	@override String get playlist => 'Spilleliste';
 	@override String get noPlaylists => 'Ingen spillelister funnet';
 	@override String get create => 'Opprett spilleliste';
@@ -2015,14 +2010,7 @@ class _Translations$companionRemote$nb extends Translations$companionRemote$en {
 	final TranslationsNb _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Fjernkontroll';
-	@override String connectedTo({required Object name}) => 'Tilkoblet ${name}';
-	@override String get unknownDevice => 'Ukjent enhet';
-	@override late final _Translations$companionRemote$session$nb session = _Translations$companionRemote$session$nb._(_root);
-	@override late final _Translations$companionRemote$pairing$nb pairing = _Translations$companionRemote$pairing$nb._(_root);
 	@override late final _Translations$companionRemote$remote$nb remote = _Translations$companionRemote$remote$nb._(_root);
-	@override late final _Translations$companionRemote$errors$nb errors = _Translations$companionRemote$errors$nb._(_root);
-	@override String get closedBeforeAuth => 'Tilkoblingen ble lukket før autentisering';
 }
 
 // Path: videoSettings
@@ -2696,7 +2684,6 @@ class _Translations$libraries$tabs$nb extends Translations$libraries$tabs$en {
 	final TranslationsNb _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => 'Anbefalt';
 	@override String get collections => 'Samlinger';
 	@override String get playlists => 'Spillelister';
 }
@@ -3168,51 +3155,6 @@ class _Translations$downloads$groupings$nb extends Translations$downloads$groupi
 	@override String get collections => 'Samlinger';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$nb extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$nb._(TranslationsNb root) : this._root = root, super.internal(root);
-
-	final TranslationsNb _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => 'Starter fjernserver...';
-	@override String get hostAddress => 'Vertsadresse';
-	@override String get connected => 'Tilkoblet';
-	@override String get serverRunning => 'Fjernserver aktiv';
-	@override String get serverStopped => 'Fjernserver stoppet';
-	@override String get serverRunningDescription => 'Mobilenheter på nettverket ditt kan koble til denne appen';
-	@override String get serverStoppedDescription => 'Start serveren for å la mobilenheter koble til';
-	@override String get usePhoneToControl => 'Bruk mobilenheten din til å styre denne appen';
-	@override String get startServer => 'Start server';
-	@override String get stopServer => 'Stopp server';
-	@override String get minimize => 'Minimer';
-	@override String get manualAddressHint => 'Manuell tilkoblingsadresse:';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$nb extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$nb._(TranslationsNb root) : this._root = root, super.internal(root);
-
-	final TranslationsNb _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => 'Plezy-enheter med samme Plex-konto vises her';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => 'Kobler til...';
-	@override String get searchingForDevices => 'Søker etter enheter...';
-	@override String get noDevicesFound => 'Ingen enheter funnet på nettverket ditt';
-	@override String get noDevicesHint => 'Åpne Plezy på datamaskinen, og bruk samme Wi-Fi';
-	@override String get availableDevices => 'Tilgjengelige enheter';
-	@override String get manualConnection => 'Manuell tilkobling';
-	@override String get cryptoInitFailed => 'Kunne ikke starte sikker tilkobling. Logg inn på Plex først.';
-	@override String get validationHostRequired => 'Vennligst oppgi vertsadresse';
-	@override String get validationHostFormat => 'Format må være IP:port (f.eks. 192.168.1.100:48632)';
-	@override String get connectionTimedOut => 'Tilkoblingen fikk tidsavbrudd. Bruk samme nettverk på begge enheter.';
-	@override String get sessionNotFound => 'Enhet ikke funnet. Sørg for at Plezy kjører på verten.';
-	@override String get authFailed => 'Autentisering mislyktes. Begge enheter må bruke samme Plex-konto.';
-	@override String failedToConnect({required Object error}) => 'Kunne ikke koble til: ${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$nb extends Translations$companionRemote$remote$en {
 	_Translations$companionRemote$remote$nb._(TranslationsNb root) : this._root = root, super.internal(root);
@@ -3220,50 +3162,7 @@ class _Translations$companionRemote$remote$nb extends Translations$companionRemo
 	final TranslationsNb _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => 'Vil du koble fra fjernøkten?';
-	@override String get reconnecting => 'Kobler til på nytt...';
-	@override String attemptOf({required Object current}) => 'Forsøk ${current} av 5';
-	@override String get retryNow => 'Prøv nå';
-	@override String get tabRemote => 'Fjernkontroll';
-	@override String get tabPlay => 'Spill av';
-	@override String get tabMore => 'Mer';
-	@override String get menu => 'Meny';
-	@override String get tabNavigation => 'Fanenavigering';
-	@override String get tabDiscover => 'Oppdag';
-	@override String get tabLibraries => 'Biblioteker';
-	@override String get tabSearch => 'Søk';
-	@override String get tabDownloads => 'Nedlastinger';
-	@override String get tabSettings => 'Innstillinger';
-	@override String get previous => 'Forrige';
-	@override String get playPause => 'Spill av/Pause';
 	@override String get next => 'Neste';
-	@override String get seekBack => 'Spol tilbake';
-	@override String get stop => 'Stopp';
-	@override String get seekForward => 'Spol fremover';
-	@override String get volume => 'Volum';
-	@override String get volumeDown => 'Ned';
-	@override String get volumeUp => 'Opp';
-	@override String get fullscreen => 'Fullskjerm';
-	@override String get subtitles => 'Undertekster';
-	@override String get audio => 'Lyd';
-	@override String get searchHint => 'Søk på datamaskinen...';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$nb extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$nb._(TranslationsNb root) : this._root = root, super.internal(root);
-
-	final TranslationsNb _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => 'Fant ingen nettverksgrensesnitt';
-	@override String get authenticationFailed => 'Autentisering mislyktes';
-	@override String serverStartFailed({required Object error}) => 'Kunne ikke starte fjernserveren: ${error}';
-	@override String commandFailed({required Object error}) => 'Kunne ikke sende fjernkommando: ${error}';
-	@override String get joinTimedOut => 'Tidsavbrudd ved tilkobling til økt';
-	@override String get failedToConnectAnyAddress => 'Kunne ikke koble til noen adresse';
-	@override String connectionLostAfterAttempts({required Object attempts}) => 'Tilkobling mistet etter ${attempts} forsøk';
-	@override String get connectionLost => 'Tilkobling mistet';
 }
 
 // Path: services.names
@@ -3426,7 +3325,6 @@ extension on TranslationsNb {
 			'common.shuffle' => 'Tilfeldig',
 			'common.addTo' => 'Legg til i...',
 			'common.createNew' => 'Opprett ny',
-			'common.connect' => 'Koble til',
 			'common.disconnect' => 'Koble fra',
 			'common.play' => 'Spill av',
 			'common.pause' => 'Pause',
@@ -3436,7 +3334,6 @@ extension on TranslationsNb {
 			'common.home' => 'Hjem',
 			'common.back' => 'Tilbake',
 			'common.settings' => 'Innstillinger',
-			'common.mute' => 'Demp',
 			'common.ok' => 'OK',
 			'common.off' => 'Av',
 			'common.options' => 'Valg',
@@ -3870,10 +3767,10 @@ extension on TranslationsNb {
 			'themeEditor.opacity' => 'Opasitet',
 			'themeEditor.hexHint' => '#RRGGBB eller #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Fra andre temaer',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} (${theme})',
 			'themeEditor.contrast.textOnBg' => 'Tekst på bakgrunn',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'Tekst på overflate',
 			'themeEditor.contrast.textMutedOnBg' => 'Sekundærtekst på bakgrunn',
 			'themeEditor.contrast.textMutedOnSurface' => 'Sekundærtekst på overflate',
@@ -4384,10 +4281,10 @@ extension on TranslationsNb {
 			'connections.addConnectionSubtitleNoProfile' => 'Logg inn med Plex eller koble til en Jellyfin- eller Emby-server',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Legg til for ${displayName}: Plex, Jellyfin, Emby eller en annen profiltilkobling',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Økten er utløpt for ${name}',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Økten er utløpt for ${count} servere',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} nektet tilgang for denne kontoen',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} servere nektet tilgang for denne kontoen',
 			'connections.signInAgain' => 'Logg inn igjen',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => 'Rediger ${product}-tilkobling',
@@ -4534,11 +4431,9 @@ extension on TranslationsNb {
 			'libraries.content' => 'bibliotekinnhold',
 			'libraries.selectLibrary' => 'Velg bibliotek',
 			'libraries.filtersWithCount' => ({required Object count}) => 'Filtre (${count})',
-			'libraries.noRecommendations' => 'Ingen anbefalinger tilgjengelig',
 			'libraries.noCollections' => 'Ingen samlinger i dette biblioteket',
 			'libraries.noFoldersFound' => 'Ingen mapper funnet',
 			'libraries.folders' => 'mapper',
-			'libraries.tabs.recommended' => 'Anbefalt',
 			'libraries.tabs.collections' => 'Samlinger',
 			'libraries.tabs.playlists' => 'Spillelister',
 			'libraries.groupings.title' => 'Gruppering',
@@ -4866,7 +4761,6 @@ extension on TranslationsNb {
 			'liveTv.failedToBuildStreamUrl' => 'Kunne ikke opprette strømme-URL-en',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Kunne ikke starte kanalen: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Kunne ikke bytte kanal: ${reason}',
-			'collections.title' => 'Samlinger',
 			'collections.collection' => 'Samling',
 			'collections.empty' => 'Samlingen er tom',
 			'collections.deleteCollection' => 'Slett samling',
@@ -4886,7 +4780,6 @@ extension on TranslationsNb {
 			'collections.removeFromCollectionFailed' => 'Kunne ikke fjerne fra samling',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'Feil ved fjerning fra samling: ${error}',
 			'collections.searchCollections' => 'Søk i samlinger...',
-			'playlists.title' => 'Spillelister',
 			'playlists.playlist' => 'Spilleliste',
 			'playlists.noPlaylists' => 'Ingen spillelister funnet',
 			'playlists.create' => 'Opprett spilleliste',
@@ -4898,14 +4791,14 @@ extension on TranslationsNb {
 			'playlists.itemCount' => ({required Object count}) => '${count} elementer',
 			'playlists.oneItem' => '1 element',
 			'playlists.emptyPlaylist' => 'Denne spillelisten er tom',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Slett spilleliste?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Er du sikker på at du vil slette "${name}"?',
 			'playlists.created' => 'Spilleliste opprettet',
 			'playlists.deleted' => 'Spilleliste slettet',
 			'playlists.itemAdded' => 'Lagt til i spilleliste',
 			'playlists.itemRemoved' => 'Fjernet fra spilleliste',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => 'Velg spilleliste',
 			'playlists.searchPlaylists' => 'Søk i spillelister...',
 			'playlists.errorCreating' => 'Kunne ikke opprette spilleliste',
@@ -5232,72 +5125,7 @@ extension on TranslationsNb {
 			'shaders.shaderImportFailed' => 'Kunne ikke importere shader',
 			'shaders.deleteShader' => 'Slett shader',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => 'Slette "${name}"?',
-			'companionRemote.title' => 'Fjernkontroll',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Tilkoblet ${name}',
-			'companionRemote.unknownDevice' => 'Ukjent enhet',
-			'companionRemote.session.startingServer' => 'Starter fjernserver...',
-			'companionRemote.session.hostAddress' => 'Vertsadresse',
-			'companionRemote.session.connected' => 'Tilkoblet',
-			'companionRemote.session.serverRunning' => 'Fjernserver aktiv',
-			'companionRemote.session.serverStopped' => 'Fjernserver stoppet',
-			'companionRemote.session.serverRunningDescription' => 'Mobilenheter på nettverket ditt kan koble til denne appen',
-			'companionRemote.session.serverStoppedDescription' => 'Start serveren for å la mobilenheter koble til',
-			'companionRemote.session.usePhoneToControl' => 'Bruk mobilenheten din til å styre denne appen',
-			'companionRemote.session.startServer' => 'Start server',
-			'companionRemote.session.stopServer' => 'Stopp server',
-			'companionRemote.session.minimize' => 'Minimer',
-			'companionRemote.session.manualAddressHint' => 'Manuell tilkoblingsadresse:',
-			'companionRemote.pairing.discoveryDescription' => 'Plezy-enheter med samme Plex-konto vises her',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Kobler til...',
-			'companionRemote.pairing.searchingForDevices' => 'Søker etter enheter...',
-			'companionRemote.pairing.noDevicesFound' => 'Ingen enheter funnet på nettverket ditt',
-			'companionRemote.pairing.noDevicesHint' => 'Åpne Plezy på datamaskinen, og bruk samme Wi-Fi',
-			'companionRemote.pairing.availableDevices' => 'Tilgjengelige enheter',
-			'companionRemote.pairing.manualConnection' => 'Manuell tilkobling',
-			'companionRemote.pairing.cryptoInitFailed' => 'Kunne ikke starte sikker tilkobling. Logg inn på Plex først.',
-			'companionRemote.pairing.validationHostRequired' => 'Vennligst oppgi vertsadresse',
-			'companionRemote.pairing.validationHostFormat' => 'Format må være IP:port (f.eks. 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'Tilkoblingen fikk tidsavbrudd. Bruk samme nettverk på begge enheter.',
-			'companionRemote.pairing.sessionNotFound' => 'Enhet ikke funnet. Sørg for at Plezy kjører på verten.',
-			'companionRemote.pairing.authFailed' => 'Autentisering mislyktes. Begge enheter må bruke samme Plex-konto.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Kunne ikke koble til: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Vil du koble fra fjernøkten?',
-			'companionRemote.remote.reconnecting' => 'Kobler til på nytt...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Forsøk ${current} av 5',
-			'companionRemote.remote.retryNow' => 'Prøv nå',
-			'companionRemote.remote.tabRemote' => 'Fjernkontroll',
-			'companionRemote.remote.tabPlay' => 'Spill av',
-			'companionRemote.remote.tabMore' => 'Mer',
-			'companionRemote.remote.menu' => 'Meny',
-			'companionRemote.remote.tabNavigation' => 'Fanenavigering',
-			'companionRemote.remote.tabDiscover' => 'Oppdag',
-			'companionRemote.remote.tabLibraries' => 'Biblioteker',
-			'companionRemote.remote.tabSearch' => 'Søk',
-			'companionRemote.remote.tabDownloads' => 'Nedlastinger',
-			'companionRemote.remote.tabSettings' => 'Innstillinger',
-			'companionRemote.remote.previous' => 'Forrige',
-			'companionRemote.remote.playPause' => 'Spill av/Pause',
 			'companionRemote.remote.next' => 'Neste',
-			'companionRemote.remote.seekBack' => 'Spol tilbake',
-			'companionRemote.remote.stop' => 'Stopp',
-			'companionRemote.remote.seekForward' => 'Spol fremover',
-			'companionRemote.remote.volume' => 'Volum',
-			'companionRemote.remote.volumeDown' => 'Ned',
-			'companionRemote.remote.volumeUp' => 'Opp',
-			'companionRemote.remote.fullscreen' => 'Fullskjerm',
-			'companionRemote.remote.subtitles' => 'Undertekster',
-			'companionRemote.remote.audio' => 'Lyd',
-			'companionRemote.remote.searchHint' => 'Søk på datamaskinen...',
-			'companionRemote.errors.noNetworkInterface' => 'Fant ingen nettverksgrensesnitt',
-			'companionRemote.errors.authenticationFailed' => 'Autentisering mislyktes',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Kunne ikke starte fjernserveren: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Kunne ikke sende fjernkommando: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Tidsavbrudd ved tilkobling til økt',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Kunne ikke koble til noen adresse',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'Tilkobling mistet etter ${attempts} forsøk',
-			'companionRemote.errors.connectionLost' => 'Tilkobling mistet',
-			'companionRemote.closedBeforeAuth' => 'Tilkoblingen ble lukket før autentisering',
 			'videoSettings.playbackSpeed' => 'Avspillingshastighet',
 			'videoSettings.normalSpeed' => 'Normal',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Aktiv (${duration})',
@@ -5412,8 +5240,6 @@ extension on TranslationsNb {
 			'metadataEdit.selectBackground' => 'Velg bakgrunn',
 			'metadataEdit.selectLogo' => 'Velg logo',
 			'metadataEdit.selectSquareArt' => 'Velg kvadratisk bilde',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'Fra URL',
 			'metadataEdit.uploadFile' => 'Last opp fil',
 			'metadataEdit.enterImageUrl' => 'Skriv inn bilde-URL',
@@ -5485,6 +5311,8 @@ extension on TranslationsNb {
 			'serverTasks.noTasks' => 'Ingen oppgaver kjører',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Tilkoblet',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Tilkoblet som @${username}',
 			'trakt.disconnectConfirm' => 'Koble fra Trakt-konto?',
 			'trakt.disconnectConfirmBody' => 'Plezy slutter å sende hendelser til Trakt. Du kan koble til igjen når som helst.',

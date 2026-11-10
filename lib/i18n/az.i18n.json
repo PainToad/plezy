@@ -76,7 +76,6 @@
     "shuffle": "Qarışdır",
     "addTo": "Əlavə et...",
     "createNew": "Yenisini yarat",
-    "connect": "Qoşul",
     "disconnect": "Əlaqəni kəs",
     "play": "Oynat",
     "pause": "Fasilə",
@@ -86,7 +85,6 @@
     "home": "Ana səhifə",
     "back": "Geri",
     "settings": "Tənzimləmələr",
-    "mute": "Səsi söndür",
     "ok": "Oldu",
     "off": "Söndürülüb",
     "options": "Seçimlər",
@@ -1277,15 +1275,11 @@
     "content": "kitabxana məzmunu",
     "selectLibrary": "Kitabxana seç",
     "filtersWithCount": "Filtrlər (${count})",
-    "noRecommendations": "Tövsiyə yoxdur",
     "noCollections": "Bu kitabxanada kolleksiya yoxdur",
-    "noGenres": "",
     "noFoldersFound": "Qovluq tapılmadı",
     "folders": "qovluqlar",
     "tabs": {
-      "recommended": "Tövsiyə olunanlar",
       "collections": "Kolleksiyalar",
-      "genres": "",
       "playlists": "Oynatma siyahıları"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Kanal dəyişdirilə bilmədi: ${reason}"
   },
   "collections": {
-    "title": "Kolleksiyalar",
     "collection": "Kolleksiya",
     "empty": "Kolleksiya boşdur",
     "deleteCollection": "Kolleksiyanı sil",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Kolleksiyalarda axtar..."
   },
   "playlists": {
-    "title": "Oynatma siyahıları",
     "playlist": "Oynatma siyahısı",
     "noPlaylists": "Oynatma siyahısı tapılmadı",
     "create": "Oynatma siyahısı yarat",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "\"${name}\" silinsin?"
   },
   "companionRemote": {
-    "title": "Köməkçi pult",
-    "connectedTo": "${name} cihazına qoşuldu",
-    "unknownDevice": "Bilinməyən cihaz",
-    "session": {
-      "startingServer": "Pult serveri başladılır...",
-      "hostAddress": "Əsas cihaz ünvanı",
-      "connected": "Qoşuldu",
-      "serverRunning": "Pult serveri aktivdir",
-      "serverStopped": "Pult serveri dayandırıldı",
-      "serverRunningDescription": "Şəbəkənizdəki mobil cihazlar qoşula bilər",
-      "serverStoppedDescription": "Mobil cihazların qoşulmasına icazə vermək üçün serveri başladın",
-      "usePhoneToControl": "Bu tətbiqi idarə etmək üçün mobil cihazınızı istifadə edin",
-      "startServer": "Serveri başlat",
-      "stopServer": "Serveri dayandır",
-      "minimize": "Yığ",
-      "manualAddressHint": "Əl ilə bağlantı ünvanı:"
-    },
-    "pairing": {
-      "discoveryDescription": "Eyni Plex hesabına sahib Plezy cihazları burada görünür",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Qoşulunur...",
-      "searchingForDevices": "Cihazlar axtarılır...",
-      "noDevicesFound": "Şəbəkənizdə cihaz tapılmadı",
-      "noDevicesHint": "Masaüstündə Plezy-ni açın və eyni Wi-Fi-dan istifadə edin",
-      "availableDevices": "Əlçatan cihazlar",
-      "manualConnection": "Əl ilə qoşulma",
-      "cryptoInitFailed": "Təhlükəsiz qoşulma başladılarkən xəta. Əvvəlcə Plex-ə daxil olun.",
-      "validationHostRequired": "Lütfən əsas cihaz ünvanını daxil edin",
-      "validationHostFormat": "Format IP:port şəklində olmalıdır",
-      "connectionTimedOut": "Qoşulma vaxtı bitdi. Hər iki cihazda eyni şəbəkədən istifadə edin.",
-      "sessionNotFound": "Cihaz tapılmadı.",
-      "authFailed": "Kimlik doğrulanması uğursuz oldu.",
-      "failedToConnect": "Qoşulma uğursuz oldu: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Pult seansından ayrılmaq istəyirsiniz?",
-      "reconnecting": "Yenidən qoşulunur...",
-      "attemptOf": "Cəhd ${current} / 5",
-      "retryNow": "İndi təzədən cəhd et",
-      "tabRemote": "Pult",
-      "tabPlay": "Oynat",
-      "tabMore": "Daha çox",
-      "menu": "Menyu",
-      "tabNavigation": "Naviqasiya",
-      "tabDiscover": "Kəşf et",
-      "tabLibraries": "Kitabxanalar",
-      "tabSearch": "Axtar",
-      "tabDownloads": "Yükləmələr",
-      "tabSettings": "Tənzimləmələr",
-      "previous": "Əvvəlki",
-      "playPause": "Oynat/Fasilə",
-      "next": "Növbəti",
-      "seekBack": "Geri sar",
-      "stop": "Saxla",
-      "seekForward": "İrəli sar",
-      "volume": "Səs",
-      "volumeDown": "Azalt",
-      "volumeUp": "Artır",
-      "fullscreen": "Tam ekran",
-      "subtitles": "Altyazılar",
-      "audio": "Səs",
-      "searchHint": "Masaüstündə axtar..."
+      "next": "Növbəti"
     },
-    "errors": {
-      "noNetworkInterface": "Şəbəkə interfeysi tapılmadı",
-      "authenticationFailed": "Kimlik doğrulanması uğursuz oldu",
-      "serverStartFailed": "Pult serveri başladıla bilmədi: ${error}",
-      "commandFailed": "Pult əmri göndərilə bilmədi: ${error}",
-      "joinTimedOut": "Seansa qoşulma vaxtı bitdi",
-      "failedToConnectAnyAddress": "Heç bir ünvana qoşuluna bilmədi",
-      "connectionLostAfterAttempts": "${attempts} cəhddən sonra əlaqə kəsildi",
-      "connectionLost": "Əlaqə kəsildi"
-    },
-    "closedBeforeAuth": "Bağlantı autentifikasiyadan əvvəl bağlandı"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Oynatma sürəti",

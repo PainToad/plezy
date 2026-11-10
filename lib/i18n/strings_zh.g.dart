@@ -175,7 +175,6 @@ class Translations$common$zh extends Translations$common$en {
 	@override String get shuffle => '随机播放';
 	@override String get addTo => '添加到…';
 	@override String get createNew => '新建';
-	@override String get connect => '连接';
 	@override String get disconnect => '断开连接';
 	@override String get play => '播放';
 	@override String get pause => '暂停';
@@ -185,7 +184,6 @@ class Translations$common$zh extends Translations$common$en {
 	@override String get home => '首页';
 	@override String get back => '返回';
 	@override String get settings => '设置';
-	@override String get mute => '静音';
 	@override String get ok => '确定';
 	@override String get off => '关闭';
 	@override String get options => '选项';
@@ -1408,7 +1406,6 @@ class Translations$libraries$zh extends Translations$libraries$en {
 	@override String get content => '媒体库内容';
 	@override String get selectLibrary => '选择媒体库';
 	@override String filtersWithCount({required Object count}) => '筛选器（${count}）';
-	@override String get noRecommendations => '暂无推荐';
 	@override String get noCollections => '此媒体库中没有合集';
 	@override String get noFoldersFound => '未找到文件夹';
 	@override String get folders => '文件夹';
@@ -1652,7 +1649,6 @@ class Translations$collections$zh extends Translations$collections$en {
 	final TranslationsZh _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '合集';
 	@override String get collection => '合集';
 	@override String get empty => '合集为空';
 	@override String get deleteCollection => '删除合集';
@@ -1681,7 +1677,6 @@ class Translations$playlists$zh extends Translations$playlists$en {
 	final TranslationsZh _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '播放列表';
 	@override String get playlist => '播放列表';
 	@override String get noPlaylists => '未找到播放列表';
 	@override String get create => '创建播放列表';
@@ -2005,14 +2000,7 @@ class Translations$companionRemote$zh extends Translations$companionRemote$en {
 	final TranslationsZh _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '遥控器';
-	@override String connectedTo({required Object name}) => '已连接到 ${name}';
-	@override String get unknownDevice => '未知设备';
-	@override late final Translations$companionRemote$session$zh session = Translations$companionRemote$session$zh.internal(_root);
-	@override late final Translations$companionRemote$pairing$zh pairing = Translations$companionRemote$pairing$zh.internal(_root);
 	@override late final Translations$companionRemote$remote$zh remote = Translations$companionRemote$remote$zh.internal(_root);
-	@override late final Translations$companionRemote$errors$zh errors = Translations$companionRemote$errors$zh.internal(_root);
-	@override String get closedBeforeAuth => '连接在身份验证前已关闭';
 }
 
 // Path: videoSettings
@@ -2686,7 +2674,6 @@ class Translations$libraries$tabs$zh extends Translations$libraries$tabs$en {
 	final TranslationsZh _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => '推荐';
 	@override String get collections => '合集';
 	@override String get playlists => '播放列表';
 }
@@ -3156,51 +3143,6 @@ class Translations$downloads$groupings$zh extends Translations$downloads$groupin
 	@override String get collections => '合集';
 }
 
-// Path: companionRemote.session
-class Translations$companionRemote$session$zh extends Translations$companionRemote$session$en {
-	Translations$companionRemote$session$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
-
-	final TranslationsZh _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => '正在启动远程服务器…';
-	@override String get hostAddress => '主机地址';
-	@override String get connected => '已连接';
-	@override String get serverRunning => '远程服务器已启动';
-	@override String get serverStopped => '远程服务器已停止';
-	@override String get serverRunningDescription => '网络上的移动设备可以连接到此应用';
-	@override String get serverStoppedDescription => '启动服务器以允许移动设备连接';
-	@override String get usePhoneToControl => '使用移动设备控制此应用';
-	@override String get startServer => '启动服务器';
-	@override String get stopServer => '停止服务器';
-	@override String get minimize => '最小化';
-	@override String get manualAddressHint => '手动连接地址：';
-}
-
-// Path: companionRemote.pairing
-class Translations$companionRemote$pairing$zh extends Translations$companionRemote$pairing$en {
-	Translations$companionRemote$pairing$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
-
-	final TranslationsZh _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => '使用同一 Plex 账号的 Plezy 设备会显示在这里';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => '正在连接…';
-	@override String get searchingForDevices => '正在搜索设备…';
-	@override String get noDevicesFound => '未在网络中找到设备';
-	@override String get noDevicesHint => '请在桌面端打开 Plezy，并确保设备连接到同一 Wi-Fi 网络';
-	@override String get availableDevices => '可用设备';
-	@override String get manualConnection => '手动连接';
-	@override String get cryptoInitFailed => '无法启动安全连接。请先登录 Plex。';
-	@override String get validationHostRequired => '请输入主机地址';
-	@override String get validationHostFormat => '格式必须为 IP:端口（例如 192.168.1.100:48632）';
-	@override String get connectionTimedOut => '连接超时。请在两台设备上使用同一网络。';
-	@override String get sessionNotFound => '未找到设备。请确认 Plezy 正在主机上运行。';
-	@override String get authFailed => '认证失败。两台设备需要使用同一 Plex 账号。';
-	@override String failedToConnect({required Object error}) => '连接失败：${error}';
-}
-
 // Path: companionRemote.remote
 class Translations$companionRemote$remote$zh extends Translations$companionRemote$remote$en {
 	Translations$companionRemote$remote$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
@@ -3208,50 +3150,7 @@ class Translations$companionRemote$remote$zh extends Translations$companionRemot
 	final TranslationsZh _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => '确定要断开遥控会话吗？';
-	@override String get reconnecting => '正在重新连接…';
-	@override String attemptOf({required Object current}) => '第 ${current} 次尝试，共 5 次';
-	@override String get retryNow => '立即重试';
-	@override String get tabRemote => '遥控器';
-	@override String get tabPlay => '播放';
-	@override String get tabMore => '更多';
-	@override String get menu => '菜单';
-	@override String get tabNavigation => '导航';
-	@override String get tabDiscover => '发现';
-	@override String get tabLibraries => '媒体库';
-	@override String get tabSearch => '搜索';
-	@override String get tabDownloads => '下载';
-	@override String get tabSettings => '设置';
-	@override String get previous => '上一个';
-	@override String get playPause => '播放/暂停';
 	@override String get next => '下一个';
-	@override String get seekBack => '快退';
-	@override String get stop => '停止';
-	@override String get seekForward => '快进';
-	@override String get volume => '音量';
-	@override String get volumeDown => '降低音量';
-	@override String get volumeUp => '提高音量';
-	@override String get fullscreen => '全屏';
-	@override String get subtitles => '字幕';
-	@override String get audio => '音频';
-	@override String get searchHint => '在桌面端搜索…';
-}
-
-// Path: companionRemote.errors
-class Translations$companionRemote$errors$zh extends Translations$companionRemote$errors$en {
-	Translations$companionRemote$errors$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
-
-	final TranslationsZh _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => '未找到网络接口';
-	@override String get authenticationFailed => '身份验证失败';
-	@override String serverStartFailed({required Object error}) => '无法启动远程服务器：${error}';
-	@override String commandFailed({required Object error}) => '无法发送远程命令：${error}';
-	@override String get joinTimedOut => '加入会话超时';
-	@override String get failedToConnectAnyAddress => '无法连接到任何地址';
-	@override String connectionLostAfterAttempts({required Object attempts}) => '${attempts} 次尝试后连接丢失';
-	@override String get connectionLost => '连接丢失';
 }
 
 // Path: services.names
@@ -3414,7 +3313,6 @@ extension on TranslationsZh {
 			'common.shuffle' => '随机播放',
 			'common.addTo' => '添加到…',
 			'common.createNew' => '新建',
-			'common.connect' => '连接',
 			'common.disconnect' => '断开连接',
 			'common.play' => '播放',
 			'common.pause' => '暂停',
@@ -3424,7 +3322,6 @@ extension on TranslationsZh {
 			'common.home' => '首页',
 			'common.back' => '返回',
 			'common.settings' => '设置',
-			'common.mute' => '静音',
 			'common.ok' => '确定',
 			'common.off' => '关闭',
 			'common.options' => '选项',
@@ -3858,10 +3755,10 @@ extension on TranslationsZh {
 			'themeEditor.opacity' => '不透明度',
 			'themeEditor.hexHint' => '#RRGGBB 或 #AARRGGBB',
 			'themeEditor.fromOtherThemes' => '来自其他主题',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} · ${color}',
 			'themeEditor.contrast.textOnBg' => '背景上的文字',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => '表面上的文字',
 			'themeEditor.contrast.textMutedOnBg' => '背景上的次要文字',
 			'themeEditor.contrast.textMutedOnSurface' => '表面上的次要文字',
@@ -4372,10 +4269,10 @@ extension on TranslationsZh {
 			'connections.addConnectionSubtitleNoProfile' => '使用 Plex 登录，或连接 Jellyfin 或 Emby 服务器',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '添加到 ${displayName}：Plex、Jellyfin、Emby，或其他用户资料的连接',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} 的会话已过期',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} 个服务器的会话已过期',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} 拒绝此账户访问',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} 台服务器拒绝此账户访问',
 			'connections.signInAgain' => '重新登录',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => '编辑 ${product} 连接',
@@ -4522,11 +4419,9 @@ extension on TranslationsZh {
 			'libraries.content' => '媒体库内容',
 			'libraries.selectLibrary' => '选择媒体库',
 			'libraries.filtersWithCount' => ({required Object count}) => '筛选器（${count}）',
-			'libraries.noRecommendations' => '暂无推荐',
 			'libraries.noCollections' => '此媒体库中没有合集',
 			'libraries.noFoldersFound' => '未找到文件夹',
 			'libraries.folders' => '文件夹',
-			'libraries.tabs.recommended' => '推荐',
 			'libraries.tabs.collections' => '合集',
 			'libraries.tabs.playlists' => '播放列表',
 			'libraries.groupings.title' => '分组',
@@ -4854,7 +4749,6 @@ extension on TranslationsZh {
 			'liveTv.failedToBuildStreamUrl' => '无法生成视频流 URL',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => '无法启动该频道：${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => '无法切换频道：${reason}',
-			'collections.title' => '合集',
 			'collections.collection' => '合集',
 			'collections.empty' => '合集为空',
 			'collections.deleteCollection' => '删除合集',
@@ -4874,7 +4768,6 @@ extension on TranslationsZh {
 			'collections.removeFromCollectionFailed' => '从合集移除失败',
 			'collections.removeFromCollectionError' => ({required Object error}) => '从合集移除时出错：${error}',
 			'collections.searchCollections' => '搜索合集…',
-			'playlists.title' => '播放列表',
 			'playlists.playlist' => '播放列表',
 			'playlists.noPlaylists' => '未找到播放列表',
 			'playlists.create' => '创建播放列表',
@@ -4886,14 +4779,14 @@ extension on TranslationsZh {
 			'playlists.itemCount' => ({required Object count}) => '${count} 个项目',
 			'playlists.oneItem' => '1 个项目',
 			'playlists.emptyPlaylist' => '此播放列表为空',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => '删除播放列表？',
 			'playlists.deleteMessage' => ({required Object name}) => '确定要删除“${name}”吗？',
 			'playlists.created' => '播放列表已创建',
 			'playlists.deleted' => '播放列表已删除',
 			'playlists.itemAdded' => '已添加到播放列表',
 			'playlists.itemRemoved' => '已从播放列表中移除',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => '选择播放列表',
 			'playlists.searchPlaylists' => '搜索播放列表…',
 			'playlists.errorCreating' => '创建播放列表失败',
@@ -5220,72 +5113,7 @@ extension on TranslationsZh {
 			'shaders.shaderImportFailed' => '导入着色器失败',
 			'shaders.deleteShader' => '删除着色器',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => '删除“${name}”？',
-			'companionRemote.title' => '遥控器',
-			'companionRemote.connectedTo' => ({required Object name}) => '已连接到 ${name}',
-			'companionRemote.unknownDevice' => '未知设备',
-			'companionRemote.session.startingServer' => '正在启动远程服务器…',
-			'companionRemote.session.hostAddress' => '主机地址',
-			'companionRemote.session.connected' => '已连接',
-			'companionRemote.session.serverRunning' => '远程服务器已启动',
-			'companionRemote.session.serverStopped' => '远程服务器已停止',
-			'companionRemote.session.serverRunningDescription' => '网络上的移动设备可以连接到此应用',
-			'companionRemote.session.serverStoppedDescription' => '启动服务器以允许移动设备连接',
-			'companionRemote.session.usePhoneToControl' => '使用移动设备控制此应用',
-			'companionRemote.session.startServer' => '启动服务器',
-			'companionRemote.session.stopServer' => '停止服务器',
-			'companionRemote.session.minimize' => '最小化',
-			'companionRemote.session.manualAddressHint' => '手动连接地址：',
-			'companionRemote.pairing.discoveryDescription' => '使用同一 Plex 账号的 Plezy 设备会显示在这里',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => '正在连接…',
-			'companionRemote.pairing.searchingForDevices' => '正在搜索设备…',
-			'companionRemote.pairing.noDevicesFound' => '未在网络中找到设备',
-			'companionRemote.pairing.noDevicesHint' => '请在桌面端打开 Plezy，并确保设备连接到同一 Wi-Fi 网络',
-			'companionRemote.pairing.availableDevices' => '可用设备',
-			'companionRemote.pairing.manualConnection' => '手动连接',
-			'companionRemote.pairing.cryptoInitFailed' => '无法启动安全连接。请先登录 Plex。',
-			'companionRemote.pairing.validationHostRequired' => '请输入主机地址',
-			'companionRemote.pairing.validationHostFormat' => '格式必须为 IP:端口（例如 192.168.1.100:48632）',
-			'companionRemote.pairing.connectionTimedOut' => '连接超时。请在两台设备上使用同一网络。',
-			'companionRemote.pairing.sessionNotFound' => '未找到设备。请确认 Plezy 正在主机上运行。',
-			'companionRemote.pairing.authFailed' => '认证失败。两台设备需要使用同一 Plex 账号。',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => '连接失败：${error}',
-			'companionRemote.remote.disconnectConfirm' => '确定要断开遥控会话吗？',
-			'companionRemote.remote.reconnecting' => '正在重新连接…',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => '第 ${current} 次尝试，共 5 次',
-			'companionRemote.remote.retryNow' => '立即重试',
-			'companionRemote.remote.tabRemote' => '遥控器',
-			'companionRemote.remote.tabPlay' => '播放',
-			'companionRemote.remote.tabMore' => '更多',
-			'companionRemote.remote.menu' => '菜单',
-			'companionRemote.remote.tabNavigation' => '导航',
-			'companionRemote.remote.tabDiscover' => '发现',
-			'companionRemote.remote.tabLibraries' => '媒体库',
-			'companionRemote.remote.tabSearch' => '搜索',
-			'companionRemote.remote.tabDownloads' => '下载',
-			'companionRemote.remote.tabSettings' => '设置',
-			'companionRemote.remote.previous' => '上一个',
-			'companionRemote.remote.playPause' => '播放/暂停',
 			'companionRemote.remote.next' => '下一个',
-			'companionRemote.remote.seekBack' => '快退',
-			'companionRemote.remote.stop' => '停止',
-			'companionRemote.remote.seekForward' => '快进',
-			'companionRemote.remote.volume' => '音量',
-			'companionRemote.remote.volumeDown' => '降低音量',
-			'companionRemote.remote.volumeUp' => '提高音量',
-			'companionRemote.remote.fullscreen' => '全屏',
-			'companionRemote.remote.subtitles' => '字幕',
-			'companionRemote.remote.audio' => '音频',
-			'companionRemote.remote.searchHint' => '在桌面端搜索…',
-			'companionRemote.errors.noNetworkInterface' => '未找到网络接口',
-			'companionRemote.errors.authenticationFailed' => '身份验证失败',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => '无法启动远程服务器：${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => '无法发送远程命令：${error}',
-			'companionRemote.errors.joinTimedOut' => '加入会话超时',
-			'companionRemote.errors.failedToConnectAnyAddress' => '无法连接到任何地址',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '${attempts} 次尝试后连接丢失',
-			'companionRemote.errors.connectionLost' => '连接丢失',
-			'companionRemote.closedBeforeAuth' => '连接在身份验证前已关闭',
 			'videoSettings.playbackSpeed' => '播放速度',
 			'videoSettings.normalSpeed' => '正常',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => '运行中（${duration}）',
@@ -5400,8 +5228,6 @@ extension on TranslationsZh {
 			'metadataEdit.selectBackground' => '选择背景',
 			'metadataEdit.selectLogo' => '选择标志',
 			'metadataEdit.selectSquareArt' => '选择方形图片',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => '通过 URL',
 			'metadataEdit.uploadFile' => '上传文件',
 			'metadataEdit.enterImageUrl' => '输入图片 URL',
@@ -5473,6 +5299,8 @@ extension on TranslationsZh {
 			'serverTasks.noTasks' => '没有正在运行的任务',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => '已连接',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '已以 @${username} 身份连接',
 			'trakt.disconnectConfirm' => '断开 Trakt 账户？',
 			'trakt.disconnectConfirmBody' => 'Plezy 将停止向 Trakt 发送事件。你可随时重新连接。',

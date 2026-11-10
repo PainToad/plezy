@@ -175,7 +175,6 @@ class _Translations$common$ru extends Translations$common$en {
 	@override String get shuffle => 'Перемешать';
 	@override String get addTo => 'Добавить в...';
 	@override String get createNew => 'Создать новый';
-	@override String get connect => 'Подключить';
 	@override String get disconnect => 'Отключить';
 	@override String get play => 'Воспроизвести';
 	@override String get pause => 'Пауза';
@@ -185,7 +184,6 @@ class _Translations$common$ru extends Translations$common$en {
 	@override String get home => 'Главная';
 	@override String get back => 'Назад';
 	@override String get settings => 'Настройки';
-	@override String get mute => 'Без звука';
 	@override String get ok => 'OK';
 	@override String get off => 'Выкл.';
 	@override String get options => 'Параметры';
@@ -1423,7 +1421,6 @@ class _Translations$libraries$ru extends Translations$libraries$en {
 	@override String get content => 'содержимое библиотеки';
 	@override String get selectLibrary => 'Выбрать библиотеку';
 	@override String filtersWithCount({required Object count}) => 'Фильтры (${count})';
-	@override String get noRecommendations => 'Рекомендации недоступны';
 	@override String get noCollections => 'В этой библиотеке нет коллекций';
 	@override String get noFoldersFound => 'Папки не найдены';
 	@override String get folders => 'папки';
@@ -1676,7 +1673,6 @@ class _Translations$collections$ru extends Translations$collections$en {
 	final TranslationsRu _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Коллекции';
 	@override String get collection => 'Коллекция';
 	@override String get empty => 'Коллекция пуста';
 	@override String get deleteCollection => 'Удалить коллекцию';
@@ -1705,7 +1701,6 @@ class _Translations$playlists$ru extends Translations$playlists$en {
 	final TranslationsRu _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Плейлисты';
 	@override String get playlist => 'Плейлист';
 	@override String get noPlaylists => 'Плейлисты не найдены';
 	@override String get create => 'Создать плейлист';
@@ -2035,14 +2030,7 @@ class _Translations$companionRemote$ru extends Translations$companionRemote$en {
 	final TranslationsRu _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Пульт управления';
-	@override String connectedTo({required Object name}) => 'Подключено к ${name}';
-	@override String get unknownDevice => 'Неизвестное устройство';
-	@override late final _Translations$companionRemote$session$ru session = _Translations$companionRemote$session$ru._(_root);
-	@override late final _Translations$companionRemote$pairing$ru pairing = _Translations$companionRemote$pairing$ru._(_root);
 	@override late final _Translations$companionRemote$remote$ru remote = _Translations$companionRemote$remote$ru._(_root);
-	@override late final _Translations$companionRemote$errors$ru errors = _Translations$companionRemote$errors$ru._(_root);
-	@override String get closedBeforeAuth => 'Соединение было закрыто до аутентификации';
 }
 
 // Path: videoSettings
@@ -2716,7 +2704,6 @@ class _Translations$libraries$tabs$ru extends Translations$libraries$tabs$en {
 	final TranslationsRu _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => 'Рекомендуемые';
 	@override String get collections => 'Коллекции';
 	@override String get playlists => 'Плейлисты';
 }
@@ -3192,51 +3179,6 @@ class _Translations$downloads$groupings$ru extends Translations$downloads$groupi
 	@override String get collections => 'Коллекции';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$ru extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$ru._(TranslationsRu root) : this._root = root, super.internal(root);
-
-	final TranslationsRu _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => 'Запуск удалённого сервера...';
-	@override String get hostAddress => 'Адрес хоста';
-	@override String get connected => 'Подключено';
-	@override String get serverRunning => 'Удалённый сервер активен';
-	@override String get serverStopped => 'Удалённый сервер остановлен';
-	@override String get serverRunningDescription => 'Мобильные устройства в вашей сети могут подключаться к этому приложению';
-	@override String get serverStoppedDescription => 'Запустите сервер, чтобы разрешить подключение мобильных устройств';
-	@override String get usePhoneToControl => 'Используйте мобильное устройство для управления этим приложением';
-	@override String get startServer => 'Запустить сервер';
-	@override String get stopServer => 'Остановить сервер';
-	@override String get minimize => 'Свернуть';
-	@override String get manualAddressHint => 'Адрес для подключения вручную:';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$ru extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$ru._(TranslationsRu root) : this._root = root, super.internal(root);
-
-	final TranslationsRu _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => 'Устройства Plezy с тем же аккаунтом Plex появятся здесь';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => 'Подключение...';
-	@override String get searchingForDevices => 'Поиск устройств...';
-	@override String get noDevicesFound => 'Устройства в вашей сети не найдены';
-	@override String get noDevicesHint => 'Откройте Plezy на компьютере и подключите оба устройства к одной сети Wi-Fi';
-	@override String get availableDevices => 'Доступные устройства';
-	@override String get manualConnection => 'Ручное подключение';
-	@override String get cryptoInitFailed => 'Не удалось установить защищённое соединение. Сначала войдите в Plex.';
-	@override String get validationHostRequired => 'Введите адрес хоста';
-	@override String get validationHostFormat => 'Формат должен быть IP:порт (например, 192.168.1.100:48632)';
-	@override String get connectionTimedOut => 'Время подключения истекло. Используйте одну сеть на обоих устройствах.';
-	@override String get sessionNotFound => 'Устройство не найдено. Убедитесь, что Plezy запущен на хосте.';
-	@override String get authFailed => 'Аутентификация не удалась. На обоих устройствах нужен один аккаунт Plex.';
-	@override String failedToConnect({required Object error}) => 'Не удалось подключиться: ${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$ru extends Translations$companionRemote$remote$en {
 	_Translations$companionRemote$remote$ru._(TranslationsRu root) : this._root = root, super.internal(root);
@@ -3244,50 +3186,7 @@ class _Translations$companionRemote$remote$ru extends Translations$companionRemo
 	final TranslationsRu _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => 'Отключиться от удалённой сессии?';
-	@override String get reconnecting => 'Переподключение...';
-	@override String attemptOf({required Object current}) => 'Попытка ${current} из 5';
-	@override String get retryNow => 'Повторить сейчас';
-	@override String get tabRemote => 'Пульт';
-	@override String get tabPlay => 'Воспроизведение';
-	@override String get tabMore => 'Ещё';
-	@override String get menu => 'Меню';
-	@override String get tabNavigation => 'Навигация';
-	@override String get tabDiscover => 'Обзор';
-	@override String get tabLibraries => 'Библиотеки';
-	@override String get tabSearch => 'Поиск';
-	@override String get tabDownloads => 'Загрузки';
-	@override String get tabSettings => 'Настройки';
-	@override String get previous => 'Предыдущий';
-	@override String get playPause => 'Воспроизведение/Пауза';
 	@override String get next => 'Следующий';
-	@override String get seekBack => 'Назад';
-	@override String get stop => 'Стоп';
-	@override String get seekForward => 'Вперёд';
-	@override String get volume => 'Громкость';
-	@override String get volumeDown => 'Тише';
-	@override String get volumeUp => 'Громче';
-	@override String get fullscreen => 'Полноэкранный';
-	@override String get subtitles => 'Субтитры';
-	@override String get audio => 'Аудио';
-	@override String get searchHint => 'Поиск на десктопе...';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$ru extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$ru._(TranslationsRu root) : this._root = root, super.internal(root);
-
-	final TranslationsRu _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => 'Сетевой интерфейс не найден';
-	@override String get authenticationFailed => 'Ошибка аутентификации';
-	@override String serverStartFailed({required Object error}) => 'Не удалось запустить удалённый сервер: ${error}';
-	@override String commandFailed({required Object error}) => 'Не удалось отправить удалённую команду: ${error}';
-	@override String get joinTimedOut => 'Время подключения к сеансу истекло';
-	@override String get failedToConnectAnyAddress => 'Не удалось подключиться ни к одному адресу';
-	@override String connectionLostAfterAttempts({required Object attempts}) => 'Соединение потеряно после ${attempts} попыток';
-	@override String get connectionLost => 'Соединение потеряно';
 }
 
 // Path: services.names
@@ -3450,7 +3349,6 @@ extension on TranslationsRu {
 			'common.shuffle' => 'Перемешать',
 			'common.addTo' => 'Добавить в...',
 			'common.createNew' => 'Создать новый',
-			'common.connect' => 'Подключить',
 			'common.disconnect' => 'Отключить',
 			'common.play' => 'Воспроизвести',
 			'common.pause' => 'Пауза',
@@ -3460,7 +3358,6 @@ extension on TranslationsRu {
 			'common.home' => 'Главная',
 			'common.back' => 'Назад',
 			'common.settings' => 'Настройки',
-			'common.mute' => 'Без звука',
 			'common.ok' => 'OK',
 			'common.off' => 'Выкл.',
 			'common.options' => 'Параметры',
@@ -3894,10 +3791,10 @@ extension on TranslationsRu {
 			'themeEditor.opacity' => 'Непрозрачность',
 			'themeEditor.hexHint' => '#RRGGBB или #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Из других тем',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} темы «${theme}»',
 			'themeEditor.contrast.textOnBg' => 'Текст на фоне',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'Текст на поверхности',
 			'themeEditor.contrast.textMutedOnBg' => 'Второстепенный текст на фоне',
 			'themeEditor.contrast.textMutedOnSurface' => 'Второстепенный текст на поверхности',
@@ -4408,10 +4305,10 @@ extension on TranslationsRu {
 			'connections.addConnectionSubtitleNoProfile' => 'Войдите через Plex или подключите сервер Jellyfin или Emby',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Добавить к ${displayName}: Plex, Jellyfin, Emby или подключение другого профиля',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Сессия истекла для ${name}',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Сессия истекла для ${count} серверов',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} отказал в доступе этой учётной записи',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => 'Доступ для этой учётной записи запрещён на ${count} серверах',
 			'connections.signInAgain' => 'Войти снова',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => 'Изменить подключение ${product}',
@@ -4558,11 +4455,9 @@ extension on TranslationsRu {
 			'libraries.content' => 'содержимое библиотеки',
 			'libraries.selectLibrary' => 'Выбрать библиотеку',
 			'libraries.filtersWithCount' => ({required Object count}) => 'Фильтры (${count})',
-			'libraries.noRecommendations' => 'Рекомендации недоступны',
 			'libraries.noCollections' => 'В этой библиотеке нет коллекций',
 			'libraries.noFoldersFound' => 'Папки не найдены',
 			'libraries.folders' => 'папки',
-			'libraries.tabs.recommended' => 'Рекомендуемые',
 			'libraries.tabs.collections' => 'Коллекции',
 			'libraries.tabs.playlists' => 'Плейлисты',
 			'libraries.groupings.title' => 'Группировка',
@@ -4890,7 +4785,6 @@ extension on TranslationsRu {
 			'liveTv.failedToBuildStreamUrl' => 'Не удалось сформировать URL потока',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Не удалось запустить канал: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Не удалось переключить канал: ${reason}',
-			'collections.title' => 'Коллекции',
 			'collections.collection' => 'Коллекция',
 			'collections.empty' => 'Коллекция пуста',
 			'collections.deleteCollection' => 'Удалить коллекцию',
@@ -4910,7 +4804,6 @@ extension on TranslationsRu {
 			'collections.removeFromCollectionFailed' => 'Не удалось удалить из коллекции',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'Ошибка удаления из коллекции: ${error}',
 			'collections.searchCollections' => 'Поиск коллекций...',
-			'playlists.title' => 'Плейлисты',
 			'playlists.playlist' => 'Плейлист',
 			'playlists.noPlaylists' => 'Плейлисты не найдены',
 			'playlists.create' => 'Создать плейлист',
@@ -4922,14 +4815,14 @@ extension on TranslationsRu {
 			'playlists.itemCount' => ({required Object count}) => '${count} элементов',
 			'playlists.oneItem' => '1 элемент',
 			'playlists.emptyPlaylist' => 'Этот плейлист пуст',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Удалить плейлист?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Вы уверены, что хотите удалить "${name}"?',
 			'playlists.created' => 'Плейлист создан',
 			'playlists.deleted' => 'Плейлист удалён',
 			'playlists.itemAdded' => 'Добавлено в плейлист',
 			'playlists.itemRemoved' => 'Удалено из плейлиста',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => 'Выбрать плейлист',
 			'playlists.searchPlaylists' => 'Поиск плейлистов...',
 			'playlists.errorCreating' => 'Не удалось создать плейлист',
@@ -5256,72 +5149,7 @@ extension on TranslationsRu {
 			'shaders.shaderImportFailed' => 'Не удалось импортировать шейдер',
 			'shaders.deleteShader' => 'Удалить шейдер',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => 'Удалить "${name}"?',
-			'companionRemote.title' => 'Пульт управления',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Подключено к ${name}',
-			'companionRemote.unknownDevice' => 'Неизвестное устройство',
-			'companionRemote.session.startingServer' => 'Запуск удалённого сервера...',
-			'companionRemote.session.hostAddress' => 'Адрес хоста',
-			'companionRemote.session.connected' => 'Подключено',
-			'companionRemote.session.serverRunning' => 'Удалённый сервер активен',
-			'companionRemote.session.serverStopped' => 'Удалённый сервер остановлен',
-			'companionRemote.session.serverRunningDescription' => 'Мобильные устройства в вашей сети могут подключаться к этому приложению',
-			'companionRemote.session.serverStoppedDescription' => 'Запустите сервер, чтобы разрешить подключение мобильных устройств',
-			'companionRemote.session.usePhoneToControl' => 'Используйте мобильное устройство для управления этим приложением',
-			'companionRemote.session.startServer' => 'Запустить сервер',
-			'companionRemote.session.stopServer' => 'Остановить сервер',
-			'companionRemote.session.minimize' => 'Свернуть',
-			'companionRemote.session.manualAddressHint' => 'Адрес для подключения вручную:',
-			'companionRemote.pairing.discoveryDescription' => 'Устройства Plezy с тем же аккаунтом Plex появятся здесь',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Подключение...',
-			'companionRemote.pairing.searchingForDevices' => 'Поиск устройств...',
-			'companionRemote.pairing.noDevicesFound' => 'Устройства в вашей сети не найдены',
-			'companionRemote.pairing.noDevicesHint' => 'Откройте Plezy на компьютере и подключите оба устройства к одной сети Wi-Fi',
-			'companionRemote.pairing.availableDevices' => 'Доступные устройства',
-			'companionRemote.pairing.manualConnection' => 'Ручное подключение',
-			'companionRemote.pairing.cryptoInitFailed' => 'Не удалось установить защищённое соединение. Сначала войдите в Plex.',
-			'companionRemote.pairing.validationHostRequired' => 'Введите адрес хоста',
-			'companionRemote.pairing.validationHostFormat' => 'Формат должен быть IP:порт (например, 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'Время подключения истекло. Используйте одну сеть на обоих устройствах.',
-			'companionRemote.pairing.sessionNotFound' => 'Устройство не найдено. Убедитесь, что Plezy запущен на хосте.',
-			'companionRemote.pairing.authFailed' => 'Аутентификация не удалась. На обоих устройствах нужен один аккаунт Plex.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Не удалось подключиться: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Отключиться от удалённой сессии?',
-			'companionRemote.remote.reconnecting' => 'Переподключение...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Попытка ${current} из 5',
-			'companionRemote.remote.retryNow' => 'Повторить сейчас',
-			'companionRemote.remote.tabRemote' => 'Пульт',
-			'companionRemote.remote.tabPlay' => 'Воспроизведение',
-			'companionRemote.remote.tabMore' => 'Ещё',
-			'companionRemote.remote.menu' => 'Меню',
-			'companionRemote.remote.tabNavigation' => 'Навигация',
-			'companionRemote.remote.tabDiscover' => 'Обзор',
-			'companionRemote.remote.tabLibraries' => 'Библиотеки',
-			'companionRemote.remote.tabSearch' => 'Поиск',
-			'companionRemote.remote.tabDownloads' => 'Загрузки',
-			'companionRemote.remote.tabSettings' => 'Настройки',
-			'companionRemote.remote.previous' => 'Предыдущий',
-			'companionRemote.remote.playPause' => 'Воспроизведение/Пауза',
 			'companionRemote.remote.next' => 'Следующий',
-			'companionRemote.remote.seekBack' => 'Назад',
-			'companionRemote.remote.stop' => 'Стоп',
-			'companionRemote.remote.seekForward' => 'Вперёд',
-			'companionRemote.remote.volume' => 'Громкость',
-			'companionRemote.remote.volumeDown' => 'Тише',
-			'companionRemote.remote.volumeUp' => 'Громче',
-			'companionRemote.remote.fullscreen' => 'Полноэкранный',
-			'companionRemote.remote.subtitles' => 'Субтитры',
-			'companionRemote.remote.audio' => 'Аудио',
-			'companionRemote.remote.searchHint' => 'Поиск на десктопе...',
-			'companionRemote.errors.noNetworkInterface' => 'Сетевой интерфейс не найден',
-			'companionRemote.errors.authenticationFailed' => 'Ошибка аутентификации',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Не удалось запустить удалённый сервер: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Не удалось отправить удалённую команду: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Время подключения к сеансу истекло',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Не удалось подключиться ни к одному адресу',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'Соединение потеряно после ${attempts} попыток',
-			'companionRemote.errors.connectionLost' => 'Соединение потеряно',
-			'companionRemote.closedBeforeAuth' => 'Соединение было закрыто до аутентификации',
 			'videoSettings.playbackSpeed' => 'Скорость воспроизведения',
 			'videoSettings.normalSpeed' => 'Обычная',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Активен (${duration})',
@@ -5436,8 +5264,6 @@ extension on TranslationsRu {
 			'metadataEdit.selectBackground' => 'Выбрать фон',
 			'metadataEdit.selectLogo' => 'Выбрать логотип',
 			'metadataEdit.selectSquareArt' => 'Выбрать квадратное изображение',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'По URL',
 			'metadataEdit.uploadFile' => 'Загрузить файл',
 			'metadataEdit.enterImageUrl' => 'Введите URL изображения',
@@ -5509,6 +5335,8 @@ extension on TranslationsRu {
 			'serverTasks.noTasks' => 'Нет выполняемых задач',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Подключено',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Подключено как @${username}',
 			'trakt.disconnectConfirm' => 'Отключить аккаунт Trakt?',
 			'trakt.disconnectConfirmBody' => 'Plezy перестанет отправлять события в Trakt. Можно подключить снова в любое время.',

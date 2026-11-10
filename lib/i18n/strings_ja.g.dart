@@ -175,7 +175,6 @@ class _Translations$common$ja extends Translations$common$en {
 	@override String get shuffle => 'シャッフル';
 	@override String get addTo => '追加先…';
 	@override String get createNew => '新規作成';
-	@override String get connect => '接続';
 	@override String get disconnect => '切断';
 	@override String get play => '再生';
 	@override String get pause => '一時停止';
@@ -185,7 +184,6 @@ class _Translations$common$ja extends Translations$common$en {
 	@override String get home => 'ホーム';
 	@override String get back => '戻る';
 	@override String get settings => '設定';
-	@override String get mute => 'ミュート';
 	@override String get ok => 'OK';
 	@override String get off => 'オフ';
 	@override String get options => 'オプション';
@@ -1408,7 +1406,6 @@ class _Translations$libraries$ja extends Translations$libraries$en {
 	@override String get content => 'ライブラリコンテンツ';
 	@override String get selectLibrary => 'ライブラリを選択';
 	@override String filtersWithCount({required Object count}) => 'フィルター (${count})';
-	@override String get noRecommendations => 'おすすめがありません';
 	@override String get noCollections => 'このライブラリにコレクションがありません';
 	@override String get noFoldersFound => 'フォルダが見つかりません';
 	@override String get folders => 'フォルダ';
@@ -1652,7 +1649,6 @@ class _Translations$collections$ja extends Translations$collections$en {
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'コレクション';
 	@override String get collection => 'コレクション';
 	@override String get empty => 'コレクションは空です';
 	@override String get deleteCollection => 'コレクションを削除';
@@ -1681,7 +1677,6 @@ class _Translations$playlists$ja extends Translations$playlists$en {
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'プレイリスト';
 	@override String get playlist => 'プレイリスト';
 	@override String get noPlaylists => 'プレイリストが見つかりません';
 	@override String get create => 'プレイリストを作成';
@@ -2005,14 +2000,7 @@ class _Translations$companionRemote$ja extends Translations$companionRemote$en {
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'コンパニオンリモート';
-	@override String connectedTo({required Object name}) => '${name}に接続中';
-	@override String get unknownDevice => '不明なデバイス';
-	@override late final _Translations$companionRemote$session$ja session = _Translations$companionRemote$session$ja._(_root);
-	@override late final _Translations$companionRemote$pairing$ja pairing = _Translations$companionRemote$pairing$ja._(_root);
 	@override late final _Translations$companionRemote$remote$ja remote = _Translations$companionRemote$remote$ja._(_root);
-	@override late final _Translations$companionRemote$errors$ja errors = _Translations$companionRemote$errors$ja._(_root);
-	@override String get closedBeforeAuth => '認証前に接続が切断されました';
 }
 
 // Path: videoSettings
@@ -2686,7 +2674,6 @@ class _Translations$libraries$tabs$ja extends Translations$libraries$tabs$en {
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => 'おすすめ';
 	@override String get collections => 'コレクション';
 	@override String get playlists => 'プレイリスト';
 }
@@ -3156,51 +3143,6 @@ class _Translations$downloads$groupings$ja extends Translations$downloads$groupi
 	@override String get collections => 'コレクション';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$ja extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$ja._(TranslationsJa root) : this._root = root, super.internal(root);
-
-	final TranslationsJa _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => 'リモートサーバーを起動中…';
-	@override String get hostAddress => 'ホストアドレス';
-	@override String get connected => '接続済み';
-	@override String get serverRunning => 'リモートサーバー稼働中';
-	@override String get serverStopped => 'リモートサーバー停止';
-	@override String get serverRunningDescription => 'ネットワーク上のモバイルデバイスがこのアプリに接続できます';
-	@override String get serverStoppedDescription => 'モバイルデバイスの接続を許可するにはサーバーを起動してください';
-	@override String get usePhoneToControl => 'モバイルデバイスでこのアプリを操作できます';
-	@override String get startServer => 'サーバーを起動';
-	@override String get stopServer => 'サーバーを停止';
-	@override String get minimize => '最小化';
-	@override String get manualAddressHint => '手動接続アドレス:';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$ja extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$ja._(TranslationsJa root) : this._root = root, super.internal(root);
-
-	final TranslationsJa _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => '同じPlexアカウントを使用しているPlezyデバイスがここに表示されます';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => '接続中…';
-	@override String get searchingForDevices => 'デバイスを検索中…';
-	@override String get noDevicesFound => 'ネットワーク上にデバイスが見つかりません';
-	@override String get noDevicesHint => 'デスクトップでPlezyを開き、同じWi-Fiネットワークに接続してください';
-	@override String get availableDevices => '利用可能なデバイス';
-	@override String get manualConnection => '手動接続';
-	@override String get cryptoInitFailed => '安全な接続を開始できませんでした。先にPlexにサインインしてください。';
-	@override String get validationHostRequired => 'ホストアドレスを入力してください';
-	@override String get validationHostFormat => '形式はIP:ポートである必要があります（例: 192.168.1.100:48632）';
-	@override String get connectionTimedOut => '接続がタイムアウトしました。両方のデバイスで同じネットワークを使用してください。';
-	@override String get sessionNotFound => 'デバイスが見つかりません。ホストでPlezyが実行中か確認してください。';
-	@override String get authFailed => '認証に失敗しました。両方のデバイスで同じPlexアカウントが必要です。';
-	@override String failedToConnect({required Object error}) => '接続に失敗しました: ${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$ja extends Translations$companionRemote$remote$en {
 	_Translations$companionRemote$remote$ja._(TranslationsJa root) : this._root = root, super.internal(root);
@@ -3208,50 +3150,7 @@ class _Translations$companionRemote$remote$ja extends Translations$companionRemo
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => 'リモートセッションを切断しますか？';
-	@override String get reconnecting => '再接続中…';
-	@override String attemptOf({required Object current}) => '試行 ${current}/5';
-	@override String get retryNow => '今すぐ再試行';
-	@override String get tabRemote => 'リモコン';
-	@override String get tabPlay => '再生';
-	@override String get tabMore => 'その他';
-	@override String get menu => 'メニュー';
-	@override String get tabNavigation => 'タブナビゲーション';
-	@override String get tabDiscover => '探す';
-	@override String get tabLibraries => 'ライブラリ';
-	@override String get tabSearch => '検索';
-	@override String get tabDownloads => 'ダウンロード';
-	@override String get tabSettings => '設定';
-	@override String get previous => '前へ';
-	@override String get playPause => '再生/一時停止';
 	@override String get next => '次へ';
-	@override String get seekBack => '巻き戻し';
-	@override String get stop => '停止';
-	@override String get seekForward => '早送り';
-	@override String get volume => '音量';
-	@override String get volumeDown => '下げる';
-	@override String get volumeUp => '上げる';
-	@override String get fullscreen => 'フルスクリーン';
-	@override String get subtitles => '字幕';
-	@override String get audio => '音声';
-	@override String get searchHint => 'デスクトップで検索…';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$ja extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$ja._(TranslationsJa root) : this._root = root, super.internal(root);
-
-	final TranslationsJa _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => 'ネットワークインターフェースが見つかりません';
-	@override String get authenticationFailed => '認証に失敗しました';
-	@override String serverStartFailed({required Object error}) => 'リモートサーバーを起動できませんでした: ${error}';
-	@override String commandFailed({required Object error}) => 'リモートコマンドを送信できませんでした: ${error}';
-	@override String get joinTimedOut => 'セッション参加がタイムアウトしました';
-	@override String get failedToConnectAnyAddress => 'どのアドレスにも接続できませんでした';
-	@override String connectionLostAfterAttempts({required Object attempts}) => '${attempts}回試行後に接続が切断されました';
-	@override String get connectionLost => '接続が切断されました';
 }
 
 // Path: services.names
@@ -3414,7 +3313,6 @@ extension on TranslationsJa {
 			'common.shuffle' => 'シャッフル',
 			'common.addTo' => '追加先…',
 			'common.createNew' => '新規作成',
-			'common.connect' => '接続',
 			'common.disconnect' => '切断',
 			'common.play' => '再生',
 			'common.pause' => '一時停止',
@@ -3424,7 +3322,6 @@ extension on TranslationsJa {
 			'common.home' => 'ホーム',
 			'common.back' => '戻る',
 			'common.settings' => '設定',
-			'common.mute' => 'ミュート',
 			'common.ok' => 'OK',
 			'common.off' => 'オフ',
 			'common.options' => 'オプション',
@@ -3858,10 +3755,10 @@ extension on TranslationsJa {
 			'themeEditor.opacity' => '不透明度',
 			'themeEditor.hexHint' => '#RRGGBB または #AARRGGBB',
 			'themeEditor.fromOtherThemes' => '他のテーマから',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme}の${color}',
 			'themeEditor.contrast.textOnBg' => '背景上のテキスト',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'サーフェス上のテキスト',
 			'themeEditor.contrast.textMutedOnBg' => '背景上の補助テキスト',
 			'themeEditor.contrast.textMutedOnSurface' => 'サーフェス上の補助テキスト',
@@ -4372,10 +4269,10 @@ extension on TranslationsJa {
 			'connections.addConnectionSubtitleNoProfile' => 'Plexでサインインするか、JellyfinまたはEmbyサーバーに接続',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName}に追加：Plex、Jellyfin、Emby、または別のプロフィールの接続',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} のセッションの有効期限が切れました',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} 台のサーバーのセッションの有効期限が切れました',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} がこのアカウントへのアクセスを拒否しました',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} 台のサーバーがこのアカウントへのアクセスを拒否しました',
 			'connections.signInAgain' => '再度サインイン',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => '${product}接続を編集',
@@ -4522,11 +4419,9 @@ extension on TranslationsJa {
 			'libraries.content' => 'ライブラリコンテンツ',
 			'libraries.selectLibrary' => 'ライブラリを選択',
 			'libraries.filtersWithCount' => ({required Object count}) => 'フィルター (${count})',
-			'libraries.noRecommendations' => 'おすすめがありません',
 			'libraries.noCollections' => 'このライブラリにコレクションがありません',
 			'libraries.noFoldersFound' => 'フォルダが見つかりません',
 			'libraries.folders' => 'フォルダ',
-			'libraries.tabs.recommended' => 'おすすめ',
 			'libraries.tabs.collections' => 'コレクション',
 			'libraries.tabs.playlists' => 'プレイリスト',
 			'libraries.groupings.title' => 'グループ',
@@ -4854,7 +4749,6 @@ extension on TranslationsJa {
 			'liveTv.failedToBuildStreamUrl' => 'ストリームURLを生成できませんでした',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'チャンネルを再生できませんでした: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'チャンネルを切り替えられませんでした: ${reason}',
-			'collections.title' => 'コレクション',
 			'collections.collection' => 'コレクション',
 			'collections.empty' => 'コレクションは空です',
 			'collections.deleteCollection' => 'コレクションを削除',
@@ -4874,7 +4768,6 @@ extension on TranslationsJa {
 			'collections.removeFromCollectionFailed' => 'コレクションからの削除に失敗しました',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'コレクションからの削除エラー: ${error}',
 			'collections.searchCollections' => 'コレクションを検索…',
-			'playlists.title' => 'プレイリスト',
 			'playlists.playlist' => 'プレイリスト',
 			'playlists.noPlaylists' => 'プレイリストが見つかりません',
 			'playlists.create' => 'プレイリストを作成',
@@ -4886,14 +4779,14 @@ extension on TranslationsJa {
 			'playlists.itemCount' => ({required Object count}) => '${count}件',
 			'playlists.oneItem' => '1件',
 			'playlists.emptyPlaylist' => 'このプレイリストは空です',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'プレイリストを削除しますか？',
 			'playlists.deleteMessage' => ({required Object name}) => '「${name}」を削除しますか？',
 			'playlists.created' => 'プレイリストを作成しました',
 			'playlists.deleted' => 'プレイリストを削除しました',
 			'playlists.itemAdded' => 'プレイリストに追加しました',
 			'playlists.itemRemoved' => 'プレイリストから削除しました',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => 'プレイリストを選択',
 			'playlists.searchPlaylists' => 'プレイリストを検索…',
 			'playlists.errorCreating' => 'プレイリストの作成に失敗しました',
@@ -5220,72 +5113,7 @@ extension on TranslationsJa {
 			'shaders.shaderImportFailed' => 'シェーダーのインポートに失敗しました',
 			'shaders.deleteShader' => 'シェーダーを削除',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => '「${name}」を削除しますか？',
-			'companionRemote.title' => 'コンパニオンリモート',
-			'companionRemote.connectedTo' => ({required Object name}) => '${name}に接続中',
-			'companionRemote.unknownDevice' => '不明なデバイス',
-			'companionRemote.session.startingServer' => 'リモートサーバーを起動中…',
-			'companionRemote.session.hostAddress' => 'ホストアドレス',
-			'companionRemote.session.connected' => '接続済み',
-			'companionRemote.session.serverRunning' => 'リモートサーバー稼働中',
-			'companionRemote.session.serverStopped' => 'リモートサーバー停止',
-			'companionRemote.session.serverRunningDescription' => 'ネットワーク上のモバイルデバイスがこのアプリに接続できます',
-			'companionRemote.session.serverStoppedDescription' => 'モバイルデバイスの接続を許可するにはサーバーを起動してください',
-			'companionRemote.session.usePhoneToControl' => 'モバイルデバイスでこのアプリを操作できます',
-			'companionRemote.session.startServer' => 'サーバーを起動',
-			'companionRemote.session.stopServer' => 'サーバーを停止',
-			'companionRemote.session.minimize' => '最小化',
-			'companionRemote.session.manualAddressHint' => '手動接続アドレス:',
-			'companionRemote.pairing.discoveryDescription' => '同じPlexアカウントを使用しているPlezyデバイスがここに表示されます',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => '接続中…',
-			'companionRemote.pairing.searchingForDevices' => 'デバイスを検索中…',
-			'companionRemote.pairing.noDevicesFound' => 'ネットワーク上にデバイスが見つかりません',
-			'companionRemote.pairing.noDevicesHint' => 'デスクトップでPlezyを開き、同じWi-Fiネットワークに接続してください',
-			'companionRemote.pairing.availableDevices' => '利用可能なデバイス',
-			'companionRemote.pairing.manualConnection' => '手動接続',
-			'companionRemote.pairing.cryptoInitFailed' => '安全な接続を開始できませんでした。先にPlexにサインインしてください。',
-			'companionRemote.pairing.validationHostRequired' => 'ホストアドレスを入力してください',
-			'companionRemote.pairing.validationHostFormat' => '形式はIP:ポートである必要があります（例: 192.168.1.100:48632）',
-			'companionRemote.pairing.connectionTimedOut' => '接続がタイムアウトしました。両方のデバイスで同じネットワークを使用してください。',
-			'companionRemote.pairing.sessionNotFound' => 'デバイスが見つかりません。ホストでPlezyが実行中か確認してください。',
-			'companionRemote.pairing.authFailed' => '認証に失敗しました。両方のデバイスで同じPlexアカウントが必要です。',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => '接続に失敗しました: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'リモートセッションを切断しますか？',
-			'companionRemote.remote.reconnecting' => '再接続中…',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => '試行 ${current}/5',
-			'companionRemote.remote.retryNow' => '今すぐ再試行',
-			'companionRemote.remote.tabRemote' => 'リモコン',
-			'companionRemote.remote.tabPlay' => '再生',
-			'companionRemote.remote.tabMore' => 'その他',
-			'companionRemote.remote.menu' => 'メニュー',
-			'companionRemote.remote.tabNavigation' => 'タブナビゲーション',
-			'companionRemote.remote.tabDiscover' => '探す',
-			'companionRemote.remote.tabLibraries' => 'ライブラリ',
-			'companionRemote.remote.tabSearch' => '検索',
-			'companionRemote.remote.tabDownloads' => 'ダウンロード',
-			'companionRemote.remote.tabSettings' => '設定',
-			'companionRemote.remote.previous' => '前へ',
-			'companionRemote.remote.playPause' => '再生/一時停止',
 			'companionRemote.remote.next' => '次へ',
-			'companionRemote.remote.seekBack' => '巻き戻し',
-			'companionRemote.remote.stop' => '停止',
-			'companionRemote.remote.seekForward' => '早送り',
-			'companionRemote.remote.volume' => '音量',
-			'companionRemote.remote.volumeDown' => '下げる',
-			'companionRemote.remote.volumeUp' => '上げる',
-			'companionRemote.remote.fullscreen' => 'フルスクリーン',
-			'companionRemote.remote.subtitles' => '字幕',
-			'companionRemote.remote.audio' => '音声',
-			'companionRemote.remote.searchHint' => 'デスクトップで検索…',
-			'companionRemote.errors.noNetworkInterface' => 'ネットワークインターフェースが見つかりません',
-			'companionRemote.errors.authenticationFailed' => '認証に失敗しました',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'リモートサーバーを起動できませんでした: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'リモートコマンドを送信できませんでした: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'セッション参加がタイムアウトしました',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'どのアドレスにも接続できませんでした',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '${attempts}回試行後に接続が切断されました',
-			'companionRemote.errors.connectionLost' => '接続が切断されました',
-			'companionRemote.closedBeforeAuth' => '認証前に接続が切断されました',
 			'videoSettings.playbackSpeed' => '再生速度',
 			'videoSettings.normalSpeed' => '標準',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => '作動中（${duration}）',
@@ -5400,8 +5228,6 @@ extension on TranslationsJa {
 			'metadataEdit.selectBackground' => '背景を選択',
 			'metadataEdit.selectLogo' => 'ロゴを選択',
 			'metadataEdit.selectSquareArt' => '正方形アートを選択',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URLから',
 			'metadataEdit.uploadFile' => 'ファイルをアップロード',
 			'metadataEdit.enterImageUrl' => '画像URLを入力',
@@ -5473,6 +5299,8 @@ extension on TranslationsJa {
 			'serverTasks.noTasks' => '実行中のタスクはありません',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => '接続済み',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '@${username}として接続済み',
 			'trakt.disconnectConfirm' => 'Traktアカウントとの接続を解除しますか？',
 			'trakt.disconnectConfirmBody' => 'PlezyはTraktへのイベント送信を停止します。いつでも再接続できます。',

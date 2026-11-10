@@ -175,7 +175,6 @@ class _Translations$common$sv extends Translations$common$en {
 	@override String get shuffle => 'Blanda';
 	@override String get addTo => 'Lägg till i...';
 	@override String get createNew => 'Skapa ny';
-	@override String get connect => 'Anslut';
 	@override String get disconnect => 'Koppla från';
 	@override String get play => 'Spela';
 	@override String get pause => 'Pausa';
@@ -185,7 +184,6 @@ class _Translations$common$sv extends Translations$common$en {
 	@override String get home => 'Hem';
 	@override String get back => 'Tillbaka';
 	@override String get settings => 'Inställningar';
-	@override String get mute => 'Stäng av ljudet';
 	@override String get ok => 'OK';
 	@override String get off => 'Av';
 	@override String get options => 'Alternativ';
@@ -1413,7 +1411,6 @@ class _Translations$libraries$sv extends Translations$libraries$en {
 	@override String get content => 'bibliotekets innehåll';
 	@override String get selectLibrary => 'Välj bibliotek';
 	@override String filtersWithCount({required Object count}) => 'Filter (${count})';
-	@override String get noRecommendations => 'Inga rekommendationer tillgängliga';
 	@override String get noCollections => 'Inga samlingar i det här biblioteket';
 	@override String get noFoldersFound => 'Inga mappar hittades';
 	@override String get folders => 'mappar';
@@ -1660,7 +1657,6 @@ class _Translations$collections$sv extends Translations$collections$en {
 	final TranslationsSv _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Samlingar';
 	@override String get collection => 'Samling';
 	@override String get empty => 'Samlingen är tom';
 	@override String get deleteCollection => 'Ta bort samling';
@@ -1689,7 +1685,6 @@ class _Translations$playlists$sv extends Translations$playlists$en {
 	final TranslationsSv _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Spellistor';
 	@override String get playlist => 'Spellista';
 	@override String get noPlaylists => 'Inga spellistor hittades';
 	@override String get create => 'Skapa spellista';
@@ -2015,14 +2010,7 @@ class _Translations$companionRemote$sv extends Translations$companionRemote$en {
 	final TranslationsSv _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Fjärrkontroll';
-	@override String connectedTo({required Object name}) => 'Ansluten till ${name}';
-	@override String get unknownDevice => 'Okänd enhet';
-	@override late final _Translations$companionRemote$session$sv session = _Translations$companionRemote$session$sv._(_root);
-	@override late final _Translations$companionRemote$pairing$sv pairing = _Translations$companionRemote$pairing$sv._(_root);
 	@override late final _Translations$companionRemote$remote$sv remote = _Translations$companionRemote$remote$sv._(_root);
-	@override late final _Translations$companionRemote$errors$sv errors = _Translations$companionRemote$errors$sv._(_root);
-	@override String get closedBeforeAuth => 'Anslutningen stängdes före autentiseringen';
 }
 
 // Path: videoSettings
@@ -2696,7 +2684,6 @@ class _Translations$libraries$tabs$sv extends Translations$libraries$tabs$en {
 	final TranslationsSv _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => 'Rekommenderat';
 	@override String get collections => 'Samlingar';
 	@override String get playlists => 'Spellistor';
 }
@@ -3168,51 +3155,6 @@ class _Translations$downloads$groupings$sv extends Translations$downloads$groupi
 	@override String get collections => 'Samlingar';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$sv extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$sv._(TranslationsSv root) : this._root = root, super.internal(root);
-
-	final TranslationsSv _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => 'Startar fjärrserver...';
-	@override String get hostAddress => 'Värdadress';
-	@override String get connected => 'Ansluten';
-	@override String get serverRunning => 'Fjärrserver aktiv';
-	@override String get serverStopped => 'Fjärrserver stoppad';
-	@override String get serverRunningDescription => 'Mobila enheter i nätverket kan ansluta till appen';
-	@override String get serverStoppedDescription => 'Starta servern så att mobila enheter kan ansluta';
-	@override String get usePhoneToControl => 'Använd din mobila enhet för att styra appen';
-	@override String get startServer => 'Starta server';
-	@override String get stopServer => 'Stoppa server';
-	@override String get minimize => 'Minimera';
-	@override String get manualAddressHint => 'Manuell anslutningsadress:';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$sv extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$sv._(TranslationsSv root) : this._root = root, super.internal(root);
-
-	final TranslationsSv _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => 'Plezy-enheter med samma Plex-konto visas här';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => 'Ansluter...';
-	@override String get searchingForDevices => 'Söker efter enheter...';
-	@override String get noDevicesFound => 'Inga enheter hittades i ditt nätverk';
-	@override String get noDevicesHint => 'Öppna Plezy på datorn och använd samma wifi';
-	@override String get availableDevices => 'Tillgängliga enheter';
-	@override String get manualConnection => 'Manuell anslutning';
-	@override String get cryptoInitFailed => 'Kunde inte starta säker anslutning. Logga in på Plex först.';
-	@override String get validationHostRequired => 'Ange värdadress';
-	@override String get validationHostFormat => 'Formatet måste vara IP:port (t.ex. 192.168.1.100:48632)';
-	@override String get connectionTimedOut => 'Anslutningen tog för lång tid. Använd samma nätverk på båda enheterna.';
-	@override String get sessionNotFound => 'Enheten hittades inte. Kontrollera att Plezy körs på värden.';
-	@override String get authFailed => 'Autentiseringen misslyckades. Båda enheterna måste använda samma Plex-konto.';
-	@override String failedToConnect({required Object error}) => 'Kunde inte ansluta: ${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$sv extends Translations$companionRemote$remote$en {
 	_Translations$companionRemote$remote$sv._(TranslationsSv root) : this._root = root, super.internal(root);
@@ -3220,50 +3162,7 @@ class _Translations$companionRemote$remote$sv extends Translations$companionRemo
 	final TranslationsSv _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => 'Vill du koppla från fjärrsessionen?';
-	@override String get reconnecting => 'Återansluter...';
-	@override String attemptOf({required Object current}) => 'Försök ${current} av 5';
-	@override String get retryNow => 'Försök nu';
-	@override String get tabRemote => 'Fjärrkontroll';
-	@override String get tabPlay => 'Spela';
-	@override String get tabMore => 'Mer';
-	@override String get menu => 'Meny';
-	@override String get tabNavigation => 'Fliknavigering';
-	@override String get tabDiscover => 'Upptäck';
-	@override String get tabLibraries => 'Bibliotek';
-	@override String get tabSearch => 'Sök';
-	@override String get tabDownloads => 'Nedladdningar';
-	@override String get tabSettings => 'Inställningar';
-	@override String get previous => 'Föregående';
-	@override String get playPause => 'Spela/Pausa';
 	@override String get next => 'Nästa';
-	@override String get seekBack => 'Spola bakåt';
-	@override String get stop => 'Stopp';
-	@override String get seekForward => 'Spola framåt';
-	@override String get volume => 'Volym';
-	@override String get volumeDown => 'Ner';
-	@override String get volumeUp => 'Upp';
-	@override String get fullscreen => 'Helskärm';
-	@override String get subtitles => 'Undertexter';
-	@override String get audio => 'Ljud';
-	@override String get searchHint => 'Sök på datorn...';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$sv extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$sv._(TranslationsSv root) : this._root = root, super.internal(root);
-
-	final TranslationsSv _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => 'Inget nätverksgränssnitt hittades';
-	@override String get authenticationFailed => 'Autentiseringen misslyckades';
-	@override String serverStartFailed({required Object error}) => 'Det gick inte att starta fjärrservern: ${error}';
-	@override String commandFailed({required Object error}) => 'Det gick inte att skicka fjärrkommandot: ${error}';
-	@override String get joinTimedOut => 'Det tog för lång tid att ansluta till sessionen';
-	@override String get failedToConnectAnyAddress => 'Det gick inte att ansluta till någon adress';
-	@override String connectionLostAfterAttempts({required Object attempts}) => 'Anslutningen bröts efter ${attempts} försök';
-	@override String get connectionLost => 'Anslutningen bröts';
 }
 
 // Path: services.names
@@ -3426,7 +3325,6 @@ extension on TranslationsSv {
 			'common.shuffle' => 'Blanda',
 			'common.addTo' => 'Lägg till i...',
 			'common.createNew' => 'Skapa ny',
-			'common.connect' => 'Anslut',
 			'common.disconnect' => 'Koppla från',
 			'common.play' => 'Spela',
 			'common.pause' => 'Pausa',
@@ -3436,7 +3334,6 @@ extension on TranslationsSv {
 			'common.home' => 'Hem',
 			'common.back' => 'Tillbaka',
 			'common.settings' => 'Inställningar',
-			'common.mute' => 'Stäng av ljudet',
 			'common.ok' => 'OK',
 			'common.off' => 'Av',
 			'common.options' => 'Alternativ',
@@ -3870,10 +3767,10 @@ extension on TranslationsSv {
 			'themeEditor.opacity' => 'Opacitet',
 			'themeEditor.hexHint' => '#RRGGBB eller #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Från andra teman',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} (${theme})',
 			'themeEditor.contrast.textOnBg' => 'Text på bakgrund',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'Text på yta',
 			'themeEditor.contrast.textMutedOnBg' => 'Sekundär text på bakgrund',
 			'themeEditor.contrast.textMutedOnSurface' => 'Sekundär text på yta',
@@ -4384,10 +4281,10 @@ extension on TranslationsSv {
 			'connections.addConnectionSubtitleNoProfile' => 'Logga in med Plex eller anslut en Jellyfin- eller Emby-server',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Lägg till för ${displayName}: Plex, Jellyfin, Emby eller en annan profilanslutning',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Sessionen har gått ut för ${name}',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Sessionen har gått ut för ${count} servrar',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} nekade åtkomst för det här kontot',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} servrar nekade åtkomst för det här kontot',
 			'connections.signInAgain' => 'Logga in igen',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => 'Redigera ${product}-anslutning',
@@ -4534,11 +4431,9 @@ extension on TranslationsSv {
 			'libraries.content' => 'bibliotekets innehåll',
 			'libraries.selectLibrary' => 'Välj bibliotek',
 			'libraries.filtersWithCount' => ({required Object count}) => 'Filter (${count})',
-			'libraries.noRecommendations' => 'Inga rekommendationer tillgängliga',
 			'libraries.noCollections' => 'Inga samlingar i det här biblioteket',
 			'libraries.noFoldersFound' => 'Inga mappar hittades',
 			'libraries.folders' => 'mappar',
-			'libraries.tabs.recommended' => 'Rekommenderat',
 			'libraries.tabs.collections' => 'Samlingar',
 			'libraries.tabs.playlists' => 'Spellistor',
 			'libraries.groupings.title' => 'Gruppering',
@@ -4866,7 +4761,6 @@ extension on TranslationsSv {
 			'liveTv.failedToBuildStreamUrl' => 'Kunde inte skapa strömmens URL',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Det gick inte att starta kanalen: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Det gick inte att byta kanal: ${reason}',
-			'collections.title' => 'Samlingar',
 			'collections.collection' => 'Samling',
 			'collections.empty' => 'Samlingen är tom',
 			'collections.deleteCollection' => 'Ta bort samling',
@@ -4886,7 +4780,6 @@ extension on TranslationsSv {
 			'collections.removeFromCollectionFailed' => 'Det gick inte att ta bort objektet från samlingen',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'Fel när objektet skulle tas bort från samlingen: ${error}',
 			'collections.searchCollections' => 'Sök samlingar...',
-			'playlists.title' => 'Spellistor',
 			'playlists.playlist' => 'Spellista',
 			'playlists.noPlaylists' => 'Inga spellistor hittades',
 			'playlists.create' => 'Skapa spellista',
@@ -4898,14 +4791,14 @@ extension on TranslationsSv {
 			'playlists.itemCount' => ({required Object count}) => '${count} objekt',
 			'playlists.oneItem' => '1 objekt',
 			'playlists.emptyPlaylist' => 'Denna spellista är tom',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Ta bort spellista?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Är du säker på att du vill ta bort "${name}"?',
 			'playlists.created' => 'Spellistan har skapats',
 			'playlists.deleted' => 'Spellistan har tagits bort',
 			'playlists.itemAdded' => 'Objektet har lagts till i spellistan',
 			'playlists.itemRemoved' => 'Objektet har tagits bort från spellistan',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => 'Välj spellista',
 			'playlists.searchPlaylists' => 'Sök i spellistor...',
 			'playlists.errorCreating' => 'Det gick inte att skapa spellistan',
@@ -5232,72 +5125,7 @@ extension on TranslationsSv {
 			'shaders.shaderImportFailed' => 'Det gick inte att importera shadern',
 			'shaders.deleteShader' => 'Ta bort shader',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => 'Ta bort "${name}"?',
-			'companionRemote.title' => 'Fjärrkontroll',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Ansluten till ${name}',
-			'companionRemote.unknownDevice' => 'Okänd enhet',
-			'companionRemote.session.startingServer' => 'Startar fjärrserver...',
-			'companionRemote.session.hostAddress' => 'Värdadress',
-			'companionRemote.session.connected' => 'Ansluten',
-			'companionRemote.session.serverRunning' => 'Fjärrserver aktiv',
-			'companionRemote.session.serverStopped' => 'Fjärrserver stoppad',
-			'companionRemote.session.serverRunningDescription' => 'Mobila enheter i nätverket kan ansluta till appen',
-			'companionRemote.session.serverStoppedDescription' => 'Starta servern så att mobila enheter kan ansluta',
-			'companionRemote.session.usePhoneToControl' => 'Använd din mobila enhet för att styra appen',
-			'companionRemote.session.startServer' => 'Starta server',
-			'companionRemote.session.stopServer' => 'Stoppa server',
-			'companionRemote.session.minimize' => 'Minimera',
-			'companionRemote.session.manualAddressHint' => 'Manuell anslutningsadress:',
-			'companionRemote.pairing.discoveryDescription' => 'Plezy-enheter med samma Plex-konto visas här',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Ansluter...',
-			'companionRemote.pairing.searchingForDevices' => 'Söker efter enheter...',
-			'companionRemote.pairing.noDevicesFound' => 'Inga enheter hittades i ditt nätverk',
-			'companionRemote.pairing.noDevicesHint' => 'Öppna Plezy på datorn och använd samma wifi',
-			'companionRemote.pairing.availableDevices' => 'Tillgängliga enheter',
-			'companionRemote.pairing.manualConnection' => 'Manuell anslutning',
-			'companionRemote.pairing.cryptoInitFailed' => 'Kunde inte starta säker anslutning. Logga in på Plex först.',
-			'companionRemote.pairing.validationHostRequired' => 'Ange värdadress',
-			'companionRemote.pairing.validationHostFormat' => 'Formatet måste vara IP:port (t.ex. 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'Anslutningen tog för lång tid. Använd samma nätverk på båda enheterna.',
-			'companionRemote.pairing.sessionNotFound' => 'Enheten hittades inte. Kontrollera att Plezy körs på värden.',
-			'companionRemote.pairing.authFailed' => 'Autentiseringen misslyckades. Båda enheterna måste använda samma Plex-konto.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Kunde inte ansluta: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Vill du koppla från fjärrsessionen?',
-			'companionRemote.remote.reconnecting' => 'Återansluter...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Försök ${current} av 5',
-			'companionRemote.remote.retryNow' => 'Försök nu',
-			'companionRemote.remote.tabRemote' => 'Fjärrkontroll',
-			'companionRemote.remote.tabPlay' => 'Spela',
-			'companionRemote.remote.tabMore' => 'Mer',
-			'companionRemote.remote.menu' => 'Meny',
-			'companionRemote.remote.tabNavigation' => 'Fliknavigering',
-			'companionRemote.remote.tabDiscover' => 'Upptäck',
-			'companionRemote.remote.tabLibraries' => 'Bibliotek',
-			'companionRemote.remote.tabSearch' => 'Sök',
-			'companionRemote.remote.tabDownloads' => 'Nedladdningar',
-			'companionRemote.remote.tabSettings' => 'Inställningar',
-			'companionRemote.remote.previous' => 'Föregående',
-			'companionRemote.remote.playPause' => 'Spela/Pausa',
 			'companionRemote.remote.next' => 'Nästa',
-			'companionRemote.remote.seekBack' => 'Spola bakåt',
-			'companionRemote.remote.stop' => 'Stopp',
-			'companionRemote.remote.seekForward' => 'Spola framåt',
-			'companionRemote.remote.volume' => 'Volym',
-			'companionRemote.remote.volumeDown' => 'Ner',
-			'companionRemote.remote.volumeUp' => 'Upp',
-			'companionRemote.remote.fullscreen' => 'Helskärm',
-			'companionRemote.remote.subtitles' => 'Undertexter',
-			'companionRemote.remote.audio' => 'Ljud',
-			'companionRemote.remote.searchHint' => 'Sök på datorn...',
-			'companionRemote.errors.noNetworkInterface' => 'Inget nätverksgränssnitt hittades',
-			'companionRemote.errors.authenticationFailed' => 'Autentiseringen misslyckades',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Det gick inte att starta fjärrservern: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Det gick inte att skicka fjärrkommandot: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Det tog för lång tid att ansluta till sessionen',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Det gick inte att ansluta till någon adress',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'Anslutningen bröts efter ${attempts} försök',
-			'companionRemote.errors.connectionLost' => 'Anslutningen bröts',
-			'companionRemote.closedBeforeAuth' => 'Anslutningen stängdes före autentiseringen',
 			'videoSettings.playbackSpeed' => 'Uppspelningshastighet',
 			'videoSettings.normalSpeed' => 'Normal',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Aktiv (${duration})',
@@ -5412,8 +5240,6 @@ extension on TranslationsSv {
 			'metadataEdit.selectBackground' => 'Välj bakgrund',
 			'metadataEdit.selectLogo' => 'Välj logotyp',
 			'metadataEdit.selectSquareArt' => 'Välj kvadratisk bild',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'Från URL',
 			'metadataEdit.uploadFile' => 'Ladda upp fil',
 			'metadataEdit.enterImageUrl' => 'Ange bild-URL',
@@ -5485,6 +5311,8 @@ extension on TranslationsSv {
 			'serverTasks.noTasks' => 'Inga pågående uppgifter',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Ansluten',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Ansluten som @${username}',
 			'trakt.disconnectConfirm' => 'Koppla från Trakt-konto?',
 			'trakt.disconnectConfirmBody' => 'Plezy slutar skicka händelser till Trakt. Du kan återansluta när som helst.',

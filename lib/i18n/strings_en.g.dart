@@ -269,9 +269,6 @@ class Translations$common$en {
 	/// en: 'Create new'
 	String get createNew => 'Create new';
 
-	/// en: 'Connect'
-	String get connect => 'Connect';
-
 	/// en: 'Disconnect'
 	String get disconnect => 'Disconnect';
 
@@ -298,9 +295,6 @@ class Translations$common$en {
 
 	/// en: 'Settings'
 	String get settings => 'Settings';
-
-	/// en: 'Mute'
-	String get mute => 'Mute';
 
 	/// en: 'OK'
 	String get ok => 'OK';
@@ -3522,14 +3516,8 @@ class Translations$libraries$en {
 	/// en: 'Filters (${count})'
 	String filtersWithCount({required Object count}) => 'Filters (${count})';
 
-	/// en: 'No recommendations available'
-	String get noRecommendations => 'No recommendations available';
-
 	/// en: 'No collections in this library'
 	String get noCollections => 'No collections in this library';
-
-	/// en: 'No genres in this library'
-	String get noGenres => 'No genres in this library';
 
 	/// en: 'No folders found'
 	String get noFoldersFound => 'No folders found';
@@ -4044,9 +4032,6 @@ class Translations$collections$en {
 
 	// Translations
 
-	/// en: 'Collections'
-	String get title => 'Collections';
-
 	/// en: 'Collection'
 	String get collection => 'Collection';
 
@@ -4112,9 +4097,6 @@ class Translations$playlists$en {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-
-	/// en: 'Playlists'
-	String get title => 'Playlists';
 
 	/// en: 'Playlist'
 	String get playlist => 'Playlist';
@@ -4980,23 +4962,7 @@ class Translations$companionRemote$en {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-
-	/// en: 'Companion Remote'
-	String get title => 'Companion Remote';
-
-	/// en: 'Connected to ${name}'
-	String connectedTo({required Object name}) => 'Connected to ${name}';
-
-	/// en: 'Unknown Device'
-	String get unknownDevice => 'Unknown Device';
-
-	late final Translations$companionRemote$session$en session = Translations$companionRemote$session$en.internal(_root);
-	late final Translations$companionRemote$pairing$en pairing = Translations$companionRemote$pairing$en.internal(_root);
 	late final Translations$companionRemote$remote$en remote = Translations$companionRemote$remote$en.internal(_root);
-	late final Translations$companionRemote$errors$en errors = Translations$companionRemote$errors$en.internal(_root);
-
-	/// en: 'The connection closed before authentication'
-	String get closedBeforeAuth => 'The connection closed before authentication';
 }
 
 // Path: videoSettings
@@ -6601,14 +6567,8 @@ class Translations$libraries$tabs$en {
 
 	// Translations
 
-	/// en: 'Recommended'
-	String get recommended => 'Recommended';
-
 	/// en: 'Collections'
 	String get collections => 'Collections';
-
-	/// en: 'Genres'
-	String get genres => 'Genres';
 
 	/// en: 'Playlists'
 	String get playlists => 'Playlists';
@@ -7625,105 +7585,6 @@ class Translations$downloads$groupings$en {
 	String get collections => 'Collections';
 }
 
-// Path: companionRemote.session
-class Translations$companionRemote$session$en {
-	Translations$companionRemote$session$en.internal(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-
-	/// en: 'Starting remote server...'
-	String get startingServer => 'Starting remote server...';
-
-	/// en: 'Host Address'
-	String get hostAddress => 'Host Address';
-
-	/// en: 'Connected'
-	String get connected => 'Connected';
-
-	/// en: 'Remote server active'
-	String get serverRunning => 'Remote server active';
-
-	/// en: 'Remote server stopped'
-	String get serverStopped => 'Remote server stopped';
-
-	/// en: 'Mobile devices on your network can connect to this app'
-	String get serverRunningDescription => 'Mobile devices on your network can connect to this app';
-
-	/// en: 'Start the server to allow mobile devices to connect'
-	String get serverStoppedDescription => 'Start the server to allow mobile devices to connect';
-
-	/// en: 'Use your mobile device to control this app'
-	String get usePhoneToControl => 'Use your mobile device to control this app';
-
-	/// en: 'Start Server'
-	String get startServer => 'Start Server';
-
-	/// en: 'Stop Server'
-	String get stopServer => 'Stop Server';
-
-	/// en: 'Minimize'
-	String get minimize => 'Minimize';
-
-	/// en: 'Manual connection address:'
-	String get manualAddressHint => 'Manual connection address:';
-}
-
-// Path: companionRemote.pairing
-class Translations$companionRemote$pairing$en {
-	Translations$companionRemote$pairing$en.internal(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-
-	/// en: 'Plezy devices with the same Plex account appear here'
-	String get discoveryDescription => 'Plezy devices with the same Plex account appear here';
-
-	/// en: '192.168.1.100:48632'
-	String get hostAddressHint => '192.168.1.100:48632';
-
-	/// en: 'Connecting...'
-	String get connecting => 'Connecting...';
-
-	/// en: 'Looking for devices...'
-	String get searchingForDevices => 'Looking for devices...';
-
-	/// en: 'No devices found on your network'
-	String get noDevicesFound => 'No devices found on your network';
-
-	/// en: 'Open Plezy on desktop and use the same Wi-Fi'
-	String get noDevicesHint => 'Open Plezy on desktop and use the same Wi-Fi';
-
-	/// en: 'Available Devices'
-	String get availableDevices => 'Available Devices';
-
-	/// en: 'Manual Connection'
-	String get manualConnection => 'Manual Connection';
-
-	/// en: 'Couldn't start secure connection. Sign in to Plex first.'
-	String get cryptoInitFailed => 'Couldn\'t start secure connection. Sign in to Plex first.';
-
-	/// en: 'Please enter host address'
-	String get validationHostRequired => 'Please enter host address';
-
-	/// en: 'Format must be IP:port (e.g., 192.168.1.100:48632)'
-	String get validationHostFormat => 'Format must be IP:port (e.g., 192.168.1.100:48632)';
-
-	/// en: 'Connection timed out. Use the same network on both devices.'
-	String get connectionTimedOut => 'Connection timed out. Use the same network on both devices.';
-
-	/// en: 'Device not found. Make sure Plezy is running on the host.'
-	String get sessionNotFound => 'Device not found. Make sure Plezy is running on the host.';
-
-	/// en: 'Authentication failed. Both devices need the same Plex account.'
-	String get authFailed => 'Authentication failed. Both devices need the same Plex account.';
-
-	/// en: 'Failed to connect: ${error}'
-	String failedToConnect({required Object error}) => 'Failed to connect: ${error}';
-}
-
 // Path: companionRemote.remote
 class Translations$companionRemote$remote$en {
 	Translations$companionRemote$remote$en.internal(this._root);
@@ -7732,119 +7593,8 @@ class Translations$companionRemote$remote$en {
 
 	// Translations
 
-	/// en: 'Do you want to disconnect from the remote session?'
-	String get disconnectConfirm => 'Do you want to disconnect from the remote session?';
-
-	/// en: 'Reconnecting...'
-	String get reconnecting => 'Reconnecting...';
-
-	/// en: 'Attempt ${current} of 5'
-	String attemptOf({required Object current}) => 'Attempt ${current} of 5';
-
-	/// en: 'Retry Now'
-	String get retryNow => 'Retry Now';
-
-	/// en: 'Remote'
-	String get tabRemote => 'Remote';
-
-	/// en: 'Play'
-	String get tabPlay => 'Play';
-
-	/// en: 'More'
-	String get tabMore => 'More';
-
-	/// en: 'Menu'
-	String get menu => 'Menu';
-
-	/// en: 'Tab Navigation'
-	String get tabNavigation => 'Tab Navigation';
-
-	/// en: 'Discover'
-	String get tabDiscover => 'Discover';
-
-	/// en: 'Libraries'
-	String get tabLibraries => 'Libraries';
-
-	/// en: 'Search'
-	String get tabSearch => 'Search';
-
-	/// en: 'Downloads'
-	String get tabDownloads => 'Downloads';
-
-	/// en: 'Settings'
-	String get tabSettings => 'Settings';
-
-	/// en: 'Previous'
-	String get previous => 'Previous';
-
-	/// en: 'Play/Pause'
-	String get playPause => 'Play/Pause';
-
 	/// en: 'Next'
 	String get next => 'Next';
-
-	/// en: 'Seek Back'
-	String get seekBack => 'Seek Back';
-
-	/// en: 'Stop'
-	String get stop => 'Stop';
-
-	/// en: 'Seek Fwd'
-	String get seekForward => 'Seek Fwd';
-
-	/// en: 'Volume'
-	String get volume => 'Volume';
-
-	/// en: 'Down'
-	String get volumeDown => 'Down';
-
-	/// en: 'Up'
-	String get volumeUp => 'Up';
-
-	/// en: 'Fullscreen'
-	String get fullscreen => 'Fullscreen';
-
-	/// en: 'Subtitles'
-	String get subtitles => 'Subtitles';
-
-	/// en: 'Audio'
-	String get audio => 'Audio';
-
-	/// en: 'Search on desktop...'
-	String get searchHint => 'Search on desktop...';
-}
-
-// Path: companionRemote.errors
-class Translations$companionRemote$errors$en {
-	Translations$companionRemote$errors$en.internal(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-
-	/// en: 'No network interface found'
-	String get noNetworkInterface => 'No network interface found';
-
-	/// en: 'Authentication failed'
-	String get authenticationFailed => 'Authentication failed';
-
-	/// en: 'Failed to start remote server: ${error}'
-	String serverStartFailed({required Object error}) => 'Failed to start remote server: ${error}';
-
-	/// en: 'Failed to send remote command: ${error}'
-	String commandFailed({required Object error}) => 'Failed to send remote command: ${error}';
-
-	/// en: 'Timed out joining session'
-	String get joinTimedOut => 'Timed out joining session';
-
-	/// en: 'Failed to connect to any address'
-	String get failedToConnectAnyAddress => 'Failed to connect to any address';
-
-	/// en: 'Connection lost after ${attempts} attempts'
-	String connectionLostAfterAttempts({required Object attempts}) => 'Connection lost after ${attempts} attempts';
-
-	/// en: 'Connection lost'
-	String get connectionLost => 'Connection lost';
 }
 
 // Path: services.names
@@ -8067,7 +7817,6 @@ extension on Translations {
 			'common.shuffle' => 'Shuffle',
 			'common.addTo' => 'Add to...',
 			'common.createNew' => 'Create new',
-			'common.connect' => 'Connect',
 			'common.disconnect' => 'Disconnect',
 			'common.play' => 'Play',
 			'common.pause' => 'Pause',
@@ -8077,7 +7826,6 @@ extension on Translations {
 			'common.home' => 'Home',
 			'common.back' => 'Back',
 			'common.settings' => 'Settings',
-			'common.mute' => 'Mute',
 			'common.ok' => 'OK',
 			'common.off' => 'Off',
 			'common.options' => 'Options',
@@ -8511,10 +8259,10 @@ extension on Translations {
 			'themeEditor.opacity' => 'Opacity',
 			'themeEditor.hexHint' => '#RRGGBB or #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'From other themes',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} ${color}',
 			'themeEditor.contrast.textOnBg' => 'Text on background',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'Text on surface',
 			'themeEditor.contrast.textMutedOnBg' => 'Secondary text on background',
 			'themeEditor.contrast.textMutedOnSurface' => 'Secondary text on surface',
@@ -9025,10 +8773,10 @@ extension on Translations {
 			'profiles.tokenIdentityMismatch' => 'The Plex profile token resolved to an unexpected server',
 			'connections.sectionTitle' => 'Connections',
 			'connections.addConnection' => 'Add connection',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnectionSubtitleNoProfile' => 'Sign in with Plex or connect a Jellyfin or Emby server',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Add to ${displayName}: Plex, Jellyfin, Emby, or another profile connection',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Session expired for ${name}',
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Session expired for ${count} servers',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} refused access for this account',
@@ -9180,14 +8928,10 @@ extension on Translations {
 			'libraries.content' => 'library content',
 			'libraries.selectLibrary' => 'Select library',
 			'libraries.filtersWithCount' => ({required Object count}) => 'Filters (${count})',
-			'libraries.noRecommendations' => 'No recommendations available',
 			'libraries.noCollections' => 'No collections in this library',
-			'libraries.noGenres' => 'No genres in this library',
 			'libraries.noFoldersFound' => 'No folders found',
 			'libraries.folders' => 'folders',
-			'libraries.tabs.recommended' => 'Recommended',
 			'libraries.tabs.collections' => 'Collections',
-			'libraries.tabs.genres' => 'Genres',
 			'libraries.tabs.playlists' => 'Playlists',
 			'libraries.groupings.title' => 'Grouping',
 			'libraries.groupings.all' => 'All',
@@ -9515,7 +9259,6 @@ extension on Translations {
 			'liveTv.failedToBuildStreamUrl' => 'Could not build the stream URL',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Couldn\'t start the channel: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Couldn\'t switch channel: ${reason}',
-			'collections.title' => 'Collections',
 			'collections.collection' => 'Collection',
 			'collections.empty' => 'Collection is empty',
 			'collections.deleteCollection' => 'Delete Collection',
@@ -9535,12 +9278,9 @@ extension on Translations {
 			'collections.removeFromCollectionFailed' => 'Failed to remove from collection',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'Error removing from collection: ${error}',
 			'collections.searchCollections' => 'Search collections...',
-			'playlists.title' => 'Playlists',
 			'playlists.playlist' => 'Playlist',
 			'playlists.noPlaylists' => 'No playlists found',
 			'playlists.create' => 'Create Playlist',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.playlistName' => 'Playlist Name',
 			'playlists.enterPlaylistName' => 'Enter playlist name',
 			'playlists.delete' => 'Delete Playlist',
@@ -9549,6 +9289,8 @@ extension on Translations {
 			'playlists.itemCount' => ({required Object count}) => '${count} items',
 			'playlists.oneItem' => '1 item',
 			'playlists.emptyPlaylist' => 'This playlist is empty',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Delete Playlist?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Are you sure you want to delete "${name}"?',
 			'playlists.created' => 'Playlist created',
@@ -9881,72 +9623,7 @@ extension on Translations {
 			'shaders.shaderImportFailed' => 'Failed to import shader',
 			'shaders.deleteShader' => 'Delete Shader',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => 'Delete "${name}"?',
-			'companionRemote.title' => 'Companion Remote',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Connected to ${name}',
-			'companionRemote.unknownDevice' => 'Unknown Device',
-			'companionRemote.session.startingServer' => 'Starting remote server...',
-			'companionRemote.session.hostAddress' => 'Host Address',
-			'companionRemote.session.connected' => 'Connected',
-			'companionRemote.session.serverRunning' => 'Remote server active',
-			'companionRemote.session.serverStopped' => 'Remote server stopped',
-			'companionRemote.session.serverRunningDescription' => 'Mobile devices on your network can connect to this app',
-			'companionRemote.session.serverStoppedDescription' => 'Start the server to allow mobile devices to connect',
-			'companionRemote.session.usePhoneToControl' => 'Use your mobile device to control this app',
-			'companionRemote.session.startServer' => 'Start Server',
-			'companionRemote.session.stopServer' => 'Stop Server',
-			'companionRemote.session.minimize' => 'Minimize',
-			'companionRemote.session.manualAddressHint' => 'Manual connection address:',
-			'companionRemote.pairing.discoveryDescription' => 'Plezy devices with the same Plex account appear here',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Connecting...',
-			'companionRemote.pairing.searchingForDevices' => 'Looking for devices...',
-			'companionRemote.pairing.noDevicesFound' => 'No devices found on your network',
-			'companionRemote.pairing.noDevicesHint' => 'Open Plezy on desktop and use the same Wi-Fi',
-			'companionRemote.pairing.availableDevices' => 'Available Devices',
-			'companionRemote.pairing.manualConnection' => 'Manual Connection',
-			'companionRemote.pairing.cryptoInitFailed' => 'Couldn\'t start secure connection. Sign in to Plex first.',
-			'companionRemote.pairing.validationHostRequired' => 'Please enter host address',
-			'companionRemote.pairing.validationHostFormat' => 'Format must be IP:port (e.g., 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'Connection timed out. Use the same network on both devices.',
-			'companionRemote.pairing.sessionNotFound' => 'Device not found. Make sure Plezy is running on the host.',
-			'companionRemote.pairing.authFailed' => 'Authentication failed. Both devices need the same Plex account.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Failed to connect: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Do you want to disconnect from the remote session?',
-			'companionRemote.remote.reconnecting' => 'Reconnecting...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Attempt ${current} of 5',
-			'companionRemote.remote.retryNow' => 'Retry Now',
-			'companionRemote.remote.tabRemote' => 'Remote',
-			'companionRemote.remote.tabPlay' => 'Play',
-			'companionRemote.remote.tabMore' => 'More',
-			'companionRemote.remote.menu' => 'Menu',
-			'companionRemote.remote.tabNavigation' => 'Tab Navigation',
-			'companionRemote.remote.tabDiscover' => 'Discover',
-			'companionRemote.remote.tabLibraries' => 'Libraries',
-			'companionRemote.remote.tabSearch' => 'Search',
-			'companionRemote.remote.tabDownloads' => 'Downloads',
-			'companionRemote.remote.tabSettings' => 'Settings',
-			'companionRemote.remote.previous' => 'Previous',
-			'companionRemote.remote.playPause' => 'Play/Pause',
 			'companionRemote.remote.next' => 'Next',
-			'companionRemote.remote.seekBack' => 'Seek Back',
-			'companionRemote.remote.stop' => 'Stop',
-			'companionRemote.remote.seekForward' => 'Seek Fwd',
-			'companionRemote.remote.volume' => 'Volume',
-			'companionRemote.remote.volumeDown' => 'Down',
-			'companionRemote.remote.volumeUp' => 'Up',
-			'companionRemote.remote.fullscreen' => 'Fullscreen',
-			'companionRemote.remote.subtitles' => 'Subtitles',
-			'companionRemote.remote.audio' => 'Audio',
-			'companionRemote.remote.searchHint' => 'Search on desktop...',
-			'companionRemote.errors.noNetworkInterface' => 'No network interface found',
-			'companionRemote.errors.authenticationFailed' => 'Authentication failed',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Failed to start remote server: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Failed to send remote command: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Timed out joining session',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Failed to connect to any address',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'Connection lost after ${attempts} attempts',
-			'companionRemote.errors.connectionLost' => 'Connection lost',
-			'companionRemote.closedBeforeAuth' => 'The connection closed before authentication',
 			'videoSettings.playbackSpeed' => 'Playback Speed',
 			'videoSettings.normalSpeed' => 'Normal',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Active (${duration})',
@@ -10053,8 +9730,6 @@ extension on Translations {
 			'metadataEdit.contentRating' => 'Content Rating',
 			'metadataEdit.studio' => 'Studio',
 			'metadataEdit.tagline' => 'Tagline',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.summary' => 'Summary',
 			'metadataEdit.poster' => 'Poster',
 			'metadataEdit.background' => 'Background',
@@ -10128,6 +9803,8 @@ extension on Translations {
 			'matchScreen.matchFailed' => 'Failed to apply match',
 			'matchScreen.titleHint' => 'Title',
 			'matchScreen.yearHint' => 'Year',
+			_ => null,
+		} ?? switch (path) {
 			'matchScreen.search' => 'Search',
 			'matchScreen.noMatchesFound' => 'No matches found',
 			'serverTasks.title' => 'Server Tasks',

@@ -76,7 +76,6 @@
     "shuffle": "Aralashtirish",
     "addTo": "Qoʻshish...",
     "createNew": "Yangi yaratish",
-    "connect": "Ulanish",
     "disconnect": "Uzilish",
     "play": "Ijro etish",
     "pause": "Pauza",
@@ -86,7 +85,6 @@
     "home": "Bosh sahifa",
     "back": "Orqaga",
     "settings": "Sozlamalar",
-    "mute": "Ovozni oʻchirish",
     "ok": "Tushunarli",
     "off": "Oʻchirilgan",
     "options": "Parametrlar",
@@ -1277,15 +1275,11 @@
     "content": "kutubxona tarkibi",
     "selectLibrary": "Kutubxonani tanlash",
     "filtersWithCount": "Filtrlar (${count})",
-    "noRecommendations": "Tavsiyalar yoʻq",
     "noCollections": "Ushbu kutubxonada toʻplamlar yoʻq",
-    "noGenres": "",
     "noFoldersFound": "Jildlar topilmadi",
     "folders": "jildlar",
     "tabs": {
-      "recommended": "Tavsiya etilganlar",
       "collections": "Toʻplamlar",
-      "genres": "",
       "playlists": "Ijro roʻyxatlari"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Kanalni almashtirib boʻlmadi: ${reason}"
   },
   "collections": {
-    "title": "Toʻplamlar",
     "collection": "Toʻplam",
     "empty": "Toʻplam boʻsh",
     "deleteCollection": "Toʻplamni oʻchirish",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Toʻplamlardan qidirish..."
   },
   "playlists": {
-    "title": "Ijro roʻyxatlari",
     "playlist": "Ijro roʻyxati",
     "noPlaylists": "Ijro roʻyxatlari topilmadi",
     "create": "Ijro roʻyxatini yaratish",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "\"${name}\" oʻchirilsinmi?"
   },
   "companionRemote": {
-    "title": "Yordamchi pult",
-    "connectedTo": "${name} qurilmasiga ulandi",
-    "unknownDevice": "Nomaʼlum qurilma",
-    "session": {
-      "startingServer": "Pult serveri ishga tushmoqda...",
-      "hostAddress": "Xost manzili",
-      "connected": "Ulandi",
-      "serverRunning": "Server faol",
-      "serverStopped": "Server toʻxtatildi",
-      "serverRunningDescription": "Tarmoqdagi mobil qurilmalar ulanishi mumkin",
-      "serverStoppedDescription": "Ulanishga ruxsat berish uchun serverni ishga tushiring",
-      "usePhoneToControl": "Ushbu ilovani boshqarish uchun telefoningizdan foydalaning",
-      "startServer": "Serverni ishga tushirish",
-      "stopServer": "Serverni toʻxtatish",
-      "minimize": "Yigʻish",
-      "manualAddressHint": "Qoʻlda ulanish manzili:"
-    },
-    "pairing": {
-      "discoveryDescription": "Bir xil Plex hisobidagi Plezy qurilmalari bu yerda koʻrinadi",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Ulanilmoqda...",
-      "searchingForDevices": "Qurilmalar qidirilmoqda...",
-      "noDevicesFound": "Tarmoqda qurilmalar topilmadi",
-      "noDevicesHint": "Kompyuterda Plezy-ni oching va bir xil Wi-Fi-ga ulaning",
-      "availableDevices": "Mavjud qurilmalar",
-      "manualConnection": "Qoʻlda ulanish",
-      "cryptoInitFailed": "Xavfsiz ulanish xatoligi. Avval Plex-ga kiring.",
-      "validationHostRequired": "Xost manzilini kiriting",
-      "validationHostFormat": "Format IP:port koʻrinishida boʻlishi kerak",
-      "connectionTimedOut": "Ulanish vaqti tugadi. Ikkala qurilmada ham bir xil tarmoqdan foydalaning.",
-      "sessionNotFound": "Qurilma topilmadi. Plezy xost qurilmada ishga tushirilganiga ishonch hosil qiling.",
-      "authFailed": "Autentifikatsiya xatoligi.",
-      "failedToConnect": "Ulanib boʻlmadi: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Pult seansidan uzilasizmi?",
-      "reconnecting": "Qayta ulanilmoqda...",
-      "attemptOf": "Urinish ${current} / 5",
-      "retryNow": "Hozir qaytadan urinib koʻrish",
-      "tabRemote": "Pult",
-      "tabPlay": "Ijro",
-      "tabMore": "Koʻproq",
-      "menu": "Menyu",
-      "tabNavigation": "Navigatsiya",
-      "tabDiscover": "Kashf qilish",
-      "tabLibraries": "Kutubxonalar",
-      "tabSearch": "Qidiruv",
-      "tabDownloads": "Yuklamalar",
-      "tabSettings": "Sozlamalar",
-      "previous": "Oldingi",
-      "playPause": "Ijro/Pauza",
-      "next": "Keyingi",
-      "seekBack": "Orqaga oʻtkazish",
-      "stop": "Toʻxtatish",
-      "seekForward": "Oldinga oʻtkazish",
-      "volume": "Ovoz",
-      "volumeDown": "Kamaytirish",
-      "volumeUp": "Oshirish",
-      "fullscreen": "Toʻliq ekran",
-      "subtitles": "Subtitrlar",
-      "audio": "Ovoz",
-      "searchHint": "Kompyuterda qidirish..."
+      "next": "Keyingi"
     },
-    "errors": {
-      "noNetworkInterface": "Tarmoq interfeysi topilmadi",
-      "authenticationFailed": "Autentifikatsiya xatoligi",
-      "serverStartFailed": "Serverni ishga tushirishda xatolik: ${error}",
-      "commandFailed": "Buyruqni yuborishda xatolik: ${error}",
-      "joinTimedOut": "Ulanish vaqti tugadi",
-      "failedToConnectAnyAddress": "Hech bir manzilga ulanib boʻlmadi",
-      "connectionLostAfterAttempts": "${attempts} urinishdan keyin aloqa uzildi",
-      "connectionLost": "Aloqa uzildi"
-    },
-    "closedBeforeAuth": "Ulanish autentifikatsiyadan oldin yopildi"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Ijro tezligi",

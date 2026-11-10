@@ -76,7 +76,6 @@
     "shuffle": "Karıştır",
     "addTo": "Ekle...",
     "createNew": "Yeni Oluştur",
-    "connect": "Bağlan",
     "disconnect": "Bağlantıyı Kes",
     "play": "Oynat",
     "pause": "Duraklat",
@@ -86,7 +85,6 @@
     "home": "Ana Sayfa",
     "back": "Geri",
     "settings": "Ayarlar",
-    "mute": "Sesi Kapat",
     "ok": "Tamam",
     "off": "Kapalı",
     "options": "Seçenekler",
@@ -1277,15 +1275,11 @@
     "content": "kitaplık içeriği",
     "selectLibrary": "Kitaplık seç",
     "filtersWithCount": "Filtreler (${count})",
-    "noRecommendations": "Öneri bulunmuyor",
     "noCollections": "Bu kitaplıkta koleksiyon yok",
-    "noGenres": "",
     "noFoldersFound": "Klasör bulunamadı",
     "folders": "klasörler",
     "tabs": {
-      "recommended": "Önerilenler",
       "collections": "Koleksiyonlar",
-      "genres": "",
       "playlists": "Oynatma Listeleri"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Kanal değiştirilemedi: ${reason}"
   },
   "collections": {
-    "title": "Koleksiyonlar",
     "collection": "Koleksiyon",
     "empty": "Koleksiyon boş",
     "deleteCollection": "Koleksiyonu Sil",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Koleksiyonlarda ara..."
   },
   "playlists": {
-    "title": "Oynatma Listeleri",
     "playlist": "Oynatma Listesi",
     "noPlaylists": "Oynatma listesi bulunamadı",
     "create": "Oynatma Listesi Oluştur",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "\"${name}\" silinsin mi?"
   },
   "companionRemote": {
-    "title": "Yardımcı Kumanda",
-    "connectedTo": "${name} cihazına bağlandı",
-    "unknownDevice": "Bilinmeyen Cihaz",
-    "session": {
-      "startingServer": "Uzaktan kumanda sunucusu başlatılıyor...",
-      "hostAddress": "Ana Bilgisayar Adresi",
-      "connected": "Bağlandı",
-      "serverRunning": "Uzaktan kumanda sunucusu aktif",
-      "serverStopped": "Uzaktan kumanda sunucusu durduruldu",
-      "serverRunningDescription": "Ağınızdaki mobil cihazlar bu uygulamaya bağlanabilir",
-      "serverStoppedDescription": "Mobil cihazların bağlanmasına izin vermek için sunucuyu başlatın",
-      "usePhoneToControl": "Bu uygulamayı kontrol etmek için mobil cihazınızı kullanın",
-      "startServer": "Sunucuyu Başlat",
-      "stopServer": "Sunucuyu Durdur",
-      "minimize": "Küçült",
-      "manualAddressHint": "Manuel bağlantı adresi:"
-    },
-    "pairing": {
-      "discoveryDescription": "Aynı Plex hesabına sahip Plezy cihazları burada görünür",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Bağlanılıyor...",
-      "searchingForDevices": "Cihazlar aranıyor...",
-      "noDevicesFound": "Ağınızda cihaz bulunamadı",
-      "noDevicesHint": "Masaüstünde Plezy'yi açın ve aynı Wi-Fi ağını kullanın",
-      "availableDevices": "Kullanılabilir Cihazlar",
-      "manualConnection": "Manuel Bağlantı",
-      "cryptoInitFailed": "Güvenli bağlantı başlatılamadı. Önce Plex'e giriş yapın.",
-      "validationHostRequired": "Lütfen ana bilgisayar adresini girin",
-      "validationHostFormat": "Biçim IP:port şeklinde olmalıdır (ör. 192.168.1.100:48632)",
-      "connectionTimedOut": "Bağlantı zaman aşımına uğradı. Her iki cihazda da aynı ağı kullanın.",
-      "sessionNotFound": "Cihaz bulunamadı. Plezy'nin ana bilgisayarda çalıştığından emin olun.",
-      "authFailed": "Kimlik doğrulama başarısız oldu. Her iki cihazın da aynı Plex hesabına ihtiyacı var.",
-      "failedToConnect": "Bağlantı başarısız: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Uzaktan kumanda oturumundan ayrılmak istiyor musunuz?",
-      "reconnecting": "Yeniden bağlanılıyor...",
-      "attemptOf": "Deneme ${current} / 5",
-      "retryNow": "Şimdi Tekrar Dene",
-      "tabRemote": "Kumanda",
-      "tabPlay": "Oynat",
-      "tabMore": "Daha Fazla",
-      "menu": "Menü",
-      "tabNavigation": "Sekme Gezinmesi",
-      "tabDiscover": "Keşfet",
-      "tabLibraries": "Kitaplıklar",
-      "tabSearch": "Ara",
-      "tabDownloads": "İndirmeler",
-      "tabSettings": "Ayarlar",
-      "previous": "Önceki",
-      "playPause": "Oynat/Duraklat",
-      "next": "Sonraki",
-      "seekBack": "Geri Sar",
-      "stop": "Durdur",
-      "seekForward": "İleri Sar",
-      "volume": "Ses",
-      "volumeDown": "Kıs",
-      "volumeUp": "Aç",
-      "fullscreen": "Tam Ekran",
-      "subtitles": "Altyazılar",
-      "audio": "Ses",
-      "searchHint": "Masaüstünde ara..."
+      "next": "Sonraki"
     },
-    "errors": {
-      "noNetworkInterface": "Ağ arabirimi bulunamadı",
-      "authenticationFailed": "Kimlik doğrulama başarısız oldu",
-      "serverStartFailed": "Uzaktan kumanda sunucusu başlatılamadı: ${error}",
-      "commandFailed": "Uzaktan komut gönderilemedi: ${error}",
-      "joinTimedOut": "Oturuma katılma zaman aşımına uğradı",
-      "failedToConnectAnyAddress": "Hiçbir adrese bağlanılamadı",
-      "connectionLostAfterAttempts": "${attempts} denemeden sonra bağlantı kesildi",
-      "connectionLost": "Bağlantı kesildi"
-    },
-    "closedBeforeAuth": "Bağlantı, kimlik doğrulamadan önce kapandı"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Oynatma Hızı",

@@ -76,7 +76,6 @@
     "shuffle": "Véletlenszerű lejátszás",
     "addTo": "Hozzáadás...",
     "createNew": "Új létrehozása",
-    "connect": "Csatlakozás",
     "disconnect": "Kapcsolat bontása",
     "play": "Lejátszás",
     "pause": "Szünet",
@@ -86,7 +85,6 @@
     "home": "Kezdőlap",
     "back": "Vissza",
     "settings": "Beállítások",
-    "mute": "Némítás",
     "ok": "OK",
     "off": "Ki",
     "options": "Lehetőségek",
@@ -1277,15 +1275,11 @@
     "content": "könyvtár tartalma",
     "selectLibrary": "Könyvtár kiválasztása",
     "filtersWithCount": "Szűrők (${count})",
-    "noRecommendations": "Nincsenek elérhető ajánlások",
     "noCollections": "Nincsenek gyűjtemények ebben a könyvtárban",
-    "noGenres": "",
     "noFoldersFound": "Nem találhatók mappák",
     "folders": "mappák",
     "tabs": {
-      "recommended": "Ajánlott",
       "collections": "Gyűjtemények",
-      "genres": "",
       "playlists": "Lejátszási listák"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Nem sikerült csatornát váltani: ${reason}"
   },
   "collections": {
-    "title": "Gyűjtemények",
     "collection": "Gyűjtemény",
     "empty": "A gyűjtemény üres",
     "deleteCollection": "Gyűjtemény törlése",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Gyűjtemények keresése..."
   },
   "playlists": {
-    "title": "Lejátszási listák",
     "playlist": "Lejátszási lista",
     "noPlaylists": "Nem találhatók lejátszási listák",
     "create": "Lejátszási lista létrehozása",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "Törlöd a következőt: \"${name}\"?"
   },
   "companionRemote": {
-    "title": "Kísérőtávirányító",
-    "connectedTo": "Csatlakoztatva a következőhöz: ${name}",
-    "unknownDevice": "Ismeretlen eszköz",
-    "session": {
-      "startingServer": "Távirányító-szerver indítása...",
-      "hostAddress": "Gazdagép címe",
-      "connected": "Csatlakoztatva",
-      "serverRunning": "A távirányító-szerver aktív",
-      "serverStopped": "A távirányító-szerver leállítva",
-      "serverRunningDescription": "A hálózaton lévő mobileszközök csatlakozhatnak ehhez az alkalmazáshoz",
-      "serverStoppedDescription": "Indítsd el a szervert, hogy a mobileszközök csatlakozhassanak",
-      "usePhoneToControl": "Használd a mobileszközödet az alkalmazás vezérléséhez",
-      "startServer": "Szerver indítása",
-      "stopServer": "Szerver leállítása",
-      "minimize": "Kis méret",
-      "manualAddressHint": "Kézi kapcsolódási cím:"
-    },
-    "pairing": {
-      "discoveryDescription": "Az azonos Plex-fiókot használó Plezy-eszközök itt jelennek meg",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Csatlakozás...",
-      "searchingForDevices": "Eszközök keresése...",
-      "noDevicesFound": "Nem találhatók eszközök a hálózaton",
-      "noDevicesHint": "Nyisd meg a Plezyt asztali gépen, és használd ugyanazt a Wi-Fi-hálózatot",
-      "availableDevices": "Elérhető eszközök",
-      "manualConnection": "Kézi csatlakozás",
-      "cryptoInitFailed": "Nem sikerült elindítani a biztonságos kapcsolatot. Először jelentkezz be a Plexbe.",
-      "validationHostRequired": "Add meg a gazdagép címét",
-      "validationHostFormat": "A formátumnak IP:port kell lennie (pl. 192.168.1.100:48632)",
-      "connectionTimedOut": "A csatlakozás túllépte az időkorlátot. Használd ugyanazt a hálózatot mindkét eszközön.",
-      "sessionNotFound": "Az eszköz nem található. Győződj meg arról, hogy a Plezy fut a gazdagépen.",
-      "authFailed": "A hitelesítés nem sikerült. Mindkét eszközön ugyanazt a Plex-fiókot kell használni.",
-      "failedToConnect": "Nem sikerült a csatlakozás: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Bontod a kapcsolatot a távoli munkamenettel?",
-      "reconnecting": "Újracsatlakozás...",
-      "attemptOf": "${current} / 5 próbálkozás",
-      "retryNow": "Újrapróbálkozás most",
-      "tabRemote": "Távirányító",
-      "tabPlay": "Lejátszás",
-      "tabMore": "Egyebek",
-      "menu": "Menü",
-      "tabNavigation": "Navigációs lap",
-      "tabDiscover": "Felfedezés",
-      "tabLibraries": "Könyvtárak",
-      "tabSearch": "Keresés",
-      "tabDownloads": "Letöltések",
-      "tabSettings": "Beállítások",
-      "previous": "Előző",
-      "playPause": "Lejátszás/Szünet",
-      "next": "Következő",
-      "seekBack": "Visszatekerés",
-      "stop": "Leállítás",
-      "seekForward": "Előretekerés",
-      "volume": "Hangerő",
-      "volumeDown": "Hangerő le",
-      "volumeUp": "Hangerő fel",
-      "fullscreen": "Teljes képernyő",
-      "subtitles": "Feliratok",
-      "audio": "Hang",
-      "searchHint": "Keresés az asztali gépen..."
+      "next": "Következő"
     },
-    "errors": {
-      "noNetworkInterface": "Nem található hálózati csatoló",
-      "authenticationFailed": "A hitelesítés nem sikerült",
-      "serverStartFailed": "Nem sikerült elindítani a távirányító-szervert: ${error}",
-      "commandFailed": "Nem sikerült elküldeni a távoli parancsot: ${error}",
-      "joinTimedOut": "Időtúllépés a munkamenethez való csatlakozáskor",
-      "failedToConnectAnyAddress": "Egyetlen címhez sem sikerült csatlakozni",
-      "connectionLostAfterAttempts": "A kapcsolat megszakadt ${attempts} próbálkozás után",
-      "connectionLost": "A kapcsolat megszakadt"
-    },
-    "closedBeforeAuth": "A kapcsolat a hitelesítés előtt megszakadt"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Lejátszási sebesség",

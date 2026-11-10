@@ -76,7 +76,6 @@
     "shuffle": "Riproduzione casuale",
     "addTo": "Aggiungi a...",
     "createNew": "Crea nuovo",
-    "connect": "Connetti",
     "disconnect": "Disconnetti",
     "play": "Riproduci",
     "pause": "Pausa",
@@ -86,7 +85,6 @@
     "home": "Home",
     "back": "Indietro",
     "settings": "Impostazioni",
-    "mute": "Disattiva audio",
     "ok": "OK",
     "off": "Disattivato",
     "options": "Opzioni",
@@ -1277,15 +1275,11 @@
     "content": "contenuto della libreria",
     "selectLibrary": "Seleziona libreria",
     "filtersWithCount": "Filtri (${count})",
-    "noRecommendations": "Nessun consiglio disponibile",
     "noCollections": "Nessuna raccolta in questa libreria",
-    "noGenres": "",
     "noFoldersFound": "Nessuna cartella trovata",
     "folders": "cartelle",
     "tabs": {
-      "recommended": "Consigliati",
       "collections": "Raccolte",
-      "genres": "",
       "playlists": "Playlist"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Impossibile cambiare canale: ${reason}"
   },
   "collections": {
-    "title": "Raccolte",
     "collection": "Raccolta",
     "empty": "La raccolta è vuota",
     "deleteCollection": "Elimina raccolta",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Cerca raccolte..."
   },
   "playlists": {
-    "title": "Playlist",
     "playlist": "Playlist",
     "noPlaylists": "Nessuna playlist trovata",
     "create": "Crea playlist",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "Eliminare \"${name}\"?"
   },
   "companionRemote": {
-    "title": "Telecomando",
-    "connectedTo": "Connesso a ${name}",
-    "unknownDevice": "Dispositivo sconosciuto",
-    "session": {
-      "startingServer": "Avvio del server remoto...",
-      "hostAddress": "Indirizzo host",
-      "connected": "Connesso",
-      "serverRunning": "Server remoto attivo",
-      "serverStopped": "Server remoto arrestato",
-      "serverRunningDescription": "I dispositivi mobili della tua rete possono connettersi a questa app",
-      "serverStoppedDescription": "Avvia il server per consentire ai dispositivi mobili di connettersi",
-      "usePhoneToControl": "Usa il tuo dispositivo mobile per controllare questa app",
-      "startServer": "Avvia server",
-      "stopServer": "Arresta server",
-      "minimize": "Riduci",
-      "manualAddressHint": "Indirizzo di connessione manuale:"
-    },
-    "pairing": {
-      "discoveryDescription": "I dispositivi Plezy con lo stesso account Plex appaiono qui",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Connessione...",
-      "searchingForDevices": "Ricerca dispositivi...",
-      "noDevicesFound": "Nessun dispositivo trovato nella tua rete",
-      "noDevicesHint": "Apri Plezy sul computer e usa la stessa rete Wi-Fi",
-      "availableDevices": "Dispositivi disponibili",
-      "manualConnection": "Connessione manuale",
-      "cryptoInitFailed": "Impossibile avviare la connessione sicura. Accedi prima a Plex.",
-      "validationHostRequired": "Inserisci l'indirizzo host",
-      "validationHostFormat": "Il formato deve essere IP:porta (es. 192.168.1.100:48632)",
-      "connectionTimedOut": "Tempo scaduto per la connessione. Usa la stessa rete su entrambi i dispositivi.",
-      "sessionNotFound": "Dispositivo non trovato. Assicurati che Plezy sia in esecuzione sull'host.",
-      "authFailed": "Autenticazione non riuscita. Entrambi i dispositivi devono usare lo stesso account Plex.",
-      "failedToConnect": "Connessione non riuscita: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Vuoi disconnetterti dalla sessione remota?",
-      "reconnecting": "Riconnessione...",
-      "attemptOf": "Tentativo ${current} di 5",
-      "retryNow": "Riprova ora",
-      "tabRemote": "Telecomando",
-      "tabPlay": "Riproduci",
-      "tabMore": "Altro",
-      "menu": "Menu",
-      "tabNavigation": "Navigazione",
-      "tabDiscover": "Esplora",
-      "tabLibraries": "Librerie",
-      "tabSearch": "Cerca",
-      "tabDownloads": "Download",
-      "tabSettings": "Impostazioni",
-      "previous": "Precedente",
-      "playPause": "Riproduci/Pausa",
-      "next": "Successivo",
-      "seekBack": "Indietro",
-      "stop": "Interrompi",
-      "seekForward": "Avanti",
-      "volume": "Volume",
-      "volumeDown": "Abbassa",
-      "volumeUp": "Alza",
-      "fullscreen": "Schermo intero",
-      "subtitles": "Sottotitoli",
-      "audio": "Audio",
-      "searchHint": "Cerca sul computer..."
+      "next": "Successivo"
     },
-    "errors": {
-      "noNetworkInterface": "Nessuna interfaccia di rete trovata",
-      "authenticationFailed": "Autenticazione non riuscita",
-      "serverStartFailed": "Impossibile avviare il server remoto: ${error}",
-      "commandFailed": "Impossibile inviare il comando remoto: ${error}",
-      "joinTimedOut": "Tempo scaduto durante la partecipazione alla sessione",
-      "failedToConnectAnyAddress": "Impossibile connettersi a qualsiasi indirizzo",
-      "connectionLostAfterAttempts": "Connessione persa dopo ${attempts} tentativi",
-      "connectionLost": "Connessione persa"
-    },
-    "closedBeforeAuth": "La connessione si è chiusa prima dell'autenticazione"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Velocità di riproduzione",

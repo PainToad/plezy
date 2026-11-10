@@ -76,7 +76,6 @@
     "shuffle": "Willekeurig",
     "addTo": "Toevoegen aan...",
     "createNew": "Nieuw aanmaken",
-    "connect": "Verbinden",
     "disconnect": "Verbinding verbreken",
     "play": "Afspelen",
     "pause": "Pauzeren",
@@ -86,7 +85,6 @@
     "home": "Home",
     "back": "Terug",
     "settings": "Instellingen",
-    "mute": "Dempen",
     "ok": "OK",
     "off": "Uit",
     "options": "Opties",
@@ -1277,15 +1275,11 @@
     "content": "bibliotheekinhoud",
     "selectLibrary": "Bibliotheek kiezen",
     "filtersWithCount": "Filters (${count})",
-    "noRecommendations": "Geen aanbevelingen beschikbaar",
     "noCollections": "Geen collecties in deze bibliotheek",
-    "noGenres": "",
     "noFoldersFound": "Geen mappen gevonden",
     "folders": "mappen",
     "tabs": {
-      "recommended": "Aanbevolen",
       "collections": "Collecties",
-      "genres": "",
       "playlists": "Afspeellijsten"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Kon niet van kanaal wisselen: ${reason}"
   },
   "collections": {
-    "title": "Collecties",
     "collection": "Collectie",
     "empty": "Collectie is leeg",
     "deleteCollection": "Collectie verwijderen",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Collecties zoeken..."
   },
   "playlists": {
-    "title": "Afspeellijsten",
     "playlist": "Afspeellijst",
     "noPlaylists": "Geen afspeellijsten gevonden",
     "create": "Afspeellijst maken",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "\"${name}\" verwijderen?"
   },
   "companionRemote": {
-    "title": "Afstandsbediening",
-    "connectedTo": "Verbonden met ${name}",
-    "unknownDevice": "Onbekend apparaat",
-    "session": {
-      "startingServer": "Externe server starten...",
-      "hostAddress": "Hostadres",
-      "connected": "Verbonden",
-      "serverRunning": "Externe server actief",
-      "serverStopped": "Externe server gestopt",
-      "serverRunningDescription": "Mobiele apparaten op je netwerk kunnen met deze app verbinden",
-      "serverStoppedDescription": "Start de server om mobiele apparaten te laten verbinden",
-      "usePhoneToControl": "Gebruik je mobiele apparaat om deze app te bedienen",
-      "startServer": "Server starten",
-      "stopServer": "Server stoppen",
-      "minimize": "Minimaliseren",
-      "manualAddressHint": "Handmatig verbindingsadres:"
-    },
-    "pairing": {
-      "discoveryDescription": "Plezy-apparaten met hetzelfde Plex-account verschijnen hier",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Verbinden...",
-      "searchingForDevices": "Apparaten zoeken...",
-      "noDevicesFound": "Geen apparaten gevonden op je netwerk",
-      "noDevicesHint": "Open Plezy op je desktop en gebruik op beide apparaten dezelfde wifi",
-      "availableDevices": "Beschikbare apparaten",
-      "manualConnection": "Handmatige verbinding",
-      "cryptoInitFailed": "Kon beveiligde verbinding niet starten. Log eerst in bij Plex.",
-      "validationHostRequired": "Voer het hostadres in",
-      "validationHostFormat": "Formaat moet IP:poort zijn (bijv. 192.168.1.100:48632)",
-      "connectionTimedOut": "Er is een time-out opgetreden. Gebruik op beide apparaten hetzelfde netwerk.",
-      "sessionNotFound": "Apparaat niet gevonden. Zorg dat Plezy op de host draait.",
-      "authFailed": "Authenticatie mislukt. Beide apparaten hebben hetzelfde Plex-account nodig.",
-      "failedToConnect": "Kan niet verbinden: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Wil je de verbinding met de externe sessie verbreken?",
-      "reconnecting": "Opnieuw verbinden...",
-      "attemptOf": "Poging ${current} van 5",
-      "retryNow": "Nu opnieuw proberen",
-      "tabRemote": "Afstandsbediening",
-      "tabPlay": "Afspelen",
-      "tabMore": "Meer",
-      "menu": "Menu",
-      "tabNavigation": "Tabnavigatie",
-      "tabDiscover": "Ontdekken",
-      "tabLibraries": "Bibliotheken",
-      "tabSearch": "Zoeken",
-      "tabDownloads": "Downloads",
-      "tabSettings": "Instellingen",
-      "previous": "Vorige",
-      "playPause": "Afspelen/Pauzeren",
-      "next": "Volgende",
-      "seekBack": "Terugspoelen",
-      "stop": "Stoppen",
-      "seekForward": "Vooruitspoelen",
-      "volume": "Volume",
-      "volumeDown": "Omlaag",
-      "volumeUp": "Omhoog",
-      "fullscreen": "Volledig scherm",
-      "subtitles": "Ondertitels",
-      "audio": "Audio",
-      "searchHint": "Zoeken op desktop..."
+      "next": "Volgende"
     },
-    "errors": {
-      "noNetworkInterface": "Geen netwerkinterface gevonden",
-      "authenticationFailed": "Authenticatie mislukt",
-      "serverStartFailed": "Externe server starten mislukt: ${error}",
-      "commandFailed": "Externe opdracht verzenden mislukt: ${error}",
-      "joinTimedOut": "Time-out bij deelnemen aan sessie",
-      "failedToConnectAnyAddress": "Er kon met geen enkel adres verbinding worden gemaakt",
-      "connectionLostAfterAttempts": "Verbinding verbroken na ${attempts} pogingen",
-      "connectionLost": "Verbinding verloren"
-    },
-    "closedBeforeAuth": "De verbinding is vóór de authenticatie gesloten"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Afspeelsnelheid",

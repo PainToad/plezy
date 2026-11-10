@@ -76,7 +76,6 @@
     "shuffle": "Bland",
     "addTo": "Tilføj til...",
     "createNew": "Opret ny",
-    "connect": "Forbind",
     "disconnect": "Afbryd",
     "play": "Afspil",
     "pause": "Pause",
@@ -86,7 +85,6 @@
     "home": "Hjem",
     "back": "Tilbage",
     "settings": "Indstillinger",
-    "mute": "Lydløs",
     "ok": "OK",
     "off": "Fra",
     "options": "Valgmuligheder",
@@ -1277,15 +1275,11 @@
     "content": "biblioteksindhold",
     "selectLibrary": "Vælg bibliotek",
     "filtersWithCount": "Filtre (${count})",
-    "noRecommendations": "Ingen anbefalinger tilgængelige",
     "noCollections": "Ingen samlinger i dette bibliotek",
-    "noGenres": "",
     "noFoldersFound": "Ingen mapper fundet",
     "folders": "mapper",
     "tabs": {
-      "recommended": "Anbefalet",
       "collections": "Samlinger",
-      "genres": "",
       "playlists": "Playlister"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Kunne ikke skifte kanal: ${reason}"
   },
   "collections": {
-    "title": "Samlinger",
     "collection": "Samling",
     "empty": "Samlingen er tom",
     "deleteCollection": "Slet samling",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Søg i samlinger..."
   },
   "playlists": {
-    "title": "Playlister",
     "playlist": "Playliste",
     "noPlaylists": "Ingen playlister fundet",
     "create": "Opret playliste",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "Slet \"${name}\"?"
   },
   "companionRemote": {
-    "title": "Fjernbetjening",
-    "connectedTo": "Forbundet til ${name}",
-    "unknownDevice": "Ukendt enhed",
-    "session": {
-      "startingServer": "Starter fjernbetjeningsserver...",
-      "hostAddress": "Værtsadresse",
-      "connected": "Forbundet",
-      "serverRunning": "Fjernbetjeningsserver aktiv",
-      "serverStopped": "Fjernbetjeningsserver stoppet",
-      "serverRunningDescription": "Mobile enheder på dit netværk kan oprette forbindelse til denne app",
-      "serverStoppedDescription": "Start serveren for at tillade mobilenheder at oprette forbindelse",
-      "usePhoneToControl": "Brug din mobilenhed til at styre denne app",
-      "startServer": "Start serveren",
-      "stopServer": "Stop serveren",
-      "minimize": "Minimér",
-      "manualAddressHint": "Manuel forbindelsesadresse:"
-    },
-    "pairing": {
-      "discoveryDescription": "Plezy-enheder med samme Plex-konto vises her",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Opretter forbindelse...",
-      "searchingForDevices": "Søger efter enheder...",
-      "noDevicesFound": "Ingen enheder fundet på dit netværk",
-      "noDevicesHint": "Åbn Plezy på din computer, og brug det samme Wi-Fi-netværk",
-      "availableDevices": "Tilgængelige enheder",
-      "manualConnection": "Manuel forbindelse",
-      "cryptoInitFailed": "Kunne ikke starte sikker forbindelse. Log ind på Plex først.",
-      "validationHostRequired": "Angiv en værtsadresse",
-      "validationHostFormat": "Format skal være IP:port (f.eks. 192.168.1.100:48632)",
-      "connectionTimedOut": "Forbindelsen fik timeout. Brug samme netværk på begge enheder.",
-      "sessionNotFound": "Enhed ikke fundet. Sørg for, at Plezy kører på værten.",
-      "authFailed": "Godkendelse mislykkedes. Begge enheder skal bruge samme Plex-konto.",
-      "failedToConnect": "Kunne ikke oprette forbindelse: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Vil du afbryde forbindelsen til fjernsessionen?",
-      "reconnecting": "Genopretter forbindelse...",
-      "attemptOf": "Forsøg ${current} af 5",
-      "retryNow": "Prøv igen nu",
-      "tabRemote": "Fjernbetjening",
-      "tabPlay": "Afspil",
-      "tabMore": "Mere",
-      "menu": "Menu",
-      "tabNavigation": "Fanenavigation",
-      "tabDiscover": "Opdag",
-      "tabLibraries": "Biblioteker",
-      "tabSearch": "Søg",
-      "tabDownloads": "Downloads",
-      "tabSettings": "Indstillinger",
-      "previous": "Forrige",
-      "playPause": "Afspil/Pause",
-      "next": "Næste",
-      "seekBack": "Spol tilbage",
-      "stop": "Stop",
-      "seekForward": "Spol frem",
-      "volume": "Lydstyrke",
-      "volumeDown": "Ned",
-      "volumeUp": "Op",
-      "fullscreen": "Fuldskærm",
-      "subtitles": "Undertekster",
-      "audio": "Lyd",
-      "searchHint": "Søg på desktop..."
+      "next": "Næste"
     },
-    "errors": {
-      "noNetworkInterface": "Ingen netværksgrænseflade fundet",
-      "authenticationFailed": "Godkendelse mislykkedes",
-      "serverStartFailed": "Fjernbetjeningsserveren kunne ikke startes: ${error}",
-      "commandFailed": "Kunne ikke sende fjernkommando: ${error}",
-      "joinTimedOut": "Tidsgrænse for deltagelse i session overskredet",
-      "failedToConnectAnyAddress": "Kunne ikke oprette forbindelse til nogen adresse",
-      "connectionLostAfterAttempts": "Forbindelse mistet efter ${attempts} forsøg",
-      "connectionLost": "Forbindelse mistet"
-    },
-    "closedBeforeAuth": "Forbindelsen blev lukket før godkendelsen"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Afspilningshastighed",

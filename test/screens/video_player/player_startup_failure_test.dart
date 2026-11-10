@@ -17,7 +17,6 @@ import 'package:plezy/models/transcode_quality_preset.dart';
 import 'package:plezy/mpv/models.dart';
 import 'package:plezy/mpv/player/player_base.dart';
 import 'package:plezy/providers/account_preferences_controller.dart';
-import 'package:plezy/providers/companion_remote_provider.dart';
 import 'package:plezy/providers/multi_server_provider.dart';
 import 'package:plezy/providers/playback_state_provider.dart';
 import 'package:plezy/screens/video_player_screen.dart';
@@ -132,7 +131,6 @@ void main() {
               ChangeNotifierProvider<MultiServerProvider>.value(value: multi.provider),
               ChangeNotifierProvider<OfflineWatchSyncService>.value(value: offlineWatch),
               ChangeNotifierProvider<AccountPreferencesController>.value(value: accountPreferences),
-              ChangeNotifierProvider(create: (_) => CompanionRemoteProvider()),
               ChangeNotifierProvider(create: (_) => WatchTogetherProvider()),
               Provider<AppDatabase>.value(value: db),
             ],

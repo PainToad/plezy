@@ -175,7 +175,6 @@ class _Translations$common$nl extends Translations$common$en {
 	@override String get shuffle => 'Willekeurig';
 	@override String get addTo => 'Toevoegen aan...';
 	@override String get createNew => 'Nieuw aanmaken';
-	@override String get connect => 'Verbinden';
 	@override String get disconnect => 'Verbinding verbreken';
 	@override String get play => 'Afspelen';
 	@override String get pause => 'Pauzeren';
@@ -185,7 +184,6 @@ class _Translations$common$nl extends Translations$common$en {
 	@override String get home => 'Home';
 	@override String get back => 'Terug';
 	@override String get settings => 'Instellingen';
-	@override String get mute => 'Dempen';
 	@override String get ok => 'OK';
 	@override String get off => 'Uit';
 	@override String get options => 'Opties';
@@ -1413,7 +1411,6 @@ class _Translations$libraries$nl extends Translations$libraries$en {
 	@override String get content => 'bibliotheekinhoud';
 	@override String get selectLibrary => 'Bibliotheek kiezen';
 	@override String filtersWithCount({required Object count}) => 'Filters (${count})';
-	@override String get noRecommendations => 'Geen aanbevelingen beschikbaar';
 	@override String get noCollections => 'Geen collecties in deze bibliotheek';
 	@override String get noFoldersFound => 'Geen mappen gevonden';
 	@override String get folders => 'mappen';
@@ -1660,7 +1657,6 @@ class _Translations$collections$nl extends Translations$collections$en {
 	final TranslationsNl _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Collecties';
 	@override String get collection => 'Collectie';
 	@override String get empty => 'Collectie is leeg';
 	@override String get deleteCollection => 'Collectie verwijderen';
@@ -1689,7 +1685,6 @@ class _Translations$playlists$nl extends Translations$playlists$en {
 	final TranslationsNl _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Afspeellijsten';
 	@override String get playlist => 'Afspeellijst';
 	@override String get noPlaylists => 'Geen afspeellijsten gevonden';
 	@override String get create => 'Afspeellijst maken';
@@ -2015,14 +2010,7 @@ class _Translations$companionRemote$nl extends Translations$companionRemote$en {
 	final TranslationsNl _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Afstandsbediening';
-	@override String connectedTo({required Object name}) => 'Verbonden met ${name}';
-	@override String get unknownDevice => 'Onbekend apparaat';
-	@override late final _Translations$companionRemote$session$nl session = _Translations$companionRemote$session$nl._(_root);
-	@override late final _Translations$companionRemote$pairing$nl pairing = _Translations$companionRemote$pairing$nl._(_root);
 	@override late final _Translations$companionRemote$remote$nl remote = _Translations$companionRemote$remote$nl._(_root);
-	@override late final _Translations$companionRemote$errors$nl errors = _Translations$companionRemote$errors$nl._(_root);
-	@override String get closedBeforeAuth => 'De verbinding is vóór de authenticatie gesloten';
 }
 
 // Path: videoSettings
@@ -2696,7 +2684,6 @@ class _Translations$libraries$tabs$nl extends Translations$libraries$tabs$en {
 	final TranslationsNl _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => 'Aanbevolen';
 	@override String get collections => 'Collecties';
 	@override String get playlists => 'Afspeellijsten';
 }
@@ -3168,51 +3155,6 @@ class _Translations$downloads$groupings$nl extends Translations$downloads$groupi
 	@override String get collections => 'Collecties';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$nl extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$nl._(TranslationsNl root) : this._root = root, super.internal(root);
-
-	final TranslationsNl _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => 'Externe server starten...';
-	@override String get hostAddress => 'Hostadres';
-	@override String get connected => 'Verbonden';
-	@override String get serverRunning => 'Externe server actief';
-	@override String get serverStopped => 'Externe server gestopt';
-	@override String get serverRunningDescription => 'Mobiele apparaten op je netwerk kunnen met deze app verbinden';
-	@override String get serverStoppedDescription => 'Start de server om mobiele apparaten te laten verbinden';
-	@override String get usePhoneToControl => 'Gebruik je mobiele apparaat om deze app te bedienen';
-	@override String get startServer => 'Server starten';
-	@override String get stopServer => 'Server stoppen';
-	@override String get minimize => 'Minimaliseren';
-	@override String get manualAddressHint => 'Handmatig verbindingsadres:';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$nl extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$nl._(TranslationsNl root) : this._root = root, super.internal(root);
-
-	final TranslationsNl _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => 'Plezy-apparaten met hetzelfde Plex-account verschijnen hier';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => 'Verbinden...';
-	@override String get searchingForDevices => 'Apparaten zoeken...';
-	@override String get noDevicesFound => 'Geen apparaten gevonden op je netwerk';
-	@override String get noDevicesHint => 'Open Plezy op je desktop en gebruik op beide apparaten dezelfde wifi';
-	@override String get availableDevices => 'Beschikbare apparaten';
-	@override String get manualConnection => 'Handmatige verbinding';
-	@override String get cryptoInitFailed => 'Kon beveiligde verbinding niet starten. Log eerst in bij Plex.';
-	@override String get validationHostRequired => 'Voer het hostadres in';
-	@override String get validationHostFormat => 'Formaat moet IP:poort zijn (bijv. 192.168.1.100:48632)';
-	@override String get connectionTimedOut => 'Er is een time-out opgetreden. Gebruik op beide apparaten hetzelfde netwerk.';
-	@override String get sessionNotFound => 'Apparaat niet gevonden. Zorg dat Plezy op de host draait.';
-	@override String get authFailed => 'Authenticatie mislukt. Beide apparaten hebben hetzelfde Plex-account nodig.';
-	@override String failedToConnect({required Object error}) => 'Kan niet verbinden: ${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$nl extends Translations$companionRemote$remote$en {
 	_Translations$companionRemote$remote$nl._(TranslationsNl root) : this._root = root, super.internal(root);
@@ -3220,50 +3162,7 @@ class _Translations$companionRemote$remote$nl extends Translations$companionRemo
 	final TranslationsNl _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => 'Wil je de verbinding met de externe sessie verbreken?';
-	@override String get reconnecting => 'Opnieuw verbinden...';
-	@override String attemptOf({required Object current}) => 'Poging ${current} van 5';
-	@override String get retryNow => 'Nu opnieuw proberen';
-	@override String get tabRemote => 'Afstandsbediening';
-	@override String get tabPlay => 'Afspelen';
-	@override String get tabMore => 'Meer';
-	@override String get menu => 'Menu';
-	@override String get tabNavigation => 'Tabnavigatie';
-	@override String get tabDiscover => 'Ontdekken';
-	@override String get tabLibraries => 'Bibliotheken';
-	@override String get tabSearch => 'Zoeken';
-	@override String get tabDownloads => 'Downloads';
-	@override String get tabSettings => 'Instellingen';
-	@override String get previous => 'Vorige';
-	@override String get playPause => 'Afspelen/Pauzeren';
 	@override String get next => 'Volgende';
-	@override String get seekBack => 'Terugspoelen';
-	@override String get stop => 'Stoppen';
-	@override String get seekForward => 'Vooruitspoelen';
-	@override String get volume => 'Volume';
-	@override String get volumeDown => 'Omlaag';
-	@override String get volumeUp => 'Omhoog';
-	@override String get fullscreen => 'Volledig scherm';
-	@override String get subtitles => 'Ondertitels';
-	@override String get audio => 'Audio';
-	@override String get searchHint => 'Zoeken op desktop...';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$nl extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$nl._(TranslationsNl root) : this._root = root, super.internal(root);
-
-	final TranslationsNl _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => 'Geen netwerkinterface gevonden';
-	@override String get authenticationFailed => 'Authenticatie mislukt';
-	@override String serverStartFailed({required Object error}) => 'Externe server starten mislukt: ${error}';
-	@override String commandFailed({required Object error}) => 'Externe opdracht verzenden mislukt: ${error}';
-	@override String get joinTimedOut => 'Time-out bij deelnemen aan sessie';
-	@override String get failedToConnectAnyAddress => 'Er kon met geen enkel adres verbinding worden gemaakt';
-	@override String connectionLostAfterAttempts({required Object attempts}) => 'Verbinding verbroken na ${attempts} pogingen';
-	@override String get connectionLost => 'Verbinding verloren';
 }
 
 // Path: services.names
@@ -3426,7 +3325,6 @@ extension on TranslationsNl {
 			'common.shuffle' => 'Willekeurig',
 			'common.addTo' => 'Toevoegen aan...',
 			'common.createNew' => 'Nieuw aanmaken',
-			'common.connect' => 'Verbinden',
 			'common.disconnect' => 'Verbinding verbreken',
 			'common.play' => 'Afspelen',
 			'common.pause' => 'Pauzeren',
@@ -3436,7 +3334,6 @@ extension on TranslationsNl {
 			'common.home' => 'Home',
 			'common.back' => 'Terug',
 			'common.settings' => 'Instellingen',
-			'common.mute' => 'Dempen',
 			'common.ok' => 'OK',
 			'common.off' => 'Uit',
 			'common.options' => 'Opties',
@@ -3870,10 +3767,10 @@ extension on TranslationsNl {
 			'themeEditor.opacity' => 'Dekking',
 			'themeEditor.hexHint' => '#RRGGBB of #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Uit andere thema\'s',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} van ${theme}',
 			'themeEditor.contrast.textOnBg' => 'Tekst op achtergrond',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'Tekst op oppervlak',
 			'themeEditor.contrast.textMutedOnBg' => 'Secundaire tekst op achtergrond',
 			'themeEditor.contrast.textMutedOnSurface' => 'Secundaire tekst op oppervlak',
@@ -4384,10 +4281,10 @@ extension on TranslationsNl {
 			'connections.addConnectionSubtitleNoProfile' => 'Meld je aan met Plex of verbind een Jellyfin- of Emby-server',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Toevoegen aan ${displayName}: Plex, Jellyfin, Emby of een andere profielverbinding',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Sessie verlopen voor ${name}',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Sessie verlopen voor ${count} servers',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} weigerde toegang voor dit account',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} servers weigerden toegang voor dit account',
 			'connections.signInAgain' => 'Opnieuw aanmelden',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => '${product}-verbinding bewerken',
@@ -4534,11 +4431,9 @@ extension on TranslationsNl {
 			'libraries.content' => 'bibliotheekinhoud',
 			'libraries.selectLibrary' => 'Bibliotheek kiezen',
 			'libraries.filtersWithCount' => ({required Object count}) => 'Filters (${count})',
-			'libraries.noRecommendations' => 'Geen aanbevelingen beschikbaar',
 			'libraries.noCollections' => 'Geen collecties in deze bibliotheek',
 			'libraries.noFoldersFound' => 'Geen mappen gevonden',
 			'libraries.folders' => 'mappen',
-			'libraries.tabs.recommended' => 'Aanbevolen',
 			'libraries.tabs.collections' => 'Collecties',
 			'libraries.tabs.playlists' => 'Afspeellijsten',
 			'libraries.groupings.title' => 'Groepering',
@@ -4866,7 +4761,6 @@ extension on TranslationsNl {
 			'liveTv.failedToBuildStreamUrl' => 'Kon de stream-URL niet samenstellen',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Kon het kanaal niet starten: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Kon niet van kanaal wisselen: ${reason}',
-			'collections.title' => 'Collecties',
 			'collections.collection' => 'Collectie',
 			'collections.empty' => 'Collectie is leeg',
 			'collections.deleteCollection' => 'Collectie verwijderen',
@@ -4886,7 +4780,6 @@ extension on TranslationsNl {
 			'collections.removeFromCollectionFailed' => 'Verwijderen uit collectie mislukt',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'Fout bij verwijderen uit collectie: ${error}',
 			'collections.searchCollections' => 'Collecties zoeken...',
-			'playlists.title' => 'Afspeellijsten',
 			'playlists.playlist' => 'Afspeellijst',
 			'playlists.noPlaylists' => 'Geen afspeellijsten gevonden',
 			'playlists.create' => 'Afspeellijst maken',
@@ -4898,14 +4791,14 @@ extension on TranslationsNl {
 			'playlists.itemCount' => ({required Object count}) => '${count} items',
 			'playlists.oneItem' => '1 item',
 			'playlists.emptyPlaylist' => 'Deze afspeellijst is leeg',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Afspeellijst verwijderen?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Weet je zeker dat je "${name}" wilt verwijderen?',
 			'playlists.created' => 'Afspeellijst gemaakt',
 			'playlists.deleted' => 'Afspeellijst verwijderd',
 			'playlists.itemAdded' => 'Toegevoegd aan afspeellijst',
 			'playlists.itemRemoved' => 'Verwijderd uit afspeellijst',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => 'Afspeellijst selecteren',
 			'playlists.searchPlaylists' => 'Afspeellijsten zoeken...',
 			'playlists.errorCreating' => 'Afspeellijst maken mislukt',
@@ -5232,72 +5125,7 @@ extension on TranslationsNl {
 			'shaders.shaderImportFailed' => 'Shader importeren mislukt',
 			'shaders.deleteShader' => 'Shader verwijderen',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => '"${name}" verwijderen?',
-			'companionRemote.title' => 'Afstandsbediening',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Verbonden met ${name}',
-			'companionRemote.unknownDevice' => 'Onbekend apparaat',
-			'companionRemote.session.startingServer' => 'Externe server starten...',
-			'companionRemote.session.hostAddress' => 'Hostadres',
-			'companionRemote.session.connected' => 'Verbonden',
-			'companionRemote.session.serverRunning' => 'Externe server actief',
-			'companionRemote.session.serverStopped' => 'Externe server gestopt',
-			'companionRemote.session.serverRunningDescription' => 'Mobiele apparaten op je netwerk kunnen met deze app verbinden',
-			'companionRemote.session.serverStoppedDescription' => 'Start de server om mobiele apparaten te laten verbinden',
-			'companionRemote.session.usePhoneToControl' => 'Gebruik je mobiele apparaat om deze app te bedienen',
-			'companionRemote.session.startServer' => 'Server starten',
-			'companionRemote.session.stopServer' => 'Server stoppen',
-			'companionRemote.session.minimize' => 'Minimaliseren',
-			'companionRemote.session.manualAddressHint' => 'Handmatig verbindingsadres:',
-			'companionRemote.pairing.discoveryDescription' => 'Plezy-apparaten met hetzelfde Plex-account verschijnen hier',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Verbinden...',
-			'companionRemote.pairing.searchingForDevices' => 'Apparaten zoeken...',
-			'companionRemote.pairing.noDevicesFound' => 'Geen apparaten gevonden op je netwerk',
-			'companionRemote.pairing.noDevicesHint' => 'Open Plezy op je desktop en gebruik op beide apparaten dezelfde wifi',
-			'companionRemote.pairing.availableDevices' => 'Beschikbare apparaten',
-			'companionRemote.pairing.manualConnection' => 'Handmatige verbinding',
-			'companionRemote.pairing.cryptoInitFailed' => 'Kon beveiligde verbinding niet starten. Log eerst in bij Plex.',
-			'companionRemote.pairing.validationHostRequired' => 'Voer het hostadres in',
-			'companionRemote.pairing.validationHostFormat' => 'Formaat moet IP:poort zijn (bijv. 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'Er is een time-out opgetreden. Gebruik op beide apparaten hetzelfde netwerk.',
-			'companionRemote.pairing.sessionNotFound' => 'Apparaat niet gevonden. Zorg dat Plezy op de host draait.',
-			'companionRemote.pairing.authFailed' => 'Authenticatie mislukt. Beide apparaten hebben hetzelfde Plex-account nodig.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Kan niet verbinden: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Wil je de verbinding met de externe sessie verbreken?',
-			'companionRemote.remote.reconnecting' => 'Opnieuw verbinden...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Poging ${current} van 5',
-			'companionRemote.remote.retryNow' => 'Nu opnieuw proberen',
-			'companionRemote.remote.tabRemote' => 'Afstandsbediening',
-			'companionRemote.remote.tabPlay' => 'Afspelen',
-			'companionRemote.remote.tabMore' => 'Meer',
-			'companionRemote.remote.menu' => 'Menu',
-			'companionRemote.remote.tabNavigation' => 'Tabnavigatie',
-			'companionRemote.remote.tabDiscover' => 'Ontdekken',
-			'companionRemote.remote.tabLibraries' => 'Bibliotheken',
-			'companionRemote.remote.tabSearch' => 'Zoeken',
-			'companionRemote.remote.tabDownloads' => 'Downloads',
-			'companionRemote.remote.tabSettings' => 'Instellingen',
-			'companionRemote.remote.previous' => 'Vorige',
-			'companionRemote.remote.playPause' => 'Afspelen/Pauzeren',
 			'companionRemote.remote.next' => 'Volgende',
-			'companionRemote.remote.seekBack' => 'Terugspoelen',
-			'companionRemote.remote.stop' => 'Stoppen',
-			'companionRemote.remote.seekForward' => 'Vooruitspoelen',
-			'companionRemote.remote.volume' => 'Volume',
-			'companionRemote.remote.volumeDown' => 'Omlaag',
-			'companionRemote.remote.volumeUp' => 'Omhoog',
-			'companionRemote.remote.fullscreen' => 'Volledig scherm',
-			'companionRemote.remote.subtitles' => 'Ondertitels',
-			'companionRemote.remote.audio' => 'Audio',
-			'companionRemote.remote.searchHint' => 'Zoeken op desktop...',
-			'companionRemote.errors.noNetworkInterface' => 'Geen netwerkinterface gevonden',
-			'companionRemote.errors.authenticationFailed' => 'Authenticatie mislukt',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Externe server starten mislukt: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Externe opdracht verzenden mislukt: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Time-out bij deelnemen aan sessie',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Er kon met geen enkel adres verbinding worden gemaakt',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'Verbinding verbroken na ${attempts} pogingen',
-			'companionRemote.errors.connectionLost' => 'Verbinding verloren',
-			'companionRemote.closedBeforeAuth' => 'De verbinding is vóór de authenticatie gesloten',
 			'videoSettings.playbackSpeed' => 'Afspeelsnelheid',
 			'videoSettings.normalSpeed' => 'Normaal',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Actief (${duration})',
@@ -5412,8 +5240,6 @@ extension on TranslationsNl {
 			'metadataEdit.selectBackground' => 'Achtergrond selecteren',
 			'metadataEdit.selectLogo' => 'Logo selecteren',
 			'metadataEdit.selectSquareArt' => 'Vierkante afbeelding selecteren',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'Vanaf URL',
 			'metadataEdit.uploadFile' => 'Bestand uploaden',
 			'metadataEdit.enterImageUrl' => 'Voer de afbeeldings-URL in',
@@ -5485,6 +5311,8 @@ extension on TranslationsNl {
 			'serverTasks.noTasks' => 'Geen actieve taken',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Verbonden',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Verbonden als @${username}',
 			'trakt.disconnectConfirm' => 'Trakt-account loskoppelen?',
 			'trakt.disconnectConfirmBody' => 'Plezy stuurt geen gebeurtenissen meer naar Trakt. Je kunt op elk moment opnieuw verbinding maken.',

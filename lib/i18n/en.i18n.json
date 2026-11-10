@@ -76,7 +76,6 @@
     "shuffle": "Shuffle",
     "addTo": "Add to...",
     "createNew": "Create new",
-    "connect": "Connect",
     "disconnect": "Disconnect",
     "play": "Play",
     "pause": "Pause",
@@ -86,7 +85,6 @@
     "home": "Home",
     "back": "Back",
     "settings": "Settings",
-    "mute": "Mute",
     "ok": "OK",
     "off": "Off",
     "options": "Options",
@@ -1277,15 +1275,11 @@
     "content": "library content",
     "selectLibrary": "Select library",
     "filtersWithCount": "Filters (${count})",
-    "noRecommendations": "No recommendations available",
     "noCollections": "No collections in this library",
-    "noGenres": "No genres in this library",
     "noFoldersFound": "No folders found",
     "folders": "folders",
     "tabs": {
-      "recommended": "Recommended",
       "collections": "Collections",
-      "genres": "Genres",
       "playlists": "Playlists"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Couldn't switch channel: ${reason}"
   },
   "collections": {
-    "title": "Collections",
     "collection": "Collection",
     "empty": "Collection is empty",
     "deleteCollection": "Delete Collection",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Search collections..."
   },
   "playlists": {
-    "title": "Playlists",
     "playlist": "Playlist",
     "noPlaylists": "No playlists found",
     "create": "Create Playlist",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "Delete \"${name}\"?"
   },
   "companionRemote": {
-    "title": "Companion Remote",
-    "connectedTo": "Connected to ${name}",
-    "unknownDevice": "Unknown Device",
-    "session": {
-      "startingServer": "Starting remote server...",
-      "hostAddress": "Host Address",
-      "connected": "Connected",
-      "serverRunning": "Remote server active",
-      "serverStopped": "Remote server stopped",
-      "serverRunningDescription": "Mobile devices on your network can connect to this app",
-      "serverStoppedDescription": "Start the server to allow mobile devices to connect",
-      "usePhoneToControl": "Use your mobile device to control this app",
-      "startServer": "Start Server",
-      "stopServer": "Stop Server",
-      "minimize": "Minimize",
-      "manualAddressHint": "Manual connection address:"
-    },
-    "pairing": {
-      "discoveryDescription": "Plezy devices with the same Plex account appear here",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Connecting...",
-      "searchingForDevices": "Looking for devices...",
-      "noDevicesFound": "No devices found on your network",
-      "noDevicesHint": "Open Plezy on desktop and use the same Wi-Fi",
-      "availableDevices": "Available Devices",
-      "manualConnection": "Manual Connection",
-      "cryptoInitFailed": "Couldn't start secure connection. Sign in to Plex first.",
-      "validationHostRequired": "Please enter host address",
-      "validationHostFormat": "Format must be IP:port (e.g., 192.168.1.100:48632)",
-      "connectionTimedOut": "Connection timed out. Use the same network on both devices.",
-      "sessionNotFound": "Device not found. Make sure Plezy is running on the host.",
-      "authFailed": "Authentication failed. Both devices need the same Plex account.",
-      "failedToConnect": "Failed to connect: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Do you want to disconnect from the remote session?",
-      "reconnecting": "Reconnecting...",
-      "attemptOf": "Attempt ${current} of 5",
-      "retryNow": "Retry Now",
-      "tabRemote": "Remote",
-      "tabPlay": "Play",
-      "tabMore": "More",
-      "menu": "Menu",
-      "tabNavigation": "Tab Navigation",
-      "tabDiscover": "Discover",
-      "tabLibraries": "Libraries",
-      "tabSearch": "Search",
-      "tabDownloads": "Downloads",
-      "tabSettings": "Settings",
-      "previous": "Previous",
-      "playPause": "Play/Pause",
-      "next": "Next",
-      "seekBack": "Seek Back",
-      "stop": "Stop",
-      "seekForward": "Seek Fwd",
-      "volume": "Volume",
-      "volumeDown": "Down",
-      "volumeUp": "Up",
-      "fullscreen": "Fullscreen",
-      "subtitles": "Subtitles",
-      "audio": "Audio",
-      "searchHint": "Search on desktop..."
+      "next": "Next"
     },
-    "errors": {
-      "noNetworkInterface": "No network interface found",
-      "authenticationFailed": "Authentication failed",
-      "serverStartFailed": "Failed to start remote server: ${error}",
-      "commandFailed": "Failed to send remote command: ${error}",
-      "joinTimedOut": "Timed out joining session",
-      "failedToConnectAnyAddress": "Failed to connect to any address",
-      "connectionLostAfterAttempts": "Connection lost after ${attempts} attempts",
-      "connectionLost": "Connection lost"
-    },
-    "closedBeforeAuth": "The connection closed before authentication"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Playback Speed",

@@ -76,7 +76,6 @@
     "shuffle": "Араластыру",
     "addTo": "Қосу...",
     "createNew": "Жаңасын жасау",
-    "connect": "Қосылу",
     "disconnect": "Ажырату",
     "play": "Ойнату",
     "pause": "Кідірту",
@@ -86,7 +85,6 @@
     "home": "Басты бет",
     "back": "Артқа",
     "settings": "Баптаулар",
-    "mute": "Дыбысты өшіру",
     "ok": "Түсінікті",
     "off": "Өшірулі",
     "options": "Параметрлер",
@@ -1277,15 +1275,11 @@
     "content": "кітапхана мазмұны",
     "selectLibrary": "Кітапхананы таңдау",
     "filtersWithCount": "Фильтрлер (${count})",
-    "noRecommendations": "Ұсыныстар жоқ",
     "noCollections": "Бұл кітапханада топтамалар жоқ",
-    "noGenres": "",
     "noFoldersFound": "Қапшықтар табылмады",
     "folders": "қапшықтар",
     "tabs": {
-      "recommended": "Ұсынылатындар",
       "collections": "Топтамалар",
-      "genres": "",
       "playlists": "Ойнату тізімдері"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Арнаны ауыстыру мүмкін болмады: ${reason}"
   },
   "collections": {
-    "title": "Топтамалар",
     "collection": "Топтама",
     "empty": "Топтама бос",
     "deleteCollection": "Топтаманы өшіру",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Топтамалардан іздеу..."
   },
   "playlists": {
-    "title": "Ойнату тізімдері",
     "playlist": "Ойнату тізімі",
     "noPlaylists": "Ойнату тізімдері табылмады",
     "create": "Ойнату тізімін жасау",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "\"${name}\" өшірілсін бе?"
   },
   "companionRemote": {
-    "title": "Көмекші пульт",
-    "connectedTo": "${name} құрылғысына қосылды",
-    "unknownDevice": "Белгісіз құрылғы",
-    "session": {
-      "startingServer": "Пульт сервері іске қосылуда...",
-      "hostAddress": "Хост мекенжайы",
-      "connected": "Қосылды",
-      "serverRunning": "Сервер белсенді",
-      "serverStopped": "Сервер тоқтатылды",
-      "serverRunningDescription": "Желідегі мобильді құрылғылар қосыла алады",
-      "serverStoppedDescription": "Қосылуға рұқсат беру үшін серверді іске қосыңыз",
-      "usePhoneToControl": "Осы қолданбаны басқару үшін телефоныңызды пайдаланыңыз",
-      "startServer": "Серверді іске қосу",
-      "stopServer": "Серверді тоқтату",
-      "minimize": "Жию",
-      "manualAddressHint": "Қолмен қосылу мекенжайы:"
-    },
-    "pairing": {
-      "discoveryDescription": "Бірдей Plex тіркелгісіндегі Plezy құрылғылары мұнда көрінеді",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Қосылуда...",
-      "searchingForDevices": "Құрылғылар ізделуде...",
-      "noDevicesFound": "Желіде құрылғылар табылмады",
-      "noDevicesHint": "ПК-де Plezy-ді ашып, бір Wi-Fi-ға қосылыңыз",
-      "availableDevices": "Қолжетімді құрылғылар",
-      "manualConnection": "Қолмен қосылу",
-      "cryptoInitFailed": "Қауіпсіз қосылым қатесі. Алдымен Plex-ке кіріңіз.",
-      "validationHostRequired": "Хост мекенжайын енгізіңіз",
-      "validationHostFormat": "Формат IP:порт түрінде болуы керек",
-      "connectionTimedOut": "Қосылу уақыты өтті. Екі құрылғыда да бір желіні пайдаланыңыз.",
-      "sessionNotFound": "Құрылғы табылмады.",
-      "authFailed": "Аутентификация қатесі.",
-      "failedToConnect": "Қосылу мүмкін болмады: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Пульт сеансынан ажырайсыз ба?",
-      "reconnecting": "Қайта қосылуда...",
-      "attemptOf": "Әрекет ${current} / 5",
-      "retryNow": "Қазір қайталау",
-      "tabRemote": "Пульт",
-      "tabPlay": "Ойнату",
-      "tabMore": "Тағы",
-      "menu": "Мәзір",
-      "tabNavigation": "Навигация",
-      "tabDiscover": "Шолу",
-      "tabLibraries": "Кітапханалар",
-      "tabSearch": "Іздеу",
-      "tabDownloads": "Жүктеулер",
-      "tabSettings": "Баптаулар",
-      "previous": "Алдыңғы",
-      "playPause": "Ойнату/Кідірту",
-      "next": "Келесі",
-      "seekBack": "Артқа айналдыру",
-      "stop": "Тоқтату",
-      "seekForward": "Алға айналдыру",
-      "volume": "Дыбыс",
-      "volumeDown": "Азайту",
-      "volumeUp": "Көбейту",
-      "fullscreen": "Толық экран",
-      "subtitles": "Субтитрлер",
-      "audio": "Дыбыс",
-      "searchHint": "ПК-де іздеу..."
+      "next": "Келесі"
     },
-    "errors": {
-      "noNetworkInterface": "Желілік интерфейс табылмады",
-      "authenticationFailed": "Аутентификация қатесі",
-      "serverStartFailed": "Серверді іске қосу қатесі: ${error}",
-      "commandFailed": "Пәрменді жіберу қатесі: ${error}",
-      "joinTimedOut": "Қосылу уақыты өтті",
-      "failedToConnectAnyAddress": "Ешбір мекенжайға қосылу мүмкін болмады",
-      "connectionLostAfterAttempts": "${attempts} әрекеттен кейін байланыс үзілді",
-      "connectionLost": "Байланыс үзілді"
-    },
-    "closedBeforeAuth": "Аутентификациядан бұрын байланыс жабылды"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Ойнату жылдамдығы",

@@ -76,7 +76,6 @@
     "shuffle": "Blanda",
     "addTo": "Lägg till i...",
     "createNew": "Skapa ny",
-    "connect": "Anslut",
     "disconnect": "Koppla från",
     "play": "Spela",
     "pause": "Pausa",
@@ -86,7 +85,6 @@
     "home": "Hem",
     "back": "Tillbaka",
     "settings": "Inställningar",
-    "mute": "Stäng av ljudet",
     "ok": "OK",
     "off": "Av",
     "options": "Alternativ",
@@ -1277,15 +1275,11 @@
     "content": "bibliotekets innehåll",
     "selectLibrary": "Välj bibliotek",
     "filtersWithCount": "Filter (${count})",
-    "noRecommendations": "Inga rekommendationer tillgängliga",
     "noCollections": "Inga samlingar i det här biblioteket",
-    "noGenres": "",
     "noFoldersFound": "Inga mappar hittades",
     "folders": "mappar",
     "tabs": {
-      "recommended": "Rekommenderat",
       "collections": "Samlingar",
-      "genres": "",
       "playlists": "Spellistor"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Det gick inte att byta kanal: ${reason}"
   },
   "collections": {
-    "title": "Samlingar",
     "collection": "Samling",
     "empty": "Samlingen är tom",
     "deleteCollection": "Ta bort samling",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Sök samlingar..."
   },
   "playlists": {
-    "title": "Spellistor",
     "playlist": "Spellista",
     "noPlaylists": "Inga spellistor hittades",
     "create": "Skapa spellista",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "Ta bort \"${name}\"?"
   },
   "companionRemote": {
-    "title": "Fjärrkontroll",
-    "connectedTo": "Ansluten till ${name}",
-    "unknownDevice": "Okänd enhet",
-    "session": {
-      "startingServer": "Startar fjärrserver...",
-      "hostAddress": "Värdadress",
-      "connected": "Ansluten",
-      "serverRunning": "Fjärrserver aktiv",
-      "serverStopped": "Fjärrserver stoppad",
-      "serverRunningDescription": "Mobila enheter i nätverket kan ansluta till appen",
-      "serverStoppedDescription": "Starta servern så att mobila enheter kan ansluta",
-      "usePhoneToControl": "Använd din mobila enhet för att styra appen",
-      "startServer": "Starta server",
-      "stopServer": "Stoppa server",
-      "minimize": "Minimera",
-      "manualAddressHint": "Manuell anslutningsadress:"
-    },
-    "pairing": {
-      "discoveryDescription": "Plezy-enheter med samma Plex-konto visas här",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Ansluter...",
-      "searchingForDevices": "Söker efter enheter...",
-      "noDevicesFound": "Inga enheter hittades i ditt nätverk",
-      "noDevicesHint": "Öppna Plezy på datorn och använd samma wifi",
-      "availableDevices": "Tillgängliga enheter",
-      "manualConnection": "Manuell anslutning",
-      "cryptoInitFailed": "Kunde inte starta säker anslutning. Logga in på Plex först.",
-      "validationHostRequired": "Ange värdadress",
-      "validationHostFormat": "Formatet måste vara IP:port (t.ex. 192.168.1.100:48632)",
-      "connectionTimedOut": "Anslutningen tog för lång tid. Använd samma nätverk på båda enheterna.",
-      "sessionNotFound": "Enheten hittades inte. Kontrollera att Plezy körs på värden.",
-      "authFailed": "Autentiseringen misslyckades. Båda enheterna måste använda samma Plex-konto.",
-      "failedToConnect": "Kunde inte ansluta: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Vill du koppla från fjärrsessionen?",
-      "reconnecting": "Återansluter...",
-      "attemptOf": "Försök ${current} av 5",
-      "retryNow": "Försök nu",
-      "tabRemote": "Fjärrkontroll",
-      "tabPlay": "Spela",
-      "tabMore": "Mer",
-      "menu": "Meny",
-      "tabNavigation": "Fliknavigering",
-      "tabDiscover": "Upptäck",
-      "tabLibraries": "Bibliotek",
-      "tabSearch": "Sök",
-      "tabDownloads": "Nedladdningar",
-      "tabSettings": "Inställningar",
-      "previous": "Föregående",
-      "playPause": "Spela/Pausa",
-      "next": "Nästa",
-      "seekBack": "Spola bakåt",
-      "stop": "Stopp",
-      "seekForward": "Spola framåt",
-      "volume": "Volym",
-      "volumeDown": "Ner",
-      "volumeUp": "Upp",
-      "fullscreen": "Helskärm",
-      "subtitles": "Undertexter",
-      "audio": "Ljud",
-      "searchHint": "Sök på datorn..."
+      "next": "Nästa"
     },
-    "errors": {
-      "noNetworkInterface": "Inget nätverksgränssnitt hittades",
-      "authenticationFailed": "Autentiseringen misslyckades",
-      "serverStartFailed": "Det gick inte att starta fjärrservern: ${error}",
-      "commandFailed": "Det gick inte att skicka fjärrkommandot: ${error}",
-      "joinTimedOut": "Det tog för lång tid att ansluta till sessionen",
-      "failedToConnectAnyAddress": "Det gick inte att ansluta till någon adress",
-      "connectionLostAfterAttempts": "Anslutningen bröts efter ${attempts} försök",
-      "connectionLost": "Anslutningen bröts"
-    },
-    "closedBeforeAuth": "Anslutningen stängdes före autentiseringen"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Uppspelningshastighet",

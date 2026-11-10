@@ -76,7 +76,6 @@
     "shuffle": "シャッフル",
     "addTo": "追加先…",
     "createNew": "新規作成",
-    "connect": "接続",
     "disconnect": "切断",
     "play": "再生",
     "pause": "一時停止",
@@ -86,7 +85,6 @@
     "home": "ホーム",
     "back": "戻る",
     "settings": "設定",
-    "mute": "ミュート",
     "ok": "OK",
     "off": "オフ",
     "options": "オプション",
@@ -1272,15 +1270,11 @@
     "content": "ライブラリコンテンツ",
     "selectLibrary": "ライブラリを選択",
     "filtersWithCount": "フィルター (${count})",
-    "noRecommendations": "おすすめがありません",
     "noCollections": "このライブラリにコレクションがありません",
-    "noGenres": "",
     "noFoldersFound": "フォルダが見つかりません",
     "folders": "フォルダ",
     "tabs": {
-      "recommended": "おすすめ",
       "collections": "コレクション",
-      "genres": "",
       "playlists": "プレイリスト"
     },
     "groupings": {
@@ -1669,7 +1663,6 @@
     "channelSwitchFailed": "チャンネルを切り替えられませんでした: ${reason}"
   },
   "collections": {
-    "title": "コレクション",
     "collection": "コレクション",
     "empty": "コレクションは空です",
     "deleteCollection": "コレクションを削除",
@@ -1691,7 +1684,6 @@
     "searchCollections": "コレクションを検索…"
   },
   "playlists": {
-    "title": "プレイリスト",
     "playlist": "プレイリスト",
     "noPlaylists": "プレイリストが見つかりません",
     "create": "プレイリストを作成",
@@ -2061,80 +2053,12 @@
     "deleteShaderConfirm": "「${name}」を削除しますか？"
   },
   "companionRemote": {
-    "title": "コンパニオンリモート",
-    "connectedTo": "${name}に接続中",
-    "unknownDevice": "不明なデバイス",
-    "session": {
-      "startingServer": "リモートサーバーを起動中…",
-      "hostAddress": "ホストアドレス",
-      "connected": "接続済み",
-      "serverRunning": "リモートサーバー稼働中",
-      "serverStopped": "リモートサーバー停止",
-      "serverRunningDescription": "ネットワーク上のモバイルデバイスがこのアプリに接続できます",
-      "serverStoppedDescription": "モバイルデバイスの接続を許可するにはサーバーを起動してください",
-      "usePhoneToControl": "モバイルデバイスでこのアプリを操作できます",
-      "startServer": "サーバーを起動",
-      "stopServer": "サーバーを停止",
-      "minimize": "最小化",
-      "manualAddressHint": "手動接続アドレス:"
-    },
-    "pairing": {
-      "discoveryDescription": "同じPlexアカウントを使用しているPlezyデバイスがここに表示されます",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "接続中…",
-      "searchingForDevices": "デバイスを検索中…",
-      "noDevicesFound": "ネットワーク上にデバイスが見つかりません",
-      "noDevicesHint": "デスクトップでPlezyを開き、同じWi-Fiネットワークに接続してください",
-      "availableDevices": "利用可能なデバイス",
-      "manualConnection": "手動接続",
-      "cryptoInitFailed": "安全な接続を開始できませんでした。先にPlexにサインインしてください。",
-      "validationHostRequired": "ホストアドレスを入力してください",
-      "validationHostFormat": "形式はIP:ポートである必要があります（例: 192.168.1.100:48632）",
-      "connectionTimedOut": "接続がタイムアウトしました。両方のデバイスで同じネットワークを使用してください。",
-      "sessionNotFound": "デバイスが見つかりません。ホストでPlezyが実行中か確認してください。",
-      "authFailed": "認証に失敗しました。両方のデバイスで同じPlexアカウントが必要です。",
-      "failedToConnect": "接続に失敗しました: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "リモートセッションを切断しますか？",
-      "reconnecting": "再接続中…",
-      "attemptOf": "試行 ${current}/5",
-      "retryNow": "今すぐ再試行",
-      "tabRemote": "リモコン",
-      "tabPlay": "再生",
-      "tabMore": "その他",
-      "menu": "メニュー",
-      "tabNavigation": "タブナビゲーション",
-      "tabDiscover": "探す",
-      "tabLibraries": "ライブラリ",
-      "tabSearch": "検索",
-      "tabDownloads": "ダウンロード",
-      "tabSettings": "設定",
-      "previous": "前へ",
-      "playPause": "再生/一時停止",
-      "next": "次へ",
-      "seekBack": "巻き戻し",
-      "stop": "停止",
-      "seekForward": "早送り",
-      "volume": "音量",
-      "volumeDown": "下げる",
-      "volumeUp": "上げる",
-      "fullscreen": "フルスクリーン",
-      "subtitles": "字幕",
-      "audio": "音声",
-      "searchHint": "デスクトップで検索…"
+      "next": "次へ"
     },
-    "errors": {
-      "noNetworkInterface": "ネットワークインターフェースが見つかりません",
-      "authenticationFailed": "認証に失敗しました",
-      "serverStartFailed": "リモートサーバーを起動できませんでした: ${error}",
-      "commandFailed": "リモートコマンドを送信できませんでした: ${error}",
-      "joinTimedOut": "セッション参加がタイムアウトしました",
-      "failedToConnectAnyAddress": "どのアドレスにも接続できませんでした",
-      "connectionLostAfterAttempts": "${attempts}回試行後に接続が切断されました",
-      "connectionLost": "接続が切断されました"
-    },
-    "closedBeforeAuth": "認証前に接続が切断されました"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "再生速度",

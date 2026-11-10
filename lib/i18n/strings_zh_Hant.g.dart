@@ -176,7 +176,6 @@ class _Translations$common$zh_Hant extends Translations$common$zh {
 	@override String get shuffle => '隨機播放';
 	@override String get addTo => '新增至…';
 	@override String get createNew => '新增';
-	@override String get connect => '連線';
 	@override String get disconnect => '中斷連線';
 	@override String get play => '播放';
 	@override String get pause => '暫停';
@@ -186,7 +185,6 @@ class _Translations$common$zh_Hant extends Translations$common$zh {
 	@override String get home => '首頁';
 	@override String get back => '返回';
 	@override String get settings => '設定';
-	@override String get mute => '靜音';
 	@override String get ok => '確定';
 	@override String get off => '關閉';
 	@override String get options => '選項';
@@ -1409,7 +1407,6 @@ class _Translations$libraries$zh_Hant extends Translations$libraries$zh {
 	@override String get content => '媒體庫內容';
 	@override String get selectLibrary => '選擇媒體庫';
 	@override String filtersWithCount({required Object count}) => '篩選器（${count}）';
-	@override String get noRecommendations => '目前沒有推薦';
 	@override String get noCollections => '此媒體庫中沒有收藏集';
 	@override String get noFoldersFound => '找不到資料夾';
 	@override String get folders => '資料夾';
@@ -1653,7 +1650,6 @@ class _Translations$collections$zh_Hant extends Translations$collections$zh {
 	final TranslationsZhHant _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '收藏集';
 	@override String get collection => '收藏集';
 	@override String get empty => '收藏集為空';
 	@override String get deleteCollection => '刪除收藏集';
@@ -1682,7 +1678,6 @@ class _Translations$playlists$zh_Hant extends Translations$playlists$zh {
 	final TranslationsZhHant _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '播放清單';
 	@override String get playlist => '播放清單';
 	@override String get noPlaylists => '找不到播放清單';
 	@override String get create => '建立播放清單';
@@ -2006,14 +2001,7 @@ class _Translations$companionRemote$zh_Hant extends Translations$companionRemote
 	final TranslationsZhHant _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '隨身遙控器';
-	@override String connectedTo({required Object name}) => '已連線至 ${name}';
-	@override String get unknownDevice => '未知裝置';
-	@override late final _Translations$companionRemote$session$zh_Hant session = _Translations$companionRemote$session$zh_Hant._(_root);
-	@override late final _Translations$companionRemote$pairing$zh_Hant pairing = _Translations$companionRemote$pairing$zh_Hant._(_root);
 	@override late final _Translations$companionRemote$remote$zh_Hant remote = _Translations$companionRemote$remote$zh_Hant._(_root);
-	@override late final _Translations$companionRemote$errors$zh_Hant errors = _Translations$companionRemote$errors$zh_Hant._(_root);
-	@override String get closedBeforeAuth => '連線在驗證前已關閉';
 }
 
 // Path: videoSettings
@@ -2687,7 +2675,6 @@ class _Translations$libraries$tabs$zh_Hant extends Translations$libraries$tabs$z
 	final TranslationsZhHant _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => '推薦';
 	@override String get collections => '收藏集';
 	@override String get playlists => '播放清單';
 }
@@ -3157,51 +3144,6 @@ class _Translations$downloads$groupings$zh_Hant extends Translations$downloads$g
 	@override String get collections => '收藏集';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$zh_Hant extends Translations$companionRemote$session$zh {
-	_Translations$companionRemote$session$zh_Hant._(TranslationsZhHant root) : this._root = root, super.internal(root);
-
-	final TranslationsZhHant _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => '正在啟動遠端伺服器…';
-	@override String get hostAddress => '主機位址';
-	@override String get connected => '已連線';
-	@override String get serverRunning => '遠端伺服器已啟動';
-	@override String get serverStopped => '遠端伺服器已停止';
-	@override String get serverRunningDescription => '區域網路中的行動裝置可以連線至此應用程式';
-	@override String get serverStoppedDescription => '啟動伺服器以允許行動裝置連線';
-	@override String get usePhoneToControl => '使用行動裝置控制此應用程式';
-	@override String get startServer => '啟動伺服器';
-	@override String get stopServer => '停止伺服器';
-	@override String get minimize => '最小化';
-	@override String get manualAddressHint => '手動連線位址：';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$zh_Hant extends Translations$companionRemote$pairing$zh {
-	_Translations$companionRemote$pairing$zh_Hant._(TranslationsZhHant root) : this._root = root, super.internal(root);
-
-	final TranslationsZhHant _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => '使用相同 Plex 帳戶的 Plezy 裝置會顯示在此處';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => '正在連線…';
-	@override String get searchingForDevices => '正在搜尋裝置…';
-	@override String get noDevicesFound => '在區域網路上找不到裝置';
-	@override String get noDevicesHint => '請在電腦上開啟 Plezy，並確認兩台裝置使用相同的 Wi-Fi 網路';
-	@override String get availableDevices => '可用裝置';
-	@override String get manualConnection => '手動連線';
-	@override String get cryptoInitFailed => '無法啟動安全連線。請先登入 Plex。';
-	@override String get validationHostRequired => '請輸入主機位址';
-	@override String get validationHostFormat => '格式必須為 IP 位址:連接埠（例如 192.168.1.100:48632）';
-	@override String get connectionTimedOut => '連線逾時。請確認兩台裝置都使用相同網路。';
-	@override String get sessionNotFound => '找不到裝置。請確認主機上已啟動 Plezy。';
-	@override String get authFailed => '驗證失敗。兩台裝置需要登入相同的 Plex 帳戶。';
-	@override String failedToConnect({required Object error}) => '連線失敗：${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$zh_Hant extends Translations$companionRemote$remote$zh {
 	_Translations$companionRemote$remote$zh_Hant._(TranslationsZhHant root) : this._root = root, super.internal(root);
@@ -3209,50 +3151,7 @@ class _Translations$companionRemote$remote$zh_Hant extends Translations$companio
 	final TranslationsZhHant _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => '是否要中斷遠端連線工作階段？';
-	@override String get reconnecting => '重新連線中…';
-	@override String attemptOf({required Object current}) => '第 ${current} 次嘗試，共 5 次';
-	@override String get retryNow => '立即重試';
-	@override String get tabRemote => '遙控';
-	@override String get tabPlay => '播放';
-	@override String get tabMore => '更多';
-	@override String get menu => '選單';
-	@override String get tabNavigation => '分頁導覽';
-	@override String get tabDiscover => '發現';
-	@override String get tabLibraries => '媒體庫';
-	@override String get tabSearch => '搜尋';
-	@override String get tabDownloads => '下載';
-	@override String get tabSettings => '設定';
-	@override String get previous => '上一個';
-	@override String get playPause => '播放/暫停';
 	@override String get next => '下一個';
-	@override String get seekBack => '後退';
-	@override String get stop => '停止';
-	@override String get seekForward => '前進';
-	@override String get volume => '音量';
-	@override String get volumeDown => '調小';
-	@override String get volumeUp => '調大';
-	@override String get fullscreen => '全螢幕';
-	@override String get subtitles => '字幕';
-	@override String get audio => '音訊';
-	@override String get searchHint => '在電腦版上搜尋…';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$zh_Hant extends Translations$companionRemote$errors$zh {
-	_Translations$companionRemote$errors$zh_Hant._(TranslationsZhHant root) : this._root = root, super.internal(root);
-
-	final TranslationsZhHant _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => '找不到網路介面';
-	@override String get authenticationFailed => '身分驗證失敗';
-	@override String serverStartFailed({required Object error}) => '無法啟動遠端伺服器：${error}';
-	@override String commandFailed({required Object error}) => '無法傳送遠端指令：${error}';
-	@override String get joinTimedOut => '加入工作階段逾時';
-	@override String get failedToConnectAnyAddress => '無法連線至任何位址';
-	@override String connectionLostAfterAttempts({required Object attempts}) => '嘗試 ${attempts} 次後連線中斷';
-	@override String get connectionLost => '連線已中斷';
 }
 
 // Path: services.names
@@ -3415,7 +3314,6 @@ extension on TranslationsZhHant {
 			'common.shuffle' => '隨機播放',
 			'common.addTo' => '新增至…',
 			'common.createNew' => '新增',
-			'common.connect' => '連線',
 			'common.disconnect' => '中斷連線',
 			'common.play' => '播放',
 			'common.pause' => '暫停',
@@ -3425,7 +3323,6 @@ extension on TranslationsZhHant {
 			'common.home' => '首頁',
 			'common.back' => '返回',
 			'common.settings' => '設定',
-			'common.mute' => '靜音',
 			'common.ok' => '確定',
 			'common.off' => '關閉',
 			'common.options' => '選項',
@@ -3859,10 +3756,10 @@ extension on TranslationsZhHant {
 			'themeEditor.opacity' => '不透明度',
 			'themeEditor.hexHint' => '#RRGGBB 或 #AARRGGBB',
 			'themeEditor.fromOtherThemes' => '來自其他主題',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} ${color}',
 			'themeEditor.contrast.textOnBg' => '背景上的文字',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => '面板上的文字',
 			'themeEditor.contrast.textMutedOnBg' => '背景上的次要文字',
 			'themeEditor.contrast.textMutedOnSurface' => '面板上的次要文字',
@@ -4373,10 +4270,10 @@ extension on TranslationsZhHant {
 			'connections.addConnectionSubtitleNoProfile' => '使用 Plex 登入或連線至 Jellyfin 或 Emby 伺服器',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '新增至 ${displayName}：Plex、Jellyfin、Emby 或其他設定檔連線',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} 的工作階段已過期',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} 個伺服器的工作階段已過期',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} 拒絕此帳戶存取',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} 台伺服器拒絕此帳戶存取',
 			'connections.signInAgain' => '重新登入',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => '編輯 ${product} 連線',
@@ -4523,11 +4420,9 @@ extension on TranslationsZhHant {
 			'libraries.content' => '媒體庫內容',
 			'libraries.selectLibrary' => '選擇媒體庫',
 			'libraries.filtersWithCount' => ({required Object count}) => '篩選器（${count}）',
-			'libraries.noRecommendations' => '目前沒有推薦',
 			'libraries.noCollections' => '此媒體庫中沒有收藏集',
 			'libraries.noFoldersFound' => '找不到資料夾',
 			'libraries.folders' => '資料夾',
-			'libraries.tabs.recommended' => '推薦',
 			'libraries.tabs.collections' => '收藏集',
 			'libraries.tabs.playlists' => '播放清單',
 			'libraries.groupings.title' => '分組',
@@ -4855,7 +4750,6 @@ extension on TranslationsZhHant {
 			'liveTv.failedToBuildStreamUrl' => '無法建立串流 URL',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => '無法開始播放此頻道：${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => '無法切換頻道：${reason}',
-			'collections.title' => '收藏集',
 			'collections.collection' => '收藏集',
 			'collections.empty' => '收藏集為空',
 			'collections.deleteCollection' => '刪除收藏集',
@@ -4875,7 +4769,6 @@ extension on TranslationsZhHant {
 			'collections.removeFromCollectionFailed' => '從收藏集移除失敗',
 			'collections.removeFromCollectionError' => ({required Object error}) => '從收藏集移除時發生錯誤：${error}',
 			'collections.searchCollections' => '搜尋收藏集…',
-			'playlists.title' => '播放清單',
 			'playlists.playlist' => '播放清單',
 			'playlists.noPlaylists' => '找不到播放清單',
 			'playlists.create' => '建立播放清單',
@@ -4887,14 +4780,14 @@ extension on TranslationsZhHant {
 			'playlists.itemCount' => ({required Object count}) => '${count} 個項目',
 			'playlists.oneItem' => '1 個項目',
 			'playlists.emptyPlaylist' => '此播放清單為空',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => '刪除播放清單？',
 			'playlists.deleteMessage' => ({required Object name}) => '確定要刪除「${name}」嗎？',
 			'playlists.created' => '播放清單已建立',
 			'playlists.deleted' => '播放清單已刪除',
 			'playlists.itemAdded' => '已新增至播放清單',
 			'playlists.itemRemoved' => '已從播放清單移除',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => '選擇播放清單',
 			'playlists.searchPlaylists' => '搜尋播放清單…',
 			'playlists.errorCreating' => '建立播放清單失敗',
@@ -5221,72 +5114,7 @@ extension on TranslationsZhHant {
 			'shaders.shaderImportFailed' => '匯入著色器失敗',
 			'shaders.deleteShader' => '刪除著色器',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => '刪除「${name}」？',
-			'companionRemote.title' => '隨身遙控器',
-			'companionRemote.connectedTo' => ({required Object name}) => '已連線至 ${name}',
-			'companionRemote.unknownDevice' => '未知裝置',
-			'companionRemote.session.startingServer' => '正在啟動遠端伺服器…',
-			'companionRemote.session.hostAddress' => '主機位址',
-			'companionRemote.session.connected' => '已連線',
-			'companionRemote.session.serverRunning' => '遠端伺服器已啟動',
-			'companionRemote.session.serverStopped' => '遠端伺服器已停止',
-			'companionRemote.session.serverRunningDescription' => '區域網路中的行動裝置可以連線至此應用程式',
-			'companionRemote.session.serverStoppedDescription' => '啟動伺服器以允許行動裝置連線',
-			'companionRemote.session.usePhoneToControl' => '使用行動裝置控制此應用程式',
-			'companionRemote.session.startServer' => '啟動伺服器',
-			'companionRemote.session.stopServer' => '停止伺服器',
-			'companionRemote.session.minimize' => '最小化',
-			'companionRemote.session.manualAddressHint' => '手動連線位址：',
-			'companionRemote.pairing.discoveryDescription' => '使用相同 Plex 帳戶的 Plezy 裝置會顯示在此處',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => '正在連線…',
-			'companionRemote.pairing.searchingForDevices' => '正在搜尋裝置…',
-			'companionRemote.pairing.noDevicesFound' => '在區域網路上找不到裝置',
-			'companionRemote.pairing.noDevicesHint' => '請在電腦上開啟 Plezy，並確認兩台裝置使用相同的 Wi-Fi 網路',
-			'companionRemote.pairing.availableDevices' => '可用裝置',
-			'companionRemote.pairing.manualConnection' => '手動連線',
-			'companionRemote.pairing.cryptoInitFailed' => '無法啟動安全連線。請先登入 Plex。',
-			'companionRemote.pairing.validationHostRequired' => '請輸入主機位址',
-			'companionRemote.pairing.validationHostFormat' => '格式必須為 IP 位址:連接埠（例如 192.168.1.100:48632）',
-			'companionRemote.pairing.connectionTimedOut' => '連線逾時。請確認兩台裝置都使用相同網路。',
-			'companionRemote.pairing.sessionNotFound' => '找不到裝置。請確認主機上已啟動 Plezy。',
-			'companionRemote.pairing.authFailed' => '驗證失敗。兩台裝置需要登入相同的 Plex 帳戶。',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => '連線失敗：${error}',
-			'companionRemote.remote.disconnectConfirm' => '是否要中斷遠端連線工作階段？',
-			'companionRemote.remote.reconnecting' => '重新連線中…',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => '第 ${current} 次嘗試，共 5 次',
-			'companionRemote.remote.retryNow' => '立即重試',
-			'companionRemote.remote.tabRemote' => '遙控',
-			'companionRemote.remote.tabPlay' => '播放',
-			'companionRemote.remote.tabMore' => '更多',
-			'companionRemote.remote.menu' => '選單',
-			'companionRemote.remote.tabNavigation' => '分頁導覽',
-			'companionRemote.remote.tabDiscover' => '發現',
-			'companionRemote.remote.tabLibraries' => '媒體庫',
-			'companionRemote.remote.tabSearch' => '搜尋',
-			'companionRemote.remote.tabDownloads' => '下載',
-			'companionRemote.remote.tabSettings' => '設定',
-			'companionRemote.remote.previous' => '上一個',
-			'companionRemote.remote.playPause' => '播放/暫停',
 			'companionRemote.remote.next' => '下一個',
-			'companionRemote.remote.seekBack' => '後退',
-			'companionRemote.remote.stop' => '停止',
-			'companionRemote.remote.seekForward' => '前進',
-			'companionRemote.remote.volume' => '音量',
-			'companionRemote.remote.volumeDown' => '調小',
-			'companionRemote.remote.volumeUp' => '調大',
-			'companionRemote.remote.fullscreen' => '全螢幕',
-			'companionRemote.remote.subtitles' => '字幕',
-			'companionRemote.remote.audio' => '音訊',
-			'companionRemote.remote.searchHint' => '在電腦版上搜尋…',
-			'companionRemote.errors.noNetworkInterface' => '找不到網路介面',
-			'companionRemote.errors.authenticationFailed' => '身分驗證失敗',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => '無法啟動遠端伺服器：${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => '無法傳送遠端指令：${error}',
-			'companionRemote.errors.joinTimedOut' => '加入工作階段逾時',
-			'companionRemote.errors.failedToConnectAnyAddress' => '無法連線至任何位址',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '嘗試 ${attempts} 次後連線中斷',
-			'companionRemote.errors.connectionLost' => '連線已中斷',
-			'companionRemote.closedBeforeAuth' => '連線在驗證前已關閉',
 			'videoSettings.playbackSpeed' => '播放速度',
 			'videoSettings.normalSpeed' => '正常速度',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => '執行中（${duration}）',
@@ -5401,8 +5229,6 @@ extension on TranslationsZhHant {
 			'metadataEdit.selectBackground' => '選擇背景圖',
 			'metadataEdit.selectLogo' => '選擇標誌',
 			'metadataEdit.selectSquareArt' => '選擇方形圖片',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => '自訂網址',
 			'metadataEdit.uploadFile' => '上傳檔案',
 			'metadataEdit.enterImageUrl' => '輸入圖片 URL',
@@ -5474,6 +5300,8 @@ extension on TranslationsZhHant {
 			'serverTasks.noTasks' => '目前沒有執行中的工作',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => '已連線',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '已以 @${username} 身分連線',
 			'trakt.disconnectConfirm' => '中斷與 Trakt 帳戶的連結？',
 			'trakt.disconnectConfirmBody' => 'Plezy 將停止向 Trakt 傳送事件。您可以隨時重新連線。',

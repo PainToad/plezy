@@ -75,7 +75,7 @@ void main() {
   testWidgets('Home has its new title and no companion remote action', (tester) async {
     await _pumpDiscoverShell(tester, isTv: false);
     expect(find.text(t.common.home), findsOneWidget);
-    expect(find.byTooltip(t.companionRemote.title), findsNothing);
+    expect(find.byTooltip('Companion Remote'), findsNothing);
   });
 
   testWidgets('Home settings save visibility and reorder rows with the TV remote', (tester) async {

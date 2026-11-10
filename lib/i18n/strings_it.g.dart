@@ -175,7 +175,6 @@ class _Translations$common$it extends Translations$common$en {
 	@override String get shuffle => 'Riproduzione casuale';
 	@override String get addTo => 'Aggiungi a...';
 	@override String get createNew => 'Crea nuovo';
-	@override String get connect => 'Connetti';
 	@override String get disconnect => 'Disconnetti';
 	@override String get play => 'Riproduci';
 	@override String get pause => 'Pausa';
@@ -185,7 +184,6 @@ class _Translations$common$it extends Translations$common$en {
 	@override String get home => 'Home';
 	@override String get back => 'Indietro';
 	@override String get settings => 'Impostazioni';
-	@override String get mute => 'Disattiva audio';
 	@override String get ok => 'OK';
 	@override String get off => 'Disattivato';
 	@override String get options => 'Opzioni';
@@ -1413,7 +1411,6 @@ class _Translations$libraries$it extends Translations$libraries$en {
 	@override String get content => 'contenuto della libreria';
 	@override String get selectLibrary => 'Seleziona libreria';
 	@override String filtersWithCount({required Object count}) => 'Filtri (${count})';
-	@override String get noRecommendations => 'Nessun consiglio disponibile';
 	@override String get noCollections => 'Nessuna raccolta in questa libreria';
 	@override String get noFoldersFound => 'Nessuna cartella trovata';
 	@override String get folders => 'cartelle';
@@ -1660,7 +1657,6 @@ class _Translations$collections$it extends Translations$collections$en {
 	final TranslationsIt _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Raccolte';
 	@override String get collection => 'Raccolta';
 	@override String get empty => 'La raccolta è vuota';
 	@override String get deleteCollection => 'Elimina raccolta';
@@ -1689,7 +1685,6 @@ class _Translations$playlists$it extends Translations$playlists$en {
 	final TranslationsIt _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Playlist';
 	@override String get playlist => 'Playlist';
 	@override String get noPlaylists => 'Nessuna playlist trovata';
 	@override String get create => 'Crea playlist';
@@ -2015,14 +2010,7 @@ class _Translations$companionRemote$it extends Translations$companionRemote$en {
 	final TranslationsIt _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Telecomando';
-	@override String connectedTo({required Object name}) => 'Connesso a ${name}';
-	@override String get unknownDevice => 'Dispositivo sconosciuto';
-	@override late final _Translations$companionRemote$session$it session = _Translations$companionRemote$session$it._(_root);
-	@override late final _Translations$companionRemote$pairing$it pairing = _Translations$companionRemote$pairing$it._(_root);
 	@override late final _Translations$companionRemote$remote$it remote = _Translations$companionRemote$remote$it._(_root);
-	@override late final _Translations$companionRemote$errors$it errors = _Translations$companionRemote$errors$it._(_root);
-	@override String get closedBeforeAuth => 'La connessione si è chiusa prima dell\'autenticazione';
 }
 
 // Path: videoSettings
@@ -2696,7 +2684,6 @@ class _Translations$libraries$tabs$it extends Translations$libraries$tabs$en {
 	final TranslationsIt _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => 'Consigliati';
 	@override String get collections => 'Raccolte';
 	@override String get playlists => 'Playlist';
 }
@@ -3168,51 +3155,6 @@ class _Translations$downloads$groupings$it extends Translations$downloads$groupi
 	@override String get collections => 'Raccolte';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$it extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$it._(TranslationsIt root) : this._root = root, super.internal(root);
-
-	final TranslationsIt _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => 'Avvio del server remoto...';
-	@override String get hostAddress => 'Indirizzo host';
-	@override String get connected => 'Connesso';
-	@override String get serverRunning => 'Server remoto attivo';
-	@override String get serverStopped => 'Server remoto arrestato';
-	@override String get serverRunningDescription => 'I dispositivi mobili della tua rete possono connettersi a questa app';
-	@override String get serverStoppedDescription => 'Avvia il server per consentire ai dispositivi mobili di connettersi';
-	@override String get usePhoneToControl => 'Usa il tuo dispositivo mobile per controllare questa app';
-	@override String get startServer => 'Avvia server';
-	@override String get stopServer => 'Arresta server';
-	@override String get minimize => 'Riduci';
-	@override String get manualAddressHint => 'Indirizzo di connessione manuale:';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$it extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$it._(TranslationsIt root) : this._root = root, super.internal(root);
-
-	final TranslationsIt _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => 'I dispositivi Plezy con lo stesso account Plex appaiono qui';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => 'Connessione...';
-	@override String get searchingForDevices => 'Ricerca dispositivi...';
-	@override String get noDevicesFound => 'Nessun dispositivo trovato nella tua rete';
-	@override String get noDevicesHint => 'Apri Plezy sul computer e usa la stessa rete Wi-Fi';
-	@override String get availableDevices => 'Dispositivi disponibili';
-	@override String get manualConnection => 'Connessione manuale';
-	@override String get cryptoInitFailed => 'Impossibile avviare la connessione sicura. Accedi prima a Plex.';
-	@override String get validationHostRequired => 'Inserisci l\'indirizzo host';
-	@override String get validationHostFormat => 'Il formato deve essere IP:porta (es. 192.168.1.100:48632)';
-	@override String get connectionTimedOut => 'Tempo scaduto per la connessione. Usa la stessa rete su entrambi i dispositivi.';
-	@override String get sessionNotFound => 'Dispositivo non trovato. Assicurati che Plezy sia in esecuzione sull\'host.';
-	@override String get authFailed => 'Autenticazione non riuscita. Entrambi i dispositivi devono usare lo stesso account Plex.';
-	@override String failedToConnect({required Object error}) => 'Connessione non riuscita: ${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$it extends Translations$companionRemote$remote$en {
 	_Translations$companionRemote$remote$it._(TranslationsIt root) : this._root = root, super.internal(root);
@@ -3220,50 +3162,7 @@ class _Translations$companionRemote$remote$it extends Translations$companionRemo
 	final TranslationsIt _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => 'Vuoi disconnetterti dalla sessione remota?';
-	@override String get reconnecting => 'Riconnessione...';
-	@override String attemptOf({required Object current}) => 'Tentativo ${current} di 5';
-	@override String get retryNow => 'Riprova ora';
-	@override String get tabRemote => 'Telecomando';
-	@override String get tabPlay => 'Riproduci';
-	@override String get tabMore => 'Altro';
-	@override String get menu => 'Menu';
-	@override String get tabNavigation => 'Navigazione';
-	@override String get tabDiscover => 'Esplora';
-	@override String get tabLibraries => 'Librerie';
-	@override String get tabSearch => 'Cerca';
-	@override String get tabDownloads => 'Download';
-	@override String get tabSettings => 'Impostazioni';
-	@override String get previous => 'Precedente';
-	@override String get playPause => 'Riproduci/Pausa';
 	@override String get next => 'Successivo';
-	@override String get seekBack => 'Indietro';
-	@override String get stop => 'Interrompi';
-	@override String get seekForward => 'Avanti';
-	@override String get volume => 'Volume';
-	@override String get volumeDown => 'Abbassa';
-	@override String get volumeUp => 'Alza';
-	@override String get fullscreen => 'Schermo intero';
-	@override String get subtitles => 'Sottotitoli';
-	@override String get audio => 'Audio';
-	@override String get searchHint => 'Cerca sul computer...';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$it extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$it._(TranslationsIt root) : this._root = root, super.internal(root);
-
-	final TranslationsIt _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => 'Nessuna interfaccia di rete trovata';
-	@override String get authenticationFailed => 'Autenticazione non riuscita';
-	@override String serverStartFailed({required Object error}) => 'Impossibile avviare il server remoto: ${error}';
-	@override String commandFailed({required Object error}) => 'Impossibile inviare il comando remoto: ${error}';
-	@override String get joinTimedOut => 'Tempo scaduto durante la partecipazione alla sessione';
-	@override String get failedToConnectAnyAddress => 'Impossibile connettersi a qualsiasi indirizzo';
-	@override String connectionLostAfterAttempts({required Object attempts}) => 'Connessione persa dopo ${attempts} tentativi';
-	@override String get connectionLost => 'Connessione persa';
 }
 
 // Path: services.names
@@ -3426,7 +3325,6 @@ extension on TranslationsIt {
 			'common.shuffle' => 'Riproduzione casuale',
 			'common.addTo' => 'Aggiungi a...',
 			'common.createNew' => 'Crea nuovo',
-			'common.connect' => 'Connetti',
 			'common.disconnect' => 'Disconnetti',
 			'common.play' => 'Riproduci',
 			'common.pause' => 'Pausa',
@@ -3436,7 +3334,6 @@ extension on TranslationsIt {
 			'common.home' => 'Home',
 			'common.back' => 'Indietro',
 			'common.settings' => 'Impostazioni',
-			'common.mute' => 'Disattiva audio',
 			'common.ok' => 'OK',
 			'common.off' => 'Disattivato',
 			'common.options' => 'Opzioni',
@@ -3870,10 +3767,10 @@ extension on TranslationsIt {
 			'themeEditor.opacity' => 'Opacità',
 			'themeEditor.hexHint' => '#RRGGBB o #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Da altri temi',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} ${theme}',
 			'themeEditor.contrast.textOnBg' => 'Testo sullo sfondo',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'Testo sulla superficie',
 			'themeEditor.contrast.textMutedOnBg' => 'Testo secondario sullo sfondo',
 			'themeEditor.contrast.textMutedOnSurface' => 'Testo secondario sulla superficie',
@@ -4384,10 +4281,10 @@ extension on TranslationsIt {
 			'connections.addConnectionSubtitleNoProfile' => 'Accedi con Plex o collega un server Jellyfin o Emby',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Aggiungi a ${displayName}: Plex, Jellyfin, Emby o la connessione di un altro profilo',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Sessione scaduta per ${name}',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Sessione scaduta per ${count} server',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} ha negato l\'accesso a questo account',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} server hanno negato l\'accesso a questo account',
 			'connections.signInAgain' => 'Accedi di nuovo',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => 'Modifica connessione ${product}',
@@ -4534,11 +4431,9 @@ extension on TranslationsIt {
 			'libraries.content' => 'contenuto della libreria',
 			'libraries.selectLibrary' => 'Seleziona libreria',
 			'libraries.filtersWithCount' => ({required Object count}) => 'Filtri (${count})',
-			'libraries.noRecommendations' => 'Nessun consiglio disponibile',
 			'libraries.noCollections' => 'Nessuna raccolta in questa libreria',
 			'libraries.noFoldersFound' => 'Nessuna cartella trovata',
 			'libraries.folders' => 'cartelle',
-			'libraries.tabs.recommended' => 'Consigliati',
 			'libraries.tabs.collections' => 'Raccolte',
 			'libraries.tabs.playlists' => 'Playlist',
 			'libraries.groupings.title' => 'Raggruppa per',
@@ -4866,7 +4761,6 @@ extension on TranslationsIt {
 			'liveTv.failedToBuildStreamUrl' => 'Impossibile creare l\'URL dello stream',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Impossibile avviare il canale: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Impossibile cambiare canale: ${reason}',
-			'collections.title' => 'Raccolte',
 			'collections.collection' => 'Raccolta',
 			'collections.empty' => 'La raccolta è vuota',
 			'collections.deleteCollection' => 'Elimina raccolta',
@@ -4886,7 +4780,6 @@ extension on TranslationsIt {
 			'collections.removeFromCollectionFailed' => 'Impossibile rimuovere dalla raccolta',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'Errore durante la rimozione dell\'elemento dalla raccolta: ${error}',
 			'collections.searchCollections' => 'Cerca raccolte...',
-			'playlists.title' => 'Playlist',
 			'playlists.playlist' => 'Playlist',
 			'playlists.noPlaylists' => 'Nessuna playlist trovata',
 			'playlists.create' => 'Crea playlist',
@@ -4898,14 +4791,14 @@ extension on TranslationsIt {
 			'playlists.itemCount' => ({required Object count}) => '${count} elementi',
 			'playlists.oneItem' => '1 elemento',
 			'playlists.emptyPlaylist' => 'Questa playlist è vuota',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Eliminare playlist?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Sei sicuro di voler eliminare "${name}"?',
 			'playlists.created' => 'Playlist creata',
 			'playlists.deleted' => 'Playlist eliminata',
 			'playlists.itemAdded' => 'Aggiunto alla playlist',
 			'playlists.itemRemoved' => 'Rimosso dalla playlist',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => 'Seleziona playlist',
 			'playlists.searchPlaylists' => 'Cerca playlist...',
 			'playlists.errorCreating' => 'Impossibile creare la playlist',
@@ -5232,72 +5125,7 @@ extension on TranslationsIt {
 			'shaders.shaderImportFailed' => 'Impossibile importare lo shader',
 			'shaders.deleteShader' => 'Elimina shader',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => 'Eliminare "${name}"?',
-			'companionRemote.title' => 'Telecomando',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Connesso a ${name}',
-			'companionRemote.unknownDevice' => 'Dispositivo sconosciuto',
-			'companionRemote.session.startingServer' => 'Avvio del server remoto...',
-			'companionRemote.session.hostAddress' => 'Indirizzo host',
-			'companionRemote.session.connected' => 'Connesso',
-			'companionRemote.session.serverRunning' => 'Server remoto attivo',
-			'companionRemote.session.serverStopped' => 'Server remoto arrestato',
-			'companionRemote.session.serverRunningDescription' => 'I dispositivi mobili della tua rete possono connettersi a questa app',
-			'companionRemote.session.serverStoppedDescription' => 'Avvia il server per consentire ai dispositivi mobili di connettersi',
-			'companionRemote.session.usePhoneToControl' => 'Usa il tuo dispositivo mobile per controllare questa app',
-			'companionRemote.session.startServer' => 'Avvia server',
-			'companionRemote.session.stopServer' => 'Arresta server',
-			'companionRemote.session.minimize' => 'Riduci',
-			'companionRemote.session.manualAddressHint' => 'Indirizzo di connessione manuale:',
-			'companionRemote.pairing.discoveryDescription' => 'I dispositivi Plezy con lo stesso account Plex appaiono qui',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Connessione...',
-			'companionRemote.pairing.searchingForDevices' => 'Ricerca dispositivi...',
-			'companionRemote.pairing.noDevicesFound' => 'Nessun dispositivo trovato nella tua rete',
-			'companionRemote.pairing.noDevicesHint' => 'Apri Plezy sul computer e usa la stessa rete Wi-Fi',
-			'companionRemote.pairing.availableDevices' => 'Dispositivi disponibili',
-			'companionRemote.pairing.manualConnection' => 'Connessione manuale',
-			'companionRemote.pairing.cryptoInitFailed' => 'Impossibile avviare la connessione sicura. Accedi prima a Plex.',
-			'companionRemote.pairing.validationHostRequired' => 'Inserisci l\'indirizzo host',
-			'companionRemote.pairing.validationHostFormat' => 'Il formato deve essere IP:porta (es. 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'Tempo scaduto per la connessione. Usa la stessa rete su entrambi i dispositivi.',
-			'companionRemote.pairing.sessionNotFound' => 'Dispositivo non trovato. Assicurati che Plezy sia in esecuzione sull\'host.',
-			'companionRemote.pairing.authFailed' => 'Autenticazione non riuscita. Entrambi i dispositivi devono usare lo stesso account Plex.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Connessione non riuscita: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Vuoi disconnetterti dalla sessione remota?',
-			'companionRemote.remote.reconnecting' => 'Riconnessione...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Tentativo ${current} di 5',
-			'companionRemote.remote.retryNow' => 'Riprova ora',
-			'companionRemote.remote.tabRemote' => 'Telecomando',
-			'companionRemote.remote.tabPlay' => 'Riproduci',
-			'companionRemote.remote.tabMore' => 'Altro',
-			'companionRemote.remote.menu' => 'Menu',
-			'companionRemote.remote.tabNavigation' => 'Navigazione',
-			'companionRemote.remote.tabDiscover' => 'Esplora',
-			'companionRemote.remote.tabLibraries' => 'Librerie',
-			'companionRemote.remote.tabSearch' => 'Cerca',
-			'companionRemote.remote.tabDownloads' => 'Download',
-			'companionRemote.remote.tabSettings' => 'Impostazioni',
-			'companionRemote.remote.previous' => 'Precedente',
-			'companionRemote.remote.playPause' => 'Riproduci/Pausa',
 			'companionRemote.remote.next' => 'Successivo',
-			'companionRemote.remote.seekBack' => 'Indietro',
-			'companionRemote.remote.stop' => 'Interrompi',
-			'companionRemote.remote.seekForward' => 'Avanti',
-			'companionRemote.remote.volume' => 'Volume',
-			'companionRemote.remote.volumeDown' => 'Abbassa',
-			'companionRemote.remote.volumeUp' => 'Alza',
-			'companionRemote.remote.fullscreen' => 'Schermo intero',
-			'companionRemote.remote.subtitles' => 'Sottotitoli',
-			'companionRemote.remote.audio' => 'Audio',
-			'companionRemote.remote.searchHint' => 'Cerca sul computer...',
-			'companionRemote.errors.noNetworkInterface' => 'Nessuna interfaccia di rete trovata',
-			'companionRemote.errors.authenticationFailed' => 'Autenticazione non riuscita',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Impossibile avviare il server remoto: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Impossibile inviare il comando remoto: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Tempo scaduto durante la partecipazione alla sessione',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Impossibile connettersi a qualsiasi indirizzo',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'Connessione persa dopo ${attempts} tentativi',
-			'companionRemote.errors.connectionLost' => 'Connessione persa',
-			'companionRemote.closedBeforeAuth' => 'La connessione si è chiusa prima dell\'autenticazione',
 			'videoSettings.playbackSpeed' => 'Velocità di riproduzione',
 			'videoSettings.normalSpeed' => 'Normale',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Attivo (${duration})',
@@ -5412,8 +5240,6 @@ extension on TranslationsIt {
 			'metadataEdit.selectBackground' => 'Seleziona sfondo',
 			'metadataEdit.selectLogo' => 'Seleziona logo',
 			'metadataEdit.selectSquareArt' => 'Seleziona immagine quadrata',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'Da URL',
 			'metadataEdit.uploadFile' => 'Carica file',
 			'metadataEdit.enterImageUrl' => 'Inserisci URL immagine',
@@ -5485,6 +5311,8 @@ extension on TranslationsIt {
 			'serverTasks.noTasks' => 'Nessuna attività in corso',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Connesso',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Connesso come @${username}',
 			'trakt.disconnectConfirm' => 'Disconnettere l\'account Trakt?',
 			'trakt.disconnectConfirmBody' => 'Plezy smetterà di inviare eventi a Trakt. Puoi riconnetterti quando vuoi.',

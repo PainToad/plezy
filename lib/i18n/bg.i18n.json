@@ -76,7 +76,6 @@
     "shuffle": "Разбъркай",
     "addTo": "Добави към...",
     "createNew": "Създай нов",
-    "connect": "Свържи",
     "disconnect": "Прекъсни връзката",
     "play": "Пусни",
     "pause": "Пауза",
@@ -86,7 +85,6 @@
     "home": "Начало",
     "back": "Назад",
     "settings": "Настройки",
-    "mute": "Заглуши",
     "ok": "OK",
     "off": "Изкл.",
     "options": "Опции",
@@ -1277,15 +1275,11 @@
     "content": "съдържание на библиотеката",
     "selectLibrary": "Избери библиотека",
     "filtersWithCount": "Филтри (${count})",
-    "noRecommendations": "Няма налични препоръки",
     "noCollections": "Няма колекции в тази библиотека",
-    "noGenres": "",
     "noFoldersFound": "Не са намерени папки",
     "folders": "папки",
     "tabs": {
-      "recommended": "Препоръчани",
       "collections": "Колекции",
-      "genres": "",
       "playlists": "Плейлисти"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Каналът не можа да бъде сменен: ${reason}"
   },
   "collections": {
-    "title": "Колекции",
     "collection": "Колекция",
     "empty": "Колекцията е празна",
     "deleteCollection": "Изтрий колекция",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Търсене на колекции..."
   },
   "playlists": {
-    "title": "Плейлисти",
     "playlist": "Плейлист",
     "noPlaylists": "Не са намерени плейлисти",
     "create": "Създай плейлист",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "Да се изтрие ли \"${name}\"?"
   },
   "companionRemote": {
-    "title": "Дистанционно управление",
-    "connectedTo": "Връзка с ${name}",
-    "unknownDevice": "Непознато устройство",
-    "session": {
-      "startingServer": "Стартиране на сървър за дистанционно управление...",
-      "hostAddress": "Адрес на хоста",
-      "connected": "Свързан",
-      "serverRunning": "Сървърът за дистанционно управление е активен",
-      "serverStopped": "Сървърът за дистанционно управление е спрян",
-      "serverRunningDescription": "Мобилни устройства във вашата мрежа могат да се свързват с това приложение",
-      "serverStoppedDescription": "Стартирайте сървъра, за да позволите на мобилни устройства да се свързват",
-      "usePhoneToControl": "Използвайте мобилното си устройство, за да управлявате това приложение",
-      "startServer": "Стартирай сървър",
-      "stopServer": "Спри сървър",
-      "minimize": "Минимизирай",
-      "manualAddressHint": "Ръчен адрес за връзка:"
-    },
-    "pairing": {
-      "discoveryDescription": "Plezy устройства със същия Plex акаунт се показват тук",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Свързване...",
-      "searchingForDevices": "Търсене на устройства...",
-      "noDevicesFound": "Не са намерени устройства във вашата мрежа",
-      "noDevicesHint": "Отворете Plezy на настолен компютър и използвайте същата Wi-Fi мрежа",
-      "availableDevices": "Налични устройства",
-      "manualConnection": "Ръчно свързване",
-      "cryptoInitFailed": "Не може да се стартира защитена връзка. Първо влезте в Plex.",
-      "validationHostRequired": "Моля, въведете адрес на хоста",
-      "validationHostFormat": "Форматът трябва да е IP:port (напр. 192.168.1.100:48632)",
-      "connectionTimedOut": "Връзката изтече. Използвайте една и съща мрежа на двете устройства.",
-      "sessionNotFound": "Устройството не е намерено. Уверете се, че Plezy работи на хоста.",
-      "authFailed": "Удостоверяването е неуспешно. Двете устройства трябва да използват същия Plex акаунт.",
-      "failedToConnect": "Неуспешно свързване: ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Искате ли да прекъснете връзката с дистанционната сесия?",
-      "reconnecting": "Повторно свързване...",
-      "attemptOf": "Опит ${current} от 5",
-      "retryNow": "Опитай сега",
-      "tabRemote": "Дистанционно",
-      "tabPlay": "Пускане",
-      "tabMore": "Още",
-      "menu": "Меню",
-      "tabNavigation": "Навигация с Tab",
-      "tabDiscover": "Открий",
-      "tabLibraries": "Библиотеки",
-      "tabSearch": "Търсене",
-      "tabDownloads": "Изтегляния",
-      "tabSettings": "Настройки",
-      "previous": "Предишен",
-      "playPause": "Пускане/пауза",
-      "next": "Следващ",
-      "seekBack": "Назад",
-      "stop": "Стоп",
-      "seekForward": "Напред",
-      "volume": "Звук",
-      "volumeDown": "Надолу",
-      "volumeUp": "Нагоре",
-      "fullscreen": "Цял екран",
-      "subtitles": "Субтитри",
-      "audio": "Аудио",
-      "searchHint": "Търсене на настолен компютър..."
+      "next": "Следващ"
     },
-    "errors": {
-      "noNetworkInterface": "Не е намерен мрежов интерфейс",
-      "authenticationFailed": "Неуспешно удостоверяване",
-      "serverStartFailed": "Неуспешно стартиране на сървъра за дистанционно управление: ${error}",
-      "commandFailed": "Неуспешно изпращане на команда за дистанционно управление: ${error}",
-      "joinTimedOut": "Времето за присъединяване към сесията изтече",
-      "failedToConnectAnyAddress": "Неуспешно свързване към който и да е адрес",
-      "connectionLostAfterAttempts": "Връзката е загубена след ${attempts} опита",
-      "connectionLost": "Връзката е загубена"
-    },
-    "closedBeforeAuth": "Връзката беше затворена преди удостоверяването"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Скорост на възпроизвеждане",

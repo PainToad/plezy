@@ -76,7 +76,6 @@
     "shuffle": "隨機播放",
     "addTo": "新增至…",
     "createNew": "新增",
-    "connect": "連線",
     "disconnect": "中斷連線",
     "play": "播放",
     "pause": "暫停",
@@ -86,7 +85,6 @@
     "home": "首頁",
     "back": "返回",
     "settings": "設定",
-    "mute": "靜音",
     "ok": "確定",
     "off": "關閉",
     "options": "選項",
@@ -1272,15 +1270,11 @@
     "content": "媒體庫內容",
     "selectLibrary": "選擇媒體庫",
     "filtersWithCount": "篩選器（${count}）",
-    "noRecommendations": "目前沒有推薦",
     "noCollections": "此媒體庫中沒有收藏集",
-    "noGenres": "",
     "noFoldersFound": "找不到資料夾",
     "folders": "資料夾",
     "tabs": {
-      "recommended": "推薦",
       "collections": "收藏集",
-      "genres": "",
       "playlists": "播放清單"
     },
     "groupings": {
@@ -1669,7 +1663,6 @@
     "channelSwitchFailed": "無法切換頻道：${reason}"
   },
   "collections": {
-    "title": "收藏集",
     "collection": "收藏集",
     "empty": "收藏集為空",
     "deleteCollection": "刪除收藏集",
@@ -1691,7 +1684,6 @@
     "searchCollections": "搜尋收藏集…"
   },
   "playlists": {
-    "title": "播放清單",
     "playlist": "播放清單",
     "noPlaylists": "找不到播放清單",
     "create": "建立播放清單",
@@ -2061,80 +2053,12 @@
     "deleteShaderConfirm": "刪除「${name}」？"
   },
   "companionRemote": {
-    "title": "隨身遙控器",
-    "connectedTo": "已連線至 ${name}",
-    "unknownDevice": "未知裝置",
-    "session": {
-      "startingServer": "正在啟動遠端伺服器…",
-      "hostAddress": "主機位址",
-      "connected": "已連線",
-      "serverRunning": "遠端伺服器已啟動",
-      "serverStopped": "遠端伺服器已停止",
-      "serverRunningDescription": "區域網路中的行動裝置可以連線至此應用程式",
-      "serverStoppedDescription": "啟動伺服器以允許行動裝置連線",
-      "usePhoneToControl": "使用行動裝置控制此應用程式",
-      "startServer": "啟動伺服器",
-      "stopServer": "停止伺服器",
-      "minimize": "最小化",
-      "manualAddressHint": "手動連線位址："
-    },
-    "pairing": {
-      "discoveryDescription": "使用相同 Plex 帳戶的 Plezy 裝置會顯示在此處",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "正在連線…",
-      "searchingForDevices": "正在搜尋裝置…",
-      "noDevicesFound": "在區域網路上找不到裝置",
-      "noDevicesHint": "請在電腦上開啟 Plezy，並確認兩台裝置使用相同的 Wi-Fi 網路",
-      "availableDevices": "可用裝置",
-      "manualConnection": "手動連線",
-      "cryptoInitFailed": "無法啟動安全連線。請先登入 Plex。",
-      "validationHostRequired": "請輸入主機位址",
-      "validationHostFormat": "格式必須為 IP 位址:連接埠（例如 192.168.1.100:48632）",
-      "connectionTimedOut": "連線逾時。請確認兩台裝置都使用相同網路。",
-      "sessionNotFound": "找不到裝置。請確認主機上已啟動 Plezy。",
-      "authFailed": "驗證失敗。兩台裝置需要登入相同的 Plex 帳戶。",
-      "failedToConnect": "連線失敗：${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "是否要中斷遠端連線工作階段？",
-      "reconnecting": "重新連線中…",
-      "attemptOf": "第 ${current} 次嘗試，共 5 次",
-      "retryNow": "立即重試",
-      "tabRemote": "遙控",
-      "tabPlay": "播放",
-      "tabMore": "更多",
-      "menu": "選單",
-      "tabNavigation": "分頁導覽",
-      "tabDiscover": "發現",
-      "tabLibraries": "媒體庫",
-      "tabSearch": "搜尋",
-      "tabDownloads": "下載",
-      "tabSettings": "設定",
-      "previous": "上一個",
-      "playPause": "播放/暫停",
-      "next": "下一個",
-      "seekBack": "後退",
-      "stop": "停止",
-      "seekForward": "前進",
-      "volume": "音量",
-      "volumeDown": "調小",
-      "volumeUp": "調大",
-      "fullscreen": "全螢幕",
-      "subtitles": "字幕",
-      "audio": "音訊",
-      "searchHint": "在電腦版上搜尋…"
+      "next": "下一個"
     },
-    "errors": {
-      "noNetworkInterface": "找不到網路介面",
-      "authenticationFailed": "身分驗證失敗",
-      "serverStartFailed": "無法啟動遠端伺服器：${error}",
-      "commandFailed": "無法傳送遠端指令：${error}",
-      "joinTimedOut": "加入工作階段逾時",
-      "failedToConnectAnyAddress": "無法連線至任何位址",
-      "connectionLostAfterAttempts": "嘗試 ${attempts} 次後連線中斷",
-      "connectionLost": "連線已中斷"
-    },
-    "closedBeforeAuth": "連線在驗證前已關閉"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "播放速度",

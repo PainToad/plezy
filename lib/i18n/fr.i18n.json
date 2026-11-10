@@ -76,7 +76,6 @@
     "shuffle": "Mélanger",
     "addTo": "Ajouter à…",
     "createNew": "Créer",
-    "connect": "Se connecter",
     "disconnect": "Se déconnecter",
     "play": "Lire",
     "pause": "Pause",
@@ -86,7 +85,6 @@
     "home": "Accueil",
     "back": "Retour",
     "settings": "Paramètres",
-    "mute": "Couper le son",
     "ok": "OK",
     "off": "Désactivé",
     "options": "Options",
@@ -1277,15 +1275,11 @@
     "content": "contenu de la bibliothèque",
     "selectLibrary": "Sélectionner la bibliothèque",
     "filtersWithCount": "Filtres (${count})",
-    "noRecommendations": "Aucune recommandation disponible",
     "noCollections": "Aucune collection dans cette bibliothèque",
-    "noGenres": "",
     "noFoldersFound": "Aucun dossier trouvé",
     "folders": "dossiers",
     "tabs": {
-      "recommended": "Recommandé",
       "collections": "Collections",
-      "genres": "",
       "playlists": "Playlists"
     },
     "groupings": {
@@ -1679,7 +1673,6 @@
     "channelSwitchFailed": "Impossible de changer de chaîne : ${reason}"
   },
   "collections": {
-    "title": "Collections",
     "collection": "Collection",
     "empty": "La collection est vide",
     "deleteCollection": "Supprimer la collection",
@@ -1701,7 +1694,6 @@
     "searchCollections": "Rechercher des collections..."
   },
   "playlists": {
-    "title": "Playlists",
     "playlist": "Playlist",
     "noPlaylists": "Aucune playlist trouvée",
     "create": "Créer une playlist",
@@ -2073,80 +2065,12 @@
     "deleteShaderConfirm": "Supprimer \"${name}\" ?"
   },
   "companionRemote": {
-    "title": "Télécommande compagnon",
-    "connectedTo": "Connecté à ${name}",
-    "unknownDevice": "Appareil inconnu",
-    "session": {
-      "startingServer": "Démarrage du serveur de télécommande…",
-      "hostAddress": "Adresse de l’hôte",
-      "connected": "Connecté",
-      "serverRunning": "Serveur de télécommande actif",
-      "serverStopped": "Serveur de télécommande arrêté",
-      "serverRunningDescription": "Les appareils mobiles de votre réseau peuvent se connecter à cette application",
-      "serverStoppedDescription": "Démarrez le serveur pour permettre aux appareils mobiles de se connecter",
-      "usePhoneToControl": "Utilisez votre appareil mobile pour contrôler cette application",
-      "startServer": "Démarrer le serveur",
-      "stopServer": "Arrêter le serveur",
-      "minimize": "Réduire",
-      "manualAddressHint": "Adresse de connexion manuelle :"
-    },
-    "pairing": {
-      "discoveryDescription": "Les appareils Plezy avec le même compte Plex apparaissent ici",
-      "hostAddressHint": "192.168.1.100:48632",
-      "connecting": "Connexion...",
-      "searchingForDevices": "Recherche d'appareils...",
-      "noDevicesFound": "Aucun appareil trouvé sur votre réseau",
-      "noDevicesHint": "Ouvrez Plezy sur votre ordinateur et utilisez le même réseau Wi-Fi",
-      "availableDevices": "Appareils disponibles",
-      "manualConnection": "Connexion manuelle",
-      "cryptoInitFailed": "Impossible de démarrer la connexion sécurisée. Connectez-vous d'abord à Plex.",
-      "validationHostRequired": "Veuillez saisir l’adresse de l’hôte",
-      "validationHostFormat": "Le format doit être IP:port (p. ex. 192.168.1.100:48632)",
-      "connectionTimedOut": "Délai de connexion dépassé. Utilisez le même réseau sur les deux appareils.",
-      "sessionNotFound": "Appareil introuvable. Assurez-vous que Plezy fonctionne sur l'hôte.",
-      "authFailed": "Échec de l'authentification. Les deux appareils doivent utiliser le même compte Plex.",
-      "failedToConnect": "Échec de la connexion : ${error}"
-    },
+    "session": {},
+    "pairing": {},
     "remote": {
-      "disconnectConfirm": "Voulez-vous vous déconnecter de la session distante ?",
-      "reconnecting": "Reconnexion...",
-      "attemptOf": "Tentative ${current} sur 5",
-      "retryNow": "Réessayer maintenant",
-      "tabRemote": "Télécommande",
-      "tabPlay": "Lecture",
-      "tabMore": "Plus",
-      "menu": "Menu",
-      "tabNavigation": "Navigation par onglets",
-      "tabDiscover": "Découvrir",
-      "tabLibraries": "Bibliothèques",
-      "tabSearch": "Rechercher",
-      "tabDownloads": "Téléchargements",
-      "tabSettings": "Paramètres",
-      "previous": "Précédent",
-      "playPause": "Lecture/Pause",
-      "next": "Suivant",
-      "seekBack": "Reculer",
-      "stop": "Arrêter",
-      "seekForward": "Avancer",
-      "volume": "Volume",
-      "volumeDown": "Baisser",
-      "volumeUp": "Augmenter",
-      "fullscreen": "Plein écran",
-      "subtitles": "Sous-titres",
-      "audio": "Audio",
-      "searchHint": "Rechercher sur l’ordinateur…"
+      "next": "Suivant"
     },
-    "errors": {
-      "noNetworkInterface": "Aucune interface réseau trouvée",
-      "authenticationFailed": "Échec de l’authentification",
-      "serverStartFailed": "Impossible de démarrer le serveur de télécommande : ${error}",
-      "commandFailed": "Impossible d’envoyer la commande à distance : ${error}",
-      "joinTimedOut": "Délai dépassé lors de la connexion à la session",
-      "failedToConnectAnyAddress": "Impossible de se connecter à une adresse",
-      "connectionLostAfterAttempts": "Connexion perdue après ${attempts} tentatives",
-      "connectionLost": "Connexion perdue"
-    },
-    "closedBeforeAuth": "La connexion a été fermée avant l’authentification"
+    "errors": {}
   },
   "videoSettings": {
     "playbackSpeed": "Vitesse de lecture",

@@ -175,7 +175,6 @@ class _Translations$common$kk extends Translations$common$en {
 	@override String get shuffle => 'Араластыру';
 	@override String get addTo => 'Қосу...';
 	@override String get createNew => 'Жаңасын жасау';
-	@override String get connect => 'Қосылу';
 	@override String get disconnect => 'Ажырату';
 	@override String get play => 'Ойнату';
 	@override String get pause => 'Кідірту';
@@ -185,7 +184,6 @@ class _Translations$common$kk extends Translations$common$en {
 	@override String get home => 'Басты бет';
 	@override String get back => 'Артқа';
 	@override String get settings => 'Баптаулар';
-	@override String get mute => 'Дыбысты өшіру';
 	@override String get ok => 'Түсінікті';
 	@override String get off => 'Өшірулі';
 	@override String get options => 'Параметрлер';
@@ -1413,7 +1411,6 @@ class _Translations$libraries$kk extends Translations$libraries$en {
 	@override String get content => 'кітапхана мазмұны';
 	@override String get selectLibrary => 'Кітапхананы таңдау';
 	@override String filtersWithCount({required Object count}) => 'Фильтрлер (${count})';
-	@override String get noRecommendations => 'Ұсыныстар жоқ';
 	@override String get noCollections => 'Бұл кітапханада топтамалар жоқ';
 	@override String get noFoldersFound => 'Қапшықтар табылмады';
 	@override String get folders => 'қапшықтар';
@@ -1660,7 +1657,6 @@ class _Translations$collections$kk extends Translations$collections$en {
 	final TranslationsKk _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Топтамалар';
 	@override String get collection => 'Топтама';
 	@override String get empty => 'Топтама бос';
 	@override String get deleteCollection => 'Топтаманы өшіру';
@@ -1689,7 +1685,6 @@ class _Translations$playlists$kk extends Translations$playlists$en {
 	final TranslationsKk _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Ойнату тізімдері';
 	@override String get playlist => 'Ойнату тізімі';
 	@override String get noPlaylists => 'Ойнату тізімдері табылмады';
 	@override String get create => 'Ойнату тізімін жасау';
@@ -2015,14 +2010,7 @@ class _Translations$companionRemote$kk extends Translations$companionRemote$en {
 	final TranslationsKk _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Көмекші пульт';
-	@override String connectedTo({required Object name}) => '${name} құрылғысына қосылды';
-	@override String get unknownDevice => 'Белгісіз құрылғы';
-	@override late final _Translations$companionRemote$session$kk session = _Translations$companionRemote$session$kk._(_root);
-	@override late final _Translations$companionRemote$pairing$kk pairing = _Translations$companionRemote$pairing$kk._(_root);
 	@override late final _Translations$companionRemote$remote$kk remote = _Translations$companionRemote$remote$kk._(_root);
-	@override late final _Translations$companionRemote$errors$kk errors = _Translations$companionRemote$errors$kk._(_root);
-	@override String get closedBeforeAuth => 'Аутентификациядан бұрын байланыс жабылды';
 }
 
 // Path: videoSettings
@@ -2696,7 +2684,6 @@ class _Translations$libraries$tabs$kk extends Translations$libraries$tabs$en {
 	final TranslationsKk _root; // ignore: unused_field
 
 	// Translations
-	@override String get recommended => 'Ұсынылатындар';
 	@override String get collections => 'Топтамалар';
 	@override String get playlists => 'Ойнату тізімдері';
 }
@@ -3168,51 +3155,6 @@ class _Translations$downloads$groupings$kk extends Translations$downloads$groupi
 	@override String get collections => 'Топтамалар';
 }
 
-// Path: companionRemote.session
-class _Translations$companionRemote$session$kk extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$kk._(TranslationsKk root) : this._root = root, super.internal(root);
-
-	final TranslationsKk _root; // ignore: unused_field
-
-	// Translations
-	@override String get startingServer => 'Пульт сервері іске қосылуда...';
-	@override String get hostAddress => 'Хост мекенжайы';
-	@override String get connected => 'Қосылды';
-	@override String get serverRunning => 'Сервер белсенді';
-	@override String get serverStopped => 'Сервер тоқтатылды';
-	@override String get serverRunningDescription => 'Желідегі мобильді құрылғылар қосыла алады';
-	@override String get serverStoppedDescription => 'Қосылуға рұқсат беру үшін серверді іске қосыңыз';
-	@override String get usePhoneToControl => 'Осы қолданбаны басқару үшін телефоныңызды пайдаланыңыз';
-	@override String get startServer => 'Серверді іске қосу';
-	@override String get stopServer => 'Серверді тоқтату';
-	@override String get minimize => 'Жию';
-	@override String get manualAddressHint => 'Қолмен қосылу мекенжайы:';
-}
-
-// Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$kk extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$kk._(TranslationsKk root) : this._root = root, super.internal(root);
-
-	final TranslationsKk _root; // ignore: unused_field
-
-	// Translations
-	@override String get discoveryDescription => 'Бірдей Plex тіркелгісіндегі Plezy құрылғылары мұнда көрінеді';
-	@override String get hostAddressHint => '192.168.1.100:48632';
-	@override String get connecting => 'Қосылуда...';
-	@override String get searchingForDevices => 'Құрылғылар ізделуде...';
-	@override String get noDevicesFound => 'Желіде құрылғылар табылмады';
-	@override String get noDevicesHint => 'ПК-де Plezy-ді ашып, бір Wi-Fi-ға қосылыңыз';
-	@override String get availableDevices => 'Қолжетімді құрылғылар';
-	@override String get manualConnection => 'Қолмен қосылу';
-	@override String get cryptoInitFailed => 'Қауіпсіз қосылым қатесі. Алдымен Plex-ке кіріңіз.';
-	@override String get validationHostRequired => 'Хост мекенжайын енгізіңіз';
-	@override String get validationHostFormat => 'Формат IP:порт түрінде болуы керек';
-	@override String get connectionTimedOut => 'Қосылу уақыты өтті. Екі құрылғыда да бір желіні пайдаланыңыз.';
-	@override String get sessionNotFound => 'Құрылғы табылмады.';
-	@override String get authFailed => 'Аутентификация қатесі.';
-	@override String failedToConnect({required Object error}) => 'Қосылу мүмкін болмады: ${error}';
-}
-
 // Path: companionRemote.remote
 class _Translations$companionRemote$remote$kk extends Translations$companionRemote$remote$en {
 	_Translations$companionRemote$remote$kk._(TranslationsKk root) : this._root = root, super.internal(root);
@@ -3220,50 +3162,7 @@ class _Translations$companionRemote$remote$kk extends Translations$companionRemo
 	final TranslationsKk _root; // ignore: unused_field
 
 	// Translations
-	@override String get disconnectConfirm => 'Пульт сеансынан ажырайсыз ба?';
-	@override String get reconnecting => 'Қайта қосылуда...';
-	@override String attemptOf({required Object current}) => 'Әрекет ${current} / 5';
-	@override String get retryNow => 'Қазір қайталау';
-	@override String get tabRemote => 'Пульт';
-	@override String get tabPlay => 'Ойнату';
-	@override String get tabMore => 'Тағы';
-	@override String get menu => 'Мәзір';
-	@override String get tabNavigation => 'Навигация';
-	@override String get tabDiscover => 'Шолу';
-	@override String get tabLibraries => 'Кітапханалар';
-	@override String get tabSearch => 'Іздеу';
-	@override String get tabDownloads => 'Жүктеулер';
-	@override String get tabSettings => 'Баптаулар';
-	@override String get previous => 'Алдыңғы';
-	@override String get playPause => 'Ойнату/Кідірту';
 	@override String get next => 'Келесі';
-	@override String get seekBack => 'Артқа айналдыру';
-	@override String get stop => 'Тоқтату';
-	@override String get seekForward => 'Алға айналдыру';
-	@override String get volume => 'Дыбыс';
-	@override String get volumeDown => 'Азайту';
-	@override String get volumeUp => 'Көбейту';
-	@override String get fullscreen => 'Толық экран';
-	@override String get subtitles => 'Субтитрлер';
-	@override String get audio => 'Дыбыс';
-	@override String get searchHint => 'ПК-де іздеу...';
-}
-
-// Path: companionRemote.errors
-class _Translations$companionRemote$errors$kk extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$kk._(TranslationsKk root) : this._root = root, super.internal(root);
-
-	final TranslationsKk _root; // ignore: unused_field
-
-	// Translations
-	@override String get noNetworkInterface => 'Желілік интерфейс табылмады';
-	@override String get authenticationFailed => 'Аутентификация қатесі';
-	@override String serverStartFailed({required Object error}) => 'Серверді іске қосу қатесі: ${error}';
-	@override String commandFailed({required Object error}) => 'Пәрменді жіберу қатесі: ${error}';
-	@override String get joinTimedOut => 'Қосылу уақыты өтті';
-	@override String get failedToConnectAnyAddress => 'Ешбір мекенжайға қосылу мүмкін болмады';
-	@override String connectionLostAfterAttempts({required Object attempts}) => '${attempts} әрекеттен кейін байланыс үзілді';
-	@override String get connectionLost => 'Байланыс үзілді';
 }
 
 // Path: services.names
@@ -3426,7 +3325,6 @@ extension on TranslationsKk {
 			'common.shuffle' => 'Араластыру',
 			'common.addTo' => 'Қосу...',
 			'common.createNew' => 'Жаңасын жасау',
-			'common.connect' => 'Қосылу',
 			'common.disconnect' => 'Ажырату',
 			'common.play' => 'Ойнату',
 			'common.pause' => 'Кідірту',
@@ -3436,7 +3334,6 @@ extension on TranslationsKk {
 			'common.home' => 'Басты бет',
 			'common.back' => 'Артқа',
 			'common.settings' => 'Баптаулар',
-			'common.mute' => 'Дыбысты өшіру',
 			'common.ok' => 'Түсінікті',
 			'common.off' => 'Өшірулі',
 			'common.options' => 'Параметрлер',
@@ -3870,10 +3767,10 @@ extension on TranslationsKk {
 			'themeEditor.opacity' => 'Мөлдірлік',
 			'themeEditor.hexHint' => '#RRGGBB немесе #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Басқа тақырыптардан',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme}: ${color}',
 			'themeEditor.contrast.textOnBg' => 'Фондағы мәтін',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.contrast.textOnSurface' => 'Беткі қабаттағы мәтін',
 			'themeEditor.contrast.textMutedOnBg' => 'Фондағы қосалқы мәтін',
 			'themeEditor.contrast.textMutedOnSurface' => 'Беткі қабаттағы қосалқы мәтін',
@@ -4384,10 +4281,10 @@ extension on TranslationsKk {
 			'connections.addConnectionSubtitleNoProfile' => 'Plex арқылы кіріңіз немесе Jellyfin не Emby серверіне қосылыңыз',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName} профиліне қосу: Plex, Jellyfin, Emby немесе басқа қосылым',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} үшін сеанс мерзімі өтті',
-			_ => null,
-		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} сервер үшін сеанс мерзімі өтті',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} бұл тіркелгіге кіруден бас тартты',
+			_ => null,
+		} ?? switch (path) {
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} сервер бұл тіркелгіге кіруден бас тартты',
 			'connections.signInAgain' => 'Қайтадан кіру',
 			'connections.editMediaBrowserTitle' => ({required Object product}) => '${product} қосылымын өңдеу',
@@ -4534,11 +4431,9 @@ extension on TranslationsKk {
 			'libraries.content' => 'кітапхана мазмұны',
 			'libraries.selectLibrary' => 'Кітапхананы таңдау',
 			'libraries.filtersWithCount' => ({required Object count}) => 'Фильтрлер (${count})',
-			'libraries.noRecommendations' => 'Ұсыныстар жоқ',
 			'libraries.noCollections' => 'Бұл кітапханада топтамалар жоқ',
 			'libraries.noFoldersFound' => 'Қапшықтар табылмады',
 			'libraries.folders' => 'қапшықтар',
-			'libraries.tabs.recommended' => 'Ұсынылатындар',
 			'libraries.tabs.collections' => 'Топтамалар',
 			'libraries.tabs.playlists' => 'Ойнату тізімдері',
 			'libraries.groupings.title' => 'Топтау',
@@ -4866,7 +4761,6 @@ extension on TranslationsKk {
 			'liveTv.failedToBuildStreamUrl' => 'Ағын URL-ін құру мүмкін болмады',
 			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Арнаны іске қосу мүмкін болмады: ${reason}',
 			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Арнаны ауыстыру мүмкін болмады: ${reason}',
-			'collections.title' => 'Топтамалар',
 			'collections.collection' => 'Топтама',
 			'collections.empty' => 'Топтама бос',
 			'collections.deleteCollection' => 'Топтаманы өшіру',
@@ -4886,7 +4780,6 @@ extension on TranslationsKk {
 			'collections.removeFromCollectionFailed' => 'Топтамадан өшіру мүмкін болмады',
 			'collections.removeFromCollectionError' => ({required Object error}) => 'Өшіру қатесі: ${error}',
 			'collections.searchCollections' => 'Топтамалардан іздеу...',
-			'playlists.title' => 'Ойнату тізімдері',
 			'playlists.playlist' => 'Ойнату тізімі',
 			'playlists.noPlaylists' => 'Ойнату тізімдері табылмады',
 			'playlists.create' => 'Ойнату тізімін жасау',
@@ -4898,14 +4791,14 @@ extension on TranslationsKk {
 			'playlists.itemCount' => ({required Object count}) => '${count} элемент',
 			'playlists.oneItem' => '1 элемент',
 			'playlists.emptyPlaylist' => 'Бұл ойнату тізімі бос',
-			_ => null,
-		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Ойнату тізімі өшірілсін бе?',
 			'playlists.deleteMessage' => ({required Object name}) => '"${name}" өшірілсін бе?',
 			'playlists.created' => 'Ойнату тізімі жасалды',
 			'playlists.deleted' => 'Ойнату тізімі өшірілді',
 			'playlists.itemAdded' => 'Тізімге қосылды',
 			'playlists.itemRemoved' => 'Тізімнен өшірілді',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.selectPlaylist' => 'Тізімді таңдау',
 			'playlists.searchPlaylists' => 'Ойнату тізімдерінен іздеу...',
 			'playlists.errorCreating' => 'Тізімді жасау мүмкін болмады',
@@ -5232,72 +5125,7 @@ extension on TranslationsKk {
 			'shaders.shaderImportFailed' => 'Шейдерді импорттау мүмкін болмады',
 			'shaders.deleteShader' => 'Шейдерді өшіру',
 			'shaders.deleteShaderConfirm' => ({required Object name}) => '"${name}" өшірілсін бе?',
-			'companionRemote.title' => 'Көмекші пульт',
-			'companionRemote.connectedTo' => ({required Object name}) => '${name} құрылғысына қосылды',
-			'companionRemote.unknownDevice' => 'Белгісіз құрылғы',
-			'companionRemote.session.startingServer' => 'Пульт сервері іске қосылуда...',
-			'companionRemote.session.hostAddress' => 'Хост мекенжайы',
-			'companionRemote.session.connected' => 'Қосылды',
-			'companionRemote.session.serverRunning' => 'Сервер белсенді',
-			'companionRemote.session.serverStopped' => 'Сервер тоқтатылды',
-			'companionRemote.session.serverRunningDescription' => 'Желідегі мобильді құрылғылар қосыла алады',
-			'companionRemote.session.serverStoppedDescription' => 'Қосылуға рұқсат беру үшін серверді іске қосыңыз',
-			'companionRemote.session.usePhoneToControl' => 'Осы қолданбаны басқару үшін телефоныңызды пайдаланыңыз',
-			'companionRemote.session.startServer' => 'Серверді іске қосу',
-			'companionRemote.session.stopServer' => 'Серверді тоқтату',
-			'companionRemote.session.minimize' => 'Жию',
-			'companionRemote.session.manualAddressHint' => 'Қолмен қосылу мекенжайы:',
-			'companionRemote.pairing.discoveryDescription' => 'Бірдей Plex тіркелгісіндегі Plezy құрылғылары мұнда көрінеді',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Қосылуда...',
-			'companionRemote.pairing.searchingForDevices' => 'Құрылғылар ізделуде...',
-			'companionRemote.pairing.noDevicesFound' => 'Желіде құрылғылар табылмады',
-			'companionRemote.pairing.noDevicesHint' => 'ПК-де Plezy-ді ашып, бір Wi-Fi-ға қосылыңыз',
-			'companionRemote.pairing.availableDevices' => 'Қолжетімді құрылғылар',
-			'companionRemote.pairing.manualConnection' => 'Қолмен қосылу',
-			'companionRemote.pairing.cryptoInitFailed' => 'Қауіпсіз қосылым қатесі. Алдымен Plex-ке кіріңіз.',
-			'companionRemote.pairing.validationHostRequired' => 'Хост мекенжайын енгізіңіз',
-			'companionRemote.pairing.validationHostFormat' => 'Формат IP:порт түрінде болуы керек',
-			'companionRemote.pairing.connectionTimedOut' => 'Қосылу уақыты өтті. Екі құрылғыда да бір желіні пайдаланыңыз.',
-			'companionRemote.pairing.sessionNotFound' => 'Құрылғы табылмады.',
-			'companionRemote.pairing.authFailed' => 'Аутентификация қатесі.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Қосылу мүмкін болмады: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Пульт сеансынан ажырайсыз ба?',
-			'companionRemote.remote.reconnecting' => 'Қайта қосылуда...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Әрекет ${current} / 5',
-			'companionRemote.remote.retryNow' => 'Қазір қайталау',
-			'companionRemote.remote.tabRemote' => 'Пульт',
-			'companionRemote.remote.tabPlay' => 'Ойнату',
-			'companionRemote.remote.tabMore' => 'Тағы',
-			'companionRemote.remote.menu' => 'Мәзір',
-			'companionRemote.remote.tabNavigation' => 'Навигация',
-			'companionRemote.remote.tabDiscover' => 'Шолу',
-			'companionRemote.remote.tabLibraries' => 'Кітапханалар',
-			'companionRemote.remote.tabSearch' => 'Іздеу',
-			'companionRemote.remote.tabDownloads' => 'Жүктеулер',
-			'companionRemote.remote.tabSettings' => 'Баптаулар',
-			'companionRemote.remote.previous' => 'Алдыңғы',
-			'companionRemote.remote.playPause' => 'Ойнату/Кідірту',
 			'companionRemote.remote.next' => 'Келесі',
-			'companionRemote.remote.seekBack' => 'Артқа айналдыру',
-			'companionRemote.remote.stop' => 'Тоқтату',
-			'companionRemote.remote.seekForward' => 'Алға айналдыру',
-			'companionRemote.remote.volume' => 'Дыбыс',
-			'companionRemote.remote.volumeDown' => 'Азайту',
-			'companionRemote.remote.volumeUp' => 'Көбейту',
-			'companionRemote.remote.fullscreen' => 'Толық экран',
-			'companionRemote.remote.subtitles' => 'Субтитрлер',
-			'companionRemote.remote.audio' => 'Дыбыс',
-			'companionRemote.remote.searchHint' => 'ПК-де іздеу...',
-			'companionRemote.errors.noNetworkInterface' => 'Желілік интерфейс табылмады',
-			'companionRemote.errors.authenticationFailed' => 'Аутентификация қатесі',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Серверді іске қосу қатесі: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Пәрменді жіберу қатесі: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Қосылу уақыты өтті',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Ешбір мекенжайға қосылу мүмкін болмады',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '${attempts} әрекеттен кейін байланыс үзілді',
-			'companionRemote.errors.connectionLost' => 'Байланыс үзілді',
-			'companionRemote.closedBeforeAuth' => 'Аутентификациядан бұрын байланыс жабылды',
 			'videoSettings.playbackSpeed' => 'Ойнату жылдамдығы',
 			'videoSettings.normalSpeed' => 'Қалыпты',
 			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Белсенді (${duration})',
@@ -5412,8 +5240,6 @@ extension on TranslationsKk {
 			'metadataEdit.selectBackground' => 'Фонды таңдау',
 			'metadataEdit.selectLogo' => 'Логотипті таңдау',
 			'metadataEdit.selectSquareArt' => 'Шаршы суретті таңдау',
-			_ => null,
-		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URL арқылы',
 			'metadataEdit.uploadFile' => 'Файлды жүктеу',
 			'metadataEdit.enterImageUrl' => 'Сурет URL-ін енгізіңіз',
@@ -5485,6 +5311,8 @@ extension on TranslationsKk {
 			'serverTasks.noTasks' => 'Орындалып жатқан тапсырмалар жоқ',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Қосылды',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '@${username} ретінде қосылды',
 			'trakt.disconnectConfirm' => 'Trakt ажыратылсын ба?',
 			'trakt.disconnectConfirmBody' => 'Plezy Trakt-қа деректер жіберуді тоқтатады.',
