@@ -2,8 +2,11 @@ name: Apple app builds
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    tags: ['**']
+
+concurrency:
+  group: apple-release-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -183,3 +186,43 @@ jobs:
           path: artifacts/plezy-macos.dmg
           if-no-files-found: error
           retention-days: 14
+
+  release:
+    name: Publish tagged release
+    needs: [build, build-macos]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download app packages
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          pattern: plezy-*
+          path: release-assets
+          merge-multiple: true
+          skip-decompress: true
+      - name: Publish release with app downloads
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          assets=(
+            release-assets/plezy-ios-unsigned.ipa
+            release-assets/plezy-tvos-unsigned.ipa
+            release-assets/plezy-macos.dmg
+          )
+          for asset in "${assets[@]}"; do
+            if [[ ! -s "$asset" ]]; then
+              echo "::error::Missing release package: $asset"
+              exit 1
+            fi
+          done
+          if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" --verify-tag --draft \
+              --title "$RELEASE_TAG" --generate-notes
+          fi
+          gh release upload "$RELEASE_TAG" "${assets[@]}" --clobber
+          gh release edit "$RELEASE_TAG" --draft=false
