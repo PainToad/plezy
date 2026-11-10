@@ -356,8 +356,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # The iOS audio-flush contract differs on arm64; keep that coverage.
           - platform: iOS
-            runner: macos-26-intel
+            runner: macos-26
             project_directory: ios
             workspace: ios/Runner.xcworkspace
             simulator_runtime: iOS
@@ -372,7 +373,7 @@ jobs:
             static_destination: platform=macOS
           # The tvOS Flutter simulator engine contains only arm64.
           - platform: tvOS
-            runner: macos-15
+            runner: macos-26
             project_directory: tvos
             workspace: tvos/Runner.xcworkspace
             simulator_runtime: tvOS

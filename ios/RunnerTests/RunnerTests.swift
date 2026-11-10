@@ -67,12 +67,14 @@ final class RecordingLifecycleDelegate: MpvPlayerDelegate {
 final class EventOrderRecorder: MpvPlayerDelegate {
   private(set) var events: [(name: String, data: [String: Any]?)] = []
   var onEndFile: (() -> Void)?
+  var onPlaybackRestart: (() -> Void)?
 
   func onPropertyChange(name: String, value: Any?, sourceId: Int64?) {}
 
   func onEvent(name: String, data: [String: Any]?) {
     events.append((name, data))
     if name == "end-file" { onEndFile?() }
+    if name == "playback-restart" { onPlaybackRestart?() }
   }
 }
 
@@ -277,7 +279,7 @@ final class MpvPlayerContractTests: XCTestCase {
   //
   // Unflushed, mpv's audio clock drops by that queue the moment the write
   // lands, about 3 s on the iOS 26.5 simulator, and playback stays about 4 s
-  // behind. Each test checks the position right after the write, then the
+  // behind. Each test checks the position after the flush seek finishes, then the
   // rate once output has restarted. One wall-clock span measured from before
   // the restart kept failing CI even at 1.5 s: it also carries the restart
   // itself, and the paused flush reads 0.5 s ahead until playback resumes.
@@ -290,7 +292,7 @@ final class MpvPlayerContractTests: XCTestCase {
     XCTAssertSuccess(awaitProperty(core, name: "pause", value: "yes"))
     pump(0.5)
     let pausedAt = try timePos(core)
-    XCTAssertSuccess(awaitProperty(core, name: "speed", value: "2"))
+    setDoubleSpeedAndAwaitFlush(core)
     XCTAssertEqual(try timePos(core), pausedAt, accuracy: speedWriteJumpTolerance)
     pump(0.5)
     XCTAssertSuccess(awaitProperty(core, name: "pause", value: "no"))
@@ -302,7 +304,7 @@ final class MpvPlayerContractTests: XCTestCase {
     defer { stopSilentPlayback(core, file: file) }
 
     let changedFrom = try timePos(core)
-    XCTAssertSuccess(awaitProperty(core, name: "speed", value: "2"))
+    setDoubleSpeedAndAwaitFlush(core)
     XCTAssertEqual(try timePos(core), changedFrom, accuracy: speedWriteJumpTolerance)
     try assertPlaysAtDoubleSpeed(core)
   }
@@ -852,6 +854,23 @@ final class MpvPlayerContractTests: XCTestCase {
     core.dispose()
     core.queue.sync {}
     try? FileManager.default.removeItem(at: file)
+  }
+
+  /// A seek command reply acknowledges the request; playback-restart marks
+  /// the completed seek, including while paused. Reading time-pos between
+  /// those events can still expose the old audio queue at the new speed.
+  private func setDoubleSpeedAndAwaitFlush(_ core: MpvPlayerCoreBase) {
+    let restarted = expectation(description: "speed-change audio flush finished")
+    let recorder = EventOrderRecorder()
+    recorder.onPlaybackRestart = { [weak recorder] in
+      recorder?.onPlaybackRestart = nil
+      restarted.fulfill()
+    }
+    core.delegate = recorder
+    defer { core.delegate = nil }
+
+    XCTAssertSuccess(awaitProperty(core, name: "speed", value: "2"))
+    wait(for: [restarted], timeout: 3)
   }
 
   /// Measures from a second after the caller's write or resume, once output
