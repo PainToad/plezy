@@ -722,17 +722,16 @@ void main() {
     TvDetectionService.setForceTVSync(true);
     expect(PlatformDetector.isTV(), isTrue);
 
-    // Establish a pointer outside the rail before mounting the hover region.
-    final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
-    addTearDown(gesture.removePointer);
-    await gesture.addPointer(location: const Offset(799, 599));
-
     await _pumpBasicRail(tester);
 
     final rail = find.descendant(of: find.byType(SideNavigationRail), matching: find.byType(AnimatedContainer)).first;
     expect(tester.getSize(rail).width, SideNavigationRailState.tvCollapsedWidth);
     expect(_railSurfaceOpacity(tester).opacity, 0.0);
 
+    final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    addTearDown(gesture.removePointer);
+    await gesture.addPointer(location: const Offset(799, 599));
+    await tester.pump();
     await gesture.moveTo(tester.getCenter(rail));
     await tester.pumpAndSettle();
 
@@ -740,6 +739,9 @@ void main() {
     expect(_railSurfaceOpacity(tester).opacity, 1.0);
 
     await gesture.moveTo(tester.getBottomRight(rail) + const Offset(100, -10));
+    // Leaving starts a 150 ms debounce timer; it does not schedule a frame.
+    // pumpAndSettle alone can therefore return before collapse begins.
+    await tester.pump(const Duration(milliseconds: 150));
     await tester.pumpAndSettle();
 
     expect(tester.getSize(rail).width, SideNavigationRailState.tvCollapsedWidth);
