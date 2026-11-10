@@ -10,7 +10,6 @@ import '../focus/key_event_utils.dart';
 import '../media/ids.dart';
 import '../media/media_server_client.dart';
 import '../profiles/active_profile_provider.dart';
-import '../profiles/plex_home_service.dart';
 import '../profiles/profile_connection_registry.dart';
 import '../providers/catalog_sources_provider.dart';
 import '../providers/discover_provider.dart';
