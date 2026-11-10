@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +43,13 @@ class GeneralSettingsScreen extends StatelessWidget {
                 title: t.settings.requireProfileSelectionOnOpen,
                 subtitle: t.settings.requireProfileSelectionOnOpenDescription,
               ),
-            _interfaceModeSelector(),
+            if (Platform.isAndroid || PlatformDetector.isDesktopOS())
+              SettingSwitchTile(
+                pref: SettingsService.forceTvMode,
+                icon: Symbols.tv_rounded,
+                title: t.settings.forceTvMode,
+                subtitle: t.settings.forceTvModeDescription,
+              ),
           ],
         ),
 
@@ -58,29 +66,6 @@ class GeneralSettingsScreen extends StatelessWidget {
             ],
           ),
         const SizedBox(height: 24),
-      ],
-    );
-  }
-
-  Widget _interfaceModeSelector() {
-    // Hardware detection ignores the saved layout override, so handhelds keep
-    // this selector after entering TV mode and TVs cannot opt out of it.
-    if (PlatformDetector.isTVDevice()) {
-      return const FocusableListTile(
-        leading: AppIcon(Symbols.tv_rounded, fill: 1),
-        title: Text('Interface mode'),
-        subtitle: Text('TV (required on this device)'),
-        enabled: false,
-      );
-    }
-    return SettingSelectionTile<bool>(
-      pref: SettingsService.forceTvMode,
-      icon: Symbols.tv_rounded,
-      title: 'Interface mode',
-      subtitleBuilder: (tv) => tv ? 'TV' : 'Automatic',
-      options: const [
-        DialogOption(value: false, title: 'Automatic', subtitle: 'Use the standard layout for this device'),
-        DialogOption(value: true, title: 'TV', subtitle: 'Use the TV layout, with touch controls available'),
       ],
     );
   }

@@ -144,9 +144,9 @@ class _InputModeTrackerState extends State<InputModeTracker> {
 
   @override
   Widget build(BuildContext context) {
-    // Hardware TVs keep keyboard mode across synthetic pointer events. Phones
-    // and tablets using the TV layout still switch to pointer mode on touch.
-    if (PlatformDetector.isTVDevice() && !PlatformDetector.isDesktopOS()) {
+    // Non-desktop TVs keep keyboard mode across synthetic pointer events, but
+    // their controls remain pointer-reachable for engine-generated taps.
+    if (PlatformDetector.isTV() && !PlatformDetector.isDesktopOS()) {
       return _InputModeProvider(mode: _mode, child: widget.child);
     }
 
