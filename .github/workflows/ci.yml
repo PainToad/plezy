@@ -474,9 +474,19 @@ jobs:
             -scheme Runner \
             -configuration Debug \
             -destination "$APPLE_TEST_DESTINATION" \
+            -parallel-testing-enabled NO \
+            -resultBundlePath "$RUNNER_TEMP/apple-native-${{ matrix.platform }}.xcresult" \
             -disableAutomaticPackageResolution \
             CODE_SIGNING_ALLOWED=NO \
             COMPILER_INDEX_STORE_ENABLE=NO
+
+      - name: Report Apple test failures
+        if: failure()
+        run: |
+          result="$RUNNER_TEMP/apple-native-${{ matrix.platform }}.xcresult"
+          if [ -d "$result" ]; then
+            xcrun xcresulttool get test-results summary --path "$result"
+          fi
 
   windows-native-test:
     name: Windows native reliability (${{ matrix.arch }})
