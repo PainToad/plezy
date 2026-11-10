@@ -6,6 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:plezy/focus/focusable_button.dart';
+import 'package:plezy/focus/dpad_navigator.dart';
+import 'package:plezy/focus/input_mode_tracker.dart';
 import 'package:plezy/i18n/strings.g.dart';
 import 'package:plezy/media/ids.dart';
 import 'package:plezy/media/media_backend.dart';
@@ -41,6 +43,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
+    SelectKeyUpSuppressor.clearSuppression();
     resetSharedPreferencesForTest();
     SettingsService.resetForTesting();
     await SettingsService.getInstance();
@@ -48,6 +51,7 @@ void main() {
   });
 
   tearDown(() {
+    SelectKeyUpSuppressor.clearSuppression();
     TvDetectionService.debugSetAppleTVOverride(null);
   });
 
@@ -68,6 +72,19 @@ void main() {
         expect(find.widgetWithText(FocusableFilterChip, t.libraries.groupings.albums), findsOneWidget);
         final storage = await StorageService.getInstance();
         expect(storage.getLibraryGrouping(_musicLibrary.globalKey), 'albums');
+
+        // Switching from touch to a remote must work on the first keypress.
+        InputModeTracker.reportNonPointerInput();
+        final albumChip = tester.widget<FocusableFilterChip>(
+          find.widgetWithText(FocusableFilterChip, t.libraries.groupings.albums),
+        );
+        albumChip.focusNode!.requestFocus();
+        await tester.pump();
+        await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+        await tester.pumpAndSettle();
+        expect(find.text(t.libraries.groupings.artists), findsOneWidget);
+        expect(find.text(t.libraries.groupings.tracks), findsOneWidget);
+        await tester.pumpWidget(const SizedBox.shrink());
       });
     }
   }

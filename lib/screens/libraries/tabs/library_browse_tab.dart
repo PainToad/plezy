@@ -1091,7 +1091,11 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
       ).then(_handleGroupingSelection);
       return;
     }
-    SelectKeyUpSuppressor.suppressSelectUntilKeyUp();
+    // A touch tap has no Select key-up to release suppression. Only guard the
+    // keypress that opened the sheet when navigating by keyboard or remote.
+    if (InputModeTracker.isKeyboardMode(context, listen: false)) {
+      SelectKeyUpSuppressor.suppressSelectUntilKeyUp();
+    }
     final controller = OverlaySheetController.of(context);
     controller
         .show<String>(builder: (_) => _buildGroupingBottomSheet(onSelected: (value) => controller.close(value)))

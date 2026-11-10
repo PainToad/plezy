@@ -23,6 +23,28 @@ env:
   FLUTTER_VERSION: "3.47.1"
 
 jobs:
+  library-regressions:
+    name: Library browse regression tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+          pub-cache: false
+      - run: flutter pub get --enforce-lockfile --no-example
+      - name: Verify library browsing and music grouping
+        run: >-
+          flutter test test/screens/libraries/library_browse_tab_test.dart
+          test/screens/libraries/library_browse_music_test.dart
+
   analyze:
     name: Code Analysis
     runs-on: ubuntu-latest
