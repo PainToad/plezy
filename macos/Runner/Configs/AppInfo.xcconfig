@@ -1,6 +1,9 @@
 
 PRODUCT_NAME = Plex
 
+// Keep the Swift module identity separate from the app's display name.
+PRODUCT_MODULE_NAME = Plezy
+
 PRODUCT_BUNDLE_IDENTIFIER = com.edde746.plezy
 
 PRODUCT_COPYRIGHT = Copyright © 2025 edde746
