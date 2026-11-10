@@ -396,10 +396,6 @@
     "services": "Dienste",
     "servicesDescription": "Trakt, MyAnimeList, Seerr und mehr verbinden",
     "manageLibrariesDescription": "Mediatheken neu anordnen und ausblenden",
-    "companionRemoteServer": "Companion-Fernbedienungsserver",
-    "companionRemoteServerDescription": "Mobilgeräten in deinem Netzwerk erlauben, diese App zu steuern",
-    "companionRemoteServerStartFailed": "Companion-Fernbedienungsserver konnte nicht gestartet werden",
-    "companionRemoteServerStopFailed": "Companion-Fernbedienungsserver konnte nicht gestoppt werden",
     "autoPip": "Automatisches Bild-in-Bild",
     "autoPipDescription": "Beim Verlassen der App während der Wiedergabe automatisch Bild-in-Bild starten",
     "matchContentFrameRate": "Inhalts-Bildrate anpassen",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Entdecken",
     "noContentAvailable": "Kein Inhalt verfügbar",
     "addMediaToLibraries": "Medien zur Mediathek hinzufügen",
     "continueWatching": "Weiterschauen",
@@ -1289,7 +1284,6 @@
     "folders": "Ordner",
     "tabs": {
       "recommended": "Empfohlen",
-      "browse": "Durchsuchen",
       "collections": "Sammlungen",
       "genres": "",
       "playlists": "Wiedergabelisten"

@@ -396,10 +396,6 @@
     "services": "Services",
     "servicesDescription": "Connect Trakt, MyAnimeList, Seerr, and more",
     "manageLibrariesDescription": "Reorder and hide libraries",
-    "companionRemoteServer": "Companion Remote Server",
-    "companionRemoteServerDescription": "Allow mobile devices on your network to control this app",
-    "companionRemoteServerStartFailed": "Couldn't start the companion server",
-    "companionRemoteServerStopFailed": "Couldn't stop the companion server",
     "autoPip": "Auto Picture-in-Picture",
     "autoPipDescription": "Automatically enter picture-in-picture when you leave the app during playback",
     "matchContentFrameRate": "Match Content Frame Rate",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Discover",
     "noContentAvailable": "No content available",
     "addMediaToLibraries": "Add some media to your libraries",
     "continueWatching": "Continue Watching",
@@ -1289,7 +1284,6 @@
     "folders": "folders",
     "tabs": {
       "recommended": "Recommended",
-      "browse": "Browse",
       "collections": "Collections",
       "genres": "Genres",
       "playlists": "Playlists"

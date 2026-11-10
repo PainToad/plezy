@@ -490,10 +490,6 @@ class _Translations$settings$zh_Hant extends Translations$settings$zh {
 	@override String get services => '外部服務';
 	@override String get servicesDescription => '連結 Trakt、MyAnimeList、Seerr 等服務';
 	@override String get manageLibrariesDescription => '重新排序與隱藏媒體庫';
-	@override String get companionRemoteServer => '隨身遙控器伺服器';
-	@override String get companionRemoteServerDescription => '允許區域網路中的行動裝置控制此應用程式';
-	@override String get companionRemoteServerStartFailed => '無法啟動隨身遙控器伺服器';
-	@override String get companionRemoteServerStopFailed => '無法停止隨身遙控器伺服器';
 	@override String get autoPip => '自動進入子母畫面';
 	@override String get autoPipDescription => '播放影片時離開應用程式將自動進入子母畫面模式';
 	@override String get matchContentFrameRate => '符合影片影格率';
@@ -1312,7 +1308,6 @@ class _Translations$discover$zh_Hant extends Translations$discover$zh {
 	final TranslationsZhHant _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '發現';
 	@override String get noContentAvailable => '沒有可用內容';
 	@override String get addMediaToLibraries => '請向您的媒體庫新增一些媒體內容';
 	@override String get continueWatching => '繼續觀看';
@@ -2693,7 +2688,6 @@ class _Translations$libraries$tabs$zh_Hant extends Translations$libraries$tabs$z
 
 	// Translations
 	@override String get recommended => '推薦';
-	@override String get browse => '瀏覽';
 	@override String get collections => '收藏集';
 	@override String get playlists => '播放清單';
 }
@@ -3727,10 +3721,6 @@ extension on TranslationsZhHant {
 			'settings.services' => '外部服務',
 			'settings.servicesDescription' => '連結 Trakt、MyAnimeList、Seerr 等服務',
 			'settings.manageLibrariesDescription' => '重新排序與隱藏媒體庫',
-			'settings.companionRemoteServer' => '隨身遙控器伺服器',
-			'settings.companionRemoteServerDescription' => '允許區域網路中的行動裝置控制此應用程式',
-			'settings.companionRemoteServerStartFailed' => '無法啟動隨身遙控器伺服器',
-			'settings.companionRemoteServerStopFailed' => '無法停止隨身遙控器伺服器',
 			'settings.autoPip' => '自動進入子母畫面',
 			'settings.autoPipDescription' => '播放影片時離開應用程式將自動進入子母畫面模式',
 			'settings.matchContentFrameRate' => '符合影片影格率',
@@ -3865,12 +3855,12 @@ extension on TranslationsZhHant {
 			'themeEditor.slots.outline' => '外框',
 			'themeEditor.slots.text' => '文字',
 			'themeEditor.slots.textMuted' => '次要文字',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => '強調色',
 			'themeEditor.opacity' => '不透明度',
 			'themeEditor.hexHint' => '#RRGGBB 或 #AARRGGBB',
 			'themeEditor.fromOtherThemes' => '來自其他主題',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} ${color}',
 			'themeEditor.contrast.textOnBg' => '背景上的文字',
 			'themeEditor.contrast.textOnSurface' => '面板上的文字',
@@ -4379,12 +4369,12 @@ extension on TranslationsZhHant {
 			'profiles.pinsDontMatch' => 'PIN 碼不符合',
 			'profiles.tokenIdentityMismatch' => 'Plex 使用者設定檔權杖解析到非預期的伺服器',
 			'connections.sectionTitle' => '連線',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => '新增連線',
 			'connections.addConnectionSubtitleNoProfile' => '使用 Plex 登入或連線至 Jellyfin 或 Emby 伺服器',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '新增至 ${displayName}：Plex、Jellyfin、Emby 或其他設定檔連線',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} 的工作階段已過期',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} 個伺服器的工作階段已過期',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} 拒絕此帳戶存取',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} 台伺服器拒絕此帳戶存取',
@@ -4448,7 +4438,6 @@ extension on TranslationsZhHant {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => '僅使用者',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => '僅影評人',
 			'accountPreferences.mediaReviewsOptions.nobody' => '隱藏',
-			'discover.title' => '發現',
 			'discover.noContentAvailable' => '沒有可用內容',
 			'discover.addMediaToLibraries' => '請向您的媒體庫新增一些媒體內容',
 			'discover.continueWatching' => '繼續觀看',
@@ -4539,7 +4528,6 @@ extension on TranslationsZhHant {
 			'libraries.noFoldersFound' => '找不到資料夾',
 			'libraries.folders' => '資料夾',
 			'libraries.tabs.recommended' => '推薦',
-			'libraries.tabs.browse' => '瀏覽',
 			'libraries.tabs.collections' => '收藏集',
 			'libraries.tabs.playlists' => '播放清單',
 			'libraries.groupings.title' => '分組',
@@ -4861,8 +4849,6 @@ extension on TranslationsZhHant {
 			'liveTv.recordSettings.anyTime' => '在任何時間錄影',
 			'liveTv.recordSettings.skipInLibrary' => '略過媒體庫中已有的劇集',
 			'liveTv.recordSettings.keepUpTo' => '要保留的劇集數',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 表示保留所有劇集',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} 傳回了無效的直播電視播放資料',
 			'liveTv.failedToStartChannel' => '無法啟動直播頻道',
@@ -4901,6 +4887,8 @@ extension on TranslationsZhHant {
 			'playlists.itemCount' => ({required Object count}) => '${count} 個項目',
 			'playlists.oneItem' => '1 個項目',
 			'playlists.emptyPlaylist' => '此播放清單為空',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => '刪除播放清單？',
 			'playlists.deleteMessage' => ({required Object name}) => '確定要刪除「${name}」嗎？',
 			'playlists.created' => '播放清單已建立',
@@ -5373,8 +5361,6 @@ extension on TranslationsZhHant {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek 硬體',
 			'performanceOverlay.decoderExynosHw' => 'Exynos 硬體',
 			'performanceOverlay.decoderSoftware' => '軟體',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => '硬體',
 			'performanceOverlay.tunnelingActive' => '已啟用',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted}（${failures} 個失敗）',
@@ -5415,6 +5401,8 @@ extension on TranslationsZhHant {
 			'metadataEdit.selectBackground' => '選擇背景圖',
 			'metadataEdit.selectLogo' => '選擇標誌',
 			'metadataEdit.selectSquareArt' => '選擇方形圖片',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => '自訂網址',
 			'metadataEdit.uploadFile' => '上傳檔案',
 			'metadataEdit.enterImageUrl' => '輸入圖片 URL',

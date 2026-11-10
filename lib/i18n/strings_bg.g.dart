@@ -489,10 +489,6 @@ class _Translations$settings$bg extends Translations$settings$en {
 	@override String get services => 'Услуги';
 	@override String get servicesDescription => 'Свържи Trakt, MyAnimeList, Seerr и още';
 	@override String get manageLibrariesDescription => 'Пренареждай и скривай библиотеки';
-	@override String get companionRemoteServer => 'Сървър за дистанционно управление';
-	@override String get companionRemoteServerDescription => 'Позволи на мобилни устройства във вашата мрежа да управляват това приложение';
-	@override String get companionRemoteServerStartFailed => 'Сървърът за дистанционно управление не можа да бъде стартиран';
-	@override String get companionRemoteServerStopFailed => 'Сървърът за дистанционно управление не можа да бъде спрян';
 	@override String get autoPip => 'Автоматичен режим картина в картината';
 	@override String get autoPipDescription => 'Автоматично включвай режима картина в картината при излизане от приложението по време на възпроизвеждане';
 	@override String get matchContentFrameRate => 'Напасване към кадровата честота на съдържанието';
@@ -1315,7 +1311,6 @@ class _Translations$discover$bg extends Translations$discover$en {
 	final TranslationsBg _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Открий';
 	@override String get noContentAvailable => 'Няма налично съдържание';
 	@override String get addMediaToLibraries => 'Добавете медия към библиотеките си';
 	@override String get continueWatching => 'Продължи гледането';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$bg extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Препоръчани';
-	@override String get browse => 'Преглед';
 	@override String get collections => 'Колекции';
 	@override String get playlists => 'Плейлисти';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsBg {
 			'settings.services' => 'Услуги',
 			'settings.servicesDescription' => 'Свържи Trakt, MyAnimeList, Seerr и още',
 			'settings.manageLibrariesDescription' => 'Пренареждай и скривай библиотеки',
-			'settings.companionRemoteServer' => 'Сървър за дистанционно управление',
-			'settings.companionRemoteServerDescription' => 'Позволи на мобилни устройства във вашата мрежа да управляват това приложение',
-			'settings.companionRemoteServerStartFailed' => 'Сървърът за дистанционно управление не можа да бъде стартиран',
-			'settings.companionRemoteServerStopFailed' => 'Сървърът за дистанционно управление не можа да бъде спрян',
 			'settings.autoPip' => 'Автоматичен режим картина в картината',
 			'settings.autoPipDescription' => 'Автоматично включвай режима картина в картината при излизане от приложението по време на възпроизвеждане',
 			'settings.matchContentFrameRate' => 'Напасване към кадровата честота на съдържанието',
@@ -3876,12 +3866,12 @@ extension on TranslationsBg {
 			'themeEditor.slots.outline' => 'Контур',
 			'themeEditor.slots.text' => 'Текст',
 			'themeEditor.slots.textMuted' => 'Вторичен текст',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Акцент',
 			'themeEditor.opacity' => 'Непрозрачност',
 			'themeEditor.hexHint' => '#RRGGBB или #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'От други теми',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} (${theme})',
 			'themeEditor.contrast.textOnBg' => 'Текст върху фона',
 			'themeEditor.contrast.textOnSurface' => 'Текст върху повърхността',
@@ -4390,12 +4380,12 @@ extension on TranslationsBg {
 			'profiles.pinsDontMatch' => 'PIN кодовете не съвпадат',
 			'profiles.tokenIdentityMismatch' => 'Токенът на профила в Plex съответства на неочакван сървър',
 			'connections.sectionTitle' => 'Връзки',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Добави връзка',
 			'connections.addConnectionSubtitleNoProfile' => 'Влезте с Plex или свържете Jellyfin или Emby сървър',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Добави към ${displayName}: Plex, Jellyfin, Emby или връзка от друг профил',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Сесията за ${name} е изтекла',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Сесиите за ${count} сървъра са изтекли',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} отказа достъп за този профил',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} сървъра отказаха достъп за този профил',
@@ -4459,7 +4449,6 @@ extension on TranslationsBg {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Само потребители',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Само критици',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Скрити',
-			'discover.title' => 'Открий',
 			'discover.noContentAvailable' => 'Няма налично съдържание',
 			'discover.addMediaToLibraries' => 'Добавете медия към библиотеките си',
 			'discover.continueWatching' => 'Продължи гледането',
@@ -4550,7 +4539,6 @@ extension on TranslationsBg {
 			'libraries.noFoldersFound' => 'Не са намерени папки',
 			'libraries.folders' => 'папки',
 			'libraries.tabs.recommended' => 'Препоръчани',
-			'libraries.tabs.browse' => 'Преглед',
 			'libraries.tabs.collections' => 'Колекции',
 			'libraries.tabs.playlists' => 'Плейлисти',
 			'libraries.groupings.title' => 'Групиране',
@@ -4872,8 +4860,6 @@ extension on TranslationsBg {
 			'liveTv.recordSettings.anyTime' => 'Записване по всяко време',
 			'liveTv.recordSettings.skipInLibrary' => 'Пропускане на епизоди, които вече са в библиотеката',
 			'liveTv.recordSettings.keepUpTo' => 'Епизоди за запазване',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 запазва всички епизоди',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} върна невалидни данни за възпроизвеждане на телевизия на живо',
 			'liveTv.failedToStartChannel' => 'Каналът на живо не можа да бъде пуснат',
@@ -4912,6 +4898,8 @@ extension on TranslationsBg {
 			'playlists.itemCount' => ({required Object count}) => '${count} елемента',
 			'playlists.oneItem' => '1 елемент',
 			'playlists.emptyPlaylist' => 'Този плейлист е празен',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Да се изтрие ли плейлистът?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Сигурни ли сте, че искате да изтриете "${name}"?',
 			'playlists.created' => 'Плейлистът е създаден',
@@ -5384,8 +5372,6 @@ extension on TranslationsBg {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'Софтуерен',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Хардуерен',
 			'performanceOverlay.tunnelingActive' => 'Активно',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (неуспешни: ${failures})',
@@ -5426,6 +5412,8 @@ extension on TranslationsBg {
 			'metadataEdit.selectBackground' => 'Избери фон',
 			'metadataEdit.selectLogo' => 'Избери лого',
 			'metadataEdit.selectSquareArt' => 'Избери квадратно изображение',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'От URL',
 			'metadataEdit.uploadFile' => 'Качи файл',
 			'metadataEdit.enterImageUrl' => 'Въведете URL на изображение',

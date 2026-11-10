@@ -489,10 +489,6 @@ class _Translations$settings$uz extends Translations$settings$en {
 	@override String get services => 'Xizmatlar';
 	@override String get servicesDescription => 'Trakt, MyAnimeList, Seerr va boshqalarni ulang';
 	@override String get manageLibrariesDescription => 'Kutubxonalarni tartiblash va yashirish';
-	@override String get companionRemoteServer => 'Yordamchi pult serveri';
-	@override String get companionRemoteServerDescription => 'Tarmoqdagi mobil qurilmalarga ushbu ilovani boshqarishga ruxsat berish';
-	@override String get companionRemoteServerStartFailed => 'Yordamchi pult serverini ishga tushirib bo‘lmadi';
-	@override String get companionRemoteServerStopFailed => 'Yordamchi pult serverini to‘xtatib bo‘lmadi';
 	@override String get autoPip => 'Avtomatik Rasm ichida rasm (PiP)';
 	@override String get autoPipDescription => 'Video ijro etilayotganda ilovadan chiqilganda avto-PiP rejimiga oʻtish';
 	@override String get matchContentFrameRate => 'Kadrlar chastotasini moslashtirish';
@@ -1315,7 +1311,6 @@ class _Translations$discover$uz extends Translations$discover$en {
 	final TranslationsUz _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Kashf qilish';
 	@override String get noContentAvailable => 'Kontent mavjud emas';
 	@override String get addMediaToLibraries => 'Kutubxonalaringizga media qoʻshing';
 	@override String get continueWatching => 'Tomoshani davom ettirish';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$uz extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Tavsiya etilganlar';
-	@override String get browse => 'Koʻrib chiqish';
 	@override String get collections => 'Toʻplamlar';
 	@override String get playlists => 'Ijro roʻyxatlari';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsUz {
 			'settings.services' => 'Xizmatlar',
 			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr va boshqalarni ulang',
 			'settings.manageLibrariesDescription' => 'Kutubxonalarni tartiblash va yashirish',
-			'settings.companionRemoteServer' => 'Yordamchi pult serveri',
-			'settings.companionRemoteServerDescription' => 'Tarmoqdagi mobil qurilmalarga ushbu ilovani boshqarishga ruxsat berish',
-			'settings.companionRemoteServerStartFailed' => 'Yordamchi pult serverini ishga tushirib bo‘lmadi',
-			'settings.companionRemoteServerStopFailed' => 'Yordamchi pult serverini to‘xtatib bo‘lmadi',
 			'settings.autoPip' => 'Avtomatik Rasm ichida rasm (PiP)',
 			'settings.autoPipDescription' => 'Video ijro etilayotganda ilovadan chiqilganda avto-PiP rejimiga oʻtish',
 			'settings.matchContentFrameRate' => 'Kadrlar chastotasini moslashtirish',
@@ -3876,12 +3866,12 @@ extension on TranslationsUz {
 			'themeEditor.slots.outline' => 'Kontur',
 			'themeEditor.slots.text' => 'Matn',
 			'themeEditor.slots.textMuted' => 'Ikkilamchi matn',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Urgʻu rangi',
 			'themeEditor.opacity' => 'Noshaffoflik',
 			'themeEditor.hexHint' => '#RRGGBB yoki #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Boshqa mavzulardan',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} — ${color}',
 			'themeEditor.contrast.textOnBg' => 'Fondagi matn',
 			'themeEditor.contrast.textOnSurface' => 'Sirtdagi matn',
@@ -4390,12 +4380,12 @@ extension on TranslationsUz {
 			'profiles.pinsDontMatch' => 'PIN kodlar mos kelmadi',
 			'profiles.tokenIdentityMismatch' => 'Plex profil tokeni kutilmagan serverga tegishli boʻlib chiqdi',
 			'connections.sectionTitle' => 'Ulanishlar',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Ulanish qoʻshish',
 			'connections.addConnectionSubtitleNoProfile' => 'Plex orqali kiring yoki Jellyfin yoki Emby serveriga ulaning',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName} profiliga qoʻshish: Plex, Jellyfin, Emby yoki boshqa ulanish',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} uchun seans vaqti tugadi',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} server uchun seans vaqti tugadi',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} ushbu hisobga kirishni rad etdi',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} ta server ushbu hisobga kirishni rad etdi',
@@ -4459,7 +4449,6 @@ extension on TranslationsUz {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Faqat foydalanuvchilar',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Faqat tanqidchilar',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Yashirilgan',
-			'discover.title' => 'Kashf qilish',
 			'discover.noContentAvailable' => 'Kontent mavjud emas',
 			'discover.addMediaToLibraries' => 'Kutubxonalaringizga media qoʻshing',
 			'discover.continueWatching' => 'Tomoshani davom ettirish',
@@ -4550,7 +4539,6 @@ extension on TranslationsUz {
 			'libraries.noFoldersFound' => 'Jildlar topilmadi',
 			'libraries.folders' => 'jildlar',
 			'libraries.tabs.recommended' => 'Tavsiya etilganlar',
-			'libraries.tabs.browse' => 'Koʻrib chiqish',
 			'libraries.tabs.collections' => 'Toʻplamlar',
 			'libraries.tabs.playlists' => 'Ijro roʻyxatlari',
 			'libraries.groupings.title' => 'Guruhlash',
@@ -4872,8 +4860,6 @@ extension on TranslationsUz {
 			'liveTv.recordSettings.anyTime' => 'Istalgan vaqtda yozib olish',
 			'liveTv.recordSettings.skipInLibrary' => 'Kutubxonada mavjud epizodlarni oʻtkazib yuborish',
 			'liveTv.recordSettings.keepUpTo' => 'Saqlanadigan epizodlar',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 barcha epizodlarni saqlaydi',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} Jonli TV ijrosi uchun notoʻgʻri maʼlumot qaytardi',
 			'liveTv.failedToStartChannel' => 'Jonli kanalni boshlab boʻlmadi',
@@ -4912,6 +4898,8 @@ extension on TranslationsUz {
 			'playlists.itemCount' => ({required Object count}) => '${count} element',
 			'playlists.oneItem' => '1 element',
 			'playlists.emptyPlaylist' => 'Ushbu roʻyxat boʻsh',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Ijro roʻyxati oʻchirilsinmi?',
 			'playlists.deleteMessage' => ({required Object name}) => '"${name}" oʻchirilsinmi?',
 			'playlists.created' => 'Ijro roʻyxati yaratildi',
@@ -5384,8 +5372,6 @@ extension on TranslationsUz {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'Dasturiy',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Apparat',
 			'performanceOverlay.tunnelingActive' => 'Faol',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} ta muvaffaqiyatsiz)',
@@ -5426,6 +5412,8 @@ extension on TranslationsUz {
 			'metadataEdit.selectBackground' => 'Fonni tanlash',
 			'metadataEdit.selectLogo' => 'Logotipni tanlash',
 			'metadataEdit.selectSquareArt' => 'Kvadrat rasm tanlash',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URL orqali',
 			'metadataEdit.uploadFile' => 'Fayl yuklash',
 			'metadataEdit.enterImageUrl' => 'Rasm URL-manzilini kiriting',

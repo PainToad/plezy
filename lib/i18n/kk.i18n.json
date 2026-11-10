@@ -396,10 +396,6 @@
     "services": "Қызметтер",
     "servicesDescription": "Trakt, MyAnimeList, Seerr және т.б. қосыңыз",
     "manageLibrariesDescription": "Кітапханаларды қайта реттеу және жасыру",
-    "companionRemoteServer": "Көмекші пульт сервері",
-    "companionRemoteServerDescription": "Желідегі мобильді құрылғыларға осы қолданбаны басқаруға рұқсат беру",
-    "companionRemoteServerStartFailed": "Көмекші серверді іске қосу мүмкін болмады",
-    "companionRemoteServerStopFailed": "Көмекші серверді тоқтату мүмкін болмады",
     "autoPip": "Автоматты Суреттегі сурет (PiP)",
     "autoPipDescription": "Видео ойнап жатқанда қолданбадан шыққанда авто-PiP режиміне өту",
     "matchContentFrameRate": "Кадр жиілігін сәйкестендіру",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Шолу",
     "noContentAvailable": "Мазмұн қолжетімсіз",
     "addMediaToLibraries": "Кітапханаларыңызға медиа қосыңыз",
     "continueWatching": "Көруді жалғастыру",
@@ -1289,7 +1284,6 @@
     "folders": "қапшықтар",
     "tabs": {
       "recommended": "Ұсынылатындар",
-      "browse": "Шолу",
       "collections": "Топтамалар",
       "genres": "",
       "playlists": "Ойнату тізімдері"

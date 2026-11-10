@@ -489,10 +489,6 @@ class _Translations$settings$tr extends Translations$settings$en {
 	@override String get services => 'Servisler';
 	@override String get servicesDescription => 'Trakt, MyAnimeList, Seerr ve daha fazlasını bağlayın';
 	@override String get manageLibrariesDescription => 'Kitaplıkları yeniden sıralayın ve gizleyin';
-	@override String get companionRemoteServer => 'Yardımcı Uzaktan Kumanda Sunucusu';
-	@override String get companionRemoteServerDescription => 'Ağınızdaki mobil cihazların bu uygulamayı kontrol etmesine izin verin';
-	@override String get companionRemoteServerStartFailed => 'Yardımcı sunucu başlatılamadı';
-	@override String get companionRemoteServerStopFailed => 'Yardımcı sunucu durdurulamadı';
 	@override String get autoPip => 'Otomatik Pencere İçinde Pencere (PiP)';
 	@override String get autoPipDescription => 'Oynatma sırasında uygulamadan çıktığınızda otomatik olarak pencere içinde pencere moduna geç';
 	@override String get matchContentFrameRate => 'İçerik Kare Hızını Eşitle';
@@ -1315,7 +1311,6 @@ class _Translations$discover$tr extends Translations$discover$en {
 	final TranslationsTr _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Keşfet';
 	@override String get noContentAvailable => 'İçerik bulunmuyor';
 	@override String get addMediaToLibraries => 'Kitaplıklarınıza biraz medya ekleyin';
 	@override String get continueWatching => 'İzlemeye Devam Et';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$tr extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Önerilenler';
-	@override String get browse => 'Göz At';
 	@override String get collections => 'Koleksiyonlar';
 	@override String get playlists => 'Oynatma Listeleri';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsTr {
 			'settings.services' => 'Servisler',
 			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr ve daha fazlasını bağlayın',
 			'settings.manageLibrariesDescription' => 'Kitaplıkları yeniden sıralayın ve gizleyin',
-			'settings.companionRemoteServer' => 'Yardımcı Uzaktan Kumanda Sunucusu',
-			'settings.companionRemoteServerDescription' => 'Ağınızdaki mobil cihazların bu uygulamayı kontrol etmesine izin verin',
-			'settings.companionRemoteServerStartFailed' => 'Yardımcı sunucu başlatılamadı',
-			'settings.companionRemoteServerStopFailed' => 'Yardımcı sunucu durdurulamadı',
 			'settings.autoPip' => 'Otomatik Pencere İçinde Pencere (PiP)',
 			'settings.autoPipDescription' => 'Oynatma sırasında uygulamadan çıktığınızda otomatik olarak pencere içinde pencere moduna geç',
 			'settings.matchContentFrameRate' => 'İçerik Kare Hızını Eşitle',
@@ -3876,12 +3866,12 @@ extension on TranslationsTr {
 			'themeEditor.slots.outline' => 'Kenarlık',
 			'themeEditor.slots.text' => 'Metin',
 			'themeEditor.slots.textMuted' => 'İkincil metin',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Vurgu',
 			'themeEditor.opacity' => 'Opaklık',
 			'themeEditor.hexHint' => '#RRGGBB veya #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Diğer temalardan',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} – ${color}',
 			'themeEditor.contrast.textOnBg' => 'Arka plan üzerinde metin',
 			'themeEditor.contrast.textOnSurface' => 'Yüzey üzerinde metin',
@@ -4390,12 +4380,12 @@ extension on TranslationsTr {
 			'profiles.pinsDontMatch' => 'PIN\'ler eşleşmiyor',
 			'profiles.tokenIdentityMismatch' => 'Plex profil belirtecinin beklenmeyen bir sunucuya ait olduğu belirlendi',
 			'connections.sectionTitle' => 'Bağlantılar',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Bağlantı ekle',
 			'connections.addConnectionSubtitleNoProfile' => 'Plex ile giriş yapın veya bir Jellyfin ya da Emby sunucusu bağlayın',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName} profiline ekle: Plex, Jellyfin, Emby veya başka bir profil bağlantısı',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} için oturum süresi doldu',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} sunucu için oturum süresi doldu',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} bu hesabın erişimini reddetti',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} sunucu bu hesabın erişimini reddetti',
@@ -4459,7 +4449,6 @@ extension on TranslationsTr {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Yalnızca kullanıcılar',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Yalnızca eleştirmenler',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Gizli',
-			'discover.title' => 'Keşfet',
 			'discover.noContentAvailable' => 'İçerik bulunmuyor',
 			'discover.addMediaToLibraries' => 'Kitaplıklarınıza biraz medya ekleyin',
 			'discover.continueWatching' => 'İzlemeye Devam Et',
@@ -4550,7 +4539,6 @@ extension on TranslationsTr {
 			'libraries.noFoldersFound' => 'Klasör bulunamadı',
 			'libraries.folders' => 'klasörler',
 			'libraries.tabs.recommended' => 'Önerilenler',
-			'libraries.tabs.browse' => 'Göz At',
 			'libraries.tabs.collections' => 'Koleksiyonlar',
 			'libraries.tabs.playlists' => 'Oynatma Listeleri',
 			'libraries.groupings.title' => 'Gruplama',
@@ -4872,8 +4860,6 @@ extension on TranslationsTr {
 			'liveTv.recordSettings.anyTime' => 'Herhangi bir saatte kaydet',
 			'liveTv.recordSettings.skipInLibrary' => 'Kitaplıkta zaten bulunan bölümleri atla',
 			'liveTv.recordSettings.keepUpTo' => 'Saklanacak bölüm sayısı',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 tüm bölümleri saklar',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} geçersiz Canlı TV oynatma verileri döndürdü',
 			'liveTv.failedToStartChannel' => 'Canlı kanal başlatılamadı',
@@ -4912,6 +4898,8 @@ extension on TranslationsTr {
 			'playlists.itemCount' => ({required Object count}) => '${count} öge',
 			'playlists.oneItem' => '1 öge',
 			'playlists.emptyPlaylist' => 'Bu oynatma listesi boş',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Oynatma Listesi Silinsin mi?',
 			'playlists.deleteMessage' => ({required Object name}) => '"${name}" listesini silmek istediğinizden emin misiniz?',
 			'playlists.created' => 'Oynatma listesi oluşturuldu',
@@ -5384,8 +5372,6 @@ extension on TranslationsTr {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek Donanım',
 			'performanceOverlay.decoderExynosHw' => 'Exynos Donanım',
 			'performanceOverlay.decoderSoftware' => 'Yazılım',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Donanım',
 			'performanceOverlay.tunnelingActive' => 'Etkin',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} başarısız)',
@@ -5426,6 +5412,8 @@ extension on TranslationsTr {
 			'metadataEdit.selectBackground' => 'Arka Plan Seç',
 			'metadataEdit.selectLogo' => 'Logo Seç',
 			'metadataEdit.selectSquareArt' => 'Kare Görsel Seç',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URL\'den',
 			'metadataEdit.uploadFile' => 'Dosya Yükle',
 			'metadataEdit.enterImageUrl' => 'Görsel URL\'si girin',

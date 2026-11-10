@@ -489,10 +489,6 @@ class _Translations$settings$ru extends Translations$settings$en {
 	@override String get services => 'Сервисы';
 	@override String get servicesDescription => 'Подключите Trakt, MyAnimeList, Seerr и другие';
 	@override String get manageLibrariesDescription => 'Изменять порядок и скрывать библиотеки';
-	@override String get companionRemoteServer => 'Сервер удалённого управления';
-	@override String get companionRemoteServerDescription => 'Разрешить мобильным устройствам в сети управлять этим приложением';
-	@override String get companionRemoteServerStartFailed => 'Не удалось запустить сервер удалённого управления';
-	@override String get companionRemoteServerStopFailed => 'Не удалось остановить сервер удалённого управления';
 	@override String get autoPip => 'Автоматический режим «картинка в картинке»';
 	@override String get autoPipDescription => 'Автоматически включать режим «картинка в картинке» при выходе из приложения во время воспроизведения';
 	@override String get matchContentFrameRate => 'Соответствие частоты кадров контента';
@@ -1323,7 +1319,6 @@ class _Translations$discover$ru extends Translations$discover$en {
 	final TranslationsRu _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Обзор';
 	@override String get noContentAvailable => 'Контент недоступен';
 	@override String get addMediaToLibraries => 'Добавьте медиафайлы в ваши библиотеки';
 	@override String get continueWatching => 'Продолжить просмотр';
@@ -2722,7 +2717,6 @@ class _Translations$libraries$tabs$ru extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Рекомендуемые';
-	@override String get browse => 'Обзор';
 	@override String get collections => 'Коллекции';
 	@override String get playlists => 'Плейлисты';
 }
@@ -3762,10 +3756,6 @@ extension on TranslationsRu {
 			'settings.services' => 'Сервисы',
 			'settings.servicesDescription' => 'Подключите Trakt, MyAnimeList, Seerr и другие',
 			'settings.manageLibrariesDescription' => 'Изменять порядок и скрывать библиотеки',
-			'settings.companionRemoteServer' => 'Сервер удалённого управления',
-			'settings.companionRemoteServerDescription' => 'Разрешить мобильным устройствам в сети управлять этим приложением',
-			'settings.companionRemoteServerStartFailed' => 'Не удалось запустить сервер удалённого управления',
-			'settings.companionRemoteServerStopFailed' => 'Не удалось остановить сервер удалённого управления',
 			'settings.autoPip' => 'Автоматический режим «картинка в картинке»',
 			'settings.autoPipDescription' => 'Автоматически включать режим «картинка в картинке» при выходе из приложения во время воспроизведения',
 			'settings.matchContentFrameRate' => 'Соответствие частоты кадров контента',
@@ -3900,12 +3890,12 @@ extension on TranslationsRu {
 			'themeEditor.slots.outline' => 'Обводка',
 			'themeEditor.slots.text' => 'Текст',
 			'themeEditor.slots.textMuted' => 'Второстепенный текст',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Акцент',
 			'themeEditor.opacity' => 'Непрозрачность',
 			'themeEditor.hexHint' => '#RRGGBB или #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Из других тем',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} темы «${theme}»',
 			'themeEditor.contrast.textOnBg' => 'Текст на фоне',
 			'themeEditor.contrast.textOnSurface' => 'Текст на поверхности',
@@ -4414,12 +4404,12 @@ extension on TranslationsRu {
 			'profiles.pinsDontMatch' => 'PIN-коды не совпадают',
 			'profiles.tokenIdentityMismatch' => 'Токен профиля Plex указал на неожиданный сервер',
 			'connections.sectionTitle' => 'Подключения',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Добавить подключение',
 			'connections.addConnectionSubtitleNoProfile' => 'Войдите через Plex или подключите сервер Jellyfin или Emby',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Добавить к ${displayName}: Plex, Jellyfin, Emby или подключение другого профиля',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Сессия истекла для ${name}',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Сессия истекла для ${count} серверов',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} отказал в доступе этой учётной записи',
 			'connections.accessDeniedMany' => ({required Object count}) => 'Доступ для этой учётной записи запрещён на ${count} серверах',
@@ -4483,7 +4473,6 @@ extension on TranslationsRu {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Только пользователи',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Только критики',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Скрыто',
-			'discover.title' => 'Обзор',
 			'discover.noContentAvailable' => 'Контент недоступен',
 			'discover.addMediaToLibraries' => 'Добавьте медиафайлы в ваши библиотеки',
 			'discover.continueWatching' => 'Продолжить просмотр',
@@ -4574,7 +4563,6 @@ extension on TranslationsRu {
 			'libraries.noFoldersFound' => 'Папки не найдены',
 			'libraries.folders' => 'папки',
 			'libraries.tabs.recommended' => 'Рекомендуемые',
-			'libraries.tabs.browse' => 'Обзор',
 			'libraries.tabs.collections' => 'Коллекции',
 			'libraries.tabs.playlists' => 'Плейлисты',
 			'libraries.groupings.title' => 'Группировка',
@@ -4896,8 +4884,6 @@ extension on TranslationsRu {
 			'liveTv.recordSettings.anyTime' => 'Записывать в любое время',
 			'liveTv.recordSettings.skipInLibrary' => 'Пропускать эпизоды, уже имеющиеся в библиотеке',
 			'liveTv.recordSettings.keepUpTo' => 'Сколько эпизодов хранить',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 — хранить все эпизоды',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} вернул некорректные данные для воспроизведения ТВ в прямом эфире',
 			'liveTv.failedToStartChannel' => 'Не удалось запустить канал в прямом эфире',
@@ -4936,6 +4922,8 @@ extension on TranslationsRu {
 			'playlists.itemCount' => ({required Object count}) => '${count} элементов',
 			'playlists.oneItem' => '1 элемент',
 			'playlists.emptyPlaylist' => 'Этот плейлист пуст',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Удалить плейлист?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Вы уверены, что хотите удалить "${name}"?',
 			'playlists.created' => 'Плейлист создан',
@@ -5408,8 +5396,6 @@ extension on TranslationsRu {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek, аппаратный',
 			'performanceOverlay.decoderExynosHw' => 'Exynos, аппаратный',
 			'performanceOverlay.decoderSoftware' => 'Программный',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Аппаратный',
 			'performanceOverlay.tunnelingActive' => 'Активно',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (ошибок: ${failures})',
@@ -5450,6 +5436,8 @@ extension on TranslationsRu {
 			'metadataEdit.selectBackground' => 'Выбрать фон',
 			'metadataEdit.selectLogo' => 'Выбрать логотип',
 			'metadataEdit.selectSquareArt' => 'Выбрать квадратное изображение',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'По URL',
 			'metadataEdit.uploadFile' => 'Загрузить файл',
 			'metadataEdit.enterImageUrl' => 'Введите URL изображения',

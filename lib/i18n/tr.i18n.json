@@ -396,10 +396,6 @@
     "services": "Servisler",
     "servicesDescription": "Trakt, MyAnimeList, Seerr ve daha fazlasını bağlayın",
     "manageLibrariesDescription": "Kitaplıkları yeniden sıralayın ve gizleyin",
-    "companionRemoteServer": "Yardımcı Uzaktan Kumanda Sunucusu",
-    "companionRemoteServerDescription": "Ağınızdaki mobil cihazların bu uygulamayı kontrol etmesine izin verin",
-    "companionRemoteServerStartFailed": "Yardımcı sunucu başlatılamadı",
-    "companionRemoteServerStopFailed": "Yardımcı sunucu durdurulamadı",
     "autoPip": "Otomatik Pencere İçinde Pencere (PiP)",
     "autoPipDescription": "Oynatma sırasında uygulamadan çıktığınızda otomatik olarak pencere içinde pencere moduna geç",
     "matchContentFrameRate": "İçerik Kare Hızını Eşitle",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Keşfet",
     "noContentAvailable": "İçerik bulunmuyor",
     "addMediaToLibraries": "Kitaplıklarınıza biraz medya ekleyin",
     "continueWatching": "İzlemeye Devam Et",
@@ -1289,7 +1284,6 @@
     "folders": "klasörler",
     "tabs": {
       "recommended": "Önerilenler",
-      "browse": "Göz At",
       "collections": "Koleksiyonlar",
       "genres": "",
       "playlists": "Oynatma Listeleri"

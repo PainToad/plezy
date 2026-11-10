@@ -46,8 +46,9 @@ require(
     "resolver must require a published stable release",
 )
 require(
-    "if: github.event_name != 'release' || !github.event.release.prerelease" in resolver,
-    "resolver must skip pre-release events so no package job runs",
+    "if: github.repository == 'edde746/plezy' && (github.event_name != 'release' || !github.event.release.prerelease)"
+    in resolver,
+    "resolver must skip forks and pre-release events so no package job runs",
 )
 require('if [ "$IS_PRERELEASE" != "false" ]; then' in resolver, "resolver must reject a pre-release tag")
 require(

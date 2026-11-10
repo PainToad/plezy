@@ -396,10 +396,6 @@
     "services": "Tjenester",
     "servicesDescription": "Forbind Trakt, MyAnimeList, Seerr og mere",
     "manageLibrariesDescription": "Omarranger og skjul biblioteker",
-    "companionRemoteServer": "Fjernbetjeningsserver",
-    "companionRemoteServerDescription": "Tillad mobilenheder på dit netværk at styre denne app",
-    "companionRemoteServerStartFailed": "Fjernbetjeningsserveren kunne ikke startes",
-    "companionRemoteServerStopFailed": "Fjernbetjeningsserveren kunne ikke stoppes",
     "autoPip": "Automatisk billede-i-billede",
     "autoPipDescription": "Skift automatisk til billede-i-billede, når du forlader appen under afspilning",
     "matchContentFrameRate": "Tilpas billedhastigheden til indholdet",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Opdag",
     "noContentAvailable": "Intet indhold tilgængeligt",
     "addMediaToLibraries": "Tilføj medier til dine biblioteker",
     "continueWatching": "Fortsæt med at se",
@@ -1289,7 +1284,6 @@
     "folders": "mapper",
     "tabs": {
       "recommended": "Anbefalet",
-      "browse": "Gennemse",
       "collections": "Samlinger",
       "genres": "",
       "playlists": "Playlister"

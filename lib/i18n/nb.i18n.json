@@ -396,10 +396,6 @@
     "services": "Tjenester",
     "servicesDescription": "Koble til Trakt, MyAnimeList, Seerr og mer",
     "manageLibrariesDescription": "Omorganiser og skjul biblioteker",
-    "companionRemoteServer": "Fjernkontrollserver",
-    "companionRemoteServerDescription": "La mobilenheter på nettverket styre denne appen",
-    "companionRemoteServerStartFailed": "Kunne ikke starte fjernkontrollserveren",
-    "companionRemoteServerStopFailed": "Kunne ikke stoppe fjernkontrollserveren",
     "autoPip": "Automatisk bilde-i-bilde",
     "autoPipDescription": "Åpne bilde-i-bilde når du forlater appen under avspilling",
     "matchContentFrameRate": "Tilpass innholdets bildefrekvens",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Oppdag",
     "noContentAvailable": "Ikke noe innhold tilgjengelig",
     "addMediaToLibraries": "Legg til medier i bibliotekene dine",
     "continueWatching": "Fortsett å se",
@@ -1289,7 +1284,6 @@
     "folders": "mapper",
     "tabs": {
       "recommended": "Anbefalt",
-      "browse": "Bla gjennom",
       "collections": "Samlinger",
       "genres": "",
       "playlists": "Spillelister"

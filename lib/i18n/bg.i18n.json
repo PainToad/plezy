@@ -396,10 +396,6 @@
     "services": "Услуги",
     "servicesDescription": "Свържи Trakt, MyAnimeList, Seerr и още",
     "manageLibrariesDescription": "Пренареждай и скривай библиотеки",
-    "companionRemoteServer": "Сървър за дистанционно управление",
-    "companionRemoteServerDescription": "Позволи на мобилни устройства във вашата мрежа да управляват това приложение",
-    "companionRemoteServerStartFailed": "Сървърът за дистанционно управление не можа да бъде стартиран",
-    "companionRemoteServerStopFailed": "Сървърът за дистанционно управление не можа да бъде спрян",
     "autoPip": "Автоматичен режим картина в картината",
     "autoPipDescription": "Автоматично включвай режима картина в картината при излизане от приложението по време на възпроизвеждане",
     "matchContentFrameRate": "Напасване към кадровата честота на съдържанието",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Открий",
     "noContentAvailable": "Няма налично съдържание",
     "addMediaToLibraries": "Добавете медия към библиотеките си",
     "continueWatching": "Продължи гледането",
@@ -1289,7 +1284,6 @@
     "folders": "папки",
     "tabs": {
       "recommended": "Препоръчани",
-      "browse": "Преглед",
       "collections": "Колекции",
       "genres": "",
       "playlists": "Плейлисти"

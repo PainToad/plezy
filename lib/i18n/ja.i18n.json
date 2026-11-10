@@ -396,10 +396,6 @@
     "services": "サービス",
     "servicesDescription": "Trakt、MyAnimeList、Seerrなどを接続",
     "manageLibrariesDescription": "ライブラリを並べ替えたり非表示にしたりできます",
-    "companionRemoteServer": "コンパニオンリモートサーバー",
-    "companionRemoteServerDescription": "ネットワーク上のモバイルデバイスからこのアプリを操作できるようにする",
-    "companionRemoteServerStartFailed": "コンパニオンリモートサーバーを開始できませんでした",
-    "companionRemoteServerStopFailed": "コンパニオンリモートサーバーを停止できませんでした",
     "autoPip": "自動ピクチャーインピクチャー",
     "autoPipDescription": "再生中にアプリを離れると、自動的にピクチャーインピクチャーに切り替えます",
     "matchContentFrameRate": "コンテンツのフレームレートに合わせる",
@@ -1181,7 +1177,6 @@
     }
   },
   "discover": {
-    "title": "探す",
     "noContentAvailable": "コンテンツがありません",
     "addMediaToLibraries": "ライブラリにメディアを追加してください",
     "continueWatching": "視聴を続ける",
@@ -1284,7 +1279,6 @@
     "folders": "フォルダ",
     "tabs": {
       "recommended": "おすすめ",
-      "browse": "ブラウズ",
       "collections": "コレクション",
       "genres": "",
       "playlists": "プレイリスト"

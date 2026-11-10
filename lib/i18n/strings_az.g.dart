@@ -489,10 +489,6 @@ class _Translations$settings$az extends Translations$settings$en {
 	@override String get services => 'Xidmətlər';
 	@override String get servicesDescription => 'Trakt, MyAnimeList, Seerr və daha çoxunu qoşun';
 	@override String get manageLibrariesDescription => 'Kitabxanaları yenidən sıralayın və gizlədin';
-	@override String get companionRemoteServer => 'Köməkçi pult serveri';
-	@override String get companionRemoteServerDescription => 'Şəbəkənizdəki mobil cihazların bu tətbiqi idarə etməsinə icazə verin';
-	@override String get companionRemoteServerStartFailed => 'Köməkçi pult serveri başladıla bilmədi';
-	@override String get companionRemoteServerStopFailed => 'Köməkçi pult serveri dayandırıla bilmədi';
 	@override String get autoPip => 'Avtomatik Pəncərə daxilində Pəncərə (PiP)';
 	@override String get autoPipDescription => 'Oynatma zamanı tətbiqdən çıxdıqda avtomatik PiP rejiminə keç';
 	@override String get matchContentFrameRate => 'Kadr tezliyini uyğunlaşdır';
@@ -1315,7 +1311,6 @@ class _Translations$discover$az extends Translations$discover$en {
 	final TranslationsAz _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Kəşf et';
 	@override String get noContentAvailable => 'Məzmun əlçatan deyil';
 	@override String get addMediaToLibraries => 'Kitabxanalarınıza bir az media əlavə edin';
 	@override String get continueWatching => 'İzləməyə davam et';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$az extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Tövsiyə olunanlar';
-	@override String get browse => 'Baxış';
 	@override String get collections => 'Kolleksiyalar';
 	@override String get playlists => 'Oynatma siyahıları';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsAz {
 			'settings.services' => 'Xidmətlər',
 			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr və daha çoxunu qoşun',
 			'settings.manageLibrariesDescription' => 'Kitabxanaları yenidən sıralayın və gizlədin',
-			'settings.companionRemoteServer' => 'Köməkçi pult serveri',
-			'settings.companionRemoteServerDescription' => 'Şəbəkənizdəki mobil cihazların bu tətbiqi idarə etməsinə icazə verin',
-			'settings.companionRemoteServerStartFailed' => 'Köməkçi pult serveri başladıla bilmədi',
-			'settings.companionRemoteServerStopFailed' => 'Köməkçi pult serveri dayandırıla bilmədi',
 			'settings.autoPip' => 'Avtomatik Pəncərə daxilində Pəncərə (PiP)',
 			'settings.autoPipDescription' => 'Oynatma zamanı tətbiqdən çıxdıqda avtomatik PiP rejiminə keç',
 			'settings.matchContentFrameRate' => 'Kadr tezliyini uyğunlaşdır',
@@ -3876,12 +3866,12 @@ extension on TranslationsAz {
 			'themeEditor.slots.outline' => 'Kontur',
 			'themeEditor.slots.text' => 'Mətn',
 			'themeEditor.slots.textMuted' => 'Köməkçi mətn',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Vurğu',
 			'themeEditor.opacity' => 'Şəffaflıq',
 			'themeEditor.hexHint' => '#RRGGBB və ya #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Digər mövzulardan',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme}: ${color}',
 			'themeEditor.contrast.textOnBg' => 'Arxa fonda mətn',
 			'themeEditor.contrast.textOnSurface' => 'Səthdə mətn',
@@ -4390,12 +4380,12 @@ extension on TranslationsAz {
 			'profiles.pinsDontMatch' => 'PIN-lər uyğun gəlmir',
 			'profiles.tokenIdentityMismatch' => 'Plex profil tokeni gözlənilməyən serveri müəyyən etdi',
 			'connections.sectionTitle' => 'Qoşulmalar',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Qoşulma əlavə et',
 			'connections.addConnectionSubtitleNoProfile' => 'Plex ilə daxil olun və ya Jellyfin yaxud Emby serverinə qoşulun',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName} profilinə əlavə et: Plex, Jellyfin, Emby və ya başqa profil qoşulması',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} üçün seansın vaxtı bitdi',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} server üçün seansın vaxtı bitdi',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} bu hesaba girişi rədd etdi',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} server bu hesaba girişi rədd etdi',
@@ -4459,7 +4449,6 @@ extension on TranslationsAz {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Yalnız istifadəçilər',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Yalnız tənqidçilər',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Gizlədilib',
-			'discover.title' => 'Kəşf et',
 			'discover.noContentAvailable' => 'Məzmun əlçatan deyil',
 			'discover.addMediaToLibraries' => 'Kitabxanalarınıza bir az media əlavə edin',
 			'discover.continueWatching' => 'İzləməyə davam et',
@@ -4550,7 +4539,6 @@ extension on TranslationsAz {
 			'libraries.noFoldersFound' => 'Qovluq tapılmadı',
 			'libraries.folders' => 'qovluqlar',
 			'libraries.tabs.recommended' => 'Tövsiyə olunanlar',
-			'libraries.tabs.browse' => 'Baxış',
 			'libraries.tabs.collections' => 'Kolleksiyalar',
 			'libraries.tabs.playlists' => 'Oynatma siyahıları',
 			'libraries.groupings.title' => 'Qruplaşdırma',
@@ -4872,8 +4860,6 @@ extension on TranslationsAz {
 			'liveTv.recordSettings.anyTime' => 'İstənilən vaxt yaz',
 			'liveTv.recordSettings.skipInLibrary' => 'Kitabxanada artıq olan epizodları ötür',
 			'liveTv.recordSettings.keepUpTo' => 'Saxlanılacaq epizodlar',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 bütün epizodları saxlayır',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} etibarsız Canlı TV oynatma məlumatı qaytardı',
 			'liveTv.failedToStartChannel' => 'Canlı kanalı başlatmaq olmadı',
@@ -4912,6 +4898,8 @@ extension on TranslationsAz {
 			'playlists.itemCount' => ({required Object count}) => '${count} element',
 			'playlists.oneItem' => '1 element',
 			'playlists.emptyPlaylist' => 'Bu oynatma siyahısı boşdur',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Oynatma siyahısı silinsin?',
 			'playlists.deleteMessage' => ({required Object name}) => '"${name}" siyahısını silmək istədiyinizdən əminsiniz?',
 			'playlists.created' => 'Oynatma siyahısı yaradıldı',
@@ -5384,8 +5372,6 @@ extension on TranslationsAz {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'Proqram təminatı',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Aparat təminatı',
 			'performanceOverlay.tunnelingActive' => 'Aktiv',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} uğursuz)',
@@ -5426,6 +5412,8 @@ extension on TranslationsAz {
 			'metadataEdit.selectBackground' => 'Arxa fon seç',
 			'metadataEdit.selectLogo' => 'Loqo seç',
 			'metadataEdit.selectSquareArt' => 'Kvadrat şəkil seç',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URL-dən',
 			'metadataEdit.uploadFile' => 'Fayl yüklə',
 			'metadataEdit.enterImageUrl' => 'Şəkil URL-i daxil edin',

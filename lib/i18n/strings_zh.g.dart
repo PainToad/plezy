@@ -489,10 +489,6 @@ class Translations$settings$zh extends Translations$settings$en {
 	@override String get services => '服务';
 	@override String get servicesDescription => '连接 Trakt、MyAnimeList、Seerr 等';
 	@override String get manageLibrariesDescription => '重新排序和隐藏媒体库';
-	@override String get companionRemoteServer => '远程控制服务器';
-	@override String get companionRemoteServerDescription => '允许同一网络中的移动设备控制此应用';
-	@override String get companionRemoteServerStartFailed => '无法启动远程控制服务器';
-	@override String get companionRemoteServerStopFailed => '无法停止远程控制服务器';
 	@override String get autoPip => '自动画中画';
 	@override String get autoPipDescription => '播放期间离开应用时自动进入画中画模式';
 	@override String get matchContentFrameRate => '匹配内容帧率';
@@ -1311,7 +1307,6 @@ class Translations$discover$zh extends Translations$discover$en {
 	final TranslationsZh _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '发现';
 	@override String get noContentAvailable => '没有可用内容';
 	@override String get addMediaToLibraries => '请向你的媒体库添加一些媒体';
 	@override String get continueWatching => '继续观看';
@@ -2692,7 +2687,6 @@ class Translations$libraries$tabs$zh extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => '推荐';
-	@override String get browse => '浏览';
 	@override String get collections => '合集';
 	@override String get playlists => '播放列表';
 }
@@ -3726,10 +3720,6 @@ extension on TranslationsZh {
 			'settings.services' => '服务',
 			'settings.servicesDescription' => '连接 Trakt、MyAnimeList、Seerr 等',
 			'settings.manageLibrariesDescription' => '重新排序和隐藏媒体库',
-			'settings.companionRemoteServer' => '远程控制服务器',
-			'settings.companionRemoteServerDescription' => '允许同一网络中的移动设备控制此应用',
-			'settings.companionRemoteServerStartFailed' => '无法启动远程控制服务器',
-			'settings.companionRemoteServerStopFailed' => '无法停止远程控制服务器',
 			'settings.autoPip' => '自动画中画',
 			'settings.autoPipDescription' => '播放期间离开应用时自动进入画中画模式',
 			'settings.matchContentFrameRate' => '匹配内容帧率',
@@ -3864,12 +3854,12 @@ extension on TranslationsZh {
 			'themeEditor.slots.outline' => '描边',
 			'themeEditor.slots.text' => '文字',
 			'themeEditor.slots.textMuted' => '次要文字',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => '强调色',
 			'themeEditor.opacity' => '不透明度',
 			'themeEditor.hexHint' => '#RRGGBB 或 #AARRGGBB',
 			'themeEditor.fromOtherThemes' => '来自其他主题',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} · ${color}',
 			'themeEditor.contrast.textOnBg' => '背景上的文字',
 			'themeEditor.contrast.textOnSurface' => '表面上的文字',
@@ -4378,12 +4368,12 @@ extension on TranslationsZh {
 			'profiles.pinsDontMatch' => 'PIN 不匹配',
 			'profiles.tokenIdentityMismatch' => 'Plex 用户资料令牌解析到了非预期服务器',
 			'connections.sectionTitle' => '连接',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => '添加连接',
 			'connections.addConnectionSubtitleNoProfile' => '使用 Plex 登录，或连接 Jellyfin 或 Emby 服务器',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '添加到 ${displayName}：Plex、Jellyfin、Emby，或其他用户资料的连接',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} 的会话已过期',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} 个服务器的会话已过期',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} 拒绝此账户访问',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} 台服务器拒绝此账户访问',
@@ -4447,7 +4437,6 @@ extension on TranslationsZh {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => '仅用户',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => '仅影评人',
 			'accountPreferences.mediaReviewsOptions.nobody' => '隐藏',
-			'discover.title' => '发现',
 			'discover.noContentAvailable' => '没有可用内容',
 			'discover.addMediaToLibraries' => '请向你的媒体库添加一些媒体',
 			'discover.continueWatching' => '继续观看',
@@ -4538,7 +4527,6 @@ extension on TranslationsZh {
 			'libraries.noFoldersFound' => '未找到文件夹',
 			'libraries.folders' => '文件夹',
 			'libraries.tabs.recommended' => '推荐',
-			'libraries.tabs.browse' => '浏览',
 			'libraries.tabs.collections' => '合集',
 			'libraries.tabs.playlists' => '播放列表',
 			'libraries.groupings.title' => '分组',
@@ -4860,8 +4848,6 @@ extension on TranslationsZh {
 			'liveTv.recordSettings.anyTime' => '在任意时间录制',
 			'liveTv.recordSettings.skipInLibrary' => '跳过媒体库中已有的剧集',
 			'liveTv.recordSettings.keepUpTo' => '保留的剧集数',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 表示保留全部剧集',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} 返回了无效的直播电视播放数据',
 			'liveTv.failedToStartChannel' => '无法播放直播频道',
@@ -4900,6 +4886,8 @@ extension on TranslationsZh {
 			'playlists.itemCount' => ({required Object count}) => '${count} 个项目',
 			'playlists.oneItem' => '1 个项目',
 			'playlists.emptyPlaylist' => '此播放列表为空',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => '删除播放列表？',
 			'playlists.deleteMessage' => ({required Object name}) => '确定要删除“${name}”吗？',
 			'playlists.created' => '播放列表已创建',
@@ -5372,8 +5360,6 @@ extension on TranslationsZh {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek 硬件',
 			'performanceOverlay.decoderExynosHw' => 'Exynos 硬件',
 			'performanceOverlay.decoderSoftware' => '软件',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => '硬件',
 			'performanceOverlay.tunnelingActive' => '已启用',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted}（${failures} 个失败）',
@@ -5414,6 +5400,8 @@ extension on TranslationsZh {
 			'metadataEdit.selectBackground' => '选择背景',
 			'metadataEdit.selectLogo' => '选择标志',
 			'metadataEdit.selectSquareArt' => '选择方形图片',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => '通过 URL',
 			'metadataEdit.uploadFile' => '上传文件',
 			'metadataEdit.enterImageUrl' => '输入图片 URL',

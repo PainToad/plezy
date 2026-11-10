@@ -489,10 +489,6 @@ class _Translations$settings$da extends Translations$settings$en {
 	@override String get services => 'Tjenester';
 	@override String get servicesDescription => 'Forbind Trakt, MyAnimeList, Seerr og mere';
 	@override String get manageLibrariesDescription => 'Omarranger og skjul biblioteker';
-	@override String get companionRemoteServer => 'Fjernbetjeningsserver';
-	@override String get companionRemoteServerDescription => 'Tillad mobilenheder på dit netværk at styre denne app';
-	@override String get companionRemoteServerStartFailed => 'Fjernbetjeningsserveren kunne ikke startes';
-	@override String get companionRemoteServerStopFailed => 'Fjernbetjeningsserveren kunne ikke stoppes';
 	@override String get autoPip => 'Automatisk billede-i-billede';
 	@override String get autoPipDescription => 'Skift automatisk til billede-i-billede, når du forlader appen under afspilning';
 	@override String get matchContentFrameRate => 'Tilpas billedhastigheden til indholdet';
@@ -1315,7 +1311,6 @@ class _Translations$discover$da extends Translations$discover$en {
 	final TranslationsDa _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Opdag';
 	@override String get noContentAvailable => 'Intet indhold tilgængeligt';
 	@override String get addMediaToLibraries => 'Tilføj medier til dine biblioteker';
 	@override String get continueWatching => 'Fortsæt med at se';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$da extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Anbefalet';
-	@override String get browse => 'Gennemse';
 	@override String get collections => 'Samlinger';
 	@override String get playlists => 'Playlister';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsDa {
 			'settings.services' => 'Tjenester',
 			'settings.servicesDescription' => 'Forbind Trakt, MyAnimeList, Seerr og mere',
 			'settings.manageLibrariesDescription' => 'Omarranger og skjul biblioteker',
-			'settings.companionRemoteServer' => 'Fjernbetjeningsserver',
-			'settings.companionRemoteServerDescription' => 'Tillad mobilenheder på dit netværk at styre denne app',
-			'settings.companionRemoteServerStartFailed' => 'Fjernbetjeningsserveren kunne ikke startes',
-			'settings.companionRemoteServerStopFailed' => 'Fjernbetjeningsserveren kunne ikke stoppes',
 			'settings.autoPip' => 'Automatisk billede-i-billede',
 			'settings.autoPipDescription' => 'Skift automatisk til billede-i-billede, når du forlader appen under afspilning',
 			'settings.matchContentFrameRate' => 'Tilpas billedhastigheden til indholdet',
@@ -3876,12 +3866,12 @@ extension on TranslationsDa {
 			'themeEditor.slots.outline' => 'Kontur',
 			'themeEditor.slots.text' => 'Tekst',
 			'themeEditor.slots.textMuted' => 'Sekundær tekst',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Accentfarve',
 			'themeEditor.opacity' => 'Opacitet',
 			'themeEditor.hexHint' => '#RRGGBB eller #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Fra andre temaer',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} (${theme})',
 			'themeEditor.contrast.textOnBg' => 'Tekst på baggrund',
 			'themeEditor.contrast.textOnSurface' => 'Tekst på overflade',
@@ -4390,12 +4380,12 @@ extension on TranslationsDa {
 			'profiles.pinsDontMatch' => 'PIN-koderne matcher ikke',
 			'profiles.tokenIdentityMismatch' => 'Plex-profiltokenet blev knyttet til en uventet server',
 			'connections.sectionTitle' => 'Forbindelser',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Tilføj forbindelse',
 			'connections.addConnectionSubtitleNoProfile' => 'Log ind med Plex eller forbind til en Jellyfin- eller Emby-server',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Føj til ${displayName}: Plex, Jellyfin, Emby eller en anden profilforbindelse',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Sessionen er udløbet for ${name}',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Sessionerne er udløbet for ${count} servere',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} nægtede adgang for denne konto',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} servere nægtede adgang for denne konto',
@@ -4459,7 +4449,6 @@ extension on TranslationsDa {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Kun brugere',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Kun anmeldere',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Skjult',
-			'discover.title' => 'Opdag',
 			'discover.noContentAvailable' => 'Intet indhold tilgængeligt',
 			'discover.addMediaToLibraries' => 'Tilføj medier til dine biblioteker',
 			'discover.continueWatching' => 'Fortsæt med at se',
@@ -4550,7 +4539,6 @@ extension on TranslationsDa {
 			'libraries.noFoldersFound' => 'Ingen mapper fundet',
 			'libraries.folders' => 'mapper',
 			'libraries.tabs.recommended' => 'Anbefalet',
-			'libraries.tabs.browse' => 'Gennemse',
 			'libraries.tabs.collections' => 'Samlinger',
 			'libraries.tabs.playlists' => 'Playlister',
 			'libraries.groupings.title' => 'Gruppering',
@@ -4872,8 +4860,6 @@ extension on TranslationsDa {
 			'liveTv.recordSettings.anyTime' => 'Optag på alle tidspunkter',
 			'liveTv.recordSettings.skipInLibrary' => 'Spring afsnit over, der allerede er i biblioteket',
 			'liveTv.recordSettings.keepUpTo' => 'Afsnit der skal beholdes',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 beholder alle afsnit',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} returnerede ugyldige afspilningsdata for Live TV',
 			'liveTv.failedToStartChannel' => 'Kunne ikke starte livekanalen',
@@ -4912,6 +4898,8 @@ extension on TranslationsDa {
 			'playlists.itemCount' => ({required Object count}) => '${count} elementer',
 			'playlists.oneItem' => '1 element',
 			'playlists.emptyPlaylist' => 'Denne playliste er tom',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Slet playliste?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Er du sikker på, at du vil slette "${name}"?',
 			'playlists.created' => 'Playliste oprettet',
@@ -5384,8 +5372,6 @@ extension on TranslationsDa {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'Software',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Hardware',
 			'performanceOverlay.tunnelingActive' => 'Aktiv',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} mislykkedes)',
@@ -5426,6 +5412,8 @@ extension on TranslationsDa {
 			'metadataEdit.selectBackground' => 'Vælg baggrund',
 			'metadataEdit.selectLogo' => 'Vælg logo',
 			'metadataEdit.selectSquareArt' => 'Vælg kvadratisk billede',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'Fra URL',
 			'metadataEdit.uploadFile' => 'Upload fil',
 			'metadataEdit.enterImageUrl' => 'Indtast billed-URL',

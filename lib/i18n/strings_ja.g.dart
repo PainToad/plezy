@@ -489,10 +489,6 @@ class _Translations$settings$ja extends Translations$settings$en {
 	@override String get services => 'サービス';
 	@override String get servicesDescription => 'Trakt、MyAnimeList、Seerrなどを接続';
 	@override String get manageLibrariesDescription => 'ライブラリを並べ替えたり非表示にしたりできます';
-	@override String get companionRemoteServer => 'コンパニオンリモートサーバー';
-	@override String get companionRemoteServerDescription => 'ネットワーク上のモバイルデバイスからこのアプリを操作できるようにする';
-	@override String get companionRemoteServerStartFailed => 'コンパニオンリモートサーバーを開始できませんでした';
-	@override String get companionRemoteServerStopFailed => 'コンパニオンリモートサーバーを停止できませんでした';
 	@override String get autoPip => '自動ピクチャーインピクチャー';
 	@override String get autoPipDescription => '再生中にアプリを離れると、自動的にピクチャーインピクチャーに切り替えます';
 	@override String get matchContentFrameRate => 'コンテンツのフレームレートに合わせる';
@@ -1311,7 +1307,6 @@ class _Translations$discover$ja extends Translations$discover$en {
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '探す';
 	@override String get noContentAvailable => 'コンテンツがありません';
 	@override String get addMediaToLibraries => 'ライブラリにメディアを追加してください';
 	@override String get continueWatching => '視聴を続ける';
@@ -2692,7 +2687,6 @@ class _Translations$libraries$tabs$ja extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'おすすめ';
-	@override String get browse => 'ブラウズ';
 	@override String get collections => 'コレクション';
 	@override String get playlists => 'プレイリスト';
 }
@@ -3726,10 +3720,6 @@ extension on TranslationsJa {
 			'settings.services' => 'サービス',
 			'settings.servicesDescription' => 'Trakt、MyAnimeList、Seerrなどを接続',
 			'settings.manageLibrariesDescription' => 'ライブラリを並べ替えたり非表示にしたりできます',
-			'settings.companionRemoteServer' => 'コンパニオンリモートサーバー',
-			'settings.companionRemoteServerDescription' => 'ネットワーク上のモバイルデバイスからこのアプリを操作できるようにする',
-			'settings.companionRemoteServerStartFailed' => 'コンパニオンリモートサーバーを開始できませんでした',
-			'settings.companionRemoteServerStopFailed' => 'コンパニオンリモートサーバーを停止できませんでした',
 			'settings.autoPip' => '自動ピクチャーインピクチャー',
 			'settings.autoPipDescription' => '再生中にアプリを離れると、自動的にピクチャーインピクチャーに切り替えます',
 			'settings.matchContentFrameRate' => 'コンテンツのフレームレートに合わせる',
@@ -3864,12 +3854,12 @@ extension on TranslationsJa {
 			'themeEditor.slots.outline' => '枠線',
 			'themeEditor.slots.text' => 'テキスト',
 			'themeEditor.slots.textMuted' => '補助テキスト',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'アクセント',
 			'themeEditor.opacity' => '不透明度',
 			'themeEditor.hexHint' => '#RRGGBB または #AARRGGBB',
 			'themeEditor.fromOtherThemes' => '他のテーマから',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme}の${color}',
 			'themeEditor.contrast.textOnBg' => '背景上のテキスト',
 			'themeEditor.contrast.textOnSurface' => 'サーフェス上のテキスト',
@@ -4378,12 +4368,12 @@ extension on TranslationsJa {
 			'profiles.pinsDontMatch' => 'PINが一致しません',
 			'profiles.tokenIdentityMismatch' => 'Plexプロフィールのトークンから予期しないサーバーが特定されました',
 			'connections.sectionTitle' => '接続',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => '接続を追加',
 			'connections.addConnectionSubtitleNoProfile' => 'Plexでサインインするか、JellyfinまたはEmbyサーバーに接続',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName}に追加：Plex、Jellyfin、Emby、または別のプロフィールの接続',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} のセッションの有効期限が切れました',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} 台のサーバーのセッションの有効期限が切れました',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} がこのアカウントへのアクセスを拒否しました',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} 台のサーバーがこのアカウントへのアクセスを拒否しました',
@@ -4447,7 +4437,6 @@ extension on TranslationsJa {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'ユーザーのみ',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => '批評家のみ',
 			'accountPreferences.mediaReviewsOptions.nobody' => '非表示',
-			'discover.title' => '探す',
 			'discover.noContentAvailable' => 'コンテンツがありません',
 			'discover.addMediaToLibraries' => 'ライブラリにメディアを追加してください',
 			'discover.continueWatching' => '視聴を続ける',
@@ -4538,7 +4527,6 @@ extension on TranslationsJa {
 			'libraries.noFoldersFound' => 'フォルダが見つかりません',
 			'libraries.folders' => 'フォルダ',
 			'libraries.tabs.recommended' => 'おすすめ',
-			'libraries.tabs.browse' => 'ブラウズ',
 			'libraries.tabs.collections' => 'コレクション',
 			'libraries.tabs.playlists' => 'プレイリスト',
 			'libraries.groupings.title' => 'グループ',
@@ -4860,8 +4848,6 @@ extension on TranslationsJa {
 			'liveTv.recordSettings.anyTime' => 'すべての時間帯で録画',
 			'liveTv.recordSettings.skipInLibrary' => 'ライブラリにあるエピソードをスキップ',
 			'liveTv.recordSettings.keepUpTo' => '保持するエピソード数',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 ですべてのエピソードを保持',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product}から無効なライブTV再生データが返されました',
 			'liveTv.failedToStartChannel' => 'ライブチャンネルを開始できませんでした',
@@ -4900,6 +4886,8 @@ extension on TranslationsJa {
 			'playlists.itemCount' => ({required Object count}) => '${count}件',
 			'playlists.oneItem' => '1件',
 			'playlists.emptyPlaylist' => 'このプレイリストは空です',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'プレイリストを削除しますか？',
 			'playlists.deleteMessage' => ({required Object name}) => '「${name}」を削除しますか？',
 			'playlists.created' => 'プレイリストを作成しました',
@@ -5372,8 +5360,6 @@ extension on TranslationsJa {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'ソフトウェア',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'ハードウェア',
 			'performanceOverlay.tunnelingActive' => '有効',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted}（${failures}件失敗）',
@@ -5414,6 +5400,8 @@ extension on TranslationsJa {
 			'metadataEdit.selectBackground' => '背景を選択',
 			'metadataEdit.selectLogo' => 'ロゴを選択',
 			'metadataEdit.selectSquareArt' => '正方形アートを選択',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URLから',
 			'metadataEdit.uploadFile' => 'ファイルをアップロード',
 			'metadataEdit.enterImageUrl' => '画像URLを入力',

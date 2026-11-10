@@ -396,10 +396,6 @@
     "services": "Usługi",
     "servicesDescription": "Połącz Trakt, MyAnimeList, Seerr i inne",
     "manageLibrariesDescription": "Zmieniaj kolejność i ukrywaj biblioteki",
-    "companionRemoteServer": "Serwer zdalnego sterowania",
-    "companionRemoteServerDescription": "Pozwól urządzeniom mobilnym w sieci sterować tą aplikacją",
-    "companionRemoteServerStartFailed": "Nie udało się uruchomić serwera zdalnego sterowania",
-    "companionRemoteServerStopFailed": "Nie udało się zatrzymać serwera zdalnego sterowania",
     "autoPip": "Automatyczny obraz w obrazie",
     "autoPipDescription": "Automatycznie włączaj tryb obrazu w obrazie po opuszczeniu aplikacji podczas odtwarzania",
     "matchContentFrameRate": "Dopasuj częstotliwość klatek do treści",
@@ -1193,7 +1189,6 @@
     }
   },
   "discover": {
-    "title": "Odkryj",
     "noContentAvailable": "Brak dostępnych treści",
     "addMediaToLibraries": "Dodaj multimedia do swoich bibliotek",
     "continueWatching": "Kontynuuj oglądanie",
@@ -1299,7 +1294,6 @@
     "folders": "foldery",
     "tabs": {
       "recommended": "Polecane",
-      "browse": "Przeglądaj",
       "collections": "Kolekcje",
       "genres": "",
       "playlists": "Playlisty"

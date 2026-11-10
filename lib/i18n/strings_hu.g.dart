@@ -489,10 +489,6 @@ class _Translations$settings$hu extends Translations$settings$en {
 	@override String get services => 'Szolgáltatások';
 	@override String get servicesDescription => 'Trakt, MyAnimeList, Seerr és egyéb szolgáltatások csatlakoztatása';
 	@override String get manageLibrariesDescription => 'Könyvtárak sorrendjének módosítása és elrejtése';
-	@override String get companionRemoteServer => 'Kísérőtávirányító szervere';
-	@override String get companionRemoteServerDescription => 'Lehetővé teszi, hogy a hálózaton lévő mobileszközökről vezéreld az alkalmazást';
-	@override String get companionRemoteServerStartFailed => 'Nem sikerült elindítani a kísérőtávirányító szerverét';
-	@override String get companionRemoteServerStopFailed => 'Nem sikerült leállítani a kísérőtávirányító szerverét';
 	@override String get autoPip => 'Automatikus kép a képben (PiP)';
 	@override String get autoPipDescription => 'Lejátszás közben az alkalmazás elhagyásakor automatikusan kép a képben módra vált';
 	@override String get matchContentFrameRate => 'Képkockasebesség illesztése a tartalomhoz';
@@ -1315,7 +1311,6 @@ class _Translations$discover$hu extends Translations$discover$en {
 	final TranslationsHu _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Felfedezés';
 	@override String get noContentAvailable => 'Nincs elérhető tartalom';
 	@override String get addMediaToLibraries => 'Adj hozzá médiát a könyvtáraidhoz';
 	@override String get continueWatching => 'Folytatás';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$hu extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Ajánlott';
-	@override String get browse => 'Böngészés';
 	@override String get collections => 'Gyűjtemények';
 	@override String get playlists => 'Lejátszási listák';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsHu {
 			'settings.services' => 'Szolgáltatások',
 			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr és egyéb szolgáltatások csatlakoztatása',
 			'settings.manageLibrariesDescription' => 'Könyvtárak sorrendjének módosítása és elrejtése',
-			'settings.companionRemoteServer' => 'Kísérőtávirányító szervere',
-			'settings.companionRemoteServerDescription' => 'Lehetővé teszi, hogy a hálózaton lévő mobileszközökről vezéreld az alkalmazást',
-			'settings.companionRemoteServerStartFailed' => 'Nem sikerült elindítani a kísérőtávirányító szerverét',
-			'settings.companionRemoteServerStopFailed' => 'Nem sikerült leállítani a kísérőtávirányító szerverét',
 			'settings.autoPip' => 'Automatikus kép a képben (PiP)',
 			'settings.autoPipDescription' => 'Lejátszás közben az alkalmazás elhagyásakor automatikusan kép a képben módra vált',
 			'settings.matchContentFrameRate' => 'Képkockasebesség illesztése a tartalomhoz',
@@ -3876,12 +3866,12 @@ extension on TranslationsHu {
 			'themeEditor.slots.outline' => 'Körvonal',
 			'themeEditor.slots.text' => 'Szöveg',
 			'themeEditor.slots.textMuted' => 'Másodlagos szöveg',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Kiemelőszín',
 			'themeEditor.opacity' => 'Átlátszatlanság',
 			'themeEditor.hexHint' => '#RRGGBB vagy #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Más témákból',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} – ${color}',
 			'themeEditor.contrast.textOnBg' => 'Szöveg a háttéren',
 			'themeEditor.contrast.textOnSurface' => 'Szöveg a felületen',
@@ -4390,12 +4380,12 @@ extension on TranslationsHu {
 			'profiles.pinsDontMatch' => 'A PIN-kódok nem egyeznek',
 			'profiles.tokenIdentityMismatch' => 'A Plex-profil tokenje nem a várt szerverhez tartozik',
 			'connections.sectionTitle' => 'Kapcsolatok',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Kapcsolat hozzáadása',
 			'connections.addConnectionSubtitleNoProfile' => 'Jelentkezz be Plexszel, vagy csatlakoztass egy Jellyfin- vagy Emby-szervert',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Hozzáadás a következőhöz (${displayName}): Plex, Jellyfin, Emby vagy más profilkapcsolat',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'A(z) ${name} munkamenete lejárt',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} szerver munkamenete lejárt',
 			'connections.accessDeniedOne' => ({required Object name}) => 'A(z) ${name} megtagadta a hozzáférést ettől a fióktól',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} szerver megtagadta a hozzáférést ettől a fióktól',
@@ -4459,7 +4449,6 @@ extension on TranslationsHu {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Csak felhasználók',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Csak kritikusok',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Rejtett',
-			'discover.title' => 'Felfedezés',
 			'discover.noContentAvailable' => 'Nincs elérhető tartalom',
 			'discover.addMediaToLibraries' => 'Adj hozzá médiát a könyvtáraidhoz',
 			'discover.continueWatching' => 'Folytatás',
@@ -4550,7 +4539,6 @@ extension on TranslationsHu {
 			'libraries.noFoldersFound' => 'Nem találhatók mappák',
 			'libraries.folders' => 'mappák',
 			'libraries.tabs.recommended' => 'Ajánlott',
-			'libraries.tabs.browse' => 'Böngészés',
 			'libraries.tabs.collections' => 'Gyűjtemények',
 			'libraries.tabs.playlists' => 'Lejátszási listák',
 			'libraries.groupings.title' => 'Csoportosítás',
@@ -4872,8 +4860,6 @@ extension on TranslationsHu {
 			'liveTv.recordSettings.anyTime' => 'Felvétel bármikor',
 			'liveTv.recordSettings.skipInLibrary' => 'A könyvtárban már meglévő epizódok kihagyása',
 			'liveTv.recordSettings.keepUpTo' => 'Megtartandó epizódok',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => 'A 0 minden epizódot megtart',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => 'A(z) ${product} érvénytelen Élő TV-lejátszási adatokat adott vissza',
 			'liveTv.failedToStartChannel' => 'Nem sikerült elindítani az élő csatornát',
@@ -4912,6 +4898,8 @@ extension on TranslationsHu {
 			'playlists.itemCount' => ({required Object count}) => '${count} elem',
 			'playlists.oneItem' => '1 elem',
 			'playlists.emptyPlaylist' => 'Ez a lejátszási lista üres',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Törlöd a lejátszási listát?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Biztosan törölni szeretnéd a következőt: "${name}"?',
 			'playlists.created' => 'Lejátszási lista létrehozva',
@@ -5384,8 +5372,6 @@ extension on TranslationsHu {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'Szoftveres',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Hardveres',
 			'performanceOverlay.tunnelingActive' => 'Aktív',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} sikertelen)',
@@ -5426,6 +5412,8 @@ extension on TranslationsHu {
 			'metadataEdit.selectBackground' => 'Háttér kiválasztása',
 			'metadataEdit.selectLogo' => 'Logó kiválasztása',
 			'metadataEdit.selectSquareArt' => 'Négyzetes kép kiválasztása',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URL-ről',
 			'metadataEdit.uploadFile' => 'Fájl feltöltése',
 			'metadataEdit.enterImageUrl' => 'Add meg a kép URL-címét',

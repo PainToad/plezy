@@ -396,10 +396,6 @@
     "services": "Servizi",
     "servicesDescription": "Connetti Trakt, MyAnimeList, Seerr e altro",
     "manageLibrariesDescription": "Riordina e nascondi le librerie",
-    "companionRemoteServer": "Server del telecomando",
-    "companionRemoteServerDescription": "Consenti ai dispositivi mobili della tua rete di controllare questa app",
-    "companionRemoteServerStartFailed": "Impossibile avviare il server del telecomando",
-    "companionRemoteServerStopFailed": "Impossibile arrestare il server del telecomando",
     "autoPip": "Picture-in-Picture automatica",
     "autoPipDescription": "Attiva automaticamente la modalità Picture-in-Picture quando esci dall'app durante la riproduzione",
     "matchContentFrameRate": "Adatta la frequenza dei fotogrammi",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Esplora",
     "noContentAvailable": "Nessun contenuto disponibile",
     "addMediaToLibraries": "Aggiungi contenuti multimediali alle tue librerie",
     "continueWatching": "Continua a guardare",
@@ -1289,7 +1284,6 @@
     "folders": "cartelle",
     "tabs": {
       "recommended": "Consigliati",
-      "browse": "Esplora",
       "collections": "Raccolte",
       "genres": "",
       "playlists": "Playlist"

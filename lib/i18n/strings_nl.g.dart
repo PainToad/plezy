@@ -489,10 +489,6 @@ class _Translations$settings$nl extends Translations$settings$en {
 	@override String get services => 'Diensten';
 	@override String get servicesDescription => 'Koppel Trakt, MyAnimeList, Seerr en meer';
 	@override String get manageLibrariesDescription => 'Bibliotheken herordenen en verbergen';
-	@override String get companionRemoteServer => 'Companion Remote-server';
-	@override String get companionRemoteServerDescription => 'Sta mobiele apparaten op je netwerk toe om deze app te bedienen';
-	@override String get companionRemoteServerStartFailed => 'Kan de Companion Remote-server niet starten';
-	@override String get companionRemoteServerStopFailed => 'Kan de Companion Remote-server niet stoppen';
 	@override String get autoPip => 'Automatische beeld-in-beeld';
 	@override String get autoPipDescription => 'Schakel over naar beeld-in-beeld als je tijdens het afspelen de app verlaat';
 	@override String get matchContentFrameRate => 'Inhoudsframesnelheid afstemmen';
@@ -1315,7 +1311,6 @@ class _Translations$discover$nl extends Translations$discover$en {
 	final TranslationsNl _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Ontdekken';
 	@override String get noContentAvailable => 'Geen inhoud beschikbaar';
 	@override String get addMediaToLibraries => 'Voeg wat media toe aan je bibliotheken';
 	@override String get continueWatching => 'Verder kijken';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$nl extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Aanbevolen';
-	@override String get browse => 'Bladeren';
 	@override String get collections => 'Collecties';
 	@override String get playlists => 'Afspeellijsten';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsNl {
 			'settings.services' => 'Diensten',
 			'settings.servicesDescription' => 'Koppel Trakt, MyAnimeList, Seerr en meer',
 			'settings.manageLibrariesDescription' => 'Bibliotheken herordenen en verbergen',
-			'settings.companionRemoteServer' => 'Companion Remote-server',
-			'settings.companionRemoteServerDescription' => 'Sta mobiele apparaten op je netwerk toe om deze app te bedienen',
-			'settings.companionRemoteServerStartFailed' => 'Kan de Companion Remote-server niet starten',
-			'settings.companionRemoteServerStopFailed' => 'Kan de Companion Remote-server niet stoppen',
 			'settings.autoPip' => 'Automatische beeld-in-beeld',
 			'settings.autoPipDescription' => 'Schakel over naar beeld-in-beeld als je tijdens het afspelen de app verlaat',
 			'settings.matchContentFrameRate' => 'Inhoudsframesnelheid afstemmen',
@@ -3876,12 +3866,12 @@ extension on TranslationsNl {
 			'themeEditor.slots.outline' => 'Rand',
 			'themeEditor.slots.text' => 'Tekst',
 			'themeEditor.slots.textMuted' => 'Secundaire tekst',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Accent',
 			'themeEditor.opacity' => 'Dekking',
 			'themeEditor.hexHint' => '#RRGGBB of #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Uit andere thema\'s',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} van ${theme}',
 			'themeEditor.contrast.textOnBg' => 'Tekst op achtergrond',
 			'themeEditor.contrast.textOnSurface' => 'Tekst op oppervlak',
@@ -4390,12 +4380,12 @@ extension on TranslationsNl {
 			'profiles.pinsDontMatch' => 'De pincodes komen niet overeen',
 			'profiles.tokenIdentityMismatch' => 'Het token van het Plex-profiel bleek bij een onverwachte server te horen',
 			'connections.sectionTitle' => 'Verbindingen',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Verbinding toevoegen',
 			'connections.addConnectionSubtitleNoProfile' => 'Meld je aan met Plex of verbind een Jellyfin- of Emby-server',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Toevoegen aan ${displayName}: Plex, Jellyfin, Emby of een andere profielverbinding',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Sessie verlopen voor ${name}',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Sessie verlopen voor ${count} servers',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} weigerde toegang voor dit account',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} servers weigerden toegang voor dit account',
@@ -4459,7 +4449,6 @@ extension on TranslationsNl {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Alleen gebruikers',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Alleen critici',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Verborgen',
-			'discover.title' => 'Ontdekken',
 			'discover.noContentAvailable' => 'Geen inhoud beschikbaar',
 			'discover.addMediaToLibraries' => 'Voeg wat media toe aan je bibliotheken',
 			'discover.continueWatching' => 'Verder kijken',
@@ -4550,7 +4539,6 @@ extension on TranslationsNl {
 			'libraries.noFoldersFound' => 'Geen mappen gevonden',
 			'libraries.folders' => 'mappen',
 			'libraries.tabs.recommended' => 'Aanbevolen',
-			'libraries.tabs.browse' => 'Bladeren',
 			'libraries.tabs.collections' => 'Collecties',
 			'libraries.tabs.playlists' => 'Afspeellijsten',
 			'libraries.groupings.title' => 'Groepering',
@@ -4872,8 +4860,6 @@ extension on TranslationsNl {
 			'liveTv.recordSettings.anyTime' => 'Op elk tijdstip opnemen',
 			'liveTv.recordSettings.skipInLibrary' => 'Afleveringen overslaan die al in de bibliotheek staan',
 			'liveTv.recordSettings.keepUpTo' => 'Te bewaren afleveringen',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 bewaart alle afleveringen',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} heeft ongeldige afspeelgegevens voor Live-tv geretourneerd',
 			'liveTv.failedToStartChannel' => 'Kon de livezender niet starten',
@@ -4912,6 +4898,8 @@ extension on TranslationsNl {
 			'playlists.itemCount' => ({required Object count}) => '${count} items',
 			'playlists.oneItem' => '1 item',
 			'playlists.emptyPlaylist' => 'Deze afspeellijst is leeg',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Afspeellijst verwijderen?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Weet je zeker dat je "${name}" wilt verwijderen?',
 			'playlists.created' => 'Afspeellijst gemaakt',
@@ -5384,8 +5372,6 @@ extension on TranslationsNl {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'Software',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Hardware',
 			'performanceOverlay.tunnelingActive' => 'Actief',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} mislukt)',
@@ -5426,6 +5412,8 @@ extension on TranslationsNl {
 			'metadataEdit.selectBackground' => 'Achtergrond selecteren',
 			'metadataEdit.selectLogo' => 'Logo selecteren',
 			'metadataEdit.selectSquareArt' => 'Vierkante afbeelding selecteren',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'Vanaf URL',
 			'metadataEdit.uploadFile' => 'Bestand uploaden',
 			'metadataEdit.enterImageUrl' => 'Voer de afbeeldings-URL in',

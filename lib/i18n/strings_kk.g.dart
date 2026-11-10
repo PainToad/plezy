@@ -489,10 +489,6 @@ class _Translations$settings$kk extends Translations$settings$en {
 	@override String get services => 'Қызметтер';
 	@override String get servicesDescription => 'Trakt, MyAnimeList, Seerr және т.б. қосыңыз';
 	@override String get manageLibrariesDescription => 'Кітапханаларды қайта реттеу және жасыру';
-	@override String get companionRemoteServer => 'Көмекші пульт сервері';
-	@override String get companionRemoteServerDescription => 'Желідегі мобильді құрылғыларға осы қолданбаны басқаруға рұқсат беру';
-	@override String get companionRemoteServerStartFailed => 'Көмекші серверді іске қосу мүмкін болмады';
-	@override String get companionRemoteServerStopFailed => 'Көмекші серверді тоқтату мүмкін болмады';
 	@override String get autoPip => 'Автоматты Суреттегі сурет (PiP)';
 	@override String get autoPipDescription => 'Видео ойнап жатқанда қолданбадан шыққанда авто-PiP режиміне өту';
 	@override String get matchContentFrameRate => 'Кадр жиілігін сәйкестендіру';
@@ -1315,7 +1311,6 @@ class _Translations$discover$kk extends Translations$discover$en {
 	final TranslationsKk _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Шолу';
 	@override String get noContentAvailable => 'Мазмұн қолжетімсіз';
 	@override String get addMediaToLibraries => 'Кітапханаларыңызға медиа қосыңыз';
 	@override String get continueWatching => 'Көруді жалғастыру';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$kk extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Ұсынылатындар';
-	@override String get browse => 'Шолу';
 	@override String get collections => 'Топтамалар';
 	@override String get playlists => 'Ойнату тізімдері';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsKk {
 			'settings.services' => 'Қызметтер',
 			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr және т.б. қосыңыз',
 			'settings.manageLibrariesDescription' => 'Кітапханаларды қайта реттеу және жасыру',
-			'settings.companionRemoteServer' => 'Көмекші пульт сервері',
-			'settings.companionRemoteServerDescription' => 'Желідегі мобильді құрылғыларға осы қолданбаны басқаруға рұқсат беру',
-			'settings.companionRemoteServerStartFailed' => 'Көмекші серверді іске қосу мүмкін болмады',
-			'settings.companionRemoteServerStopFailed' => 'Көмекші серверді тоқтату мүмкін болмады',
 			'settings.autoPip' => 'Автоматты Суреттегі сурет (PiP)',
 			'settings.autoPipDescription' => 'Видео ойнап жатқанда қолданбадан шыққанда авто-PiP режиміне өту',
 			'settings.matchContentFrameRate' => 'Кадр жиілігін сәйкестендіру',
@@ -3876,12 +3866,12 @@ extension on TranslationsKk {
 			'themeEditor.slots.outline' => 'Контур',
 			'themeEditor.slots.text' => 'Мәтін',
 			'themeEditor.slots.textMuted' => 'Қосалқы мәтін',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Акцент',
 			'themeEditor.opacity' => 'Мөлдірлік',
 			'themeEditor.hexHint' => '#RRGGBB немесе #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Басқа тақырыптардан',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme}: ${color}',
 			'themeEditor.contrast.textOnBg' => 'Фондағы мәтін',
 			'themeEditor.contrast.textOnSurface' => 'Беткі қабаттағы мәтін',
@@ -4390,12 +4380,12 @@ extension on TranslationsKk {
 			'profiles.pinsDontMatch' => 'PIN кодтар сәйкес келмейді',
 			'profiles.tokenIdentityMismatch' => 'Plex профилінің токені күтілмеген серверді анықтады',
 			'connections.sectionTitle' => 'Қосылымдар',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Қосылым қосу',
 			'connections.addConnectionSubtitleNoProfile' => 'Plex арқылы кіріңіз немесе Jellyfin не Emby серверіне қосылыңыз',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName} профиліне қосу: Plex, Jellyfin, Emby немесе басқа қосылым',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name} үшін сеанс мерзімі өтті',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count} сервер үшін сеанс мерзімі өтті',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} бұл тіркелгіге кіруден бас тартты',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} сервер бұл тіркелгіге кіруден бас тартты',
@@ -4459,7 +4449,6 @@ extension on TranslationsKk {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Тек пайдаланушылар',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Тек сыншылар',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Жасырылған',
-			'discover.title' => 'Шолу',
 			'discover.noContentAvailable' => 'Мазмұн қолжетімсіз',
 			'discover.addMediaToLibraries' => 'Кітапханаларыңызға медиа қосыңыз',
 			'discover.continueWatching' => 'Көруді жалғастыру',
@@ -4550,7 +4539,6 @@ extension on TranslationsKk {
 			'libraries.noFoldersFound' => 'Қапшықтар табылмады',
 			'libraries.folders' => 'қапшықтар',
 			'libraries.tabs.recommended' => 'Ұсынылатындар',
-			'libraries.tabs.browse' => 'Шолу',
 			'libraries.tabs.collections' => 'Топтамалар',
 			'libraries.tabs.playlists' => 'Ойнату тізімдері',
 			'libraries.groupings.title' => 'Топтау',
@@ -4872,8 +4860,6 @@ extension on TranslationsKk {
 			'liveTv.recordSettings.anyTime' => 'Кез келген уақытта жазу',
 			'liveTv.recordSettings.skipInLibrary' => 'Кітапханада бар эпизодтарды өткізіп жіберу',
 			'liveTv.recordSettings.keepUpTo' => 'Сақталатын эпизодтар',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 барлық эпизодты сақтайды',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} жарамсыз тікелей TV ойнату деректерін қайтарды',
 			'liveTv.failedToStartChannel' => 'Тікелей эфир арнасын іске қосу мүмкін болмады',
@@ -4912,6 +4898,8 @@ extension on TranslationsKk {
 			'playlists.itemCount' => ({required Object count}) => '${count} элемент',
 			'playlists.oneItem' => '1 элемент',
 			'playlists.emptyPlaylist' => 'Бұл ойнату тізімі бос',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Ойнату тізімі өшірілсін бе?',
 			'playlists.deleteMessage' => ({required Object name}) => '"${name}" өшірілсін бе?',
 			'playlists.created' => 'Ойнату тізімі жасалды',
@@ -5384,8 +5372,6 @@ extension on TranslationsKk {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'Бағдарламалық',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Аппараттық',
 			'performanceOverlay.tunnelingActive' => 'Белсенді',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} сәтсіз аяқталды)',
@@ -5426,6 +5412,8 @@ extension on TranslationsKk {
 			'metadataEdit.selectBackground' => 'Фонды таңдау',
 			'metadataEdit.selectLogo' => 'Логотипті таңдау',
 			'metadataEdit.selectSquareArt' => 'Шаршы суретті таңдау',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URL арқылы',
 			'metadataEdit.uploadFile' => 'Файлды жүктеу',
 			'metadataEdit.enterImageUrl' => 'Сурет URL-ін енгізіңіз',

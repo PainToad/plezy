@@ -489,10 +489,6 @@ class _Translations$settings$ko extends Translations$settings$en {
 	@override String get services => '서비스';
 	@override String get servicesDescription => 'Trakt, MyAnimeList, Seerr 등 연결';
 	@override String get manageLibrariesDescription => '라이브러리 순서를 변경하거나 숨깁니다';
-	@override String get companionRemoteServer => '컴패니언 리모트 서버';
-	@override String get companionRemoteServerDescription => '네트워크의 모바일 기기가 이 앱을 제어할 수 있도록 허용';
-	@override String get companionRemoteServerStartFailed => '컴패니언 리모트 서버를 시작할 수 없습니다';
-	@override String get companionRemoteServerStopFailed => '컴패니언 리모트 서버를 중지할 수 없습니다';
 	@override String get autoPip => '자동 PIP 모드';
 	@override String get autoPipDescription => '재생 중 앱을 떠나면 자동으로 화면 속 화면 모드로 전환합니다';
 	@override String get matchContentFrameRate => '콘텐츠 프레임 레이트 맞춤';
@@ -1311,7 +1307,6 @@ class _Translations$discover$ko extends Translations$discover$en {
 	final TranslationsKo _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => '둘러보기';
 	@override String get noContentAvailable => '사용 가능한 콘텐츠가 없습니다';
 	@override String get addMediaToLibraries => '미디어 라이브러리에 미디어를 추가해 주세요';
 	@override String get continueWatching => '계속 시청';
@@ -2692,7 +2687,6 @@ class _Translations$libraries$tabs$ko extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => '추천';
-	@override String get browse => '찾아보기';
 	@override String get collections => '컬렉션';
 	@override String get playlists => '재생 목록';
 }
@@ -3726,10 +3720,6 @@ extension on TranslationsKo {
 			'settings.services' => '서비스',
 			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr 등 연결',
 			'settings.manageLibrariesDescription' => '라이브러리 순서를 변경하거나 숨깁니다',
-			'settings.companionRemoteServer' => '컴패니언 리모트 서버',
-			'settings.companionRemoteServerDescription' => '네트워크의 모바일 기기가 이 앱을 제어할 수 있도록 허용',
-			'settings.companionRemoteServerStartFailed' => '컴패니언 리모트 서버를 시작할 수 없습니다',
-			'settings.companionRemoteServerStopFailed' => '컴패니언 리모트 서버를 중지할 수 없습니다',
 			'settings.autoPip' => '자동 PIP 모드',
 			'settings.autoPipDescription' => '재생 중 앱을 떠나면 자동으로 화면 속 화면 모드로 전환합니다',
 			'settings.matchContentFrameRate' => '콘텐츠 프레임 레이트 맞춤',
@@ -3864,12 +3854,12 @@ extension on TranslationsKo {
 			'themeEditor.slots.outline' => '윤곽선',
 			'themeEditor.slots.text' => '텍스트',
 			'themeEditor.slots.textMuted' => '보조 텍스트',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => '강조색',
 			'themeEditor.opacity' => '불투명도',
 			'themeEditor.hexHint' => '#RRGGBB 또는 #AARRGGBB',
 			'themeEditor.fromOtherThemes' => '다른 테마에서',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} ${color}',
 			'themeEditor.contrast.textOnBg' => '배경 위 텍스트',
 			'themeEditor.contrast.textOnSurface' => '표면 위 텍스트',
@@ -4378,12 +4368,12 @@ extension on TranslationsKo {
 			'profiles.pinsDontMatch' => 'PIN이 일치하지 않습니다',
 			'profiles.tokenIdentityMismatch' => 'Plex 프로필 토큰이 예상과 다른 서버로 확인되었습니다',
 			'connections.sectionTitle' => '연결',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => '연결 추가',
 			'connections.addConnectionSubtitleNoProfile' => 'Plex로 로그인하거나 Jellyfin 또는 Emby 서버에 연결',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName}에 추가: Plex, Jellyfin, Emby 또는 다른 프로필 연결',
 			'connections.sessionExpiredOne' => ({required Object name}) => '${name}의 세션이 만료되었습니다',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => '${count}개 서버의 세션이 만료되었습니다',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name}에서 이 계정의 접근을 거부했습니다',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count}개 서버에서 이 계정의 접근을 거부했습니다',
@@ -4447,7 +4437,6 @@ extension on TranslationsKo {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => '사용자만',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => '평론가만',
 			'accountPreferences.mediaReviewsOptions.nobody' => '숨김',
-			'discover.title' => '둘러보기',
 			'discover.noContentAvailable' => '사용 가능한 콘텐츠가 없습니다',
 			'discover.addMediaToLibraries' => '미디어 라이브러리에 미디어를 추가해 주세요',
 			'discover.continueWatching' => '계속 시청',
@@ -4538,7 +4527,6 @@ extension on TranslationsKo {
 			'libraries.noFoldersFound' => '폴더를 찾을 수 없습니다',
 			'libraries.folders' => '폴더',
 			'libraries.tabs.recommended' => '추천',
-			'libraries.tabs.browse' => '찾아보기',
 			'libraries.tabs.collections' => '컬렉션',
 			'libraries.tabs.playlists' => '재생 목록',
 			'libraries.groupings.title' => '그룹',
@@ -4860,8 +4848,6 @@ extension on TranslationsKo {
 			'liveTv.recordSettings.anyTime' => '모든 시간대에 녹화',
 			'liveTv.recordSettings.skipInLibrary' => '라이브러리에 이미 있는 에피소드 건너뛰기',
 			'liveTv.recordSettings.keepUpTo' => '보관할 에피소드 수',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0이면 모든 에피소드 보관',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product}에서 잘못된 실시간 TV 재생 데이터를 반환했습니다',
 			'liveTv.failedToStartChannel' => '실시간 채널을 시작할 수 없습니다',
@@ -4900,6 +4886,8 @@ extension on TranslationsKo {
 			'playlists.itemCount' => ({required Object count}) => '${count}개 항목',
 			'playlists.oneItem' => '1개 항목',
 			'playlists.emptyPlaylist' => '이 재생 목록은 비어 있습니다',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => '재생 목록을 삭제하시겠습니까?',
 			'playlists.deleteMessage' => ({required Object name}) => '"${name}"을(를) 삭제하시겠습니까?',
 			'playlists.created' => '재생 목록이 생성되었습니다',
@@ -5372,8 +5360,6 @@ extension on TranslationsKo {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => '소프트웨어',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => '하드웨어',
 			'performanceOverlay.tunnelingActive' => '활성',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures}개 실패)',
@@ -5414,6 +5400,8 @@ extension on TranslationsKo {
 			'metadataEdit.selectBackground' => '배경 선택',
 			'metadataEdit.selectLogo' => '로고 선택',
 			'metadataEdit.selectSquareArt' => '정사각형 아트 선택',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'URL에서',
 			'metadataEdit.uploadFile' => '파일 업로드',
 			'metadataEdit.enterImageUrl' => '이미지 URL 입력',

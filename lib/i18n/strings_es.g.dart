@@ -489,10 +489,6 @@ class _Translations$settings$es extends Translations$settings$en {
 	@override String get services => 'Servicios';
 	@override String get servicesDescription => 'Conecta Trakt, MyAnimeList, Seerr y más';
 	@override String get manageLibrariesDescription => 'Reordena y oculta bibliotecas';
-	@override String get companionRemoteServer => 'Servidor de control remoto';
-	@override String get companionRemoteServerDescription => 'Permitir que dispositivos móviles en tu red controlen esta aplicación';
-	@override String get companionRemoteServerStartFailed => 'No se pudo iniciar el servidor de control remoto';
-	@override String get companionRemoteServerStopFailed => 'No se pudo detener el servidor de control remoto';
 	@override String get autoPip => 'Imagen en imagen automática';
 	@override String get autoPipDescription => 'Activar automáticamente el modo de imagen en imagen al salir de la aplicación durante la reproducción';
 	@override String get matchContentFrameRate => 'Ajustar frecuencia de actualización';
@@ -1315,7 +1311,6 @@ class _Translations$discover$es extends Translations$discover$en {
 	final TranslationsEs _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Descubrir';
 	@override String get noContentAvailable => 'No hay contenido disponible';
 	@override String get addMediaToLibraries => 'Añade contenido a tus bibliotecas';
 	@override String get continueWatching => 'Seguir viendo';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$es extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Recomendado';
-	@override String get browse => 'Explorar';
 	@override String get collections => 'Colecciones';
 	@override String get playlists => 'Listas de reproducción';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsEs {
 			'settings.services' => 'Servicios',
 			'settings.servicesDescription' => 'Conecta Trakt, MyAnimeList, Seerr y más',
 			'settings.manageLibrariesDescription' => 'Reordena y oculta bibliotecas',
-			'settings.companionRemoteServer' => 'Servidor de control remoto',
-			'settings.companionRemoteServerDescription' => 'Permitir que dispositivos móviles en tu red controlen esta aplicación',
-			'settings.companionRemoteServerStartFailed' => 'No se pudo iniciar el servidor de control remoto',
-			'settings.companionRemoteServerStopFailed' => 'No se pudo detener el servidor de control remoto',
 			'settings.autoPip' => 'Imagen en imagen automática',
 			'settings.autoPipDescription' => 'Activar automáticamente el modo de imagen en imagen al salir de la aplicación durante la reproducción',
 			'settings.matchContentFrameRate' => 'Ajustar frecuencia de actualización',
@@ -3876,12 +3866,12 @@ extension on TranslationsEs {
 			'themeEditor.slots.outline' => 'Contorno',
 			'themeEditor.slots.text' => 'Texto',
 			'themeEditor.slots.textMuted' => 'Texto secundario',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Acento',
 			'themeEditor.opacity' => 'Opacidad',
 			'themeEditor.hexHint' => '#RRGGBB o #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'De otros temas',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} de ${theme}',
 			'themeEditor.contrast.textOnBg' => 'Texto sobre fondo',
 			'themeEditor.contrast.textOnSurface' => 'Texto sobre superficie',
@@ -4390,12 +4380,12 @@ extension on TranslationsEs {
 			'profiles.pinsDontMatch' => 'Los PIN no coinciden',
 			'profiles.tokenIdentityMismatch' => 'El token del perfil de Plex correspondía a un servidor inesperado',
 			'connections.sectionTitle' => 'Conexiones',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Añadir conexión',
 			'connections.addConnectionSubtitleNoProfile' => 'Inicia sesión con Plex o conecta un servidor de Jellyfin o Emby',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Añadir a ${displayName}: Plex, Jellyfin, Emby u otra conexión de perfil',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Sesión caducada para ${name}',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Sesión caducada para ${count} servidores',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} denegó el acceso a esta cuenta',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} servidores denegaron el acceso a esta cuenta',
@@ -4459,7 +4449,6 @@ extension on TranslationsEs {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Solo usuarios',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Solo críticos',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Ocultos',
-			'discover.title' => 'Descubrir',
 			'discover.noContentAvailable' => 'No hay contenido disponible',
 			'discover.addMediaToLibraries' => 'Añade contenido a tus bibliotecas',
 			'discover.continueWatching' => 'Seguir viendo',
@@ -4550,7 +4539,6 @@ extension on TranslationsEs {
 			'libraries.noFoldersFound' => 'No se encontraron carpetas',
 			'libraries.folders' => 'carpetas',
 			'libraries.tabs.recommended' => 'Recomendado',
-			'libraries.tabs.browse' => 'Explorar',
 			'libraries.tabs.collections' => 'Colecciones',
 			'libraries.tabs.playlists' => 'Listas de reproducción',
 			'libraries.groupings.title' => 'Agrupación',
@@ -4872,8 +4860,6 @@ extension on TranslationsEs {
 			'liveTv.recordSettings.anyTime' => 'Grabar a cualquier hora',
 			'liveTv.recordSettings.skipInLibrary' => 'Omitir episodios que ya están en la biblioteca',
 			'liveTv.recordSettings.keepUpTo' => 'Episodios que conservar',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 conserva todos los episodios',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} devolvió datos de reproducción de TV en vivo no válidos',
 			'liveTv.failedToStartChannel' => 'No se pudo iniciar el canal en vivo',
@@ -4912,6 +4898,8 @@ extension on TranslationsEs {
 			'playlists.itemCount' => ({required Object count}) => '${count} elementos',
 			'playlists.oneItem' => '1 elemento',
 			'playlists.emptyPlaylist' => 'Esta lista de reproducción está vacía',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => '¿Eliminar lista de reproducción?',
 			'playlists.deleteMessage' => ({required Object name}) => '¿Estás seguro de que quieres eliminar "${name}"?',
 			'playlists.created' => 'Lista de reproducción creada',
@@ -5384,8 +5372,6 @@ extension on TranslationsEs {
 			'performanceOverlay.decoderMediatekHw' => 'HW de MediaTek',
 			'performanceOverlay.decoderExynosHw' => 'HW de Exynos',
 			'performanceOverlay.decoderSoftware' => 'Software',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Hardware',
 			'performanceOverlay.tunnelingActive' => 'Activo',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} con error)',
@@ -5426,6 +5412,8 @@ extension on TranslationsEs {
 			'metadataEdit.selectBackground' => 'Seleccionar fondo',
 			'metadataEdit.selectLogo' => 'Seleccionar logo',
 			'metadataEdit.selectSquareArt' => 'Seleccionar imagen cuadrada',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'Desde URL',
 			'metadataEdit.uploadFile' => 'Subir archivo',
 			'metadataEdit.enterImageUrl' => 'Introducir URL de imagen',

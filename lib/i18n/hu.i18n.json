@@ -396,10 +396,6 @@
     "services": "Szolgáltatások",
     "servicesDescription": "Trakt, MyAnimeList, Seerr és egyéb szolgáltatások csatlakoztatása",
     "manageLibrariesDescription": "Könyvtárak sorrendjének módosítása és elrejtése",
-    "companionRemoteServer": "Kísérőtávirányító szervere",
-    "companionRemoteServerDescription": "Lehetővé teszi, hogy a hálózaton lévő mobileszközökről vezéreld az alkalmazást",
-    "companionRemoteServerStartFailed": "Nem sikerült elindítani a kísérőtávirányító szerverét",
-    "companionRemoteServerStopFailed": "Nem sikerült leállítani a kísérőtávirányító szerverét",
     "autoPip": "Automatikus kép a képben (PiP)",
     "autoPipDescription": "Lejátszás közben az alkalmazás elhagyásakor automatikusan kép a képben módra vált",
     "matchContentFrameRate": "Képkockasebesség illesztése a tartalomhoz",
@@ -1185,7 +1181,6 @@
     }
   },
   "discover": {
-    "title": "Felfedezés",
     "noContentAvailable": "Nincs elérhető tartalom",
     "addMediaToLibraries": "Adj hozzá médiát a könyvtáraidhoz",
     "continueWatching": "Folytatás",
@@ -1289,7 +1284,6 @@
     "folders": "mappák",
     "tabs": {
       "recommended": "Ajánlott",
-      "browse": "Böngészés",
       "collections": "Gyűjtemények",
       "genres": "",
       "playlists": "Lejátszási listák"

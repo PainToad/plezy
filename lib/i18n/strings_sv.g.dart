@@ -489,10 +489,6 @@ class _Translations$settings$sv extends Translations$settings$en {
 	@override String get services => 'Tjänster';
 	@override String get servicesDescription => 'Anslut Trakt, MyAnimeList, Seerr med mera';
 	@override String get manageLibrariesDescription => 'Ordna om och dölj bibliotek';
-	@override String get companionRemoteServer => 'Server för fjärrkontroll';
-	@override String get companionRemoteServerDescription => 'Tillåt att mobila enheter i nätverket styr appen';
-	@override String get companionRemoteServerStartFailed => 'Kunde inte starta servern för fjärrkontroll';
-	@override String get companionRemoteServerStopFailed => 'Kunde inte stoppa servern för fjärrkontroll';
 	@override String get autoPip => 'Automatisk bild-i-bild';
 	@override String get autoPipDescription => 'Aktivera bild-i-bild om du lämnar appen under uppspelning';
 	@override String get matchContentFrameRate => 'Matcha innehållets bildfrekvens';
@@ -1315,7 +1311,6 @@ class _Translations$discover$sv extends Translations$discover$en {
 	final TranslationsSv _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Upptäck';
 	@override String get noContentAvailable => 'Inget innehåll tillgängligt';
 	@override String get addMediaToLibraries => 'Lägg till medieinnehåll i dina bibliotek';
 	@override String get continueWatching => 'Fortsätt titta';
@@ -2702,7 +2697,6 @@ class _Translations$libraries$tabs$sv extends Translations$libraries$tabs$en {
 
 	// Translations
 	@override String get recommended => 'Rekommenderat';
-	@override String get browse => 'Bläddra';
 	@override String get collections => 'Samlingar';
 	@override String get playlists => 'Spellistor';
 }
@@ -3738,10 +3732,6 @@ extension on TranslationsSv {
 			'settings.services' => 'Tjänster',
 			'settings.servicesDescription' => 'Anslut Trakt, MyAnimeList, Seerr med mera',
 			'settings.manageLibrariesDescription' => 'Ordna om och dölj bibliotek',
-			'settings.companionRemoteServer' => 'Server för fjärrkontroll',
-			'settings.companionRemoteServerDescription' => 'Tillåt att mobila enheter i nätverket styr appen',
-			'settings.companionRemoteServerStartFailed' => 'Kunde inte starta servern för fjärrkontroll',
-			'settings.companionRemoteServerStopFailed' => 'Kunde inte stoppa servern för fjärrkontroll',
 			'settings.autoPip' => 'Automatisk bild-i-bild',
 			'settings.autoPipDescription' => 'Aktivera bild-i-bild om du lämnar appen under uppspelning',
 			'settings.matchContentFrameRate' => 'Matcha innehållets bildfrekvens',
@@ -3876,12 +3866,12 @@ extension on TranslationsSv {
 			'themeEditor.slots.outline' => 'Kontur',
 			'themeEditor.slots.text' => 'Text',
 			'themeEditor.slots.textMuted' => 'Sekundär text',
-			_ => null,
-		} ?? switch (path) {
 			'themeEditor.slots.accent' => 'Accentfärg',
 			'themeEditor.opacity' => 'Opacitet',
 			'themeEditor.hexHint' => '#RRGGBB eller #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'Från andra teman',
+			_ => null,
+		} ?? switch (path) {
 			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} (${theme})',
 			'themeEditor.contrast.textOnBg' => 'Text på bakgrund',
 			'themeEditor.contrast.textOnSurface' => 'Text på yta',
@@ -4390,12 +4380,12 @@ extension on TranslationsSv {
 			'profiles.pinsDontMatch' => 'PIN-koderna stämmer inte överens',
 			'profiles.tokenIdentityMismatch' => 'Plex-profiltoken kopplades till en oväntad server',
 			'connections.sectionTitle' => 'Anslutningar',
-			_ => null,
-		} ?? switch (path) {
 			'connections.addConnection' => 'Lägg till anslutning',
 			'connections.addConnectionSubtitleNoProfile' => 'Logga in med Plex eller anslut en Jellyfin- eller Emby-server',
 			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Lägg till för ${displayName}: Plex, Jellyfin, Emby eller en annan profilanslutning',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Sessionen har gått ut för ${name}',
+			_ => null,
+		} ?? switch (path) {
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Sessionen har gått ut för ${count} servrar',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} nekade åtkomst för det här kontot',
 			'connections.accessDeniedMany' => ({required Object count}) => '${count} servrar nekade åtkomst för det här kontot',
@@ -4459,7 +4449,6 @@ extension on TranslationsSv {
 			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Endast användare',
 			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Endast kritiker',
 			'accountPreferences.mediaReviewsOptions.nobody' => 'Dolda',
-			'discover.title' => 'Upptäck',
 			'discover.noContentAvailable' => 'Inget innehåll tillgängligt',
 			'discover.addMediaToLibraries' => 'Lägg till medieinnehåll i dina bibliotek',
 			'discover.continueWatching' => 'Fortsätt titta',
@@ -4550,7 +4539,6 @@ extension on TranslationsSv {
 			'libraries.noFoldersFound' => 'Inga mappar hittades',
 			'libraries.folders' => 'mappar',
 			'libraries.tabs.recommended' => 'Rekommenderat',
-			'libraries.tabs.browse' => 'Bläddra',
 			'libraries.tabs.collections' => 'Samlingar',
 			'libraries.tabs.playlists' => 'Spellistor',
 			'libraries.groupings.title' => 'Gruppering',
@@ -4872,8 +4860,6 @@ extension on TranslationsSv {
 			'liveTv.recordSettings.anyTime' => 'Spela in när som helst',
 			'liveTv.recordSettings.skipInLibrary' => 'Hoppa över avsnitt som redan finns i biblioteket',
 			'liveTv.recordSettings.keepUpTo' => 'Avsnitt att behålla',
-			_ => null,
-		} ?? switch (path) {
 			'liveTv.recordSettings.keepUpToHint' => '0 behåller alla avsnitt',
 			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} returnerade ogiltiga uppspelningsdata för Live-TV',
 			'liveTv.failedToStartChannel' => 'Kunde inte starta livekanalen',
@@ -4912,6 +4898,8 @@ extension on TranslationsSv {
 			'playlists.itemCount' => ({required Object count}) => '${count} objekt',
 			'playlists.oneItem' => '1 objekt',
 			'playlists.emptyPlaylist' => 'Denna spellista är tom',
+			_ => null,
+		} ?? switch (path) {
 			'playlists.deleteConfirm' => 'Ta bort spellista?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Är du säker på att du vill ta bort "${name}"?',
 			'playlists.created' => 'Spellistan har skapats',
@@ -5384,8 +5372,6 @@ extension on TranslationsSv {
 			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
 			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
 			'performanceOverlay.decoderSoftware' => 'Programvara',
-			_ => null,
-		} ?? switch (path) {
 			'performanceOverlay.decoderHardware' => 'Maskinvara',
 			'performanceOverlay.tunnelingActive' => 'Aktiv',
 			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} misslyckades)',
@@ -5426,6 +5412,8 @@ extension on TranslationsSv {
 			'metadataEdit.selectBackground' => 'Välj bakgrund',
 			'metadataEdit.selectLogo' => 'Välj logotyp',
 			'metadataEdit.selectSquareArt' => 'Välj kvadratisk bild',
+			_ => null,
+		} ?? switch (path) {
 			'metadataEdit.fromUrl' => 'Från URL',
 			'metadataEdit.uploadFile' => 'Ladda upp fil',
 			'metadataEdit.enterImageUrl' => 'Ange bild-URL',
