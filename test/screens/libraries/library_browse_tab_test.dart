@@ -207,6 +207,24 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
+  for (final kind in [MediaKind.movie, MediaKind.show, MediaKind.clip]) {
+    testWidgets('non-music ${kind.name} library has no grouping chip', (tester) async {
+      final harness = _BrowseHarness(clientA: _BrowseClient('server-a', 'Video Library'));
+      addTearDown(harness.dispose);
+      harness.selectedLibrary.value = MediaLibrary(
+        id: 'video-library',
+        backend: MediaBackend.jellyfin,
+        title: 'Video Library',
+        kind: kind,
+        serverId: harness.clientA.serverId,
+      );
+      await _pumpHarness(tester, settle: false);
+      await pumpRequestFrames(tester);
+      expect(find.byType(FocusableFilterChip), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+  }
+
   testWidgets('mixed library all grouping applies its explicit root kinds', (tester) async {
     final client = _BrowseClient('server-a', 'Mixed');
     final harness = _BrowseHarness(clientA: client);

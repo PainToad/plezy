@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:plezy/focus/focusable_button.dart';
+import 'package:plezy/i18n/strings.g.dart';
 import 'package:plezy/media/ids.dart';
 import 'package:plezy/media/media_backend.dart';
 import 'package:plezy/media/media_kind.dart';
@@ -47,6 +49,29 @@ void main() {
   tearDown(() {
     TvDetectionService.debugSetAppleTVOverride(null);
   });
+
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    for (final size in [const Size(390, 844), const Size(1024, 768)]) {
+      testWidgets('music grouping is visible on $platform at $size', (tester) async {
+        debugDefaultTargetPlatformOverride = platform;
+        final harness = _MusicBrowseHarness();
+        addTearDown(harness.dispose);
+        await _pumpBrowseTab(tester, harness, size: size);
+        final chip = find.widgetWithText(FocusableFilterChip, t.libraries.groupings.artists);
+        expect(chip, findsOneWidget);
+        await tester.tap(chip);
+        await tester.pumpAndSettle();
+        expect(find.text(t.libraries.groupings.albums), findsOneWidget);
+        expect(find.text(t.libraries.groupings.tracks), findsOneWidget);
+        await tester.tap(find.text(t.libraries.groupings.albums));
+        await pumpRequestFrames(tester);
+        expect(find.widgetWithText(FocusableFilterChip, t.libraries.groupings.albums), findsOneWidget);
+        final storage = await StorageService.getInstance();
+        expect(storage.getLibraryGrouping(_musicLibrary.globalKey), 'albums');
+        debugDefaultTargetPlatformOverride = null;
+      });
+    }
+  }
 
   testWidgets('TV full-card preference keeps music browse captions visible', (tester) async {
     TvDetectionService.debugSetAppleTVOverride(true);
@@ -111,10 +136,16 @@ void main() {
   });
 }
 
-Future<void> _pumpBrowseTab(WidgetTester tester, _MusicBrowseHarness harness, {MediaLibrary? library}) async {
+Future<void> _pumpBrowseTab(
+  WidgetTester tester,
+  _MusicBrowseHarness harness, {
+  MediaLibrary? library,
+  Size size = const Size(1280, 720),
+}) async {
   await pumpLibraryTab(
     tester,
     provider: harness.provider,
+    size: size,
     tab: LibraryBrowseTab(
       library: library ?? _musicLibrary,
       canGroupByFolders: true,
@@ -157,6 +188,13 @@ class _MusicBrowseHarness {
               ],
               'TotalRecordCount': 1,
             }),
+            200,
+            headers: {'content-type': 'application/json'},
+          );
+        }
+        if (request.url.path == '/Items') {
+          return http.Response(
+            jsonEncode({'Items': const [], 'TotalRecordCount': 0}),
             200,
             headers: {'content-type': 'application/json'},
           );

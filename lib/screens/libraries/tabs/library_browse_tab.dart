@@ -568,12 +568,16 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
   /// Focus the chips bar (for navigating from tab bar to content).
   /// Called by libraries screen when pressing DOWN on tab bar.
   void focusChipsBar() {
-    if (_usesMobileBrowseOptions) {
-      focusFirstItem();
+    if (!_showsChipsBar) {
+      if (hasFocusableContent) {
+        focusFirstItem();
+      } else {
+        widget.onBack?.call();
+      }
       return;
     }
     lastFocusedGridIndex = null;
-    _groupingChipFocusNode.requestFocus();
+    _firstVisibleChipFocusNode?.requestFocus();
   }
 
   /// Show the mobile browse options sheet from the parent app bar.
@@ -1043,13 +1047,14 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(vertical: 8),
         children: [
-          FocusableListTile(
-            leading: const AppIcon(Symbols.category_rounded, fill: 1),
-            title: Text(t.libraries.groupings.title),
-            subtitle: Text(_getGroupingLabel(_selectedGrouping)),
-            trailing: const AppIcon(Symbols.chevron_right_rounded, fill: 1),
-            onTap: () => _showGroupingOptionsPage(controller),
-          ),
+          if (_isMusicLibrary)
+            FocusableListTile(
+              leading: const AppIcon(Symbols.category_rounded, fill: 1),
+              title: Text(t.libraries.groupings.title),
+              subtitle: Text(_getGroupingLabel(_selectedGrouping)),
+              trailing: const AppIcon(Symbols.chevron_right_rounded, fill: 1),
+              onTap: () => _showGroupingOptionsPage(controller),
+            ),
           if (_isFiltersChipVisible)
             FocusableListTile(
               leading: const AppIcon(Symbols.filter_alt_rounded, fill: 1),
@@ -1453,11 +1458,11 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
 
   /// Navigate focus from grid up to the chips bar, or the tab bar on mobile.
   void _navigateToChips() {
-    if (_usesMobileBrowseOptions) {
+    if (!_showsChipsBar) {
       widget.onBack?.call();
       return;
     }
-    _groupingChipFocusNode.requestFocus();
+    _firstVisibleChipFocusNode?.requestFocus();
   }
 
   void _navigateToSidebar() {
@@ -1471,8 +1476,21 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
   /// Whether the device is a phone (not tablet/desktop/TV).
   bool _isPhone(BuildContext context) => PlatformDetector.isPhone(context);
 
-  /// Mobile uses a top-bar options action instead of inline browse chips.
+  /// Mobile keeps filter/sort options in the top bar; music grouping is inline.
   bool get _usesMobileBrowseOptions => PlatformDetector.isMobile(context);
+
+  bool get _isMusicLibrary => widget.library.kind == MediaKind.artist;
+
+  bool get _showsChipsBar =>
+      _isMusicLibrary || (!_usesMobileBrowseOptions && (_isFiltersChipVisible || _isSortChipVisible));
+
+  FocusNode? get _firstVisibleChipFocusNode => _isMusicLibrary
+      ? _groupingChipFocusNode
+      : _isFiltersChipVisible
+      ? _filtersChipFocusNode
+      : _isSortChipVisible
+      ? _sortChipFocusNode
+      : null;
 
   /// The letter currently visible at the top of the grid, determined by
   /// how many items we've scrolled past relative to the API's cumulative
@@ -1606,7 +1624,7 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
     );
   }
 
-  double get _contentStartScrollOffset => (_usesMobileBrowseOptions ? 0.0 : _chipsBarHeight) + _effectiveTopPadding;
+  double get _contentStartScrollOffset => (_showsChipsBar ? _chipsBarHeight : 0.0) + _effectiveTopPadding;
 
   /// Handle a tap on the letter at [targetIndex] in the alpha bar. The
   /// active [LibraryAlphaBarStrategy] owns the per-backend behaviour and
@@ -1798,7 +1816,7 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
             // Floating chips: scroll off with content but snap back into view
             // on upward direction reversal, matching the outer floating
             // SliverAppBar's behavior.
-            if (!_usesMobileBrowseOptions)
+            if (_showsChipsBar)
               SliverPersistentHeader(
                 floating: true,
                 pinned: false,
@@ -1946,14 +1964,15 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
   Widget _buildChipsBar() {
     return OptionsChipsBar(
       chips: [
-        OptionsChipDescriptor(
-          anchorKey: _groupingChipKey,
-          focusNode: _groupingChipFocusNode,
-          icon: Symbols.category_rounded,
-          label: _getGroupingLabel(_selectedGrouping),
-          onPressed: _showGroupingBottomSheet,
-        ),
-        if (_isFiltersChipVisible)
+        if (_isMusicLibrary)
+          OptionsChipDescriptor(
+            anchorKey: _groupingChipKey,
+            focusNode: _groupingChipFocusNode,
+            icon: Symbols.category_rounded,
+            label: _getGroupingLabel(_selectedGrouping),
+            onPressed: _showGroupingBottomSheet,
+          ),
+        if (!_usesMobileBrowseOptions && _isFiltersChipVisible)
           OptionsChipDescriptor(
             anchorKey: _filtersChipKey,
             focusNode: _filtersChipFocusNode,
@@ -1963,7 +1982,7 @@ class _LibraryBrowseTabState extends BaseLibraryTabState<MediaItem, LibraryBrows
                 : t.libraries.filtersWithCount(count: _activeFilterFieldCount),
             onPressed: _showFiltersBottomSheet,
           ),
-        if (_isSortChipVisible)
+        if (!_usesMobileBrowseOptions && _isSortChipVisible)
           OptionsChipDescriptor(
             anchorKey: _sortChipKey,
             focusNode: _sortChipFocusNode,
