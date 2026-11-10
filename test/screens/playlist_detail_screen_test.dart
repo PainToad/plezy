@@ -707,7 +707,7 @@ void main() {
     expect(menu, findsOneWidget);
     expect(tester.widget<AppMenuSheet<Object?>>(menu).title, contains('Item 1'));
     expect(find.text(t.mediaMenu.markAsWatched), findsOneWidget);
-    expect(find.text(t.mediaMenu.rate), findsOneWidget);
+    expect(find.text(t.mediaMenu.rate), findsNothing);
 
     await tester.sendKeyEvent(LogicalKeyboardKey.gameButtonB);
     await tester.pumpAndSettle();

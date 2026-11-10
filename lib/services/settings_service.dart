@@ -951,11 +951,6 @@ class SettingsService extends BaseSharedPreferencesService {
     return NullableStringPref(profileScopedPrefsKey(profileId, 'metadata_recent_tags'));
   }
 
-  static final companionRemoteLastHostAddress = NullableStringPref(
-    'companion_remote_last_host_address',
-    transform: _trimEmptyAsNull,
-  );
-
   static final maxVolume = IntPref('max_volume', defaultValue: 100, transform: (v) => v.clamp(100, 300));
   static final downmixCenterBoost = IntPref('downmix_center_boost', transform: (v) => v.clamp(0, 12));
   // mpv's sub-pos range: values above 100 move subtitles further down than

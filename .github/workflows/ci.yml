@@ -24,7 +24,7 @@ env:
 
 jobs:
   library-regressions:
-    name: Library browse regression tests
+    name: UI and settings regression tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -40,10 +40,13 @@ jobs:
           cache: true
           pub-cache: false
       - run: flutter pub get --enforce-lockfile --no-example
-      - name: Verify library browsing and music grouping
+      - name: Verify library browsing, media menus, navigation and settings
         run: >-
           flutter test test/screens/libraries/library_browse_tab_test.dart
           test/screens/libraries/library_browse_music_test.dart
+          test/screens/playlist_detail_screen_test.dart
+          test/widgets/side_navigation_rail_test.dart
+          test/services/settings_service_test.dart
 
   analyze:
     name: Code Analysis
