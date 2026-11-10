@@ -104,7 +104,9 @@ void main() {
         }
         if (kind.hasFileInfo) expect(find.text(t.mediaMenu.fileInfo), findsOneWidget);
         if (onHome && [MediaKind.movie, MediaKind.show, MediaKind.season, MediaKind.episode].contains(kind)) {
-          expect(find.text(t.mediaMenu.viewDetails), findsOneWidget);
+          final label = kind == MediaKind.episode ? t.mediaMenu.goToSeries : t.mediaMenu.viewDetails;
+          expect(find.text(label), findsOneWidget);
+          expect(find.byIcon(Symbols.tv_rounded), findsOneWidget);
         }
         await tester.pumpWidget(const SizedBox());
       });

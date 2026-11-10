@@ -650,7 +650,11 @@ class MediaContextMenuState extends State<MediaContextMenu> {
           label: t.mediaMenu.removeFromContinueWatching,
         ),
       if (widget.isInContinueWatching && isVideoKind)
-        _MenuAction(value: 'details', icon: Symbols.info_rounded, label: t.mediaMenu.viewDetails),
+        _MenuAction(
+          value: 'details',
+          icon: Symbols.tv_rounded,
+          label: mediaKind == MediaKind.episode ? t.mediaMenu.goToSeries : t.mediaMenu.viewDetails,
+        ),
       if (isVideoKind) _MenuAction(value: 'rate', icon: Symbols.star_rounded, label: t.mediaMenu.rate),
       // Edit Metadata — admin-only and backend-capability gated.
       if (menu.canEditMetadata)
