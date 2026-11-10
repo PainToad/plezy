@@ -349,7 +349,7 @@ jobs:
 
   apple-native-test:
     name: Apple native reliability (${{ matrix.platform }})
-    runs-on: macos-26
+    runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
     strategy:
@@ -357,18 +357,22 @@ jobs:
       matrix:
         include:
           - platform: iOS
+            runner: macos-26-intel
             project_directory: ios
             workspace: ios/Runner.xcworkspace
             simulator_runtime: iOS
             simulator_platform: iOS
             static_destination: ""
           - platform: macOS
+            runner: macos-26-intel
             project_directory: macos
             workspace: macos/Runner.xcworkspace
             simulator_runtime: ""
             simulator_platform: ""
             static_destination: platform=macOS
+          # The tvOS Flutter simulator engine contains only arm64.
           - platform: tvOS
+            runner: macos-15
             project_directory: tvos
             workspace: tvos/Runner.xcworkspace
             simulator_runtime: tvOS
