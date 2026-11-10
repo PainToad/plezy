@@ -21,10 +21,8 @@ import 'package:plezy/media/media_backend.dart';
 import 'package:plezy/media/media_file_info.dart';
 import 'package:plezy/media/media_item.dart';
 import 'package:plezy/media/media_kind.dart';
-import 'package:plezy/media/media_part.dart';
 import 'package:plezy/media/media_playlist.dart';
 import 'package:plezy/media/media_server_client.dart';
-import 'package:plezy/media/media_version.dart';
 import 'package:plezy/media/server_capabilities.dart';
 import 'package:plezy/metadata_edit/metadata_edit_adapters.dart';
 import 'package:plezy/models/plex/plex_home_user.dart';
@@ -39,7 +37,6 @@ import 'package:plezy/providers/offline_mode_provider.dart';
 import 'package:plezy/providers/playback_state_provider.dart';
 import 'package:plezy/screens/music/album_detail_screen.dart';
 import 'package:plezy/screens/music/artist_detail_screen.dart';
-import 'package:plezy/services/deep_links/deep_link.dart';
 import 'package:plezy/services/download_manager_service.dart';
 import 'package:plezy/services/download_storage_service.dart';
 import 'package:plezy/services/jellyfin_client.dart';
@@ -49,16 +46,12 @@ import 'package:plezy/services/multi_server_manager.dart';
 import 'package:plezy/services/plex_api_cache.dart';
 import 'package:plezy/services/settings_service.dart';
 import 'package:plezy/services/catalog/catalog_source.dart';
-import 'package:plezy/utils/deletion_notifier.dart';
 import 'package:plezy/utils/external_ids.dart';
 import 'package:plezy/theme/mono_theme.dart';
 import 'package:plezy/utils/media_server_http_client.dart';
-import 'package:plezy/utils/media_server_timeouts.dart';
 import 'package:plezy/utils/platform_detector.dart';
-import 'package:plezy/widgets/deep_link_dialog.dart';
 import 'package:plezy/widgets/file_info_bottom_sheet.dart';
 import 'package:plezy/widgets/media_context_menu.dart';
-import 'package:plezy/widgets/tag_edit_dialog.dart';
 import 'package:provider/provider.dart';
 import '../test_helpers/backend_client_fixtures.dart';
 import '../test_helpers/media_items.dart';
@@ -69,6 +62,55 @@ import '../test_helpers/profile_stack.dart';
 import '../test_helpers/stub_music_playback_service.dart';
 
 void main() {
+  for (final kind in [
+    MediaKind.movie,
+    MediaKind.show,
+    MediaKind.season,
+    MediaKind.episode,
+    MediaKind.artist,
+    MediaKind.album,
+    MediaKind.track,
+  ]) {
+    for (final onHome in [false, true]) {
+      testWidgets('simplified context menu: ${kind.name}, Home: $onHome', (tester) async {
+        final item = testMediaItem(
+          id: 'item-1',
+          backend: MediaBackend.plex,
+          kind: kind,
+          guid: 'plex://movie/example',
+          serverId: 'plex-1',
+          parentId: 'parent',
+          grandparentId: 'series',
+        );
+        final menuKey = await _pumpPlexMovieMenu(tester, const [], item: item, isInContinueWatching: onHome);
+        menuKey.currentState!.showContextMenu(tester.element(find.text('picker target')));
+        await tester.pumpAndSettle();
+        for (final label in [
+          t.mediaMenu.rate,
+          t.metadataEdit.editMetadata,
+          t.metadataEdit.quickTag,
+          t.matchScreen.match,
+          t.matchScreen.fixMatch,
+          t.deepLinks.showLink,
+          t.mediaMenu.playVersion,
+          t.externalPlayer.playInExternalPlayer,
+          t.common.addTo,
+          t.mediaMenu.deleteEpisodeFromServer,
+          t.mediaMenu.deleteSeasonFromServer,
+          t.mediaMenu.deleteShowFromServer,
+          t.mediaMenu.deleteMovieFromServer,
+        ]) {
+          expect(find.text(label), findsNothing, reason: '${kind.name}: $label');
+        }
+        if (kind.hasFileInfo) expect(find.text(t.mediaMenu.fileInfo), findsOneWidget);
+        if (onHome && [MediaKind.movie, MediaKind.show, MediaKind.season, MediaKind.episode].contains(kind)) {
+          expect(find.text(t.mediaMenu.viewDetails), findsOneWidget);
+        }
+        await tester.pumpWidget(const SizedBox());
+      });
+    }
+  }
+
   testWidgets('cancelled media menu restores its live captured item', (tester) async {
     final destination = FocusNode();
     addTearDown(destination.dispose);
@@ -267,539 +309,6 @@ void main() {
     });
   });
 
-  group('MediaContextMenu delete gate', () {
-    testWidgets('hides delete for an administrator the server refuses (issue #1749)', (tester) async {
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: true,
-        handler: (_) async => _canDeleteResponse('movie-1', false),
-      );
-
-      await _openMenu(tester, menuKey);
-
-      expect(find.text(t.mediaMenu.deleteMovieFromServer), findsNothing);
-    });
-
-    testWidgets('shows delete for a non-admin the server permits', (tester) async {
-      final requests = <Uri>[];
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: false,
-        requests: requests,
-        handler: (_) async => _canDeleteResponse('movie-1', true),
-      );
-
-      await _openMenu(tester, menuKey);
-
-      expect(find.text(t.mediaMenu.deleteMovieFromServer), findsOneWidget);
-      final probes = requests.where((uri) => uri.queryParameters['Fields'] == 'CanDelete').toList();
-      expect(probes, hasLength(1));
-      expect(probes.single.queryParameters['ids'], 'movie-1');
-    });
-
-    testWidgets('shows delete for a library-granted user inside the grant', (tester) async {
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: false,
-        itemId: 'movie-in-grant',
-        handler: _libraryGrantedToOneMovie,
-      );
-
-      await _openMenu(tester, menuKey);
-
-      expect(find.text(t.mediaMenu.deleteMovieFromServer), findsOneWidget);
-    });
-
-    testWidgets('hides delete for a library-granted user outside the grant', (tester) async {
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: false,
-        itemId: 'movie-outside-grant',
-        handler: _libraryGrantedToOneMovie,
-      );
-
-      await _openMenu(tester, menuKey);
-
-      expect(find.text(t.mediaMenu.deleteMovieFromServer), findsNothing);
-    });
-
-    testWidgets('hides delete when the permission probe fails', (tester) async {
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: true,
-        handler: (_) async => http.Response('boom', 500),
-      );
-
-      await _openMenu(tester, menuKey);
-
-      expect(find.text(t.mediaMenu.deleteMovieFromServer), findsNothing);
-      expect(tester.takeException(), isNull);
-      // The menu itself still opened; only the destructive entry is missing.
-      expect(find.text(t.mediaMenu.fileInfo), findsOneWidget);
-    });
-
-    testWidgets('hides delete without probing while the item server is offline', (tester) async {
-      final requests = <Uri>[];
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: true,
-        serverOnline: false,
-        requests: requests,
-        handler: (_) async => _canDeleteResponse('movie-1', true),
-      );
-
-      await _openMenu(tester, menuKey);
-
-      expect(find.text(t.mediaMenu.deleteMovieFromServer), findsNothing);
-      expect(requests.where((uri) => uri.queryParameters['Fields'] == 'CanDelete'), isEmpty);
-    });
-
-    testWidgets('still opens the menu, without delete, when the probe hangs', (tester) async {
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: true,
-        handler: (_) => Completer<http.Response>().future,
-      );
-
-      menuKey.currentState!.showContextMenu(tester.element(find.text('delete target')));
-      await tester.pump();
-      expect(find.text(t.mediaMenu.fileInfo), findsNothing, reason: 'the menu waits for the permission answer');
-
-      await tester.pump(MediaServerTimeouts.jellyfinDeletePermission + const Duration(milliseconds: 1));
-      await tester.pumpAndSettle();
-
-      expect(find.text(t.mediaMenu.fileInfo), findsOneWidget);
-      expect(find.text(t.mediaMenu.deleteMovieFromServer), findsNothing);
-    });
-  });
-
-  group('MediaContextMenu add to (MediaBrowser, #2356)', () {
-    Future<http.Response> playlistServer(http.Request request, List<http.Request> posts) async {
-      if (request.method == 'POST') {
-        posts.add(request);
-        return http.Response('', 204);
-      }
-      if (request.url.queryParameters['IncludeItemTypes'] == 'Playlist') {
-        return jsonResponse({
-          'Items': [
-            {'Id': 'pl-1', 'Name': 'Road trip', 'Type': 'Playlist', 'MediaType': 'Video'},
-          ],
-          'TotalRecordCount': 1,
-        });
-      }
-      return _canDeleteResponse('movie-1', false);
-    }
-
-    testWidgets('a non-admin goes straight to the playlist picker and adds the item', (tester) async {
-      final posts = <http.Request>[];
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: false,
-        handler: (request) => playlistServer(request, posts),
-      );
-
-      await _openMenu(tester, menuKey);
-      await tester.tap(find.text(t.common.addTo));
-      await tester.pumpAndSettle();
-
-      expect(
-        find.text(t.collections.collection),
-        findsNothing,
-        reason: 'the server refuses non-admin collection edits',
-      );
-      expect(find.text(t.playlists.selectPlaylist), findsOneWidget);
-
-      await tester.tap(find.text('Road trip'));
-      await tester.pumpAndSettle();
-
-      expect(posts, hasLength(1));
-      expect(posts.single.url.path, '/Playlists/pl-1/Items');
-      expect(posts.single.url.queryParameters['Ids'], 'movie-1');
-    });
-
-    testWidgets('an admin chooses between playlist and collection', (tester) async {
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: true,
-        handler: (request) => playlistServer(request, []),
-      );
-
-      await _openMenu(tester, menuKey);
-      await tester.tap(find.text(t.common.addTo));
-      await tester.pumpAndSettle();
-
-      expect(find.text(t.playlists.playlist), findsOneWidget);
-      expect(find.text(t.collections.collection), findsOneWidget);
-    });
-  });
-
-  group('MediaContextMenu delete confirmation', () {
-    testWidgets('names the episode, never the show, at every step (issue #1781)', (tester) async {
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(id: 'ep-2', index: 2, file: '/tv/bb/S01E02.mkv'),
-        handler: _deleteFlowHandler(
-          episodes: [_episodeJson(id: 'ep-2', index: 2, path: '/tv/bb/S01E02.mkv')],
-        ),
-      );
-
-      await _openMenu(tester, menuKey);
-      expect(find.text(t.mediaMenu.deleteEpisodeFromServer), findsOneWidget);
-      expect(find.text(t.mediaMenu.deleteShowFromServer), findsNothing);
-
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-
-      final dialog = find.byType(AlertDialog);
-      expect(dialog, findsOneWidget);
-      expect(find.descendant(of: dialog, matching: find.text(t.mediaMenu.deleteEpisodeTitle)), findsOneWidget);
-      expect(
-        find.descendant(
-          of: dialog,
-          matching: find.text(t.mediaMenu.confirmDeleteTarget(title: 'Breaking Bad · S1 E2 · Cat in the Bag')),
-        ),
-        findsOneWidget,
-        reason: 'the confirmation must name the episode; displayTitle would render only "Breaking Bad"',
-      );
-      expect(find.descendant(of: dialog, matching: find.text(t.mediaMenu.deleteEpisodeConfirm)), findsOneWidget);
-      expect(find.text(t.mediaMenu.deleteMultipleWarning), findsNothing);
-    });
-
-    testWidgets('a show delete says so and states the episode count', (tester) async {
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: testMediaItem(
-          id: 'show-1',
-          backend: MediaBackend.jellyfin,
-          kind: MediaKind.show,
-          title: 'Breaking Bad',
-          serverId: 'srv-1',
-          leafCount: 62,
-        ),
-        handler: _deleteFlowHandler(episodes: const []),
-      );
-
-      await _openMenu(tester, menuKey);
-      expect(find.text(t.mediaMenu.deleteShowFromServer), findsOneWidget);
-      expect(find.text(t.mediaMenu.deleteEpisodeFromServer), findsNothing);
-
-      await _tapMenuEntry(tester, t.mediaMenu.deleteShowFromServer);
-      await tester.pumpAndSettle();
-
-      final dialog = find.byType(AlertDialog);
-      expect(find.descendant(of: dialog, matching: find.text(t.mediaMenu.deleteShowTitle)), findsOneWidget);
-      expect(
-        find.descendant(of: dialog, matching: find.text(t.mediaMenu.deleteEpisodeCountWarning(n: 62))),
-        findsOneWidget,
-      );
-      expect(find.descendant(of: dialog, matching: find.text(t.mediaMenu.deleteShowConfirm)), findsOneWidget);
-    });
-
-    testWidgets('cancelling issues no delete request', (tester) async {
-      final requests = <Uri>[];
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        requests: requests,
-        item: _episode(id: 'ep-2', index: 2, file: '/tv/bb/S01E02.mkv'),
-        handler: _deleteFlowHandler(
-          episodes: [_episodeJson(id: 'ep-2', index: 2, path: '/tv/bb/S01E02.mkv')],
-        ),
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-      await tester.tap(find.text(t.common.cancel));
-      await tester.pumpAndSettle();
-
-      expect(requests.where((uri) => uri.path.contains('/Items/ep-2')), isEmpty);
-    });
-
-    testWidgets('confirming deletes exactly the focused episode', (tester) async {
-      final deleted = <String>[];
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(id: 'ep-2', index: 2, file: '/tv/bb/S01E02.mkv'),
-        handler: _deleteFlowHandler(
-          episodes: [
-            _episodeJson(id: 'ep-1', index: 1, path: '/tv/bb/S01E01.mkv'),
-            _episodeJson(id: 'ep-2', index: 2, path: '/tv/bb/S01E02.mkv'),
-            _episodeJson(id: 'ep-3', index: 3, path: '/tv/bb/S01E03.mkv'),
-          ],
-          onDelete: deleted.add,
-        ),
-      );
-
-      await _confirmDelete(tester, menuKey, t.mediaMenu.deleteEpisodeConfirm);
-
-      expect(deleted, ['ep-2'], reason: 'siblings in the same folder must be untouched');
-    });
-
-    testWidgets('warns about episodes sharing the file and reports them deleted', (tester) async {
-      const sharedFile = '/tv/bb/S01E02-E03.mkv';
-      final events = <String>[];
-      final subscription = DeletionNotifier().stream.listen((event) => events.add(event.itemId));
-      addTearDown(subscription.cancel);
-
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(id: 'ep-2', index: 2, file: sharedFile),
-        handler: _deleteFlowHandler(
-          episodes: [
-            _episodeJson(id: 'ep-1', index: 1, path: '/tv/bb/S01E01.mkv'),
-            _episodeJson(id: 'ep-2', index: 2, path: sharedFile),
-            _episodeJson(id: 'ep-3', index: 3, path: sharedFile),
-          ],
-        ),
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-
-      expect(find.textContaining(t.mediaMenu.deleteSharedFileHeading(n: 1)), findsOneWidget);
-      expect(find.textContaining('S1 E3'), findsOneWidget);
-
-      await tester.tap(find.text(t.mediaMenu.deleteEpisodeConfirm));
-      await tester.pumpAndSettle();
-
-      expect(events, containsAll(<String>['ep-2', 'ep-3']));
-      expect(events, isNot(contains('ep-1')));
-    });
-
-    testWidgets('a long shared-file list scrolls instead of overflowing a phone dialog', (tester) async {
-      const sharedFile = '/tv/bb/S01E01-E08.mkv';
-      tester.view.physicalSize = const Size(360, 640);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(id: 'ep-1', index: 1, file: sharedFile),
-        handler: _deleteFlowHandler(
-          episodes: [for (var i = 1; i <= 8; i++) _episodeJson(id: 'ep-$i', index: i, path: sharedFile)],
-        ),
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-
-      expect(find.textContaining(t.mediaMenu.deleteSharedFileHeading(n: 7)), findsOneWidget);
-      expect(tester.takeException(), isNull, reason: 'the warning block must scroll, not overflow');
-    });
-
-    testWidgets('system back during the impact probe keeps the spinner and the screen', (tester) async {
-      // The spinner is documented non-dismissible, but barrierDismissible
-      // alone does not stop system back. If back popped it, the probe's
-      // cleanup would pop the screen underneath instead.
-      final gate = Completer<void>();
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        onPushedRoute: true,
-        item: _episode(id: 'ep-2', index: 2, file: '/tv/bb/S01E02.mkv'),
-        handler: (request) async {
-          if (request.url.queryParameters.containsKey('ParentId')) {
-            await gate.future;
-            return jsonResponse({
-              'Items': [_episodeJson(id: 'ep-2', index: 2, path: '/tv/bb/S01E02.mkv')],
-              'TotalRecordCount': 1,
-            });
-          }
-          if (request.url.queryParameters['Fields'] == 'CanDelete') {
-            return _canDeleteResponse(request.url.queryParameters['ids'] ?? '', true);
-          }
-          if (request.url.path.contains('/Seasons')) return jsonResponse({'Items': <Object?>[]});
-          return jsonResponse({'Items': <Object?>[]});
-        },
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pump();
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-      await tester.binding.handlePopRoute();
-      // Bounded pumps only: pumpAndSettle would run the fake clock past
-      // MediaServerTimeouts.deleteImpactProbe and close the spinner by
-      // timeout, hiding whatever back actually did.
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget, reason: 'the spinner is non-dismissible');
-      expect(find.text('home screen'), findsNothing, reason: 'the screen under the spinner must survive back');
-
-      gate.complete();
-      await tester.pumpAndSettle();
-
-      expect(find.byType(AlertDialog), findsOneWidget);
-      expect(find.byType(CircularProgressIndicator), findsNothing);
-      expect(find.text('home screen'), findsNothing);
-      expect(
-        find.descendant(of: find.byType(AlertDialog), matching: find.text(t.mediaMenu.deleteEpisodeConfirm)),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('warns when the episode is split across several files', (tester) async {
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(
-          id: 'ep-2',
-          index: 2,
-          versions: [
-            MediaVersion(
-              id: 'v-1',
-              parts: const [
-                MediaPart(id: 'p-1', file: '/tv/bb/S01E02-cd1.mkv'),
-                MediaPart(id: 'p-2', file: '/tv/bb/S01E02-cd2.mkv'),
-              ],
-            ),
-          ],
-        ),
-        handler: _deleteFlowHandler(
-          episodes: [_episodeJson(id: 'ep-2', index: 2, path: '/tv/bb/S01E02-cd1.mkv')],
-        ),
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-
-      expect(find.textContaining(t.mediaMenu.deleteMultiPartWarning(n: 2)), findsOneWidget);
-    });
-
-    testWidgets('refuses to imply single-file scope when the server withholds paths', (tester) async {
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(
-          id: 'ep-2',
-          index: 2,
-          versions: const [
-            MediaVersion(
-              id: 'v-1',
-              parts: [MediaPart(id: 'p-1')],
-            ),
-          ],
-        ),
-        handler: _deleteFlowHandler(
-          episodes: [_episodeJson(id: 'ep-2', index: 2, path: null)],
-          details: {'ep-2': _episodeJson(id: 'ep-2', index: 2, path: null)},
-        ),
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-
-      final dialog = find.byType(AlertDialog);
-      expect(
-        find.descendant(of: dialog, matching: find.text(t.mediaMenu.deleteScopeUnverifiedNoFileInfo)),
-        findsOneWidget,
-      );
-      expect(
-        find.descendant(of: dialog, matching: find.text(t.mediaMenu.deleteAnyway)),
-        findsOneWidget,
-        reason: 'an unverified scope must not offer the confident per-kind confirm label',
-      );
-      expect(find.text(t.mediaMenu.deleteEpisodeConfirm), findsNothing);
-    });
-
-    testWidgets('recovers scope from the detail endpoint when the browse row omitted paths', (tester) async {
-      // PlexMappers synthesizes a single file-less part for a thin row, and
-      // Jellyfin resume rows can arrive without MediaSources. Treating that as
-      // "server withholds paths" would make the danger warning the default
-      // even though the detail endpoint answers.
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(
-          id: 'ep-2',
-          index: 2,
-          versions: const [
-            MediaVersion(
-              id: 'v-1',
-              parts: [MediaPart(id: 'p-1')],
-            ),
-          ],
-        ),
-        handler: _deleteFlowHandler(
-          episodes: [
-            _episodeJson(id: 'ep-1', index: 1, path: '/tv/bb/S01E01.mkv'),
-            _episodeJson(id: 'ep-2', index: 2, path: '/tv/bb/S01E02.mkv'),
-          ],
-          details: {'ep-2': _episodeJson(id: 'ep-2', index: 2, path: '/tv/bb/S01E02.mkv')},
-        ),
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-
-      final dialog = find.byType(AlertDialog);
-      expect(find.descendant(of: dialog, matching: find.text(t.mediaMenu.deleteEpisodeConfirm)), findsOneWidget);
-      expect(find.text(t.mediaMenu.deleteAnyway), findsNothing);
-      expect(find.text(t.mediaMenu.deleteScopeUnverifiedNoFileInfo), findsNothing);
-      expect(find.text(t.mediaMenu.deleteScopeUnverifiedProbeFailed), findsNothing);
-    });
-
-    testWidgets('resolves a path-less sibling row before ruling out a shared file', (tester) async {
-      // The sibling browse row carries no path. Trusting it would report the
-      // delete as exclusive while the server destroys ep-3 along with it.
-      const sharedFile = '/tv/bb/S01E02-E03.mkv';
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(id: 'ep-2', index: 2, file: sharedFile),
-        handler: _deleteFlowHandler(
-          episodes: [
-            _episodeJson(id: 'ep-2', index: 2, path: sharedFile),
-            _episodeJson(id: 'ep-3', index: 3, path: null),
-          ],
-          details: {'ep-3': _episodeJson(id: 'ep-3', index: 3, path: sharedFile)},
-        ),
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-
-      expect(find.textContaining(t.mediaMenu.deleteSharedFileHeading(n: 1)), findsOneWidget);
-      expect(find.textContaining('S1 E3'), findsOneWidget);
-    });
-
-    testWidgets('flags an unverified scope when the sibling lookup fails, and still deletes', (tester) async {
-      final deleted = <String>[];
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(id: 'ep-2', index: 2, file: '/tv/bb/S01E02.mkv'),
-        handler: _deleteFlowHandler(episodes: null, onDelete: deleted.add),
-      );
-
-      await _openMenu(tester, menuKey);
-      await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-      await tester.pumpAndSettle();
-
-      expect(find.text(t.mediaMenu.deleteScopeUnverifiedProbeFailed), findsOneWidget);
-
-      await tester.tap(find.text(t.mediaMenu.deleteAnyway));
-      await tester.pumpAndSettle();
-
-      expect(deleted, ['ep-2']);
-    });
-  });
-
   group('supportsMetadataEdit', () {
     test('allows Jellyfin video metadata edit through capability gate', () {
       final client = JellyfinClient.forTesting(
@@ -811,135 +320,6 @@ void main() {
       expect(supportsMetadataEdit(client, MediaKind.movie), isTrue);
       expect(supportsMetadataEdit(client, MediaKind.show), isTrue);
       expect(supportsMetadataEdit(client, MediaKind.track), isFalse);
-    });
-  });
-
-  group('MediaContextMenu show link', () {
-    Future<void> openPlexMenu(WidgetTester tester, MediaKind kind, {String? guid}) async {
-      final item = testMediaItem(id: 'item-1', backend: MediaBackend.plex, kind: kind, guid: guid, serverId: 'plex-1');
-      final menuKey = await _pumpPlexMovieMenu(tester, const [], item: item);
-      menuKey.currentState!.showContextMenu(tester.element(find.text('picker target')));
-      await tester.pumpAndSettle();
-    }
-
-    testWidgets('opens the link dialog for a Plex movie', (tester) async {
-      await openPlexMenu(tester, MediaKind.movie, guid: 'plex://movie/5d776825880197001ec967c2');
-      await tester.tap(find.text(t.deepLinks.showLink));
-      await tester.pumpAndSettle();
-
-      expect(find.byType(ItemLinkDialog), findsOneWidget);
-      // The test server knows no catalogue ids, so the Plex GUID names the movie.
-      const link = 'plezy://play?type=movie&plex=5d776825880197001ec967c2';
-      expect(find.text(link), findsOneWidget);
-      expect(
-        (DeepLink.tryParse(link)! as PlayLink).target,
-        const CatalogPlayTarget(kind: MediaKind.movie, plexHash: '5d776825880197001ec967c2'),
-      );
-    });
-
-    for (final kind in [MediaKind.movie, MediaKind.show, MediaKind.episode]) {
-      testWidgets('is offered on a Plex ${kind.name}', (tester) async {
-        await openPlexMenu(tester, kind);
-
-        expect(find.text(t.deepLinks.showLink), findsOneWidget);
-      });
-    }
-
-    for (final backend in [MediaBackend.jellyfin, MediaBackend.emby]) {
-      for (final kind in [MediaKind.movie, MediaKind.show, MediaKind.episode]) {
-        testWidgets('is offered on a ${backend.name} ${kind.name}', (tester) async {
-          final menuKey = await _pumpJellyfinItemMenu(
-            tester,
-            isAdministrator: false,
-            handler: (_) async => _canDeleteResponse('item-1', true),
-            item: testMediaItem(id: 'item-1', backend: backend, kind: kind, serverId: 'srv-1'),
-          );
-          await _openMenu(tester, menuKey);
-
-          expect(find.text(t.deepLinks.showLink), findsOneWidget);
-        });
-      }
-    }
-
-    for (final kind in [MediaKind.album, MediaKind.track, MediaKind.collection]) {
-      testWidgets('is not offered on a Plex ${kind.name}', (tester) async {
-        await openPlexMenu(tester, kind);
-
-        expect(find.text(t.deepLinks.showLink), findsNothing);
-      });
-    }
-  });
-
-  group('MediaContextMenu quick tag', () {
-    testWidgets('shows Quick Tag for an admin on a movie and applies a suggestion', (tester) async {
-      String? postedBody;
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: true,
-        handler: (request) async {
-          final path = request.url.path;
-          if (request.url.queryParameters['Fields'] == 'CanDelete') {
-            return _canDeleteResponse('movie-1', true);
-          }
-          if (request.method == 'GET' && path == '/Users/user-1/Items/movie-1') {
-            return jsonResponse({'Id': 'movie-1', 'Name': 'Movie', 'Type': 'Movie', 'Tags': <String>[]});
-          }
-          if (request.method == 'GET' && path == '/Items/Filters') {
-            return jsonResponse({
-              'Tags': ['kids', 'horror'],
-            });
-          }
-          if (request.method == 'POST' && path == '/Items/movie-1') {
-            postedBody = request.body;
-            return http.Response('', 204);
-          }
-          return http.Response('unexpected ${request.method} $path', 500);
-        },
-      );
-
-      await _openMenu(tester, menuKey);
-      await tester.tap(find.text(t.metadataEdit.quickTag));
-      await tester.pumpAndSettle();
-
-      expect(find.byType(TagEditDialog), findsOneWidget);
-      expect(find.text('kids'), findsOneWidget);
-
-      await tester.tap(find.text('kids'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text(t.common.save));
-      await tester.pumpAndSettle();
-
-      expect(postedBody, isNotNull);
-      expect((jsonDecode(postedBody!) as Map<String, dynamic>)['Tags'], ['kids']);
-      expect(find.text(t.metadataEdit.metadataUpdated), findsOneWidget);
-    });
-
-    testWidgets('hides Quick Tag for a non-admin', (tester) async {
-      final menuKey = await _pumpJellyfinMovieMenu(
-        tester,
-        isAdministrator: false,
-        handler: (_) async => _canDeleteResponse('movie-1', true),
-      );
-
-      await _openMenu(tester, menuKey);
-
-      expect(find.text(t.metadataEdit.editMetadata), findsNothing);
-      expect(find.text(t.metadataEdit.quickTag), findsNothing);
-    });
-
-    testWidgets('hides Quick Tag on kinds without a label field', (tester) async {
-      final menuKey = await _pumpJellyfinItemMenu(
-        tester,
-        isAdministrator: true,
-        item: _episode(id: 'ep-1', index: 1, file: '/tv/bb/S01E01.mkv'),
-        handler: (_) async => _canDeleteResponse('ep-1', true),
-      );
-
-      await _openMenu(tester, menuKey);
-
-      // Episodes still get the full editor (director/writer), just not tags.
-      expect(find.text(t.metadataEdit.editMetadata), findsOneWidget);
-      expect(find.text(t.metadataEdit.quickTag), findsNothing);
     });
   });
 
@@ -1335,45 +715,6 @@ void main() {
       expect(find.byType(SnackBar), findsOneWidget);
     });
 
-    testWidgets('playlist picker filters playlists by title', (tester) async {
-      final playlists = [
-        for (var i = 0; i < 10; i++) (id: '$i', title: 'Alpha $i'),
-        (id: 'gamma', title: 'Gamma Nights'),
-      ];
-      final menuKey = await _pumpPlexMovieMenu(tester, playlists);
-
-      await _openPlaylistPicker(tester, menuKey);
-      final textField = tester.widget<TextField>(find.byType(TextField));
-      textField.controller!.text = 'gamma';
-      textField.onChanged!('gamma');
-      await tester.pumpAndSettle();
-
-      expect(find.text('Gamma Nights'), findsOneWidget);
-      expect(find.text('Alpha 0'), findsNothing);
-      expect(find.text(t.common.createNew), findsOneWidget);
-    });
-
-    testWidgets('playlist picker wires TV focus, D-pad down, and back', (tester) async {
-      final playlists = [for (var i = 0; i < 10; i++) (id: '$i', title: 'Playlist $i')];
-      final menuKey = await _pumpPlexMovieMenu(tester, playlists);
-
-      await _openPlaylistPicker(tester, menuKey);
-
-      final textField = tester.widget<TextField>(find.byType(TextField));
-      expect(textField.focusNode!.hasFocus, isTrue);
-
-      await tester.sendKeyDownEvent(LogicalKeyboardKey.arrowDown);
-      await tester.sendKeyUpEvent(LogicalKeyboardKey.arrowDown);
-      await tester.pump();
-      expect(Focus.of(tester.element(find.text(t.common.createNew))).hasFocus, isTrue);
-
-      await tester.sendKeyDownEvent(LogicalKeyboardKey.escape);
-      await tester.pumpAndSettle();
-
-      expect(find.text(t.playlists.selectPlaylist), findsNothing);
-      expect(find.text('picker target'), findsOneWidget);
-    });
-
     testWidgets('the music menu gives Instant Mix an icon it shares with no sibling row', (tester) async {
       final track = testMediaItem(
         id: 'track-1',
@@ -1724,6 +1065,7 @@ Future<GlobalKey<MediaContextMenuState>> _pumpPlexMovieMenu(
   List<({String id, String title})> playlists, {
   Widget Function(Widget menu)? wrapMenu,
   MediaItem? item,
+  bool isInContinueWatching = false,
 }) async {
   LocaleSettings.setLocaleSync(AppLocale.en);
   TvDetectionService.debugSetAppleTVOverride(true);
@@ -1777,6 +1119,7 @@ Future<GlobalKey<MediaContextMenuState>> _pumpPlexMovieMenu(
 
   final menuKey = GlobalKey<MediaContextMenuState>();
   final menu = MediaContextMenu(
+    isInContinueWatching: isInContinueWatching,
     key: menuKey,
     item:
         item ??
@@ -1812,128 +1155,6 @@ http.Response _canDeleteResponse(String id, bool canDelete) => jsonResponse({
     {'Id': id, 'CanDelete': canDelete},
   ],
 });
-
-/// A user holding `EnableContentDeletionFromFolders` for one library only: the
-/// server answers per item, which is the only way that grant reaches a client.
-Future<http.Response> _libraryGrantedToOneMovie(http.Request request) async {
-  final id = request.url.queryParameters['ids'] ?? '';
-  return _canDeleteResponse(id, id == 'movie-in-grant');
-}
-
-/// Jellyfin episode fixture. [file] populates the inline media source so the
-/// impact probe resolves without a detail refetch; pass [versions] instead to
-/// model a split or path-less item.
-MediaItem _episode({required String id, required int index, String? file, List<MediaVersion>? versions}) {
-  return testMediaItem(
-    id: id,
-    backend: MediaBackend.jellyfin,
-    kind: MediaKind.episode,
-    title: 'Cat in the Bag',
-    parentId: 'season-1',
-    parentIndex: 1,
-    index: index,
-    grandparentId: 'show-1',
-    grandparentTitle: 'Breaking Bad',
-    serverId: 'srv-1',
-    mediaVersions:
-        versions ??
-        [
-          MediaVersion(
-            id: 'v-$id',
-            parts: [MediaPart(id: 'p-$id', file: file)],
-          ),
-        ],
-  );
-}
-
-Map<String, Object?> _episodeJson({required String id, required int index, required String? path}) => {
-  'Id': id,
-  'Name': 'Episode $index',
-  'Type': 'Episode',
-  'IndexNumber': index,
-  'ParentIndexNumber': 1,
-  'SeriesId': 'show-1',
-  'SeriesName': 'Breaking Bad',
-  'SeasonId': 'season-1',
-  'MediaSources': [
-    {'Id': 'ms-$id', 'Path': ?path},
-  ],
-};
-
-/// Answers every request the delete flow makes: the CanDelete probe, the
-/// season-children lookup, per-item detail refetches, and the DELETE itself.
-///
-/// A null [episodes] makes the children lookup fail, which is the
-/// probe-failure path. [details] is keyed by item id and models the detail
-/// endpoint carrying file paths that the browse row omitted.
-Future<http.Response> Function(http.Request) _deleteFlowHandler({
-  required List<Map<String, Object?>>? episodes,
-  Map<String, Map<String, Object?>> details = const {},
-  void Function(String id)? onDelete,
-}) {
-  return (request) async {
-    final path = request.url.path;
-    final lastSegment = path.split('/').last;
-    if (request.method == 'DELETE') {
-      onDelete?.call(lastSegment);
-      return http.Response('', 204);
-    }
-    if (request.url.queryParameters['Fields'] == 'CanDelete') {
-      return _canDeleteResponse(request.url.queryParameters['ids'] ?? '', true);
-    }
-    // fetchChildren probes /Shows/{id}/Seasons first and falls through to the
-    // generic ParentId query when it comes back empty.
-    if (path.contains('/Seasons')) return jsonResponse({'Items': <Object?>[]});
-    if (request.url.queryParameters.containsKey('ParentId')) {
-      if (episodes == null) return http.Response('boom', 500);
-      return jsonResponse({'Items': episodes, 'TotalRecordCount': episodes.length});
-    }
-    final detail = details[lastSegment];
-    if (detail != null) return jsonResponse(detail);
-    return jsonResponse({'Items': <Object?>[]});
-  };
-}
-
-Future<void> _confirmDelete(WidgetTester tester, GlobalKey<MediaContextMenuState> menuKey, String confirmLabel) async {
-  await _openMenu(tester, menuKey);
-  await _tapMenuEntry(tester, t.mediaMenu.deleteEpisodeFromServer);
-  await tester.pumpAndSettle();
-  await tester.tap(find.text(confirmLabel));
-  await tester.pumpAndSettle();
-}
-
-/// Taps a menu row, scrolling the menu first: Delete is the last row and sits
-/// below the fold of an 800x600 test window, as it does on a short screen.
-Future<void> _tapMenuEntry(WidgetTester tester, String label) async {
-  final entry = find.text(label);
-  await tester.ensureVisible(entry);
-  await tester.pumpAndSettle();
-  await tester.tap(entry);
-}
-
-Future<GlobalKey<MediaContextMenuState>> _pumpJellyfinMovieMenu(
-  WidgetTester tester, {
-  required bool isAdministrator,
-  required Future<http.Response> Function(http.Request request) handler,
-  String itemId = 'movie-1',
-  bool serverOnline = true,
-  List<Uri>? requests,
-}) {
-  return _pumpJellyfinItemMenu(
-    tester,
-    isAdministrator: isAdministrator,
-    handler: handler,
-    serverOnline: serverOnline,
-    requests: requests,
-    item: testMediaItem(
-      id: itemId,
-      backend: MediaBackend.jellyfin,
-      kind: MediaKind.movie,
-      title: 'Movie',
-      serverId: 'srv-1',
-    ),
-  );
-}
 
 Future<GlobalKey<MediaContextMenuState>> _pumpJellyfinItemMenu(
   WidgetTester tester, {
@@ -2006,16 +1227,6 @@ Future<GlobalKey<MediaContextMenuState>> _pumpJellyfinItemMenu(
 Future<void> _openMenu(WidgetTester tester, GlobalKey<MediaContextMenuState> menuKey) async {
   menuKey.currentState!.showContextMenu(tester.element(find.text('delete target')));
   await tester.pumpAndSettle();
-}
-
-Future<void> _openPlaylistPicker(WidgetTester tester, GlobalKey<MediaContextMenuState> menuKey) async {
-  menuKey.currentState!.showContextMenu(tester.element(find.text('picker target')));
-  await tester.pumpAndSettle();
-  await tester.tap(find.text(t.common.addTo));
-  await tester.pumpAndSettle();
-  await tester.tap(find.text(t.playlists.playlist));
-  await tester.pumpAndSettle();
-  expect(find.text(t.playlists.selectPlaylist), findsOneWidget);
 }
 
 class _AudioPlaylistClient implements MediaServerClient {

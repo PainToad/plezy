@@ -48,6 +48,7 @@ jobs:
           test/navigation/profile_session_screen_test.dart
           test/screens/profile/profile_teardown_test.dart
           test/services/music/music_playback_service_test.dart
+          test/widgets/media_context_menu_test.dart
 
   build:
     name: Unsigned ${{ matrix.platform }} IPA

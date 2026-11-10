@@ -1078,9 +1078,23 @@ class MediaContextMenuState extends State<MediaContextMenu> {
     t.messages.errorLoadingSeries,
   );
 
+  // One policy for every media kind and caller (Home, libraries, detail and
+  // music views), including adaptive sheets and desktop/TV popup menus.
+  static const _hiddenActions = {
+    'rate',
+    'edit_metadata',
+    'quick_tag',
+    'match',
+    'show_link',
+    'play_version',
+    'play_external',
+    'add_to',
+    'delete_media',
+  };
+
   List<AppMenuEntry<String>> _menuEntries(List<_MenuAction> actions) {
     return [
-      for (final action in actions)
+      for (final action in actions.where((action) => !_hiddenActions.contains(action.value)))
         AppMenuItem<String>(
           value: action.value,
           icon: action.icon,
