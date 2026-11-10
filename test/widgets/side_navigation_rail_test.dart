@@ -114,6 +114,8 @@ Future<void> _pumpBasicRail(
   double? height,
   CatalogSourcesProvider? catalogSources,
   ValueChanged<bool>? onFloatingPanelChanged,
+  ValueChanged<String>? onLibrarySelected,
+  ValueChanged<NavigationTabId>? onDestinationSelected,
 }) async {
   await SettingsService.getInstance();
 
@@ -137,8 +139,8 @@ Future<void> _pumpBasicRail(
     selectedLibraryKey: selectedLibraryKey,
     isSidebarFocused: isSidebarFocused,
     alwaysExpanded: alwaysExpanded,
-    onDestinationSelected: (_) {},
-    onLibrarySelected: (_) {},
+    onDestinationSelected: onDestinationSelected ?? (_) {},
+    onLibrarySelected: onLibrarySelected ?? (_) {},
     onFloatingPanelChanged: onFloatingPanelChanged,
   );
 
@@ -824,14 +826,68 @@ void main() {
     sideNavKey.currentState!.focusActiveItem();
     await tester.pumpAndSettle();
 
-    // Home -> Libraries -> Search -> Settings. Downloads is hidden on Apple TV.
-    await _press(tester, LogicalKeyboardKey.arrowDown);
+    // Home -> Search -> Settings. No Libraries folder or downloads on Apple TV.
     await _press(tester, LogicalKeyboardKey.arrowDown);
     await _press(tester, LogicalKeyboardKey.arrowDown);
     await _press(tester, LogicalKeyboardKey.enter);
 
     expect(selectedTab, NavigationTabId.settings);
   });
+
+  for (final appleTV in [false, true]) {
+    testWidgets('TV libraries are top-level destinations, Apple TV: $appleTV', (tester) async {
+      await TvDetectionService.getInstance();
+      TvDetectionService.debugSetAppleTVOverride(appleTV ? true : null);
+      TvDetectionService.setForceTVSync(true);
+      addTearDown(() {
+        TvDetectionService.debugSetAppleTVOverride(null);
+        TvDetectionService.setForceTVSync(false);
+      });
+      await SettingsService.getInstance();
+      await SettingsService.instance.write(SettingsService.librariesSectionExpanded, false);
+      await SettingsService.instance.write(SettingsService.groupLibrariesByServer, true);
+      final movies = _library(id: '1', title: 'Movies', serverId: ServerId('a'), serverName: 'Server A');
+      final shows = _library(id: '2', title: 'TV', serverId: ServerId('b'), serverName: 'Server B');
+      final key = GlobalKey<SideNavigationRailState>();
+      String? selectedLibrary;
+      NavigationTabId? selectedTab;
+      await _pumpBasicRail(
+        tester,
+        sideNavKey: key,
+        libraries: [movies, shows],
+        selectedTab: NavigationTabId.libraries,
+        selectedLibraryKey: movies.globalKey,
+        isSidebarFocused: true,
+        alwaysExpanded: true,
+        onLibrarySelected: (value) => selectedLibrary = value,
+        onDestinationSelected: (value) => selectedTab = value,
+      );
+      expect(find.text('Libraries'), findsNothing);
+      expect(find.text('Server A'), findsNothing);
+      expect(find.text('Server B'), findsNothing);
+      final home = find.widgetWithText(NavigationRailItem, 'Home');
+      final movieRow = find.widgetWithText(NavigationRailItem, 'Movies');
+      final showRow = find.widgetWithText(NavigationRailItem, 'TV');
+      expect(movieRow, findsOneWidget);
+      expect(showRow, findsOneWidget);
+      expect(tester.getTopLeft(movieRow).dx, tester.getTopLeft(home).dx);
+      expect(tester.getSize(movieRow).height, tester.getSize(home).height);
+      key.currentState!.focusActiveItem();
+      await tester.pumpAndSettle();
+      await _press(tester, LogicalKeyboardKey.enter);
+      expect(selectedLibrary, movies.globalKey);
+      await _press(tester, LogicalKeyboardKey.arrowUp);
+      await _press(tester, LogicalKeyboardKey.enter);
+      expect(selectedTab, NavigationTabId.discover);
+      await _press(tester, LogicalKeyboardKey.arrowDown);
+      await _press(tester, LogicalKeyboardKey.arrowDown);
+      await _press(tester, LogicalKeyboardKey.enter);
+      expect(selectedLibrary, shows.globalKey);
+      await _press(tester, LogicalKeyboardKey.arrowDown);
+      await _press(tester, LogicalKeyboardKey.enter);
+      expect(selectedTab, NavigationTabId.search);
+    });
+  }
 
   testWidgets('D-pad down from a hidden server header focuses that hidden server library', (tester) async {
     await SettingsService.getInstance();

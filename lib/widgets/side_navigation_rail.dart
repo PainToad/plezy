@@ -628,7 +628,7 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
         return _kExplore;
       case NavigationTabId.libraries:
         final libKey = widget.selectedLibraryKey;
-        if (libKey != null && _librariesExpanded) {
+        if (libKey != null && (PlatformDetector.isTV() || _librariesExpanded)) {
           final visibleKey = '$_kLibraryItemPrefix:${_LibraryNavSection.visible.name}:$libKey';
           if (_mountedFocusNodeFor(visibleKey) != null) return visibleKey;
           if (_hiddenLibrariesExpanded) {
@@ -636,7 +636,7 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
             if (_mountedFocusNodeFor(hiddenKey) != null) return hiddenKey;
           }
         }
-        return _kLibraries;
+        return PlatformDetector.isTV() ? _kHome : _kLibraries;
       case NavigationTabId.search:
         return _kSearch;
       case NavigationTabId.downloads:
@@ -681,17 +681,17 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
     return {
       _kHome,
       if (hasNowPlaying) _kNowPlaying,
-      _kLibraries,
+      if (!PlatformDetector.isTV()) _kLibraries,
       if (hasExplore) _kExplore,
       _kSearch,
       if (_showDownloads) _kDownloads,
       _kSettings,
       _kReconnect,
-      if (hasHiddenLibraries) _kHiddenLibraries,
+      if (!PlatformDetector.isTV() && hasHiddenLibraries) _kHiddenLibraries,
       if (_showFullscreenToggle) _kFullscreen,
       if (hasLiveTv) 'liveTv',
       ..._focusKeysForLibraryRows(visibleRows),
-      if (_hiddenLibrariesExpanded) ..._focusKeysForLibraryRows(hiddenRows),
+      if (!PlatformDetector.isTV() && _hiddenLibrariesExpanded) ..._focusKeysForLibraryRows(hiddenRows),
     };
   }
 
@@ -765,11 +765,12 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
       if (!widget.isOfflineMode) ...[
         _kHome,
         if (hasNowPlaying) _kNowPlaying,
-        _kLibraries,
+        if (!PlatformDetector.isTV()) _kLibraries,
         // Library rows render inside ExcludeFocus(excluding: !_librariesExpanded
         // || isCollapsed); keep the D-pad order in lockstep with that render
         // condition so a collapsed rail never targets a focus-excluded row.
-        if (_librariesExpanded && !isCollapsed) ...[
+        if (PlatformDetector.isTV()) ..._focusKeysForLibraryRows(visibleRows),
+        if (!PlatformDetector.isTV() && _librariesExpanded && !isCollapsed) ...[
           ..._focusKeysForLibraryRows(visibleRows),
           if (hasHiddenLibraries) ...[
             _kHiddenLibraries,
@@ -905,7 +906,7 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
         final hasExplore = hasExploreSource && SettingsService.instance.read(SettingsService.showExploreTab);
         // Server grouping: only when multi-server AND the user-facing toggle is on.
         final groupByServerSetting = SettingsService.instance.read(SettingsService.groupLibrariesByServer);
-        final showServerHeaders = serverIds.length > 1 && groupByServerSetting;
+        final showServerHeaders = !PlatformDetector.isTV() && serverIds.length > 1 && groupByServerSetting;
         _collapsedServerGroupKeys.retainAll(
           _buildServerGroupStateKeys(visibleLibraries, hiddenLibraries, showServerHeaders: showServerHeaders),
         );
@@ -1267,6 +1268,35 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
   }) {
     final librariesProvider = context.watch<LibrariesProvider>();
     final isLoading = librariesProvider.isLoading;
+    // TV destinations are peers: no Libraries, server or hidden-library folders.
+    // Use the same row geometry and collapsed representation as Home/Search.
+    if (PlatformDetector.isTV()) {
+      return Column(
+        crossAxisAlignment: .start,
+        children: [
+          for (final row in visibleRows)
+            if (row is _LibraryItemRow) ...[
+              _buildNavItem(
+                icon: ContentTypeHelper.getLibraryIcon(row.library.kind.id),
+                selectedIcon: ContentTypeHelper.getLibraryIcon(row.library.kind.id),
+                label: row.showServerName ? '${row.library.title} (${row.library.serverName})' : row.library.title,
+                isSelected:
+                    widget.selectedTab == NavigationTabId.libraries &&
+                    widget.selectedLibraryKey == row.library.globalKey,
+                onTap: () => widget.onLibrarySelected(row.library.globalKey),
+                focusNode: _focusTracker.get(_libraryItemFocusKey(row.section, row.library)),
+                isCollapsed: isCollapsed,
+              ),
+              const SizedBox(height: _itemGap),
+            ],
+          if (isLoading)
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
+            ),
+        ],
+      );
+    }
     final isLibrariesTabSelected = widget.selectedTab == NavigationTabId.libraries;
     final allEmpty = visibleRows.isEmpty && hiddenLibraryCount == 0;
     final headerLabelColor = isLibrariesTabSelected ? t.text : t.textMuted;

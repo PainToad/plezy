@@ -1089,6 +1089,7 @@ class MediaContextMenuState extends State<MediaContextMenu> {
     'edit_metadata',
     'quick_tag',
     'match',
+    'unmatch',
     'show_link',
     'play_version',
     'play_external',

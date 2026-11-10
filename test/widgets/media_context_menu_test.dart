@@ -91,6 +91,7 @@ void main() {
           t.metadataEdit.quickTag,
           t.matchScreen.match,
           t.matchScreen.fixMatch,
+          t.matchScreen.unmatch,
           t.deepLinks.showLink,
           t.mediaMenu.playVersion,
           t.externalPlayer.playInExternalPlayer,
