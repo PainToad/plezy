@@ -12,6 +12,8 @@ import 'package:plezy/profiles/profile_registry.dart';
 import 'package:plezy/screens/settings/general_settings_screen.dart';
 import 'package:plezy/services/settings_service.dart';
 import 'package:plezy/theme/mono_theme.dart';
+import 'package:plezy/utils/platform_detector.dart';
+import 'package:plezy/widgets/focusable_list_tile.dart';
 import 'package:provider/provider.dart';
 
 import '../../test_helpers/prefs.dart';
@@ -20,15 +22,20 @@ void main() {
   setUp(() async {
     resetSharedPreferencesForTest();
     SettingsService.resetForTesting();
+    TvDetectionService.debugReset();
+    await TvDetectionService.getInstance();
+    addTearDown(TvDetectionService.debugReset);
     await SettingsService.getInstance();
     LocaleSettings.setLocaleSync(AppLocale.en);
   });
 
   Future<({AppDatabase database, PlexHomeService plexHome, ActiveProfileProvider activeProfile})> pumpGeneralScreen(
-    WidgetTester tester,
-  ) async {
+    WidgetTester tester, {
+    TargetPlatform? platform,
+    double width = 1000,
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(1000, 1400);
+    tester.view.physicalSize = Size(width, 1400);
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPhysicalSize);
 
@@ -52,7 +59,10 @@ void main() {
     await tester.pumpWidget(
       ChangeNotifierProvider<ActiveProfileProvider>.value(
         value: activeProfile,
-        child: MaterialApp(theme: monoTheme(MonoPalette.dark), home: const GeneralSettingsScreen()),
+        child: MaterialApp(
+          theme: monoTheme(MonoPalette.dark).copyWith(platform: platform),
+          home: const GeneralSettingsScreen(),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -80,6 +90,47 @@ void main() {
     // The test host is a desktop OS, so the window group applies.
     expect(find.text(t.settings.startInFullscreen), findsOneWidget);
 
+    await disposeHarness(tester, harness);
+  });
+
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    for (final width in [390.0, 1024.0]) {
+      testWidgets('interface mode switches both ways on $platform at width $width', (tester) async {
+        final harness = await pumpGeneralScreen(tester, platform: platform, width: width);
+        expect(find.text('Automatic'), findsOneWidget);
+        await tester.tap(find.text('Interface mode'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('TV').last);
+        await tester.pumpAndSettle();
+        expect(SettingsService.instance.read(SettingsService.forceTvMode), isTrue);
+        expect(SettingsService.instance.prefs.getBool(SettingsService.forceTvMode.key), isTrue);
+        expect(PlatformDetector.isTV(), isTrue);
+        expect(PlatformDetector.isTVDevice(), isFalse);
+
+        // The control remains reachable in the TV layout, without a restart.
+        await tester.tap(find.text('Interface mode'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Automatic').last);
+        await tester.pumpAndSettle();
+        expect(SettingsService.instance.read(SettingsService.forceTvMode), isFalse);
+        expect(PlatformDetector.isTV(), isFalse);
+        await disposeHarness(tester, harness);
+      });
+    }
+  }
+
+  testWidgets('TV hardware only shows a locked TV interface mode', (tester) async {
+    TvDetectionService.debugSetAppleTVOverride(true);
+    final harness = await pumpGeneralScreen(tester);
+    final tile = find.widgetWithText(FocusableListTile, 'Interface mode');
+    expect(tester.widget<FocusableListTile>(tile).enabled, isFalse);
+    expect(find.text('TV (required on this device)'), findsOneWidget);
+    expect(SettingsService.instance.read(SettingsService.forceTvMode), isFalse);
+    expect(PlatformDetector.isTV(), isTrue);
+    await tester.tap(find.text('Interface mode'));
+    await tester.pumpAndSettle();
+    expect(find.text('Automatic'), findsNothing);
+    expect(PlatformDetector.isTV(), isTrue);
     await disposeHarness(tester, harness);
   });
 

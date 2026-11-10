@@ -113,6 +113,45 @@ void main() {
     await tester.pump();
     expect(taps, 1);
   });
+  testWidgets('touch returns a handheld using the TV layout to pointer mode', (tester) async {
+    TvDetectionService.debugReset();
+    await TvDetectionService.getInstance(forceTv: true);
+    PlatformDetector.debugSetIsDesktopOSOverride(false);
+    addTearDown(() {
+      TvDetectionService.debugReset();
+      PlatformDetector.debugSetIsDesktopOSOverride(null);
+    });
+    expect(PlatformDetector.isTV(), isTrue);
+    expect(PlatformDetector.isTVDevice(), isFalse);
+    late InputMode observed;
+    var taps = 0;
+    await tester.pumpWidget(
+      InputModeTracker(
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: Builder(
+            builder: (context) {
+              observed = InputModeTracker.of(context);
+              return GestureDetector(
+                key: const Key('handheld-target'),
+                behavior: HitTestBehavior.opaque,
+                onTap: () => taps++,
+                child: const SizedBox(width: 120, height: 80),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+    InputModeTracker.reportNonPointerInput();
+    await tester.pump();
+    expect(observed, InputMode.keyboard);
+    await tester.tap(find.byKey(const Key('handheld-target')));
+    await tester.pump();
+    expect(taps, 1);
+    expect(observed, InputMode.pointer);
+  });
+
   testWidgets('a physical-keyboard Enter does not switch the app into keyboard mode', (tester) async {
     expect(await _modeAfterKey(tester, LogicalKeyboardKey.enter), InputMode.pointer);
   });
