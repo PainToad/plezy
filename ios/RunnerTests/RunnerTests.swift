@@ -848,7 +848,9 @@ final class MpvPlayerContractTests: XCTestCase {
     let startupDeadline = Date().addingTimeInterval(15)
     while Date() < startupDeadline {
       pump(0.1)
-      if let position = try? timePos(core), position >= 3 {
+      if case .success(let value?) = awaitGetProperty(core, name: "time-pos"),
+        let position = Double(value), position >= 3
+      {
         break
       }
     }
