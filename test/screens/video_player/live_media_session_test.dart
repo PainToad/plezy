@@ -285,6 +285,29 @@ void main() {
       LiveTvChannel(key: 'ch-3', title: 'Channel 3', serverId: 'srv-1'),
     ];
 
+    Future<void> finishOpening(WidgetTester tester, Future<void> opening) async {
+      var finished = false;
+      unawaited(
+        opening.then<void>(
+          (_) {
+            finished = true;
+          },
+          onError: (Object _, StackTrace _) {
+            finished = true;
+          },
+        ),
+      );
+      for (var tick = 0; tick < 100 && !finished; tick++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+      expect(
+        finished,
+        isTrue,
+        reason: 'the startup operation must settle after the simulated first frame or cancellation',
+      );
+      await opening;
+    }
+
     Future<void> onScreen(
       WidgetTester tester,
       _StartupLiveTvSupport liveTv,
@@ -310,9 +333,12 @@ void main() {
           final state = key.currentState!..player = player;
           await state.debugMarkPlaybackStartedForTesting();
           await state.debugWirePlayerStreamsForTesting();
-          await body(state);
-          await tester.pumpWidget(const SizedBox.shrink());
-          await tester.pump(const Duration(seconds: 3));
+          try {
+            await body(state);
+          } finally {
+            await tester.pumpWidget(const SizedBox.shrink());
+            await tester.pump(const Duration(seconds: 3));
+          }
         },
       );
     }
@@ -331,7 +357,7 @@ void main() {
         await tester.pump(const Duration(seconds: 2));
         expect(liveTv.channels, ['ch-1', 'ch-1']);
         await tester.pump(const Duration(seconds: 2));
-        await opening;
+        await finishOpening(tester, opening);
         expect(liveTv.channels, ['ch-1', 'ch-1', 'ch-1']);
         expect(player.opens, 1);
         await tester.pump(const Duration(seconds: 10));
@@ -355,7 +381,7 @@ void main() {
         expect(sessions.single.probes, 1);
         expect(player.stops, 1);
         await tester.pump(const Duration(seconds: 2));
-        await opening;
+        await finishOpening(tester, opening);
         expect(player.opens, 2);
         expect(liveTv.channels, ['ch-1']);
         expect(player.urls.toSet(), hasLength(1));
@@ -378,7 +404,7 @@ void main() {
         expect(player.opens, 1);
         await tester.pump(const Duration(seconds: 30));
         await tester.pump(const Duration(seconds: 2));
-        await opening;
+        await finishOpening(tester, opening);
         expect(player.opens, 2);
         expect(liveTv.channels, ['ch-1']);
         expect(player.urls.toSet(), hasLength(1));
@@ -394,7 +420,7 @@ void main() {
           final opening = state.debugStartPlaybackForTesting();
           await tester.pump();
           await tester.pump(const Duration(seconds: 2));
-          await opening;
+          await finishOpening(tester, opening);
           expect(liveTv.channels, ['ch-1']);
           expect(session.probes, 1);
           expect(session.discards, 0);
@@ -417,7 +443,7 @@ void main() {
         await tester.pump();
         expect(expired.probes, 1);
         await tester.pump(const Duration(seconds: 2));
-        await opening;
+        await finishOpening(tester, opening);
         expect(liveTv.channels, ['ch-1', 'ch-1']);
         expect(replacement.discards, 0);
         expect(expired.discards, 1);
@@ -432,7 +458,7 @@ void main() {
         final opening = state.debugSwitchLiveChannelForTesting(1);
         await tester.pump();
         await tester.pump(const Duration(seconds: 2));
-        await opening;
+        await finishOpening(tester, opening);
         expect(liveTv.channels, ['ch-2']);
         expect(session.urlLookups, 1);
         expect(session.reports, isNot(contains('stopped')));
@@ -449,7 +475,7 @@ void main() {
         final opening = state.debugStartPlaybackForTesting();
         await tester.pump();
         await tester.pump(const Duration(seconds: 2));
-        await opening;
+        await finishOpening(tester, opening);
         expect(liveTv.channels, ['ch-1']);
         expect(session.urlLookups, 2);
         expect(session.discards, 0);
@@ -469,10 +495,10 @@ void main() {
         expect(old.probes, 1);
         final newOpening = state.debugSwitchLiveChannelForTesting(1);
         await tester.pump();
-        await newOpening;
+        await finishOpening(tester, newOpening);
         pending.complete(false);
         await tester.pump();
-        await oldOpening;
+        await finishOpening(tester, oldOpening);
         await tester.pump(const Duration(seconds: 10));
         expect(liveTv.channels, ['ch-1', 'ch-2']);
         expect(replacement.discards, 0);
@@ -495,16 +521,16 @@ void main() {
         await tester.pump();
         final newOpening = state.debugSwitchLiveChannelForTesting(1);
         await tester.pump();
-        await newOpening;
+        await finishOpening(tester, newOpening);
         final secondLate = _StartupLiveSession('ch-2');
         secondPending.complete(secondLate);
         await tester.pump();
-        await secondOpening;
+        await finishOpening(tester, secondOpening);
         expect(secondLate.discards, 1);
         final late = _StartupLiveSession('ch-1');
         pending.complete(late);
         await tester.pump();
-        await oldOpening;
+        await finishOpening(tester, oldOpening);
         expect(late.discards, 1);
         expect(liveTv.channels, ['ch-1', 'ch-2', 'ch-3']);
         expect(player.opens, 1);
@@ -522,7 +548,7 @@ void main() {
         expect(liveTv.channels, hasLength(1));
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pump(const Duration(minutes: 3));
-        await opening;
+        await finishOpening(tester, opening);
         expect(liveTv.channels, hasLength(1));
       });
     });

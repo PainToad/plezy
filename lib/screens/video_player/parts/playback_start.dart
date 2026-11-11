@@ -118,6 +118,9 @@ extension _VideoPlayerPlaybackStartMethods on VideoPlayerScreenState {
       );
       if (opened) openedStream = _live.streamGeneration;
       if (!attempt.isCurrent) return false;
+      // Keep this capture alive during the player's open. Re-arm the usual
+      // initial-heartbeat delay after each reopen while Plex stabilizes it.
+      if (startup != null && opened) _startLiveTimelineUpdates();
 
       await _initVideoFilterAndPip();
       if (!mounted || !attempt.isCurrent) return false;
