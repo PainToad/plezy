@@ -44,6 +44,14 @@ class LiveTimelineUpdate {
   bool get isEmpty => captureBuffer == null && playbackStream == null;
 }
 
+/// A capture session whose liveness can be checked without claiming a tuner.
+/// A transport failure is unknown, rather than evidence to open another one.
+abstract interface class ReusableLiveTvPlaybackSession implements LiveTvPlaybackSession {
+  /// True while the capture session exists, false when the server explicitly
+  /// reports it gone, null when its state cannot be established.
+  Future<bool?> isActive();
+}
+
 /// One live-TV playback session, produced by [LiveTvSupport.startPlayback].
 ///
 /// This is the backend-neutral handle the player drives; the

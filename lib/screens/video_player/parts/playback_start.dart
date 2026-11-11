@@ -2,6 +2,7 @@ part of '../../video_player_screen.dart';
 
 extension _VideoPlayerPlaybackStartMethods on VideoPlayerScreenState {
   Future<bool> _startLivePlaybackOnce(Player currentPlayer) async {
+    final startup = _live.startupRetry;
     final attempt = _beginPlaybackAttempt(currentPlayer);
     _firstFrame.resetRenderedForAttempt();
     _hasFatalPlaybackError = false;
@@ -25,7 +26,7 @@ extension _VideoPlayerPlaybackStartMethods on VideoPlayerScreenState {
       // Start the session inside the player for both backends (loading
       // spinner covers Plex's tune / Jellyfin's stream negotiation).
       final channel = widget.live!.channel;
-      final session = await _startLiveSession(channel);
+      final session = startup?.session ?? await _startLiveSession(channel);
       if (session == null) {
         throw PlaybackException(t.liveTv.failedToStartChannel, reason: PlaybackFailureReason.serverUnavailable);
       }
@@ -33,14 +34,18 @@ extension _VideoPlayerPlaybackStartMethods on VideoPlayerScreenState {
         _abandonLiveSession(session);
         return false;
       }
-      _live.adoptSession(session);
+      if (startup != null) startup.session = session;
+      if (!identical(_live.session, session)) {
+        _live.adoptSession(session);
+        _live.playbackStartTime = DateTime.now();
+      }
 
       // Show "Watch from Start" dialog when an existing capture session has >60s of history.
       // On a fresh tune (no active recording), the buffer is empty so this won't trigger.
-      int? offsetSeconds;
+      int? offsetSeconds = startup?.offsetSeconds;
       final captureBuffer = session.captureBuffer;
       final programBeginsAt = session.program.beginsAt;
-      if (captureBuffer != null && programBeginsAt != null) {
+      if (!(startup?.startPositionResolved ?? false) && captureBuffer != null && programBeginsAt != null) {
         final nowEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
         final offsetProgramStart = programBeginsAt - captureBuffer.startedAt.round();
         // If a session recording started after current program start, offset of program start at will be negative.
@@ -73,12 +78,19 @@ extension _VideoPlayerPlaybackStartMethods on VideoPlayerScreenState {
         }
       }
 
-      // Build the stream URL (with optional offset for time-shift)
-      final streamUrl = await session.streamUrlAt(offsetSeconds: offsetSeconds);
+      if (startup != null) {
+        startup.offsetSeconds = offsetSeconds;
+        startup.startPositionResolved = true;
+      }
+      // Reopen the same URL/session after an mpv failure. Its HLS output may
+      // restart, but it must not claim another capture tuner.
+      final streamUrl = startup?.streamUrl ?? await session.streamUrlAt(offsetSeconds: offsetSeconds);
       if (!attempt.isCurrent) return false;
       if (streamUrl == null || !mounted) {
         throw PlaybackException(t.liveTv.failedToBuildStreamUrl, reason: PlaybackFailureReason.noPlayableSource);
       }
+
+      if (startup != null) startup.streamUrl = streamUrl;
 
       // Track the requested epoch separately from MPV's source-local clock.
       int? targetEpoch;

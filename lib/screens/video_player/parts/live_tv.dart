@@ -6,10 +6,10 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
   bool get _useServerTimeShift => _live.captureBuffer != null || (_live.session?.canTimeShift ?? false);
 
   /// Plex may give up before the shared upstream proxy has filled its cache.
-  /// Re-tune with the same settings until a frame arrives or the user leaves.
+  /// Reopen the same capture until Plex confirms it ended, then re-tune.
   Future<bool> _runLiveStartup(Player currentPlayer, LiveTvChannel channel, Future<bool> Function() start) async {
     if (_liveChannelItem(channel).backend != MediaBackend.plex) return start();
-    final retry = LiveTvStartupRetry();
+    final retry = LiveTvStartupRetry<LiveTvPlaybackSession>();
     _live.startupRetry?.cancel();
     _live.startupRetry = retry;
     final channelIndex = widget.live?.channels?.indexOf(channel) ?? -1;
@@ -26,40 +26,76 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
         start: start,
         isCurrent: isCurrent,
         onError: (error, stackTrace) => appLogger.w(
-          'Plex Live TV startup failed; will re-tune ${channel.displayName}',
+          'Plex Live TV startup failed; will retry ${channel.displayName}',
           error: error,
           stackTrace: stackTrace,
         ),
         beforeRetry: () async {
           _live.startupOutcome?.abort('retrying Plex Live TV startup');
           _http503Watchdog.disarm();
-          _stopLiveTimelineUpdates();
-          final failedSession = _live.session;
-          _live.session = null;
-          _live.captureBuffer = null;
           _firstFrame.reset();
-          // Finish stopping this load before the next one. Each operation is
-          // bounded so a failed stop endpoint cannot stall all future tunes.
           try {
             await currentPlayer.stop().timeout(const Duration(seconds: 5));
           } catch (error) {
             appLogger.w('Failed to stop a live startup load', error: error);
           }
-          if (failedSession != null) {
+          if (!isCurrent() || retry.isCancelled) return;
+
+          final retained = retry.session;
+          final outgoing = _live.session;
+          if (outgoing != null && !identical(outgoing, retained)) {
+            _stopLiveTimelineUpdates();
+            _live.session = null;
+            _live.captureBuffer = null;
+            await _releaseLiveStartupSession(outgoing);
+          }
+          if (!isCurrent() || retry.isCancelled) return;
+
+          // An HLS 404 or an mpv timeout says nothing about the capture's
+          // liveness. Only probe the capture metadata; unknown stays reusable.
+          bool? active;
+          if (retained is ReusableLiveTvPlaybackSession) {
             try {
-              await failedSession.discard().timeout(const Duration(seconds: 5));
-            } catch (error) {
-              appLogger.w('Failed to release a live startup session', error: error);
+              active = await retained.isActive().timeout(const Duration(seconds: 5));
+            } catch (_) {
+              active = null;
             }
+          }
+          if (!isCurrent() || retry.isCancelled) return;
+          if (active == false) {
+            retry.clearSession();
+            if (identical(_live.session, retained)) {
+              _stopLiveTimelineUpdates();
+              _live.session = null;
+              _live.captureBuffer = null;
+            }
+            if (retained != null) await _releaseLiveStartupSession(retained);
+          } else if (retained != null) {
+            if (!identical(_live.session, retained)) {
+              _live.adoptSession(retained);
+              _live.markStreamRestartedAtLiveEdge(retained.captureBuffer);
+            }
+            // A slow mpv open must not let an otherwise healthy tuner expire.
+            if (_live.timelineTimer == null) _startLiveTimelineUpdates();
           }
         },
       );
     } finally {
+      final retained = retry.session;
+      if (retained != null && !identical(_live.session, retained)) _abandonLiveSession(retained);
       if (identical(_live.startupRetry, retry)) {
         _live.startupRetry = null;
         _live.startupOutcome = null;
         _live.startupChannelIndex = null;
       }
+    }
+  }
+
+  Future<void> _releaseLiveStartupSession(LiveTvPlaybackSession session) async {
+    try {
+      await session.discard().timeout(const Duration(seconds: 5));
+    } catch (error) {
+      appLogger.w('Failed to release a live startup session', error: error);
     }
   }
 
@@ -718,6 +754,7 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
         _transitionGate.owns(transitionLease, expected: PlaybackTransition.switchingChannel);
     _liveSeek.cancel();
 
+    final startup = _live.startupRetry;
     final previousSession = _live.session;
     final previousFirstFrame = _firstFrame.snapshot();
     final channel = channels[newIndex];
@@ -733,7 +770,7 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       // the old session alive until the replacement stream is actually open so
       // a failed zap does not tell the server to reclaim the still-playing
       // tuner/transcode session.
-      session = await _startLiveSession(channel);
+      session = startup?.session ?? await _startLiveSession(channel);
       if (session == null) {
         // Jellyfin's negotiation returns null instead of throwing, so this
         // is not covered by the catch below; without feedback a failed zap
@@ -744,16 +781,18 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
         return false;
       }
       if (!isCurrentChannelSwitch()) {
-        _abandonLiveSession(session);
+        if (!identical(startup?.session, session)) _abandonLiveSession(session);
         return false;
       }
 
-      final streamUrl = await session.streamUrlAt();
+      if (startup != null) startup.session = session;
+      final streamUrl = startup?.streamUrl ?? await session.streamUrlAt();
       if (streamUrl == null || !isCurrentChannelSwitch()) {
-        _abandonLiveSession(session);
+        if (!identical(startup?.session, session)) _abandonLiveSession(session);
         return false;
       }
 
+      if (startup != null) startup.streamUrl = streamUrl;
       _setPlayerState(() {
         _firstFrame.reset();
       });
@@ -779,22 +818,22 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       );
       if (opened) openedStream = _live.streamGeneration;
       if (!isCurrentChannelSwitch()) {
-        _abandonLiveSession(session);
+        if (!identical(startup?.session, session)) _abandonLiveSession(session);
         return false;
       }
 
       // The new stream is now the active local playback. Stop the old heartbeat
       // and send its terminal timeline before adopting the replacement session.
       _stopLiveTimelineUpdates();
-      if (previousSession != null) {
+      if (previousSession != null && !identical(previousSession, session)) {
         await _sendLiveTimeline('stopped');
       }
       if (!isCurrentChannelSwitch()) {
-        _abandonLiveSession(session);
+        if (!identical(startup?.session, session)) _abandonLiveSession(session);
         return false;
       }
 
-      _live.adoptSession(session);
+      if (!identical(_live.session, session)) _live.adoptSession(session);
       _live.fallbackLevel = 0;
       committed = true;
 
@@ -826,7 +865,9 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       // A session that tuned but was never adopted (streamUrlAt/open threw)
       // would otherwise hold its server-side tuner until the backend times out.
       final orphan = session;
-      if (orphan != null && _live.session != orphan) _abandonLiveSession(orphan);
+      if (orphan != null && _live.session != orphan && !identical(startup?.session, orphan)) {
+        _abandonLiveSession(orphan);
+      }
       if (!isCurrentChannelSwitch()) return false;
       if (_live.startupRetry != null) rethrow;
       if (replacementOpenStarted && mounted && _live.session == previousSession) {

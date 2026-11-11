@@ -2,11 +2,24 @@ import 'dart:async';
 
 /// Serial startup attempts for a channel whose upstream cache is still filling.
 /// A dispatched load is not success: [start] must wait for a rendered frame.
-class LiveTvStartupRetry {
+class LiveTvStartupRetry<Session> {
   LiveTvStartupRetry({this.delay = const Duration(seconds: 2)});
 
   final Duration delay;
   final Completer<void> _cancelled = Completer<void>();
+
+  /// The tune and URL belong to this channel request, not to each mpv load.
+  Session? session;
+  String? streamUrl;
+  int? offsetSeconds;
+  bool startPositionResolved = false;
+
+  void clearSession() {
+    session = null;
+    streamUrl = null;
+    offsetSeconds = null;
+    startPositionResolved = false;
+  }
 
   bool get isCancelled => _cancelled.isCompleted;
 

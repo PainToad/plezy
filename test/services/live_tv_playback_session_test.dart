@@ -145,6 +145,50 @@ void main() {
       expect(requests, ['/livetv/dvrs/dvr-1/channels/ch-1/tune']);
     });
 
+    for (final (status, expected) in <(int, bool?)>[
+      (200, true),
+      (404, false),
+      (410, false),
+      (401, null),
+      (500, null),
+      (503, null),
+    ]) {
+      test('capture liveness HTTP $status returns $expected without another tune', () async {
+        final requests = <http.Request>[];
+        final client = makeClient((request) async {
+          requests.add(request);
+          if (request.url.path.endsWith('/tune')) return jsonResponse(tuneResponse());
+          return http.Response('{}', status, headers: {'content-type': 'application/json'});
+        });
+        addTearDown(client.close);
+        final session = (await client.liveTv.startPlayback('ch-1', dvrKey: 'dvr-1'))!;
+        expect(await (session as ReusableLiveTvPlaybackSession).isActive(), expected);
+        expect(requests.map((r) => r.url.path), [
+          '/livetv/dvrs/dvr-1/channels/ch-1/tune',
+          '/livetv/sessions/session-abc',
+        ]);
+        expect(requests.last.method, 'GET');
+        expect(
+          requests.last.url.queryParameters['X-Plex-Session-Identifier'],
+          requests.first.url.queryParameters['X-Plex-Session-Identifier'],
+        );
+      });
+    }
+
+    test('capture liveness is unknown after a transport error and does not fail over', () async {
+      final requests = <Uri>[];
+      final client = makeClient((request) async {
+        requests.add(request.url);
+        if (request.url.path.endsWith('/tune')) return jsonResponse(tuneResponse());
+        throw http.ClientException('capture metadata unavailable', request.url);
+      }, prioritizedEndpoints: const ['https://plex.example.com', 'https://fallback.example.com']);
+      addTearDown(client.close);
+      final session = (await client.liveTv.startPlayback('ch-1', dvrKey: 'dvr-1'))!;
+      expect(await (session as ReusableLiveTvPlaybackSession).isActive(), isNull);
+      expect(requests, hasLength(2));
+      expect(requests.map((r) => r.host), everyElement('plex.example.com'));
+    });
+
     test('discarding a tune stops its session without waiting for the idle expiry', () async {
       final tuneSessions = <String?>[];
       final timelines = <Map<String, String>>[];

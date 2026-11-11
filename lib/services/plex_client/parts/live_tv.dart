@@ -943,7 +943,7 @@ mixin _PlexLiveTvClientMethods on _PlexClientInternals implements LiveTvSupport,
 /// (`sessionPath` / `sessionIdentifier`) plus the `transcodeSessionId` that
 /// must be reused across time-shift rebuilds so the server reuses its
 /// capture buffer.
-class _PlexLiveTvPlaybackSession implements LiveTvPlaybackSession {
+class _PlexLiveTvPlaybackSession implements ReusableLiveTvPlaybackSession {
   final PlexClient _client;
   final String _dvrKey;
   final String _channelKey;
@@ -1048,6 +1048,24 @@ class _PlexLiveTvPlaybackSession implements LiveTvPlaybackSession {
 
   @override
   bool get canTimeShift => captureBuffer != null;
+
+  @override
+  Future<bool?> isActive() async {
+    try {
+      final response = await _client._getWithFailover(
+        _sessionPath,
+        queryParameters: {'X-Plex-Session-Identifier': _sessionIdentifier},
+        timeout: const Duration(seconds: 5),
+        allowEndpointFailover: false,
+      );
+      return response.statusCode == 200 ? true : null;
+    } on MediaServerHttpException catch (error) {
+      if (error.statusCode == 404 || error.statusCode == 410) return false;
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
 
   @override
   Future<String?> streamUrlAt({int? offsetSeconds, MediaSubtitleTrack? subtitleTrack}) async {

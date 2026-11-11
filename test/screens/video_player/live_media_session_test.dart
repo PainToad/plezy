@@ -339,7 +339,7 @@ void main() {
       });
     });
 
-    testWidgets('a failed media open is stopped and discarded before a fresh tune', (tester) async {
+    testWidgets('an mpv failure reopens the same URL without claiming another tuner', (tester) async {
       final sessions = <_StartupLiveSession>[];
       final liveTv = _StartupLiveTvSupport((key, _) async {
         final session = _StartupLiveSession(key);
@@ -351,12 +351,16 @@ void main() {
         final opening = state.debugStartPlaybackForTesting();
         await tester.pump();
         expect(player.opens, 1);
-        expect(sessions.single.discards, 1);
+        expect(sessions.single.discards, 0);
+        expect(sessions.single.probes, 1);
         expect(player.stops, 1);
         await tester.pump(const Duration(seconds: 2));
         await opening;
         expect(player.opens, 2);
-        expect(liveTv.channels, ['ch-1', 'ch-1']);
+        expect(liveTv.channels, ['ch-1']);
+        expect(player.urls.toSet(), hasLength(1));
+        expect(sessions.single.urlLookups, 1);
+        expect(sessions.single.discards, 0);
         expect(
           sessions.map((s) => s.recoveries),
           everyElement(0),
@@ -365,7 +369,7 @@ void main() {
       });
     });
 
-    testWidgets('a load without start-file times out and makes a new tune request', (tester) async {
+    testWidgets('an mpv open timeout reuses the existing capture and URL', (tester) async {
       final liveTv = _StartupLiveTvSupport((key, _) async => _StartupLiveSession(key));
       final player = _StartupLivePlayer(stallFirst: true);
       await onScreen(tester, liveTv, player, (state) async {
@@ -376,7 +380,102 @@ void main() {
         await tester.pump(const Duration(seconds: 2));
         await opening;
         expect(player.opens, 2);
+        expect(liveTv.channels, ['ch-1']);
+        expect(player.urls.toSet(), hasLength(1));
+      });
+    });
+
+    for (final alive in [true, null]) {
+      testWidgets('capture status $alive keeps the tuner when mpv reports an HLS 404', (tester) async {
+        final session = _StartupLiveSession('ch-1')..active = alive;
+        final liveTv = _StartupLiveTvSupport((_, _) async => session);
+        final player = _StartupLivePlayer(failFirst: true);
+        await onScreen(tester, liveTv, player, (state) async {
+          final opening = state.debugStartPlaybackForTesting();
+          await tester.pump();
+          await tester.pump(const Duration(seconds: 2));
+          await opening;
+          expect(liveTv.channels, ['ch-1']);
+          expect(session.probes, 1);
+          expect(session.discards, 0);
+          expect(session.reports, isNot(contains('stopped')));
+        });
+      });
+    }
+
+    testWidgets('a confirmed expired capture is released before tuning a replacement', (tester) async {
+      final expired = _StartupLiveSession('ch-1')..active = false;
+      final replacement = _StartupLiveSession('ch-1');
+      final liveTv = _StartupLiveTvSupport((_, attempt) async {
+        if (attempt == 1) return expired;
+        expect(expired.discards, 1);
+        return replacement;
+      });
+      final player = _StartupLivePlayer(failFirst: true);
+      await onScreen(tester, liveTv, player, (state) async {
+        final opening = state.debugStartPlaybackForTesting();
+        await tester.pump();
+        expect(expired.probes, 1);
+        await tester.pump(const Duration(seconds: 2));
+        await opening;
         expect(liveTv.channels, ['ch-1', 'ch-1']);
+        expect(replacement.discards, 0);
+        expect(expired.discards, 1);
+      });
+    });
+
+    testWidgets('a channel zap reuses its tuner without sending itself a stopped timeline', (tester) async {
+      final session = _StartupLiveSession('ch-2');
+      final liveTv = _StartupLiveTvSupport((_, _) async => session);
+      final player = _StartupLivePlayer(failFirst: true);
+      await onScreen(tester, liveTv, player, (state) async {
+        final opening = state.debugSwitchLiveChannelForTesting(1);
+        await tester.pump();
+        await tester.pump(const Duration(seconds: 2));
+        await opening;
+        expect(liveTv.channels, ['ch-2']);
+        expect(session.urlLookups, 1);
+        expect(session.reports, isNot(contains('stopped')));
+        expect(session.discards, 0);
+        expect(player.opens, 2);
+      });
+    });
+
+    testWidgets('a failed URL lookup retains the capture while retrying the decision', (tester) async {
+      final session = _StartupLiveSession('ch-1')..failFirstUrl = true;
+      final liveTv = _StartupLiveTvSupport((_, _) async => session);
+      final player = _StartupLivePlayer();
+      await onScreen(tester, liveTv, player, (state) async {
+        final opening = state.debugStartPlaybackForTesting();
+        await tester.pump();
+        await tester.pump(const Duration(seconds: 2));
+        await opening;
+        expect(liveTv.channels, ['ch-1']);
+        expect(session.urlLookups, 2);
+        expect(session.discards, 0);
+        expect(player.opens, 1);
+      });
+    });
+
+    testWidgets('a late liveness result cannot discard the newly selected channel', (tester) async {
+      final pending = Completer<bool?>();
+      final old = _StartupLiveSession('ch-1')..probe = () => pending.future;
+      final replacement = _StartupLiveSession('ch-2');
+      final liveTv = _StartupLiveTvSupport((_, attempt) async => attempt == 1 ? old : replacement);
+      final player = _StartupLivePlayer(failFirst: true);
+      await onScreen(tester, liveTv, player, (state) async {
+        final oldOpening = state.debugStartPlaybackForTesting();
+        await tester.pump();
+        expect(old.probes, 1);
+        final newOpening = state.debugSwitchLiveChannelForTesting(1);
+        await tester.pump();
+        await newOpening;
+        pending.complete(false);
+        await tester.pump();
+        await oldOpening;
+        await tester.pump(const Duration(seconds: 10));
+        expect(liveTv.channels, ['ch-1', 'ch-2']);
+        expect(replacement.discards, 0);
       });
     });
 
@@ -1056,9 +1155,38 @@ class _StartupLiveTvSupport implements LiveTvSupport {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class _StartupLiveSession extends _ChannelLiveSession {
+class _StartupLiveSession extends _ChannelLiveSession implements ReusableLiveTvPlaybackSession {
   _StartupLiveSession(super.channelKey);
   int discards = 0;
+  int probes = 0;
+  int urlLookups = 0;
+  bool? active = true;
+  bool failFirstUrl = false;
+  Future<bool?> Function()? probe;
+  final List<String> reports = [];
+
+  @override
+  Future<bool?> isActive() async {
+    probes++;
+    return probe == null ? active : await probe!();
+  }
+
+  @override
+  Future<String?> streamUrlAt({int? offsetSeconds, MediaSubtitleTrack? subtitleTrack}) async {
+    urlLookups++;
+    if (failFirstUrl && urlLookups == 1) return null;
+    return super.streamUrlAt(offsetSeconds: offsetSeconds, subtitleTrack: subtitleTrack);
+  }
+
+  @override
+  Future<LiveTimelineUpdate?> reportTimeline({
+    required String state,
+    required int positionMs,
+    required int durationMs,
+  }) async {
+    reports.add(state);
+    return null;
+  }
 
   @override
   Future<void> discard() async => discards++;
@@ -1070,6 +1198,7 @@ class _StartupLivePlayer extends _LiveMediaSessionPlayer {
   final bool stallFirst;
   int opens = 0;
   int stops = 0;
+  final List<String> urls = [];
   final _started = StreamController<void>.broadcast();
   final _ready = StreamController<void>.broadcast();
   final _failed = StreamController<void>.broadcast();
@@ -1129,11 +1258,12 @@ class _StartupLivePlayer extends _LiveMediaSessionPlayer {
     Duration timelineOffset = Duration.zero,
   }) async {
     opens++;
+    urls.add(media.uri);
     if (stallFirst && opens == 1) return;
     _started.add(null);
     if (failFirst && opens == 1) {
       _failed.add(null);
-      _errors.add(const PlayerError('Plex session expired'));
+      _errors.add(const PlayerError('HTTP 404 missing HLS segment', cause: PlayerError.serverHttp404));
     } else {
       _ready.add(null);
     }

@@ -116,7 +116,7 @@ class LiveTvSessionState {
   bool retrying = false;
   bool retryFailed = false;
 
-  LiveTvStartupRetry? startupRetry;
+  LiveTvStartupRetry<LiveTvPlaybackSession>? startupRetry;
   PlaybackOpenOutcome? startupOutcome;
   int? startupChannelIndex;
 
