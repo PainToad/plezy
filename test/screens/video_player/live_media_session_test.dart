@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:os_media_controls/os_media_controls.dart';
 import 'package:plezy/database/app_database.dart';
 import 'package:plezy/media/ids.dart';
@@ -45,6 +46,7 @@ import '../../test_helpers/prefs.dart';
 /// `MediaControlsManager` unconstructed for the whole screen lifetime.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() => initializeDateFormatting('en'));
 
   const mediaControlChannel = MethodChannel('com.edde746.os_media_controls/methods');
   const mediaControlEvents = MethodChannel('com.edde746.os_media_controls/events');
