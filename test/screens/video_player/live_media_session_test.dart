@@ -1100,6 +1100,24 @@ class _StartupLivePlayer extends _LiveMediaSessionPlayer {
   Future<void> setBoxFitMode(int mode) async {}
 
   @override
+  Future<void> setVideoZoom(double scale) async {}
+
+  @override
+  String get playerType => 'mpv';
+
+  @override
+  bool get supportsSecondarySubtitles => true;
+
+  @override
+  bool get providesNativeStats => false;
+
+  @override
+  bool get detectsFpsAfterRender => false;
+
+  @override
+  bool get audioPassthroughActive => false;
+
+  @override
   Future<void> open(
     Media media, {
     bool play = true,
