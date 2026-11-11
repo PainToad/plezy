@@ -738,7 +738,7 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
         // Jellyfin's negotiation returns null instead of throwing, so this
         // is not covered by the catch below; without feedback a failed zap
         // looks like a dead remote (#2198).
-        if (isCurrentChannelSwitch() && _live.startupRetry == null) {
+        if (mounted && isCurrentChannelSwitch() && _live.startupRetry == null) {
           showErrorSnackBar(context, t.liveTv.failedToStartChannel);
         }
         return false;
