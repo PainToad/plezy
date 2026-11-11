@@ -47,6 +47,8 @@ jobs:
           test/screens/playlist_detail_screen_test.dart
           test/widgets/side_navigation_rail_test.dart
           test/services/settings_service_test.dart
+          test/screens/video_player/live_tv_startup_retry_test.dart
+          test/screens/video_player/live_media_session_test.dart
 
   analyze:
     name: Code Analysis

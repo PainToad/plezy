@@ -5,6 +5,81 @@ const _liveClockReadyTimeout = Duration(seconds: 15);
 extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
   bool get _useServerTimeShift => _live.captureBuffer != null || (_live.session?.canTimeShift ?? false);
 
+  /// Plex may give up before the shared upstream proxy has filled its cache.
+  /// Re-tune with the same settings until a frame arrives or the user leaves.
+  Future<bool> _runLiveStartup(Player currentPlayer, LiveTvChannel channel, Future<bool> Function() start) async {
+    if (_liveChannelItem(channel).backend != MediaBackend.plex) return start();
+    final retry = LiveTvStartupRetry();
+    _live.startupRetry?.cancel();
+    _live.startupRetry = retry;
+    final channelIndex = widget.live?.channels?.indexOf(channel) ?? -1;
+    _live.startupChannelIndex = channelIndex < 0 ? null : channelIndex;
+    bool isCurrent() =>
+        mounted &&
+        !_shuttingDown &&
+        !_isExiting.value &&
+        _launchCurrent &&
+        player == currentPlayer &&
+        identical(_live.startupRetry, retry);
+    try {
+      return await retry.run(
+        start: start,
+        isCurrent: isCurrent,
+        onError: (error, stackTrace) => appLogger.w(
+          'Plex Live TV startup failed; will re-tune ${channel.displayName}',
+          error: error,
+          stackTrace: stackTrace,
+        ),
+        beforeRetry: () async {
+          _live.startupOutcome?.abort('retrying Plex Live TV startup');
+          _http503Watchdog.disarm();
+          _stopLiveTimelineUpdates();
+          final failedSession = _live.session;
+          _live.session = null;
+          _live.captureBuffer = null;
+          _firstFrame.reset();
+          // Finish stopping this load before the next one. Each operation is
+          // bounded so a failed stop endpoint cannot stall all future tunes.
+          try {
+            await currentPlayer.stop().timeout(const Duration(seconds: 5));
+          } catch (error) {
+            appLogger.w('Failed to stop a live startup load', error: error);
+          }
+          if (failedSession != null) {
+            try {
+              await failedSession.discard().timeout(const Duration(seconds: 5));
+            } catch (error) {
+              appLogger.w('Failed to release a live startup session', error: error);
+            }
+          }
+        },
+      );
+    } finally {
+      if (identical(_live.startupRetry, retry)) {
+        _live.startupRetry = null;
+        _live.startupOutcome = null;
+        _live.startupChannelIndex = null;
+      }
+    }
+  }
+
+  Future<bool> _waitForLiveStartupFrame(PlaybackOpenOutcome outcome, bool Function() isCurrent) async {
+    if (_live.startupRetry == null) return true;
+    final ready = await outcome.firstFrame;
+    return ready && isCurrent();
+  }
+
+  void _trackLiveStartupOutcome(PlaybackOpenOutcome outcome) {
+    if (_live.startupRetry == null) return;
+    _live.startupOutcome = outcome;
+    // Arm before opening or releasing the display gate. A load that never
+    // emits start-file otherwise cannot arm the normal progress deadline.
+    final timer = Timer(VideoPlayerScreenState._openDeadline, () {
+      outcome.abort('Plex Live TV startup produced no frame');
+    });
+    unawaited(outcome.firstFrame.then((_) => timer.cancel()));
+  }
+
   /// Start periodic timeline heartbeats for live TV transcode session.
   void _startLiveTimelineUpdates() {
     if (_shuttingDown) return;
@@ -602,10 +677,28 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
     if (_shuttingDown) return;
     final channels = widget.live?.channels;
     if (channels == null || channels.isEmpty) return;
-    final newIndex = _live.channelIndex + delta;
+    final newIndex = (_live.startupChannelIndex ?? _live.channelIndex) + delta;
     if (newIndex < 0 || newIndex >= channels.length) return;
     final currentPlayer = player;
     if (currentPlayer == null) return;
+
+    // A channel change supersedes an in-flight startup immediately. Its late
+    // tune result is released by the old attempt instead of being adopted.
+    if (_live.startupRetry != null) {
+      _live.startupRetry?.cancel();
+      _live.startupOutcome?.abort('channel changed during live startup');
+      _live.startupRetry = null;
+      _live.startupOutcome = null;
+      _live.startupChannelIndex = null;
+      _transitionGate.beginGeneration();
+    }
+    await _runLiveStartup(currentPlayer, channels[newIndex], () => _switchLiveChannelOnce(newIndex));
+  }
+
+  Future<bool> _switchLiveChannelOnce(int newIndex) async {
+    final channels = widget.live?.channels;
+    final currentPlayer = player;
+    if (_shuttingDown || channels == null || currentPlayer == null) return false;
 
     // Zapping away from a failing channel must not wait out its recovery (a
     // re-tune can take the whole tune budget): the zap replaces that stream,
@@ -615,7 +708,7 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       _live.retrying = false;
     }
     final transitionLease = _transitionGate.tryAcquire(PlaybackTransition.switchingChannel);
-    if (transitionLease == null) return; // debounce concurrent switches
+    if (transitionLease == null) return false; // debounce concurrent switches
     final replacement = _live.beginReplacement();
     var committed = false;
     bool isCurrentChannelSwitch() =>
@@ -645,18 +738,20 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
         // Jellyfin's negotiation returns null instead of throwing, so this
         // is not covered by the catch below; without feedback a failed zap
         // looks like a dead remote (#2198).
-        if (mounted) showErrorSnackBar(context, t.liveTv.failedToStartChannel);
-        return;
+        if (isCurrentChannelSwitch() && _live.startupRetry == null) {
+          showErrorSnackBar(context, t.liveTv.failedToStartChannel);
+        }
+        return false;
       }
       if (!isCurrentChannelSwitch()) {
         _abandonLiveSession(session);
-        return;
+        return false;
       }
 
       final streamUrl = await session.streamUrlAt();
       if (streamUrl == null || !isCurrentChannelSwitch()) {
         _abandonLiveSession(session);
-        return;
+        return false;
       }
 
       _setPlayerState(() {
@@ -667,6 +762,7 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       // A zap starts no playback attempt, so it arms its own first-frame
       // signal; the deadline bounds a stream that stops moving before one.
       zapOutcome = PlaybackOpenOutcome.arm(currentPlayer, deadline: VideoPlayerScreenState._openDeadline);
+      _trackLiveStartupOutcome(zapOutcome);
       frameRatePlan = _armLiveDisplayNegotiation(currentPlayer, zapOutcome);
       final opened = await _openLiveStream(
         currentPlayer,
@@ -684,7 +780,7 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       if (opened) openedStream = _live.streamGeneration;
       if (!isCurrentChannelSwitch()) {
         _abandonLiveSession(session);
-        return;
+        return false;
       }
 
       // The new stream is now the active local playback. Stop the old heartbeat
@@ -695,14 +791,14 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       }
       if (!isCurrentChannelSwitch()) {
         _abandonLiveSession(session);
-        return;
+        return false;
       }
 
       _live.adoptSession(session);
       _live.fallbackLevel = 0;
       committed = true;
 
-      if (!mounted) return;
+      if (!mounted) return false;
       _setPlayerState(() {
         _live.channelIndex = newIndex;
         _live.channelName = channel.displayName;
@@ -731,7 +827,8 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
       // would otherwise hold its server-side tuner until the backend times out.
       final orphan = session;
       if (orphan != null && _live.session != orphan) _abandonLiveSession(orphan);
-      if (!isCurrentChannelSwitch()) return;
+      if (!isCurrentChannelSwitch()) return false;
+      if (_live.startupRetry != null) rethrow;
       if (replacementOpenStarted && mounted && _live.session == previousSession) {
         _setPlayerState(() {
           _firstFrame.restore(previousFirstFrame);
@@ -747,12 +844,19 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
         await _releaseLiveDisplayNegotiation(currentPlayer, plan, stream: committed ? openedStream : null);
       }
     }
+    if (!committed || zapOutcome == null) return false;
+    // The lease is released above so Back/channel changes remain responsive
+    // while the backend is waiting for its first frame.
+    final stream = openedStream;
+    return _waitForLiveStartupFrame(zapOutcome, () => mounted && !_shuttingDown && _live.streamGeneration == stream);
   }
 
   bool get _hasNextChannel {
     final channels = widget.live?.channels;
-    return channels != null && _live.channelIndex >= 0 && _live.channelIndex < channels.length - 1;
+    final index = _live.startupChannelIndex ?? _live.channelIndex;
+    return channels != null && index >= 0 && index < channels.length - 1;
   }
 
-  bool get _hasPreviousChannel => widget.live?.channels != null && _live.channelIndex > 0;
+  bool get _hasPreviousChannel =>
+      widget.live?.channels != null && (_live.startupChannelIndex ?? _live.channelIndex) > 0;
 }

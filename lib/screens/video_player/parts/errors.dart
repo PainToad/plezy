@@ -24,6 +24,15 @@ extension _VideoPlayerErrorMethods on VideoPlayerScreenState {
     // failed HLS open into an ANR. A new open resets the latch.
     if (_hasFatalPlaybackError) return;
 
+    // Plex startup owns tune and media-open failures until a frame arrives.
+    // Retrying here as well would race it and change the playback settings.
+    if (_live.startupRetry != null && !_live.startupRetry!.isCancelled) {
+      if (err.cause != PlayerError.audioOutputFailed && err.cause != PlayerError.playerInitFailed) {
+        _live.startupOutcome?.abort('live startup failed: ${err.cause ?? err.message}');
+        return;
+      }
+    }
+
     // A sidecar subtitle fetch can also log a status, but it never raises the
     // end-file error this handler is wired to, so a latched status belongs to
     // the primary media open.

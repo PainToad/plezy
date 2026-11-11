@@ -4,7 +4,9 @@ import '../../media/live_tv_support.dart';
 import '../../media/media_source_info.dart';
 import '../../models/livetv_capture_buffer.dart';
 import '../../mpv/player/player_streams.dart';
+import '../../services/playback_open_outcome.dart';
 import 'live_tv_session_args.dart';
+import 'live_tv_startup_retry.dart';
 import 'live_timeline_report.dart';
 
 class _LiveClockOpen {
@@ -113,6 +115,10 @@ class LiveTvSessionState {
   int fallbackLevel = 0;
   bool retrying = false;
   bool retryFailed = false;
+
+  LiveTvStartupRetry? startupRetry;
+  PlaybackOpenOutcome? startupOutcome;
+  int? startupChannelIndex;
 
   /// Whether the timeline heartbeat should restart when the app resumes
   /// from the background (it is suspended on hide).

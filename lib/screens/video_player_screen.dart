@@ -108,6 +108,7 @@ import 'video_player/media_controls_screen_controller.dart';
 import 'video_player/media_reload_outcome.dart';
 import 'video_player/spurious_eof_recovery.dart';
 import 'video_player/live_stream_retry.dart';
+import 'video_player/live_tv_startup_retry.dart';
 import 'video_player/live_timeline_report.dart';
 import 'video_player/wakelock_controller.dart';
 import 'video_player/playback_failure_action.dart';
@@ -1202,6 +1203,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   /// and dispose — before the player closes its streams, so nothing waits on
   /// a `Stream.first` that can only die with them.
   void _abortCurrentOpen(String reason) {
+    _live.startupRetry?.cancel();
+    _live.startupOutcome?.abort(reason);
     _playbackAttempt?.outcome.abort(reason);
     unawaited(_trackManager?.invalidatePendingSelection());
     _http503Watchdog.disarm();

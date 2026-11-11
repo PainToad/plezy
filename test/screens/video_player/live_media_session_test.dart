@@ -132,9 +132,11 @@ void main() {
         await key.currentState!.debugInitializeServicesForTesting();
         await tester.pump();
 
-        expect(calls.where((call) => call.method == 'setMetadata').map((call) => (call.arguments as Map)['title']), [
-          channel.displayName,
-        ], reason: 'the session must carry the tuned channel');
+        expect(
+          calls.where((call) => call.method == 'setMetadata').map((call) => (call.arguments as Map)['title']),
+          [channel.displayName],
+          reason: 'the session must carry the tuned channel',
+        );
 
         // A channel with no capture buffer can only play, pause and stop: the
         // OS is told so rather than shown dead ±skip/seek/speed controls.
@@ -273,6 +275,151 @@ void main() {
         await tester.pump(const Duration(seconds: 3));
       },
     );
+  });
+
+  group('Plex Live TV startup retries', () {
+    final channels = [
+      LiveTvChannel(key: 'ch-1', title: 'Channel 1', serverId: 'srv-1'),
+      LiveTvChannel(key: 'ch-2', title: 'Channel 2', serverId: 'srv-1'),
+      LiveTvChannel(key: 'ch-3', title: 'Channel 3', serverId: 'srv-1'),
+    ];
+
+    Future<void> onScreen(
+      WidgetTester tester,
+      _StartupLiveTvSupport liveTv,
+      _StartupLivePlayer player,
+      Future<void> Function(VideoPlayerScreenState state) body,
+    ) async {
+      addTearDown(player.close);
+      final shell = _LiveShell(client: _LiveMediaServerClient(liveTv, backend: MediaBackend.plex));
+      await withMockPlayerChannels(
+        methodChannelName: 'com.plezy/mpv_player',
+        eventChannelName: 'com.plezy/mpv_player/events',
+        methodHandler: (call) async => call.method == 'initialize' ? false : null,
+        testBody: () async {
+          final key = GlobalKey<VideoPlayerScreenState>();
+          await tester.pumpWidget(shell.screen(key: key, channel: channels.first, channels: channels));
+          await tester.pump();
+          await tester.pump(const Duration(milliseconds: 100));
+          final state = key.currentState!..player = player;
+          await state.debugWirePlayerStreamsForTesting();
+          await body(state);
+          await tester.pumpWidget(const SizedBox.shrink());
+          await tester.pump(const Duration(seconds: 3));
+        },
+      );
+    }
+
+    testWidgets('fresh tunes continue after timeout and null responses until a frame arrives', (tester) async {
+      final liveTv = _StartupLiveTvSupport((key, attempt) async {
+        if (attempt == 1) throw TimeoutException('Plex timed out');
+        if (attempt == 2) return null;
+        return _StartupLiveSession(key);
+      });
+      final player = _StartupLivePlayer();
+      await onScreen(tester, liveTv, player, (state) async {
+        final opening = state.debugStartPlaybackForTesting();
+        await tester.pump();
+        expect(liveTv.channels, ['ch-1']);
+        await tester.pump(const Duration(seconds: 2));
+        expect(liveTv.channels, ['ch-1', 'ch-1']);
+        await tester.pump(const Duration(seconds: 2));
+        await opening;
+        expect(liveTv.channels, ['ch-1', 'ch-1', 'ch-1']);
+        expect(player.opens, 1);
+        await tester.pump(const Duration(seconds: 10));
+        expect(liveTv.channels, hasLength(3), reason: 'a rendered frame ends the loop');
+      });
+    });
+
+    testWidgets('a failed media open is stopped and discarded before a fresh tune', (tester) async {
+      final sessions = <_StartupLiveSession>[];
+      final liveTv = _StartupLiveTvSupport((key, _) async {
+        final session = _StartupLiveSession(key);
+        sessions.add(session);
+        return session;
+      });
+      final player = _StartupLivePlayer(failFirst: true);
+      await onScreen(tester, liveTv, player, (state) async {
+        final opening = state.debugStartPlaybackForTesting();
+        await tester.pump();
+        expect(player.opens, 1);
+        expect(sessions.single.discards, 1);
+        expect(player.stops, 1);
+        await tester.pump(const Duration(seconds: 2));
+        await opening;
+        expect(player.opens, 2);
+        expect(liveTv.channels, ['ch-1', 'ch-1']);
+        expect(
+          sessions.map((s) => s.recoveries),
+          everyElement(0),
+          reason: 'startup never changes the fallback settings',
+        );
+      });
+    });
+
+    testWidgets('a load without start-file times out and makes a new tune request', (tester) async {
+      final liveTv = _StartupLiveTvSupport((key, _) async => _StartupLiveSession(key));
+      final player = _StartupLivePlayer(stallFirst: true);
+      await onScreen(tester, liveTv, player, (state) async {
+        final opening = state.debugStartPlaybackForTesting();
+        await tester.pump();
+        expect(player.opens, 1);
+        await tester.pump(const Duration(seconds: 30));
+        await tester.pump(const Duration(seconds: 2));
+        await opening;
+        expect(player.opens, 2);
+        expect(liveTv.channels, ['ch-1', 'ch-1']);
+      });
+    });
+
+    testWidgets('changing channel supersedes a pending tune and releases its late session', (tester) async {
+      final pending = Completer<LiveTvPlaybackSession?>();
+      final secondPending = Completer<LiveTvPlaybackSession?>();
+      final liveTv = _StartupLiveTvSupport((key, attempt) async {
+        if (attempt == 1) return pending.future;
+        if (attempt == 2) return secondPending.future;
+        return _StartupLiveSession(key);
+      });
+      final player = _StartupLivePlayer();
+      await onScreen(tester, liveTv, player, (state) async {
+        final oldOpening = state.debugStartPlaybackForTesting();
+        await tester.pump();
+        final secondOpening = state.debugSwitchLiveChannelForTesting(1);
+        await tester.pump();
+        final newOpening = state.debugSwitchLiveChannelForTesting(1);
+        await tester.pump();
+        await newOpening;
+        final secondLate = _StartupLiveSession('ch-2');
+        secondPending.complete(secondLate);
+        await tester.pump();
+        await secondOpening;
+        expect(secondLate.discards, 1);
+        final late = _StartupLiveSession('ch-1');
+        pending.complete(late);
+        await tester.pump();
+        await oldOpening;
+        expect(late.discards, 1);
+        expect(liveTv.channels, ['ch-1', 'ch-2', 'ch-3']);
+        expect(player.opens, 1);
+        await tester.pump(const Duration(seconds: 10));
+        expect(liveTv.channels, hasLength(3));
+      });
+    });
+
+    testWidgets('leaving the player cancels further startup requests', (tester) async {
+      final liveTv = _StartupLiveTvSupport((_, _) async => null);
+      final player = _StartupLivePlayer();
+      await onScreen(tester, liveTv, player, (state) async {
+        final opening = state.debugStartPlaybackForTesting();
+        await tester.pump();
+        expect(liveTv.channels, hasLength(1));
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pump(const Duration(minutes: 3));
+        await opening;
+        expect(liveTv.channels, hasLength(1));
+      });
+    });
   });
 
   group('live display matching (#2568)', () {
@@ -686,7 +833,7 @@ class _RecoveringLiveSession implements LiveTvPlaybackSession {
 }
 
 class _LiveMediaServerClient implements MediaServerClient {
-  _LiveMediaServerClient(this.liveTv);
+  _LiveMediaServerClient(this.liveTv, {this.backend = MediaBackend.jellyfin});
 
   @override
   final LiveTvSupport liveTv;
@@ -698,7 +845,7 @@ class _LiveMediaServerClient implements MediaServerClient {
   String? get serverName => 'Server 1';
 
   @override
-  MediaBackend get backend => MediaBackend.jellyfin;
+  final MediaBackend backend;
 
   @override
   ServerCapabilities get capabilities => const ServerCapabilities(liveTv: true);
@@ -881,4 +1028,94 @@ class _ChannelLiveSession extends _RecoveringLiveSession {
   @override
   Future<String?> streamUrlAt({int? offsetSeconds, MediaSubtitleTrack? subtitleTrack}) =>
       Future.value('http://example.invalid/$channelKey.ts');
+}
+
+class _StartupLiveTvSupport implements LiveTvSupport {
+  _StartupLiveTvSupport(this.tune);
+  final Future<LiveTvPlaybackSession?> Function(String key, int attempt) tune;
+  final List<String> channels = [];
+
+  @override
+  Future<LiveTvPlaybackSession?> startPlayback(
+    String channelKey, {
+    String? dvrKey,
+    TranscodeQualityPreset quality = TranscodeQualityPreset.original,
+  }) {
+    channels.add(channelKey);
+    return tune(channelKey, channels.length);
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _StartupLiveSession extends _ChannelLiveSession {
+  _StartupLiveSession(super.channelKey);
+  int discards = 0;
+
+  @override
+  Future<void> discard() async => discards++;
+}
+
+class _StartupLivePlayer extends _LiveMediaSessionPlayer {
+  _StartupLivePlayer({this.failFirst = false, this.stallFirst = false});
+  final bool failFirst;
+  final bool stallFirst;
+  int opens = 0;
+  int stops = 0;
+  final _started = StreamController<void>.broadcast();
+  final _ready = StreamController<void>.broadcast();
+  final _failed = StreamController<void>.broadcast();
+  final _silent = StreamController<void>.broadcast();
+  final _errors = StreamController<PlayerError>.broadcast();
+
+  @override
+  late final PlayerStreams streams = emptyPlayerStreams(
+    fileStarted: _started.stream,
+    primaryMediaReady: _silent.stream,
+    fileLoaded: _silent.stream,
+    playbackRestart: _ready.stream,
+    fileLoadFailed: _failed.stream,
+    error: _errors.stream,
+  );
+
+  @override
+  bool get disposed => false;
+
+  @override
+  Duration get currentPosition => Duration.zero;
+
+  @override
+  Future<String?> getProperty(String name) async => null;
+
+  @override
+  Future<void> open(
+    Media media, {
+    bool play = true,
+    bool isLive = false,
+    List<SubtitleTrack>? externalSubtitles,
+    Duration? timelineDuration,
+    Duration timelineOffset = Duration.zero,
+  }) async {
+    opens++;
+    if (stallFirst && opens == 1) return;
+    _started.add(null);
+    if (failFirst && opens == 1) {
+      _failed.add(null);
+      _errors.add(const PlayerError('Plex session expired'));
+    } else {
+      _ready.add(null);
+    }
+  }
+
+  @override
+  Future<void> stop() async => stops++;
+
+  Future<void> close() async {
+    await _started.close();
+    await _ready.close();
+    await _failed.close();
+    await _silent.close();
+    await _errors.close();
+  }
 }
