@@ -1685,15 +1685,12 @@ def phase_msstore(ctx: Context) -> None:
 def phase_publish(ctx: Context) -> None:
     if dry_guard(ctx, "publish the GitHub release"):
         return
-    if not ctx.confirm(
-        f"Publish GitHub release {ctx.tag}? "
-        "The release event will update Homebrew, WinGet, and the appcast branch."
-    ):
+    if not ctx.confirm(f"Publish GitHub release {ctx.tag}?"):
         log("publish: skipped; rerun with --only publish when ready")
         raise PhaseDeferred
 
     run(["gh", "release", "edit", ctx.tag, "--draft=false"])
-    log(f"publish: release {ctx.tag} is live; package updates run in update-packages.yml")
+    log(f"publish: release {ctx.tag} is live")
 
 
 # ---------------------------------------------------------------------------

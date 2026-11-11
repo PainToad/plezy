@@ -18,7 +18,6 @@ for checker in \
   scripts/checks/check_workflow_security.py \
   scripts/checks/check_workflow_action_pins.py \
   scripts/checks/check_container_image_pins.py \
-  scripts/checks/check_update_packages_workflow.py \
   scripts/checks/check_linux_package_deps.py \
   scripts/checks/check_windows_installer.py \
   scripts/checks/check_windows_msix.py; do
