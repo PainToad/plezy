@@ -432,9 +432,10 @@ void main() {
     testWidgets('a confirmed expired capture is released before tuning a replacement', (tester) async {
       final expired = _StartupLiveSession('ch-1')..active = false;
       final replacement = _StartupLiveSession('ch-1');
+      int? discardedBeforeReplacement;
       final liveTv = _StartupLiveTvSupport((_, attempt) async {
         if (attempt == 1) return expired;
-        expect(expired.discards, 1);
+        discardedBeforeReplacement = expired.discards;
         return replacement;
       });
       final player = _StartupLivePlayer(failFirst: true);
@@ -447,6 +448,7 @@ void main() {
         expect(liveTv.channels, ['ch-1', 'ch-1']);
         expect(replacement.discards, 0);
         expect(expired.discards, 1);
+        expect(discardedBeforeReplacement, 1);
       });
     });
 
