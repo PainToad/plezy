@@ -88,7 +88,6 @@ class TranslationsHu extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$hu externalPlayer = _Translations$externalPlayer$hu._(_root);
 	@override late final _Translations$metadataEdit$hu metadataEdit = _Translations$metadataEdit$hu._(_root);
 	@override late final _Translations$matchScreen$hu matchScreen = _Translations$matchScreen$hu._(_root);
-	@override late final _Translations$serverTasks$hu serverTasks = _Translations$serverTasks$hu._(_root);
 	@override late final _Translations$trakt$hu trakt = _Translations$trakt$hu._(_root);
 	@override late final _Translations$seerr$hu seerr = _Translations$seerr$hu._(_root);
 	@override late final _Translations$services$hu services = _Translations$services$hu._(_root);
@@ -2236,18 +2235,6 @@ class _Translations$matchScreen$hu extends Translations$matchScreen$en {
 	@override String get yearHint => 'Év';
 	@override String get search => 'Keresés';
 	@override String get noMatchesFound => 'Nincsenek egyezések';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$hu extends Translations$serverTasks$en {
-	_Translations$serverTasks$hu._(TranslationsHu root) : this._root = root, super.internal(root);
-
-	final TranslationsHu _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Szerverfeladatok';
-	@override String get failedToLoad => 'Nem sikerült a feladatok betöltése';
-	@override String get noTasks => 'Nincsenek futó feladatok';
 }
 
 // Path: trakt
@@ -5306,16 +5293,13 @@ extension on TranslationsHu {
 			'matchScreen.yearHint' => 'Év',
 			'matchScreen.search' => 'Keresés',
 			'matchScreen.noMatchesFound' => 'Nincsenek egyezések',
-			'serverTasks.title' => 'Szerverfeladatok',
-			'serverTasks.failedToLoad' => 'Nem sikerült a feladatok betöltése',
-			'serverTasks.noTasks' => 'Nincsenek futó feladatok',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Csatlakoztatva',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '@${username} néven csatlakoztatva',
 			'trakt.disconnectConfirm' => 'Leválasztod a Trakt-fiókot?',
 			'trakt.disconnectConfirmBody' => 'A Plezy nem küld több eseményt a Traktnak. Bármikor újracsatlakozhatsz.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Valós idejű scrobbling',
 			'trakt.scrobbleDescription' => 'Lejátszási, szüneteltetési és leállítási események küldése a Traktnak lejátszás közben.',
 			'trakt.watchedSync' => 'Megtekintési állapot szinkronizálása',

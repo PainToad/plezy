@@ -88,7 +88,6 @@ class TranslationsTr extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$tr externalPlayer = _Translations$externalPlayer$tr._(_root);
 	@override late final _Translations$metadataEdit$tr metadataEdit = _Translations$metadataEdit$tr._(_root);
 	@override late final _Translations$matchScreen$tr matchScreen = _Translations$matchScreen$tr._(_root);
-	@override late final _Translations$serverTasks$tr serverTasks = _Translations$serverTasks$tr._(_root);
 	@override late final _Translations$trakt$tr trakt = _Translations$trakt$tr._(_root);
 	@override late final _Translations$seerr$tr seerr = _Translations$seerr$tr._(_root);
 	@override late final _Translations$services$tr services = _Translations$services$tr._(_root);
@@ -2236,18 +2235,6 @@ class _Translations$matchScreen$tr extends Translations$matchScreen$en {
 	@override String get yearHint => 'Yıl';
 	@override String get search => 'Ara';
 	@override String get noMatchesFound => 'Eşleşme bulunamadı';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$tr extends Translations$serverTasks$en {
-	_Translations$serverTasks$tr._(TranslationsTr root) : this._root = root, super.internal(root);
-
-	final TranslationsTr _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Sunucu Görevleri';
-	@override String get failedToLoad => 'Görevler yüklenemedi';
-	@override String get noTasks => 'Çalışan görev yok';
 }
 
 // Path: trakt
@@ -5306,16 +5293,13 @@ extension on TranslationsTr {
 			'matchScreen.yearHint' => 'Yıl',
 			'matchScreen.search' => 'Ara',
 			'matchScreen.noMatchesFound' => 'Eşleşme bulunamadı',
-			'serverTasks.title' => 'Sunucu Görevleri',
-			'serverTasks.failedToLoad' => 'Görevler yüklenemedi',
-			'serverTasks.noTasks' => 'Çalışan görev yok',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Bağlandı',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '@${username} olarak bağlandı',
 			'trakt.disconnectConfirm' => 'Trakt hesabının bağlantısı kesilsin mi?',
 			'trakt.disconnectConfirmBody' => 'Plezy, Trakt\'a olay göndermeyi durduracak. İstediğiniz zaman yeniden bağlanabilirsiniz.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Gerçek zamanlı scrobble',
 			'trakt.scrobbleDescription' => 'Oynatma sırasında Trakt\'a oynatma, duraklatma ve durdurma olayları gönderin.',
 			'trakt.watchedSync' => 'İzleme durumunu eşitle',

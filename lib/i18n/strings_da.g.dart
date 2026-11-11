@@ -88,7 +88,6 @@ class TranslationsDa extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$da externalPlayer = _Translations$externalPlayer$da._(_root);
 	@override late final _Translations$metadataEdit$da metadataEdit = _Translations$metadataEdit$da._(_root);
 	@override late final _Translations$matchScreen$da matchScreen = _Translations$matchScreen$da._(_root);
-	@override late final _Translations$serverTasks$da serverTasks = _Translations$serverTasks$da._(_root);
 	@override late final _Translations$trakt$da trakt = _Translations$trakt$da._(_root);
 	@override late final _Translations$seerr$da seerr = _Translations$seerr$da._(_root);
 	@override late final _Translations$services$da services = _Translations$services$da._(_root);
@@ -2236,18 +2235,6 @@ class _Translations$matchScreen$da extends Translations$matchScreen$en {
 	@override String get yearHint => 'År';
 	@override String get search => 'Søg';
 	@override String get noMatchesFound => 'Ingen match fundet';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$da extends Translations$serverTasks$en {
-	_Translations$serverTasks$da._(TranslationsDa root) : this._root = root, super.internal(root);
-
-	final TranslationsDa _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Serveropgaver';
-	@override String get failedToLoad => 'Kunne ikke indlæse opgaver';
-	@override String get noTasks => 'Ingen opgaver kører';
 }
 
 // Path: trakt
@@ -5306,16 +5293,13 @@ extension on TranslationsDa {
 			'matchScreen.yearHint' => 'År',
 			'matchScreen.search' => 'Søg',
 			'matchScreen.noMatchesFound' => 'Ingen match fundet',
-			'serverTasks.title' => 'Serveropgaver',
-			'serverTasks.failedToLoad' => 'Kunne ikke indlæse opgaver',
-			'serverTasks.noTasks' => 'Ingen opgaver kører',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Forbundet',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Forbundet som @${username}',
 			'trakt.disconnectConfirm' => 'Frakobl Trakt-konto?',
 			'trakt.disconnectConfirmBody' => 'Plezy stopper med at sende hændelser til Trakt. Du kan tilslutte igen når som helst.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Realtids-scrobbling',
 			'trakt.scrobbleDescription' => 'Send afspil-, pause- og stop-begivenheder til Trakt under afspilning.',
 			'trakt.watchedSync' => 'Synkroniser set-status',

@@ -2287,11 +2287,6 @@
     "search": "Szukaj",
     "noMatchesFound": "Nie znaleziono dopasowań"
   },
-  "serverTasks": {
-    "title": "Zadania serwera",
-    "failedToLoad": "Nie udało się załadować zadań",
-    "noTasks": "Brak uruchomionych zadań"
-  },
   "trakt": {
     "title": "Trakt",
     "connected": "Połączono",

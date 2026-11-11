@@ -88,7 +88,6 @@ class TranslationsZh extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final Translations$externalPlayer$zh externalPlayer = Translations$externalPlayer$zh.internal(_root);
 	@override late final Translations$metadataEdit$zh metadataEdit = Translations$metadataEdit$zh.internal(_root);
 	@override late final Translations$matchScreen$zh matchScreen = Translations$matchScreen$zh.internal(_root);
-	@override late final Translations$serverTasks$zh serverTasks = Translations$serverTasks$zh.internal(_root);
 	@override late final Translations$trakt$zh trakt = Translations$trakt$zh.internal(_root);
 	@override late final Translations$seerr$zh seerr = Translations$seerr$zh.internal(_root);
 	@override late final Translations$services$zh services = Translations$services$zh.internal(_root);
@@ -2226,18 +2225,6 @@ class Translations$matchScreen$zh extends Translations$matchScreen$en {
 	@override String get yearHint => '年份';
 	@override String get search => '搜索';
 	@override String get noMatchesFound => '未找到匹配项';
-}
-
-// Path: serverTasks
-class Translations$serverTasks$zh extends Translations$serverTasks$en {
-	Translations$serverTasks$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
-
-	final TranslationsZh _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => '服务器任务';
-	@override String get failedToLoad => '加载任务失败';
-	@override String get noTasks => '没有正在运行的任务';
 }
 
 // Path: trakt
@@ -5294,16 +5281,13 @@ extension on TranslationsZh {
 			'matchScreen.yearHint' => '年份',
 			'matchScreen.search' => '搜索',
 			'matchScreen.noMatchesFound' => '未找到匹配项',
-			'serverTasks.title' => '服务器任务',
-			'serverTasks.failedToLoad' => '加载任务失败',
-			'serverTasks.noTasks' => '没有正在运行的任务',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => '已连接',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '已以 @${username} 身份连接',
 			'trakt.disconnectConfirm' => '断开 Trakt 账户？',
 			'trakt.disconnectConfirmBody' => 'Plezy 将停止向 Trakt 发送事件。你可随时重新连接。',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => '实时同步播放状态',
 			'trakt.scrobbleDescription' => '播放期间将播放、暂停和停止事件发送到 Trakt。',
 			'trakt.watchedSync' => '同步已观看状态',

@@ -88,7 +88,6 @@ class TranslationsPl extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$pl externalPlayer = _Translations$externalPlayer$pl._(_root);
 	@override late final _Translations$metadataEdit$pl metadataEdit = _Translations$metadataEdit$pl._(_root);
 	@override late final _Translations$matchScreen$pl matchScreen = _Translations$matchScreen$pl._(_root);
-	@override late final _Translations$serverTasks$pl serverTasks = _Translations$serverTasks$pl._(_root);
 	@override late final _Translations$trakt$pl trakt = _Translations$trakt$pl._(_root);
 	@override late final _Translations$seerr$pl seerr = _Translations$seerr$pl._(_root);
 	@override late final _Translations$services$pl services = _Translations$services$pl._(_root);
@@ -2256,18 +2255,6 @@ class _Translations$matchScreen$pl extends Translations$matchScreen$en {
 	@override String get yearHint => 'Rok';
 	@override String get search => 'Szukaj';
 	@override String get noMatchesFound => 'Nie znaleziono dopasowań';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$pl extends Translations$serverTasks$en {
-	_Translations$serverTasks$pl._(TranslationsPl root) : this._root = root, super.internal(root);
-
-	final TranslationsPl _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Zadania serwera';
-	@override String get failedToLoad => 'Nie udało się załadować zadań';
-	@override String get noTasks => 'Brak uruchomionych zadań';
 }
 
 // Path: trakt
@@ -5330,16 +5317,13 @@ extension on TranslationsPl {
 			'matchScreen.yearHint' => 'Rok',
 			'matchScreen.search' => 'Szukaj',
 			'matchScreen.noMatchesFound' => 'Nie znaleziono dopasowań',
-			'serverTasks.title' => 'Zadania serwera',
-			'serverTasks.failedToLoad' => 'Nie udało się załadować zadań',
-			'serverTasks.noTasks' => 'Brak uruchomionych zadań',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Połączono',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Połączono jako @${username}',
 			'trakt.disconnectConfirm' => 'Rozłączyć konto Trakt?',
 			'trakt.disconnectConfirmBody' => 'Plezy przestanie wysyłać zdarzenia do serwisu Trakt. Połączenie można przywrócić w dowolnym momencie.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Śledzenie odtwarzania w czasie rzeczywistym',
 			'trakt.scrobbleDescription' => 'Wysyłaj do serwisu Trakt zdarzenia odtwarzania, wstrzymania i zatrzymania.',
 			'trakt.watchedSync' => 'Synchronizuj stan obejrzenia',

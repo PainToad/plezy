@@ -2263,11 +2263,6 @@
     "search": "Rechercher",
     "noMatchesFound": "Aucune correspondance"
   },
-  "serverTasks": {
-    "title": "Tâches du serveur",
-    "failedToLoad": "Échec du chargement des tâches",
-    "noTasks": "Aucune tâche en cours"
-  },
   "trakt": {
     "title": "Trakt",
     "connected": "Connecté",

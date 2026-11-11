@@ -88,7 +88,6 @@ class TranslationsNl extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$nl externalPlayer = _Translations$externalPlayer$nl._(_root);
 	@override late final _Translations$metadataEdit$nl metadataEdit = _Translations$metadataEdit$nl._(_root);
 	@override late final _Translations$matchScreen$nl matchScreen = _Translations$matchScreen$nl._(_root);
-	@override late final _Translations$serverTasks$nl serverTasks = _Translations$serverTasks$nl._(_root);
 	@override late final _Translations$trakt$nl trakt = _Translations$trakt$nl._(_root);
 	@override late final _Translations$seerr$nl seerr = _Translations$seerr$nl._(_root);
 	@override late final _Translations$services$nl services = _Translations$services$nl._(_root);
@@ -2236,18 +2235,6 @@ class _Translations$matchScreen$nl extends Translations$matchScreen$en {
 	@override String get yearHint => 'Jaar';
 	@override String get search => 'Zoeken';
 	@override String get noMatchesFound => 'Geen overeenkomsten gevonden';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$nl extends Translations$serverTasks$en {
-	_Translations$serverTasks$nl._(TranslationsNl root) : this._root = root, super.internal(root);
-
-	final TranslationsNl _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Servertaken';
-	@override String get failedToLoad => 'Taken konden niet worden geladen';
-	@override String get noTasks => 'Geen actieve taken';
 }
 
 // Path: trakt
@@ -5306,16 +5293,13 @@ extension on TranslationsNl {
 			'matchScreen.yearHint' => 'Jaar',
 			'matchScreen.search' => 'Zoeken',
 			'matchScreen.noMatchesFound' => 'Geen overeenkomsten gevonden',
-			'serverTasks.title' => 'Servertaken',
-			'serverTasks.failedToLoad' => 'Taken konden niet worden geladen',
-			'serverTasks.noTasks' => 'Geen actieve taken',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Verbonden',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Verbonden als @${username}',
 			'trakt.disconnectConfirm' => 'Trakt-account loskoppelen?',
 			'trakt.disconnectConfirmBody' => 'Plezy stuurt geen gebeurtenissen meer naar Trakt. Je kunt op elk moment opnieuw verbinding maken.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Realtime scrobblen',
 			'trakt.scrobbleDescription' => 'Stuur tijdens het afspelen gebeurtenissen voor afspelen, pauzeren en stoppen naar Trakt.',
 			'trakt.watchedSync' => 'Kijkstatus synchroniseren',

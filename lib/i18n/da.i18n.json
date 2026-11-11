@@ -2263,11 +2263,6 @@
     "search": "Søg",
     "noMatchesFound": "Ingen match fundet"
   },
-  "serverTasks": {
-    "title": "Serveropgaver",
-    "failedToLoad": "Kunne ikke indlæse opgaver",
-    "noTasks": "Ingen opgaver kører"
-  },
   "trakt": {
     "title": "Trakt",
     "connected": "Forbundet",

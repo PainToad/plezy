@@ -89,7 +89,6 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final Translations$externalPlayer$en externalPlayer = Translations$externalPlayer$en.internal(_root);
 	late final Translations$metadataEdit$en metadataEdit = Translations$metadataEdit$en.internal(_root);
 	late final Translations$matchScreen$en matchScreen = Translations$matchScreen$en.internal(_root);
-	late final Translations$serverTasks$en serverTasks = Translations$serverTasks$en.internal(_root);
 	late final Translations$trakt$en trakt = Translations$trakt$en.internal(_root);
 	late final Translations$seerr$en seerr = Translations$seerr$en.internal(_root);
 	late final Translations$services$en services = Translations$services$en.internal(_root);
@@ -5553,24 +5552,6 @@ class Translations$matchScreen$en {
 	String get noMatchesFound => 'No matches found';
 }
 
-// Path: serverTasks
-class Translations$serverTasks$en {
-	Translations$serverTasks$en.internal(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-
-	/// en: 'Server Tasks'
-	String get title => 'Server Tasks';
-
-	/// en: 'Failed to load tasks'
-	String get failedToLoad => 'Failed to load tasks';
-
-	/// en: 'No tasks running'
-	String get noTasks => 'No tasks running';
-}
-
 // Path: trakt
 class Translations$trakt$en {
 	Translations$trakt$en.internal(this._root);
@@ -9807,9 +9788,6 @@ extension on Translations {
 		} ?? switch (path) {
 			'matchScreen.search' => 'Search',
 			'matchScreen.noMatchesFound' => 'No matches found',
-			'serverTasks.title' => 'Server Tasks',
-			'serverTasks.failedToLoad' => 'Failed to load tasks',
-			'serverTasks.noTasks' => 'No tasks running',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Connected',
 			'trakt.connectedAs' => ({required Object username}) => 'Connected as @${username}',

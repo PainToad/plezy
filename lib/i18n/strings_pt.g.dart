@@ -88,7 +88,6 @@ class TranslationsPt extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$pt externalPlayer = _Translations$externalPlayer$pt._(_root);
 	@override late final _Translations$metadataEdit$pt metadataEdit = _Translations$metadataEdit$pt._(_root);
 	@override late final _Translations$matchScreen$pt matchScreen = _Translations$matchScreen$pt._(_root);
-	@override late final _Translations$serverTasks$pt serverTasks = _Translations$serverTasks$pt._(_root);
 	@override late final _Translations$trakt$pt trakt = _Translations$trakt$pt._(_root);
 	@override late final _Translations$seerr$pt seerr = _Translations$seerr$pt._(_root);
 	@override late final _Translations$services$pt services = _Translations$services$pt._(_root);
@@ -2236,18 +2235,6 @@ class _Translations$matchScreen$pt extends Translations$matchScreen$en {
 	@override String get yearHint => 'Ano';
 	@override String get search => 'Pesquisar';
 	@override String get noMatchesFound => 'Nenhuma correspondência encontrada';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$pt extends Translations$serverTasks$en {
-	_Translations$serverTasks$pt._(TranslationsPt root) : this._root = root, super.internal(root);
-
-	final TranslationsPt _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Tarefas do servidor';
-	@override String get failedToLoad => 'Falha ao carregar tarefas';
-	@override String get noTasks => 'Nenhuma tarefa em execução';
 }
 
 // Path: trakt
@@ -5306,16 +5293,13 @@ extension on TranslationsPt {
 			'matchScreen.yearHint' => 'Ano',
 			'matchScreen.search' => 'Pesquisar',
 			'matchScreen.noMatchesFound' => 'Nenhuma correspondência encontrada',
-			'serverTasks.title' => 'Tarefas do servidor',
-			'serverTasks.failedToLoad' => 'Falha ao carregar tarefas',
-			'serverTasks.noTasks' => 'Nenhuma tarefa em execução',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Conectado',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Conectado como @${username}',
 			'trakt.disconnectConfirm' => 'Desconectar a conta do Trakt?',
 			'trakt.disconnectConfirmBody' => 'O Plezy deixará de enviar eventos ao Trakt. Você pode reconectar quando quiser.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Scrobbling em tempo real',
 			'trakt.scrobbleDescription' => 'Envia eventos de reprodução, pausa e parada ao Trakt durante a exibição.',
 			'trakt.watchedSync' => 'Sincronizar status de assistido',

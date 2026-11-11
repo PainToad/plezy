@@ -88,7 +88,6 @@ class TranslationsUz extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$uz externalPlayer = _Translations$externalPlayer$uz._(_root);
 	@override late final _Translations$metadataEdit$uz metadataEdit = _Translations$metadataEdit$uz._(_root);
 	@override late final _Translations$matchScreen$uz matchScreen = _Translations$matchScreen$uz._(_root);
-	@override late final _Translations$serverTasks$uz serverTasks = _Translations$serverTasks$uz._(_root);
 	@override late final _Translations$trakt$uz trakt = _Translations$trakt$uz._(_root);
 	@override late final _Translations$seerr$uz seerr = _Translations$seerr$uz._(_root);
 	@override late final _Translations$services$uz services = _Translations$services$uz._(_root);
@@ -2236,18 +2235,6 @@ class _Translations$matchScreen$uz extends Translations$matchScreen$en {
 	@override String get yearHint => 'Yil';
 	@override String get search => 'Qidiruv';
 	@override String get noMatchesFound => 'Mosliklar topilmadi';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$uz extends Translations$serverTasks$en {
-	_Translations$serverTasks$uz._(TranslationsUz root) : this._root = root, super.internal(root);
-
-	final TranslationsUz _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Server vazifalari';
-	@override String get failedToLoad => 'Vazifalarni yuklab boʻlmadi';
-	@override String get noTasks => 'Bajarilayotgan vazifalar yoʻq';
 }
 
 // Path: trakt
@@ -5306,16 +5293,13 @@ extension on TranslationsUz {
 			'matchScreen.yearHint' => 'Yil',
 			'matchScreen.search' => 'Qidiruv',
 			'matchScreen.noMatchesFound' => 'Mosliklar topilmadi',
-			'serverTasks.title' => 'Server vazifalari',
-			'serverTasks.failedToLoad' => 'Vazifalarni yuklab boʻlmadi',
-			'serverTasks.noTasks' => 'Bajarilayotgan vazifalar yoʻq',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Ulandi',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '@${username} sifatida ulandi',
 			'trakt.disconnectConfirm' => 'Trakt uzilsinmi?',
 			'trakt.disconnectConfirmBody' => 'Plezy Trakt-ga maʼlumot yuborishni toʻxtatadi.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Real vaqt rejimida kuzatish',
 			'trakt.scrobbleDescription' => 'Ijro paytida Trakt-ga maʼlumot yuborish.',
 			'trakt.watchedSync' => 'Koʻrish holatini sinxronlash',

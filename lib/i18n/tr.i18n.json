@@ -2263,11 +2263,6 @@
     "search": "Ara",
     "noMatchesFound": "Eşleşme bulunamadı"
   },
-  "serverTasks": {
-    "title": "Sunucu Görevleri",
-    "failedToLoad": "Görevler yüklenemedi",
-    "noTasks": "Çalışan görev yok"
-  },
   "trakt": {
     "title": "Trakt",
     "connected": "Bağlandı",

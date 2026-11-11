@@ -88,7 +88,6 @@ class TranslationsKo extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$ko externalPlayer = _Translations$externalPlayer$ko._(_root);
 	@override late final _Translations$metadataEdit$ko metadataEdit = _Translations$metadataEdit$ko._(_root);
 	@override late final _Translations$matchScreen$ko matchScreen = _Translations$matchScreen$ko._(_root);
-	@override late final _Translations$serverTasks$ko serverTasks = _Translations$serverTasks$ko._(_root);
 	@override late final _Translations$trakt$ko trakt = _Translations$trakt$ko._(_root);
 	@override late final _Translations$seerr$ko seerr = _Translations$seerr$ko._(_root);
 	@override late final _Translations$services$ko services = _Translations$services$ko._(_root);
@@ -2226,18 +2225,6 @@ class _Translations$matchScreen$ko extends Translations$matchScreen$en {
 	@override String get yearHint => '연도';
 	@override String get search => '검색';
 	@override String get noMatchesFound => '일치하는 항목이 없습니다';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$ko extends Translations$serverTasks$en {
-	_Translations$serverTasks$ko._(TranslationsKo root) : this._root = root, super.internal(root);
-
-	final TranslationsKo _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => '서버 작업';
-	@override String get failedToLoad => '작업을 불러올 수 없습니다';
-	@override String get noTasks => '실행 중인 작업 없음';
 }
 
 // Path: trakt
@@ -5294,16 +5281,13 @@ extension on TranslationsKo {
 			'matchScreen.yearHint' => '연도',
 			'matchScreen.search' => '검색',
 			'matchScreen.noMatchesFound' => '일치하는 항목이 없습니다',
-			'serverTasks.title' => '서버 작업',
-			'serverTasks.failedToLoad' => '작업을 불러올 수 없습니다',
-			'serverTasks.noTasks' => '실행 중인 작업 없음',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => '연결됨',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '@${username}(으)로 연결됨',
 			'trakt.disconnectConfirm' => 'Trakt 계정 연결을 끊으시겠습니까?',
 			'trakt.disconnectConfirmBody' => 'Plezy가 Trakt로 이벤트 전송을 중지합니다. 언제든 다시 연결할 수 있습니다.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => '실시간 스크로블',
 			'trakt.scrobbleDescription' => '재생 중 재생, 일시정지, 정지 이벤트를 Trakt로 전송합니다.',
 			'trakt.watchedSync' => '시청 상태 동기화',

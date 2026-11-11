@@ -88,7 +88,6 @@ class TranslationsRu extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$ru externalPlayer = _Translations$externalPlayer$ru._(_root);
 	@override late final _Translations$metadataEdit$ru metadataEdit = _Translations$metadataEdit$ru._(_root);
 	@override late final _Translations$matchScreen$ru matchScreen = _Translations$matchScreen$ru._(_root);
-	@override late final _Translations$serverTasks$ru serverTasks = _Translations$serverTasks$ru._(_root);
 	@override late final _Translations$trakt$ru trakt = _Translations$trakt$ru._(_root);
 	@override late final _Translations$seerr$ru seerr = _Translations$seerr$ru._(_root);
 	@override late final _Translations$services$ru services = _Translations$services$ru._(_root);
@@ -2256,18 +2255,6 @@ class _Translations$matchScreen$ru extends Translations$matchScreen$en {
 	@override String get yearHint => 'Год';
 	@override String get search => 'Поиск';
 	@override String get noMatchesFound => 'Совпадений не найдено';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$ru extends Translations$serverTasks$en {
-	_Translations$serverTasks$ru._(TranslationsRu root) : this._root = root, super.internal(root);
-
-	final TranslationsRu _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Задачи сервера';
-	@override String get failedToLoad => 'Не удалось загрузить задачи';
-	@override String get noTasks => 'Нет выполняемых задач';
 }
 
 // Path: trakt
@@ -5330,16 +5317,13 @@ extension on TranslationsRu {
 			'matchScreen.yearHint' => 'Год',
 			'matchScreen.search' => 'Поиск',
 			'matchScreen.noMatchesFound' => 'Совпадений не найдено',
-			'serverTasks.title' => 'Задачи сервера',
-			'serverTasks.failedToLoad' => 'Не удалось загрузить задачи',
-			'serverTasks.noTasks' => 'Нет выполняемых задач',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Подключено',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Подключено как @${username}',
 			'trakt.disconnectConfirm' => 'Отключить аккаунт Trakt?',
 			'trakt.disconnectConfirmBody' => 'Plezy перестанет отправлять события в Trakt. Можно подключить снова в любое время.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Скробблинг в реальном времени',
 			'trakt.scrobbleDescription' => 'Отправлять события воспроизведения, паузы и остановки в Trakt во время просмотра.',
 			'trakt.watchedSync' => 'Синхронизация статуса просмотра',

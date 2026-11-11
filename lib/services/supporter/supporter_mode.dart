@@ -1,8 +1,7 @@
 /// How this build offers the Supporter perks: preset and custom themes and
 /// alternate app icons.
 ///
-/// Chosen per build with `--dart-define=SUPPORTER_MODE=<name>`. Leaving it unset
-/// compiles the perks out.
+/// This fork always hides the perks and purchase UI.
 enum SupporterMode {
   /// Perks compiled out: the GitHub iOS IPA and Android APK, and local builds.
   off,
@@ -19,17 +18,10 @@ enum SupporterMode {
   msstore,
 }
 
-const String _supporterModeDefine = String.fromEnvironment('SUPPORTER_MODE');
-
 /// This build's [SupporterMode]. Const, so `off` builds tree-shake perk UI that
 /// is guarded by a comparison against it.
-const SupporterMode supporterBuildMode = _supporterModeDefine == 'iap'
-    ? SupporterMode.iap
-    : _supporterModeDefine == 'unlocked'
-    ? SupporterMode.unlocked
-    : _supporterModeDefine == 'msstore'
-    ? SupporterMode.msstore
-    : SupporterMode.off;
+/// Store-specific build flags cannot enable perks or purchase prompts.
+const SupporterMode supporterBuildMode = SupporterMode.off;
 
 /// Whether this install shows the perks and how they unlock.
 enum SupporterAvailability {

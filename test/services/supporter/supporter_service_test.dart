@@ -62,6 +62,30 @@ PurchaseDetails _playBillingCancel() => PurchaseDetails(
 void main() {
   setUp(resetSharedPreferencesForTest);
 
+  test('the fork hides perks at startup and runtime even with a cached purchase', () async {
+    await _cacheEntitlement(true);
+    final settings = await SettingsService.getInstance();
+    final service = SupporterService();
+    addTearDown(service.dispose);
+
+    expect(supporterBuildMode, SupporterMode.off);
+    expect(SupporterService.startupUnlocked(settings), isFalse);
+    expect(service.availability, SupporterAvailability.hidden);
+    expect(service.isAvailable, isFalse);
+    expect(service.isUnlocked, isFalse);
+
+    await service.init();
+    await service.loadProduct();
+    await service.purchase();
+    await service.restore();
+
+    expect(service.isAvailable, isFalse);
+    expect(service.isUnlocked, isFalse);
+    expect(service.storeState.value.status, SupporterPurchaseStatus.idle);
+    expect(service.storeState.value.price, isNull);
+    expect(await _cachedEntitlement(), isTrue);
+  });
+
   group('supporterAvailabilityFor', () {
     test('a Microsoft Store install gets the perks free; the same compile outside the Store hides them', () {
       expect(supporterAvailabilityFor(SupporterMode.msstore, isPackagedInstall: true), SupporterAvailability.free);

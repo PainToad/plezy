@@ -88,7 +88,6 @@ class TranslationsKk extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$kk externalPlayer = _Translations$externalPlayer$kk._(_root);
 	@override late final _Translations$metadataEdit$kk metadataEdit = _Translations$metadataEdit$kk._(_root);
 	@override late final _Translations$matchScreen$kk matchScreen = _Translations$matchScreen$kk._(_root);
-	@override late final _Translations$serverTasks$kk serverTasks = _Translations$serverTasks$kk._(_root);
 	@override late final _Translations$trakt$kk trakt = _Translations$trakt$kk._(_root);
 	@override late final _Translations$seerr$kk seerr = _Translations$seerr$kk._(_root);
 	@override late final _Translations$services$kk services = _Translations$services$kk._(_root);
@@ -2236,18 +2235,6 @@ class _Translations$matchScreen$kk extends Translations$matchScreen$en {
 	@override String get yearHint => 'Жыл';
 	@override String get search => 'Іздеу';
 	@override String get noMatchesFound => 'Сәйкестіктер табылмады';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$kk extends Translations$serverTasks$en {
-	_Translations$serverTasks$kk._(TranslationsKk root) : this._root = root, super.internal(root);
-
-	final TranslationsKk _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Сервер тапсырмалары';
-	@override String get failedToLoad => 'Тапсырмаларды жүктеу мүмкін болмады';
-	@override String get noTasks => 'Орындалып жатқан тапсырмалар жоқ';
 }
 
 // Path: trakt
@@ -5306,16 +5293,13 @@ extension on TranslationsKk {
 			'matchScreen.yearHint' => 'Жыл',
 			'matchScreen.search' => 'Іздеу',
 			'matchScreen.noMatchesFound' => 'Сәйкестіктер табылмады',
-			'serverTasks.title' => 'Сервер тапсырмалары',
-			'serverTasks.failedToLoad' => 'Тапсырмаларды жүктеу мүмкін болмады',
-			'serverTasks.noTasks' => 'Орындалып жатқан тапсырмалар жоқ',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Қосылды',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => '@${username} ретінде қосылды',
 			'trakt.disconnectConfirm' => 'Trakt ажыратылсын ба?',
 			'trakt.disconnectConfirmBody' => 'Plezy Trakt-қа деректер жіберуді тоқтатады.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Нақты уақытта бақылау',
 			'trakt.scrobbleDescription' => 'Ойнату кезінде Trakt-қа деректер жіберу.',
 			'trakt.watchedSync' => 'Көру мәртебесін синхрондау',

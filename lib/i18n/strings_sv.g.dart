@@ -88,7 +88,6 @@ class TranslationsSv extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$externalPlayer$sv externalPlayer = _Translations$externalPlayer$sv._(_root);
 	@override late final _Translations$metadataEdit$sv metadataEdit = _Translations$metadataEdit$sv._(_root);
 	@override late final _Translations$matchScreen$sv matchScreen = _Translations$matchScreen$sv._(_root);
-	@override late final _Translations$serverTasks$sv serverTasks = _Translations$serverTasks$sv._(_root);
 	@override late final _Translations$trakt$sv trakt = _Translations$trakt$sv._(_root);
 	@override late final _Translations$seerr$sv seerr = _Translations$seerr$sv._(_root);
 	@override late final _Translations$services$sv services = _Translations$services$sv._(_root);
@@ -2236,18 +2235,6 @@ class _Translations$matchScreen$sv extends Translations$matchScreen$en {
 	@override String get yearHint => 'År';
 	@override String get search => 'Sök';
 	@override String get noMatchesFound => 'Inga matchningar hittades';
-}
-
-// Path: serverTasks
-class _Translations$serverTasks$sv extends Translations$serverTasks$en {
-	_Translations$serverTasks$sv._(TranslationsSv root) : this._root = root, super.internal(root);
-
-	final TranslationsSv _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Serveruppgifter';
-	@override String get failedToLoad => 'Kunde inte ladda uppgifter';
-	@override String get noTasks => 'Inga pågående uppgifter';
 }
 
 // Path: trakt
@@ -5306,16 +5293,13 @@ extension on TranslationsSv {
 			'matchScreen.yearHint' => 'År',
 			'matchScreen.search' => 'Sök',
 			'matchScreen.noMatchesFound' => 'Inga matchningar hittades',
-			'serverTasks.title' => 'Serveruppgifter',
-			'serverTasks.failedToLoad' => 'Kunde inte ladda uppgifter',
-			'serverTasks.noTasks' => 'Inga pågående uppgifter',
 			'trakt.title' => 'Trakt',
 			'trakt.connected' => 'Ansluten',
-			_ => null,
-		} ?? switch (path) {
 			'trakt.connectedAs' => ({required Object username}) => 'Ansluten som @${username}',
 			'trakt.disconnectConfirm' => 'Koppla från Trakt-konto?',
 			'trakt.disconnectConfirmBody' => 'Plezy slutar skicka händelser till Trakt. Du kan återansluta när som helst.',
+			_ => null,
+		} ?? switch (path) {
 			'trakt.scrobble' => 'Realtidsspårning',
 			'trakt.scrobbleDescription' => 'Skicka händelser för uppspelning, paus och stopp till Trakt under uppspelningen.',
 			'trakt.watchedSync' => 'Synkronisera seddstatus',
