@@ -133,11 +133,9 @@ void main() {
         await key.currentState!.debugInitializeServicesForTesting();
         await tester.pump();
 
-        expect(
-          calls.where((call) => call.method == 'setMetadata').map((call) => (call.arguments as Map)['title']),
-          [channel.displayName],
-          reason: 'the session must carry the tuned channel',
-        );
+        expect(calls.where((call) => call.method == 'setMetadata').map((call) => (call.arguments as Map)['title']), [
+          channel.displayName,
+        ], reason: 'the session must carry the tuned channel');
 
         // A channel with no capture buffer can only play, pause and stop: the
         // OS is told so rather than shown dead ±skip/seek/speed controls.
