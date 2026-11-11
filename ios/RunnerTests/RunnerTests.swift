@@ -834,8 +834,9 @@ final class MpvPlayerContractTests: XCTestCase {
       && (event.data?["text"] as? String)?.contains(text) == true
   }
 
-  /// An audio core playing 30 s of silence through ao_avfoundation for three
-  /// seconds, long enough to fill the renderer's read-ahead.
+  /// An audio core playing 30 s of silence through ao_avfoundation until its
+  /// playback clock reaches three seconds, filling the renderer's read-ahead.
+  /// Simulator audio startup can consume much of a fixed wall-clock delay.
   private func startSilentPlayback() throws -> (MpvAudioPlayerCore, URL) {
     let file = FileManager.default.temporaryDirectory
       .appendingPathComponent("plezy-silence-\(UUID().uuidString).wav")
@@ -844,9 +845,15 @@ final class MpvPlayerContractTests: XCTestCase {
     XCTAssertTrue(core.initialize())
     core.command(["loadfile", file.path])
     XCTAssertSuccess(awaitProperty(core, name: "pause", value: "no"))
-    pump(3)
+    let startupDeadline = Date().addingTimeInterval(15)
+    while Date() < startupDeadline {
+      pump(0.1)
+      if let position = try? timePos(core), position >= 3 {
+        break
+      }
+    }
     XCTAssertEqual(try awaitGetProperty(core, name: "current-ao").get(), "avfoundation")
-    XCTAssertGreaterThan(try timePos(core), 2)
+    XCTAssertGreaterThanOrEqual(try timePos(core), 3, "Audio playback did not finish warming up")
     return (core, file)
   }
 
