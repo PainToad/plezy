@@ -26,7 +26,10 @@ extension _VideoPlayerErrorMethods on VideoPlayerScreenState {
 
     // Plex startup owns tune and media-open failures until a frame arrives.
     // Retrying here as well would race it and change the playback settings.
-    if (_live.startupRetry != null && !_live.startupRetry!.isCancelled) {
+    final startupOutcome = _live.startupOutcome;
+    final startupHasFrame =
+        startupOutcome != null && startupOutcome.isSettled && !startupOutcome.failed && !startupOutcome.isAborted;
+    if (_live.startupRetry != null && !_live.startupRetry!.isCancelled && !startupHasFrame) {
       if (err.cause != PlayerError.audioOutputFailed && err.cause != PlayerError.playerInitFailed) {
         _live.startupOutcome?.abort('live startup failed: ${err.cause ?? err.message}');
         return;

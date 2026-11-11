@@ -29,6 +29,7 @@ import 'package:plezy/services/media_controls_manager.dart';
 import 'package:plezy/services/multi_server_manager.dart';
 import 'package:plezy/services/offline_watch_sync_service.dart';
 import 'package:plezy/services/settings_service.dart';
+import 'package:plezy/watch_together/watch_together.dart';
 import 'package:provider/provider.dart';
 
 import '../../test_helpers/media_items.dart';
@@ -298,10 +299,16 @@ void main() {
         methodHandler: (call) async => call.method == 'initialize' ? false : null,
         testBody: () async {
           final key = GlobalKey<VideoPlayerScreenState>();
-          await tester.pumpWidget(shell.screen(key: key, channel: channels.first, channels: channels));
+          await tester.pumpWidget(
+            ChangeNotifierProvider(
+              create: (_) => WatchTogetherProvider(),
+              child: shell.screen(key: key, channel: channels.first, channels: channels),
+            ),
+          );
           await tester.pump();
           await tester.pump(const Duration(milliseconds: 100));
           final state = key.currentState!..player = player;
+          await state.debugMarkPlaybackStartedForTesting();
           await state.debugWirePlayerStreamsForTesting();
           await body(state);
           await tester.pumpWidget(const SizedBox.shrink());
@@ -1087,6 +1094,12 @@ class _StartupLivePlayer extends _LiveMediaSessionPlayer {
 
   @override
   Future<String?> getProperty(String name) async => null;
+
+  @override
+  Future<void> updateFrame() async {}
+
+  @override
+  Future<void> setBoxFitMode(int mode) async {}
 
   @override
   Future<void> open(
