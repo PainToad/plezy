@@ -471,6 +471,8 @@
     "showExploreTabDescription": "显示“探索”标签页，其中包含来自 Plex Discover 和已连接追踪服务的内容",
     "liveTvDefaultFavorites": "默认显示收藏频道",
     "liveTvDefaultFavoritesDescription": "打开直播电视时仅显示收藏频道",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "通用",
     "generalDescription": "语言、启动和窗口行为",
     "languageAndRegion": "语言与地区",

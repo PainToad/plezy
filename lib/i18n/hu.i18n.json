@@ -471,6 +471,8 @@
     "showExploreTabDescription": "A Plex Discover és a csatlakoztatott követők tartalmait megjelenítő Felfedezés lap megjelenítése",
     "liveTvDefaultFavorites": "Kedvenc csatornák alapértelmezés szerint",
     "liveTvDefaultFavoritesDescription": "Csak a kedvenc csatornák megjelenítése az Élő TV megnyitásakor",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Általános",
     "generalDescription": "Nyelv, indítás és ablakviselkedés",
     "languageAndRegion": "Nyelv és régió",

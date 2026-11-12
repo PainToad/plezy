@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Wyświetlaj kartę Odkryj z treściami z Plex Discover i połączonych serwisów śledzących",
     "liveTvDefaultFavorites": "Domyślnie ulubione kanały",
     "liveTvDefaultFavoritesDescription": "Pokaż tylko ulubione kanały po otwarciu telewizji na żywo",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Ogólne",
     "generalDescription": "Język, uruchamianie i zachowanie okna",
     "languageAndRegion": "Język i region",

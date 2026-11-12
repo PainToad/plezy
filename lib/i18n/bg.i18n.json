@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Показва раздела „Открий“ със съдържание от Plex Discover и свързаните тракери",
     "liveTvDefaultFavorites": "По подразбиране към любими канали",
     "liveTvDefaultFavoritesDescription": "Показвай само любими канали при отваряне на телевизия на живо",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Общи",
     "generalDescription": "Език, стартиране и поведение на прозореца",
     "languageAndRegion": "Език и регион",

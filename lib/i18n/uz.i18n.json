@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Plex Discover va ulangan kuzatuvchilardagi kontent bilan Kashf qilish varagʻini koʻrsatish",
     "liveTvDefaultFavorites": "Jonli TV-da tanlangan kanallarni standart qilish",
     "liveTvDefaultFavoritesDescription": "Jonli TV ochilganda faqat tanlangan kanallarni koʻrsatish",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Umumiy",
     "generalDescription": "Til, ishga tushirish va oyna xatti-harakati",
     "languageAndRegion": "Til va mintaqa",

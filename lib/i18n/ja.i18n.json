@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Plex Discoverと接続済みのトラッカーのコンテンツを「探す」タブに表示します",
     "liveTvDefaultFavorites": "お気に入りチャンネルをデフォルトに",
     "liveTvDefaultFavoritesDescription": "ライブTVを開いたときにお気に入りチャンネルのみ表示",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "一般",
     "generalDescription": "言語、起動、ウィンドウの動作",
     "languageAndRegion": "言語と地域",

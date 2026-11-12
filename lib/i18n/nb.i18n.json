@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Vis Oppdag-fanen med innhold fra Plex Discover og tilkoblede sporingstjenester",
     "liveTvDefaultFavorites": "Vis favorittkanaler som standard",
     "liveTvDefaultFavoritesDescription": "Vis bare favorittkanaler når du åpner Direkte-TV",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Generelt",
     "generalDescription": "Språk, oppstart og vindusatferd",
     "languageAndRegion": "Språk og region",

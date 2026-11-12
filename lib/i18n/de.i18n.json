@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Zeigt den Tab „Entdecken“ mit Inhalten aus Plex Discover und verbundenen Trackern an",
     "liveTvDefaultFavorites": "Standardmäßig Favoritenkanäle",
     "liveTvDefaultFavoritesDescription": "Beim Öffnen von Live TV nur Favoritenkanäle anzeigen",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Allgemein",
     "generalDescription": "Sprache, Start und Fensterverhalten",
     "languageAndRegion": "Sprache & Region",

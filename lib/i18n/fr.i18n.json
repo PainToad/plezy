@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Afficher l’onglet Explorer avec le contenu de Plex Discover et des services de suivi connectés",
     "liveTvDefaultFavorites": "Chaînes favorites par défaut",
     "liveTvDefaultFavoritesDescription": "Afficher uniquement les chaînes favorites à l'ouverture de la TV en direct",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Général",
     "generalDescription": "Langue, démarrage et comportement de la fenêtre",
     "languageAndRegion": "Langue et région",

@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Plex шолуынан және қосылған трекерлерден алынған контенті бар «Шолу» қойындысын көрсету",
     "liveTvDefaultFavorites": "Тікелей TV-де таңдаулы арналарды әдепкі ету",
     "liveTvDefaultFavoritesDescription": "Тікелей TV ашылғанда тек таңдаулы арналарды көрсету",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Жалпы",
     "generalDescription": "Тіл, іске қосу және терезе мінез-құлқы",
     "languageAndRegion": "Тіл және аймақ",

@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Visualizza la scheda Esplora con contenuti di Esplora di Plex e dei tracker collegati",
     "liveTvDefaultFavorites": "Apri sui canali preferiti",
     "liveTvDefaultFavoritesDescription": "Mostra solo i canali preferiti quando apri la TV in diretta",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Generali",
     "generalDescription": "Lingua, avvio e comportamento della finestra",
     "languageAndRegion": "Lingua e regione",

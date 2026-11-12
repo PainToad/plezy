@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Toon het tabblad Ontdekken met content uit Plex Discover en gekoppelde trackers",
     "liveTvDefaultFavorites": "Standaard favoriete zenders",
     "liveTvDefaultFavoritesDescription": "Toon alleen favoriete zenders bij het openen van Live TV",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Algemeen",
     "generalDescription": "Taal, opstart- en venstergedrag",
     "languageAndRegion": "Taal en regio",

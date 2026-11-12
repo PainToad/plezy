@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Plex Discover və qoşulmuş izləmə xidmətlərindəki məzmunla Kəşf et nişanını göstər",
     "liveTvDefaultFavorites": "Canlı TV-də sevimli kanalları defolt et",
     "liveTvDefaultFavoritesDescription": "Canlı TV açıldıqda yalnız sevimli kanalları göstər",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Ümumi",
     "generalDescription": "Dil, başlanğıc və pəncərə davranışı",
     "languageAndRegion": "Dil və Region",

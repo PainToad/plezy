@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Visa fliken Utforska med innehåll från Plex Discover och anslutna spårningstjänster",
     "liveTvDefaultFavorites": "Öppna med favoriter",
     "liveTvDefaultFavoritesDescription": "Visa endast favoritkanaler när Live-TV öppnas",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Allmänt",
     "generalDescription": "Språk, start och fönsterbeteende",
     "languageAndRegion": "Språk och region",

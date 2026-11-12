@@ -471,6 +471,8 @@
     "showExploreTabDescription": "顯示探索分頁，其中包含來自 Plex Discover 和已連結追蹤服務的內容",
     "liveTvDefaultFavorites": "預設顯示最愛頻道",
     "liveTvDefaultFavoritesDescription": "開啟直播電視時僅顯示最愛頻道",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "一般",
     "generalDescription": "語言、啟動與視窗行為",
     "languageAndRegion": "語言與地區",

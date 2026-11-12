@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Plex Discover와 연결된 트래커의 콘텐츠가 포함된 둘러보기 탭을 표시합니다",
     "liveTvDefaultFavorites": "즐겨찾기 채널 기본 설정",
     "liveTvDefaultFavoritesDescription": "라이브 TV를 열 때 즐겨찾기 채널만 표시",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "일반",
     "generalDescription": "언어, 시작 및 창 동작",
     "languageAndRegion": "언어 및 지역",

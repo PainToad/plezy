@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Muestra la pestaña Explorar con contenido de Plex Discover y servicios de seguimiento conectados",
     "liveTvDefaultFavorites": "Canales favoritos por defecto",
     "liveTvDefaultFavoritesDescription": "Mostrar solo canales favoritos al abrir TV en vivo",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "General",
     "generalDescription": "Idioma, inicio y comportamiento de la ventana",
     "languageAndRegion": "Idioma y región",

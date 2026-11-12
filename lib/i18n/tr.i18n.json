@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Plex Keşfet ve bağlı takip hizmetlerinden gelen içeriklerle Keşfet sekmesini göster",
     "liveTvDefaultFavorites": "Canlı TV'de Favorileri Varsayılan Yap",
     "liveTvDefaultFavoritesDescription": "Canlı TV açıldığında yalnızca favori kanalları göster",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Genel",
     "generalDescription": "Dil, başlangıç ve pencere davranışı",
     "languageAndRegion": "Dil ve Bölge",

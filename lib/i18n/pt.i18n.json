@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Exibir a aba Explorar com conteúdo do Plex Discover e dos rastreadores conectados",
     "liveTvDefaultFavorites": "Canais favoritos por padrão",
     "liveTvDefaultFavoritesDescription": "Mostrar apenas os canais favoritos ao abrir a TV ao vivo",
+    "liveTvStartupRetries": "",
+    "liveTvStartupRetriesDescription": "",
     "general": "Geral",
     "generalDescription": "Idioma, inicialização e comportamento da janela",
     "languageAndRegion": "Idioma e Região",
