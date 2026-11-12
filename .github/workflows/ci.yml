@@ -48,6 +48,7 @@ jobs:
           test/widgets/side_navigation_rail_test.dart
           test/services/settings_service_test.dart
           test/services/live_tv_playback_session_test.dart
+          test/screens/settings/playback_settings_screen_test.dart
           test/screens/video_player/live_tv_startup_retry_test.dart
           test/screens/video_player/live_media_session_test.dart
 

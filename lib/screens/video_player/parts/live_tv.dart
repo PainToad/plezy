@@ -8,7 +8,10 @@ extension _VideoPlayerLiveTvMethods on VideoPlayerScreenState {
   /// Plex may give up before the shared upstream proxy has filled its cache.
   /// Reopen the same capture until Plex confirms it ended, then re-tune.
   Future<bool> _runLiveStartup(Player currentPlayer, LiveTvChannel channel, Future<bool> Function() start) async {
-    if (_liveChannelItem(channel).backend != MediaBackend.plex) return start();
+    if (_liveChannelItem(channel).backend != MediaBackend.plex ||
+        !SettingsService.instance.read(SettingsService.liveTvStartupRetries)) {
+      return start();
+    }
     final retry = LiveTvStartupRetry<LiveTvPlaybackSession>();
     _live.startupRetry?.cancel();
     _live.startupRetry = retry;

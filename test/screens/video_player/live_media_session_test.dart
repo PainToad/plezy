@@ -343,6 +343,19 @@ void main() {
       );
     }
 
+    testWidgets('disabled startup retries make only one channel tune attempt', (tester) async {
+      await SettingsService.instance.write(SettingsService.liveTvStartupRetries, false);
+      final liveTv = _StartupLiveTvSupport((_, _) async => null);
+      final player = _StartupLivePlayer();
+      await onScreen(tester, liveTv, player, (state) async {
+        final opening = state.debugSwitchLiveChannelForTesting(1);
+        await finishOpening(tester, opening);
+        await tester.pump(const Duration(seconds: 10));
+        expect(liveTv.channels, ['ch-2']);
+        expect(player.opens, 0);
+      });
+    });
+
     testWidgets('fresh tunes continue after timeout and null responses until a frame arrives', (tester) async {
       final liveTv = _StartupLiveTvSupport((key, attempt) async {
         if (attempt == 1) throw TimeoutException('Plex timed out');

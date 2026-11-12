@@ -143,6 +143,17 @@ class PlaybackSettingsScreen extends StatelessWidget {
               ],
             ),
 
+            SettingsGroup(
+              title: t.settings.liveTv,
+              children: [
+                SettingSwitchTile(
+                  pref: SettingsService.liveTvStartupRetries,
+                  icon: Symbols.refresh_rounded,
+                  title: t.settings.liveTvStartupRetries,
+                  subtitle: t.settings.liveTvStartupRetriesDescription,
+                ),
+              ],
+            ),
             _seekAndTimingGroup(),
             _autoPlayAndSkipGroup(),
             _behaviorGroup(context, isMobile),

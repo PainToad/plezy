@@ -471,6 +471,8 @@
     "showExploreTabDescription": "Display the Explore tab with content from Plex Discover and connected trackers",
     "liveTvDefaultFavorites": "Default to Favorite Channels",
     "liveTvDefaultFavoritesDescription": "Show only favorite channels when opening Live TV",
+    "liveTvStartupRetries": "Persistent Live TV Startup Retries",
+    "liveTvStartupRetriesDescription": "Plex only. Keep retrying until playback starts or you leave the channel.",
     "general": "General",
     "generalDescription": "Language, startup, and window behavior",
     "languageAndRegion": "Language & Region",

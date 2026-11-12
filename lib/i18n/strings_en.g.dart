@@ -1360,6 +1360,12 @@ class Translations$settings$en {
 	/// en: 'Show only favorite channels when opening Live TV'
 	String get liveTvDefaultFavoritesDescription => 'Show only favorite channels when opening Live TV';
 
+	/// en: 'Persistent Live TV Startup Retries'
+	String get liveTvStartupRetries => 'Persistent Live TV Startup Retries';
+
+	/// en: 'Plex only. Keep retrying until playback starts or you leave the channel.'
+	String get liveTvStartupRetriesDescription => 'Plex only. Keep retrying until playback starts or you leave the channel.';
+
 	/// en: 'General'
 	String get general => 'General';
 
@@ -8179,6 +8185,8 @@ extension on Translations {
 			'settings.showExploreTabDescription' => 'Display the Explore tab with content from Plex Discover and connected trackers',
 			'settings.liveTvDefaultFavorites' => 'Default to Favorite Channels',
 			'settings.liveTvDefaultFavoritesDescription' => 'Show only favorite channels when opening Live TV',
+			'settings.liveTvStartupRetries' => 'Persistent Live TV Startup Retries',
+			'settings.liveTvStartupRetriesDescription' => 'Plex only. Keep retrying until playback starts or you leave the channel.',
 			'settings.general' => 'General',
 			'settings.generalDescription' => 'Language, startup, and window behavior',
 			'settings.languageAndRegion' => 'Language & Region',
@@ -8240,10 +8248,10 @@ extension on Translations {
 			'themeEditor.opacity' => 'Opacity',
 			'themeEditor.hexHint' => '#RRGGBB or #AARRGGBB',
 			'themeEditor.fromOtherThemes' => 'From other themes',
-			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} ${color}',
-			'themeEditor.contrast.textOnBg' => 'Text on background',
 			_ => null,
 		} ?? switch (path) {
+			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} ${color}',
+			'themeEditor.contrast.textOnBg' => 'Text on background',
 			'themeEditor.contrast.textOnSurface' => 'Text on surface',
 			'themeEditor.contrast.textMutedOnBg' => 'Secondary text on background',
 			'themeEditor.contrast.textMutedOnSurface' => 'Secondary text on surface',
@@ -8754,10 +8762,10 @@ extension on Translations {
 			'profiles.tokenIdentityMismatch' => 'The Plex profile token resolved to an unexpected server',
 			'connections.sectionTitle' => 'Connections',
 			'connections.addConnection' => 'Add connection',
-			'connections.addConnectionSubtitleNoProfile' => 'Sign in with Plex or connect a Jellyfin or Emby server',
-			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Add to ${displayName}: Plex, Jellyfin, Emby, or another profile connection',
 			_ => null,
 		} ?? switch (path) {
+			'connections.addConnectionSubtitleNoProfile' => 'Sign in with Plex or connect a Jellyfin or Emby server',
+			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Add to ${displayName}: Plex, Jellyfin, Emby, or another profile connection',
 			'connections.sessionExpiredOne' => ({required Object name}) => 'Session expired for ${name}',
 			'connections.sessionExpiredMany' => ({required Object count}) => 'Session expired for ${count} servers',
 			'connections.accessDeniedOne' => ({required Object name}) => '${name} refused access for this account',
@@ -9268,10 +9276,10 @@ extension on Translations {
 			'playlists.removeItem' => 'Remove from Playlist',
 			'playlists.smartPlaylist' => 'Smart Playlist',
 			'playlists.itemCount' => ({required Object count}) => '${count} items',
-			'playlists.oneItem' => '1 item',
-			'playlists.emptyPlaylist' => 'This playlist is empty',
 			_ => null,
 		} ?? switch (path) {
+			'playlists.oneItem' => '1 item',
+			'playlists.emptyPlaylist' => 'This playlist is empty',
 			'playlists.deleteConfirm' => 'Delete Playlist?',
 			'playlists.deleteMessage' => ({required Object name}) => 'Are you sure you want to delete "${name}"?',
 			'playlists.created' => 'Playlist created',
@@ -9782,10 +9790,10 @@ extension on Translations {
 			'matchScreen.unmatchFailed' => 'Failed to unmatch item',
 			'matchScreen.matchApplied' => 'Match applied',
 			'matchScreen.matchFailed' => 'Failed to apply match',
-			'matchScreen.titleHint' => 'Title',
-			'matchScreen.yearHint' => 'Year',
 			_ => null,
 		} ?? switch (path) {
+			'matchScreen.titleHint' => 'Title',
+			'matchScreen.yearHint' => 'Year',
 			'matchScreen.search' => 'Search',
 			'matchScreen.noMatchesFound' => 'No matches found',
 			'trakt.title' => 'Trakt',

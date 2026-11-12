@@ -13,7 +13,7 @@ A personal fork of [Plezy](https://github.com/edde746/plezy), focused on Plex Li
 - **Apple downloads:** build unsigned iPhone/iPad and Apple TV IPAs, plus a macOS DMG.
 - **CI adjustments:** remove the unrelated Server checks and Website checks jobs and improve playback regression coverage and test reliability.
 
-Plex server-side timeshifting and its startup retry behavior are Plex-only. The other supported server backends retain their existing playback behavior.
+Plex server-side timeshifting and its startup retry behavior are Plex-only. Persistent startup retries are enabled by default and can be turned off under Settings → Video Playback → Live TV. The other supported server backends retain their existing playback behavior.
 
 ## Releases
 
