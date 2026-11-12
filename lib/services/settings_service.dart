@@ -922,7 +922,7 @@ class SettingsService extends BaseSharedPreferencesService {
   /// per machine, so reset-only in the registry.
   static const audioOutputDevice = StringPref('audio_output_device', defaultValue: 'auto');
   static const liveTvDefaultFavorites = BoolPref('live_tv_default_favorites');
-  static const liveTvStartupRetries = BoolPref('live_tv_startup_retries', defaultValue: true);
+  static const liveTvStartupRetries = BoolPref('live_tv_startup_retries', defaultValue: false);
   static const matchRefreshRate = BoolPref('match_refresh_rate');
   static const matchDynamicRange = BoolPref('match_dynamic_range');
   static const appLocale = _AppLocalePref();

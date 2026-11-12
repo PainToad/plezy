@@ -19,9 +19,9 @@ void main() {
     LocaleSettings.setLocaleSync(AppLocale.en);
   });
 
-  testWidgets('Live TV startup retries default on and persist when switched off', (tester) async {
+  testWidgets('Live TV startup retries default off and persist when switched on', (tester) async {
     final settings = SettingsService.instance;
-    expect(settings.read(SettingsService.liveTvStartupRetries), isTrue);
+    expect(settings.read(SettingsService.liveTvStartupRetries), isFalse);
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(1000, 1400);
     addTearDown(tester.view.resetDevicePixelRatio);
@@ -33,12 +33,12 @@ void main() {
     await tester.scrollUntilVisible(title, 500, scrollable: find.byType(Scrollable).first);
     await tester.tap(title);
     await tester.pumpAndSettle();
-    expect(settings.read(SettingsService.liveTvStartupRetries), isFalse);
-    expect(settings.prefs.getBool(SettingsService.liveTvStartupRetries.key), isFalse);
+    expect(settings.read(SettingsService.liveTvStartupRetries), isTrue);
+    expect(settings.prefs.getBool(SettingsService.liveTvStartupRetries.key), isTrue);
     await tester.pumpWidget(const SizedBox.shrink());
     SettingsService.resetForTesting();
     final reloaded = await SettingsService.getInstance();
-    expect(reloaded.read(SettingsService.liveTvStartupRetries), isFalse);
+    expect(reloaded.read(SettingsService.liveTvStartupRetries), isTrue);
   });
 
   testWidgets('shows and changes the persisted music quality', (tester) async {

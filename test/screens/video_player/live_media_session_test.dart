@@ -279,6 +279,10 @@ void main() {
   });
 
   group('Plex Live TV startup retries', () {
+    setUp(() async {
+      await SettingsService.instance.write(SettingsService.liveTvStartupRetries, true);
+    });
+
     final channels = [
       LiveTvChannel(key: 'ch-1', title: 'Channel 1', serverId: 'srv-1'),
       LiveTvChannel(key: 'ch-2', title: 'Channel 2', serverId: 'srv-1'),
