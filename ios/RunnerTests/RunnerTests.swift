@@ -290,8 +290,7 @@ final class MpvPlayerContractTests: XCTestCase {
     defer { stopSilentPlayback(core, file: file) }
 
     XCTAssertSuccess(awaitProperty(core, name: "pause", value: "yes"))
-    pump(0.5)
-    let pausedAt = try timePos(core)
+    let pausedAt = try stablePausedPosition(core)
     setDoubleSpeedAndAwaitFlush(core)
     XCTAssertEqual(try timePos(core), pausedAt, accuracy: speedWriteJumpTolerance)
     pump(0.5)
@@ -924,10 +923,36 @@ final class MpvPlayerContractTests: XCTestCase {
     return wav
   }
 
+  /// Let main-thread property replies and playback events run for at least the
+  /// requested interval. A delayed main-queue timer is not a playback failure:
+  /// simulator startup can keep it queued beyond XCTest's wall-clock timeout.
   private func pump(_ seconds: TimeInterval) {
-    let elapsed = expectation(description: "\(seconds) s elapsed")
-    DispatchQueue.main.asyncAfter(deadline: .now() + seconds) { elapsed.fulfill() }
-    wait(for: [elapsed], timeout: seconds + 2)
+    let deadline = ProcessInfo.processInfo.systemUptime + seconds
+    while ProcessInfo.processInfo.systemUptime < deadline {
+      RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+    }
+  }
+
+  /// Native pause acknowledgement can precede the renderer's final clock
+  /// update. Compare the speed-change seek with the settled paused position,
+  /// rather than an arbitrary sample taken half a second after the write.
+  private func stablePausedPosition(_ core: MpvPlayerCoreBase) throws -> Double {
+    let deadline = ProcessInfo.processInfo.systemUptime + 10
+    var position = try timePos(core)
+    var stableSince = ProcessInfo.processInfo.systemUptime
+    while ProcessInfo.processInfo.systemUptime < deadline {
+      pump(0.1)
+      let next = try timePos(core)
+      if abs(next - position) > 0.01 {
+        stableSince = ProcessInfo.processInfo.systemUptime
+      } else if ProcessInfo.processInfo.systemUptime - stableSince >= 0.5 {
+        XCTAssertEqual(try awaitGetProperty(core, name: "pause").get(), "yes")
+        return next
+      }
+      position = next
+    }
+    XCTFail("Paused audio clock did not settle")
+    return position
   }
 
   private func timePos(_ core: MpvPlayerCoreBase) throws -> Double {
