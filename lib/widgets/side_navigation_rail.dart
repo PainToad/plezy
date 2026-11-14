@@ -431,6 +431,8 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
   /// Libraries section expansion, held in settings rather than widget state so
   /// it survives relaunch, remount and layout switches (#1896). The rail's
   /// [ListenableBuilder] below listens to the pref, so the toggle just writes.
+  bool get _flatLibraries => PlatformDetector.isTV() || PlatformDetector.isDesktopOS();
+
   bool get _librariesExpanded => SettingsService.instance.read(SettingsService.librariesSectionExpanded);
 
   bool _isHovered = false;
@@ -628,7 +630,7 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
         return _kExplore;
       case NavigationTabId.libraries:
         final libKey = widget.selectedLibraryKey;
-        if (libKey != null && (PlatformDetector.isTV() || _librariesExpanded)) {
+        if (libKey != null && (_flatLibraries || _librariesExpanded)) {
           final visibleKey = '$_kLibraryItemPrefix:${_LibraryNavSection.visible.name}:$libKey';
           if (_mountedFocusNodeFor(visibleKey) != null) return visibleKey;
           if (_hiddenLibrariesExpanded) {
@@ -636,7 +638,7 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
             if (_mountedFocusNodeFor(hiddenKey) != null) return hiddenKey;
           }
         }
-        return PlatformDetector.isTV() ? _kHome : _kLibraries;
+        return _flatLibraries ? _kHome : _kLibraries;
       case NavigationTabId.search:
         return _kSearch;
       case NavigationTabId.downloads:
@@ -681,17 +683,17 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
     return {
       _kHome,
       if (hasNowPlaying) _kNowPlaying,
-      if (!PlatformDetector.isTV()) _kLibraries,
+      if (!_flatLibraries) _kLibraries,
       if (hasExplore) _kExplore,
       _kSearch,
       if (_showDownloads) _kDownloads,
       _kSettings,
       _kReconnect,
-      if (!PlatformDetector.isTV() && hasHiddenLibraries) _kHiddenLibraries,
+      if (!_flatLibraries && hasHiddenLibraries) _kHiddenLibraries,
       if (_showFullscreenToggle) _kFullscreen,
       if (hasLiveTv) 'liveTv',
       ..._focusKeysForLibraryRows(visibleRows),
-      if (!PlatformDetector.isTV() && _hiddenLibrariesExpanded) ..._focusKeysForLibraryRows(hiddenRows),
+      if (!_flatLibraries && _hiddenLibrariesExpanded) ..._focusKeysForLibraryRows(hiddenRows),
     };
   }
 
@@ -765,12 +767,12 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
       if (!widget.isOfflineMode) ...[
         _kHome,
         if (hasNowPlaying) _kNowPlaying,
-        if (!PlatformDetector.isTV()) _kLibraries,
+        if (!_flatLibraries) _kLibraries,
         // Library rows render inside ExcludeFocus(excluding: !_librariesExpanded
         // || isCollapsed); keep the D-pad order in lockstep with that render
         // condition so a collapsed rail never targets a focus-excluded row.
-        if (PlatformDetector.isTV()) ..._focusKeysForLibraryRows(visibleRows),
-        if (!PlatformDetector.isTV() && _librariesExpanded && !isCollapsed) ...[
+        if (_flatLibraries) ..._focusKeysForLibraryRows(visibleRows),
+        if (!_flatLibraries && _librariesExpanded && !isCollapsed) ...[
           ..._focusKeysForLibraryRows(visibleRows),
           if (hasHiddenLibraries) ...[
             _kHiddenLibraries,
@@ -842,21 +844,8 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
     librariesProvider.refresh();
   }
 
-  /// Calculate top padding for macOS traffic lights
-  double _getTopPadding(BuildContext context) {
-    double basePadding = MediaQuery.paddingOf(context).top + 16;
-
-    // On macOS, add extra padding for traffic lights (when not fullscreen)
-    if (Platform.isMacOS) {
-      final isFullscreen = FullscreenStateManager().isFullscreen;
-      if (!isFullscreen) {
-        // Traffic lights area is approximately 52 pixels high
-        basePadding = basePadding < 52 ? 52 : basePadding;
-      }
-    }
-
-    return basePadding;
-  }
+  // The root shell reserves the macOS titlebar for every route.
+  double _getTopPadding(BuildContext context) => MediaQuery.paddingOf(context).top + 16;
 
   @override
   Widget build(BuildContext context) {
@@ -906,7 +895,7 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
         final hasExplore = hasExploreSource && SettingsService.instance.read(SettingsService.showExploreTab);
         // Server grouping: only when multi-server AND the user-facing toggle is on.
         final groupByServerSetting = SettingsService.instance.read(SettingsService.groupLibrariesByServer);
-        final showServerHeaders = !PlatformDetector.isTV() && serverIds.length > 1 && groupByServerSetting;
+        final showServerHeaders = !_flatLibraries && serverIds.length > 1 && groupByServerSetting;
         _collapsedServerGroupKeys.retainAll(
           _buildServerGroupStateKeys(visibleLibraries, hiddenLibraries, showServerHeaders: showServerHeaders),
         );
@@ -1268,9 +1257,9 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
   }) {
     final librariesProvider = context.watch<LibrariesProvider>();
     final isLoading = librariesProvider.isLoading;
-    // TV destinations are peers: no Libraries, server or hidden-library folders.
+    // Desktop and TV destinations are peers: no Libraries, server or hidden-library folders.
     // Use the same row geometry and collapsed representation as Home/Search.
-    if (PlatformDetector.isTV()) {
+    if (_flatLibraries) {
       return Column(
         crossAxisAlignment: .start,
         children: [
@@ -1573,3 +1562,4 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
     );
   }
 }
+

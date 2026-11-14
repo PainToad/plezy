@@ -12,7 +12,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'connection/connection.dart';
 import 'connection/connection_bootstrap.dart';
@@ -885,7 +884,7 @@ class _StartupBootstrapState<T> extends State<StartupBootstrap<T>> {
     // what turned a black Android TV splash into a flashbang (#1833).
     return Scaffold(
       backgroundColor: widget.transparentWhileLoading ? Colors.transparent : null,
-      body: const Center(child: CircularProgressIndicator(key: startupBootstrapProgressKey)),
+      body: const SizedBox.expand(key: startupBootstrapProgressKey),
     );
   }
 }
@@ -2032,7 +2031,22 @@ Widget rootShell(Widget? child) {
       child: FormFactorScale(
         child: ScaffoldMessenger(
           key: rootScaffoldMessengerKey,
-          child: Scaffold(backgroundColor: Colors.transparent, body: child),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Platform.isMacOS
+              ? ListenableBuilder(
+                  listenable: FullscreenStateManager(),
+                  child: child,
+                  builder: (context, content) => ColoredBox(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: FullscreenStateManager().isFullscreen ? 0 : 52),
+                      child: MediaQuery.removePadding(context: context, removeTop: true, child: content!),
+                    ),
+                  ),
+                )
+              : child,
+          ),
         ),
       ),
     ),
@@ -2140,11 +2154,8 @@ class SetupScreen extends StatefulWidget {
 }
 
 class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
-  String _statusMessage = '';
   bool _enteringOffline = false;
 
-  // Per-server connection status: serverId -> (name, connected?)
-  final Map<String, (String name, bool? connected)> _serverStatus = {};
 
   @override
   void initState() {
@@ -2156,7 +2167,7 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
   }
 
   void _setStatus(String message) {
-    setStateIfMounted(() => _statusMessage = message);
+    appLogger.d('Setup: $message');
   }
 
   Future<void> _enterOfflineMode({bool initialPromptHandled = false}) async {
@@ -2287,20 +2298,6 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
 
     if (!mounted) return;
 
-    if (mounted) {
-      setState(() {
-        for (final conn in allConnections) {
-          if (conn is PlexAccountConnection) {
-            for (final s in conn.servers) {
-              _serverStatus[s.clientIdentifier] = (s.name, null);
-            }
-          } else if (conn is JellyfinConnection) {
-            _serverStatus[conn.serverMachineId] = (conn.serverName, null);
-          }
-        }
-      });
-    }
-
     final plexCount = allConnections.whereType<PlexAccountConnection>().fold<int>(0, (n, c) => n + c.servers.length);
     final mediaBrowserCount = allConnections.whereType<JellyfinConnection>().length;
     unawaited(
@@ -2332,10 +2329,6 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
       unawaited(Navigator.pushReplacement(context, fadeRoute(const AuthScreen())));
       return;
     }
-
-    // Wire the per-server status listener before either branch so the splash
-    // checkmarks fill in even while the user is choosing a profile.
-    _bindServerStatusListener();
 
     // A launch link that names a profile chooses it, in place of both the
     // previously active profile (the binder defers that bind, see
@@ -2420,169 +2413,11 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     }
   }
 
-  /// Wire per-server status updates from [MultiServerManager] into the
-  /// splash list so the user sees check/cross marks land as the binder
-  /// brings each client online. [MultiServerManager.connectProgressStream]
-  /// fires as each individual server settles; [MultiServerManager.statusStream]
-  /// emits once per connect pass and back-fills anything the progress stream
-  /// missed (e.g. servers torn down by the binder's visibility sweep).
-  /// Best-effort: stops listening when the state goes away.
-  StreamSubscription<Map<String, bool>>? _statusSub;
-  StreamSubscription<({String serverId, bool online})>? _connectProgressSub;
-
-  void _bindServerStatusListener() {
-    _statusSub?.cancel();
-    _connectProgressSub?.cancel();
-    final manager = _serverManagerFromContext();
-    _connectProgressSub = manager.connectProgressStream.listen((progress) {
-      if (!mounted) return;
-      final existing = _serverStatus[progress.serverId];
-      if (existing == null) return;
-      setState(() {
-        _serverStatus[progress.serverId] = (existing.$1, progress.online);
-      });
-    });
-    _statusSub = manager.statusStream.listen((status) {
-      if (!mounted) return;
-      setState(() {
-        for (final entry in status.entries) {
-          final existing = _serverStatus[entry.key];
-          if (existing != null) {
-            _serverStatus[entry.key] = (existing.$1, entry.value);
-          }
-        }
-      });
-    });
-  }
-
   MultiServerManager _serverManagerFromContext() => context.read<MultiServerProvider>().serverManager;
 
   @override
-  void dispose() {
-    _statusSub?.cancel();
-    _connectProgressSub?.cancel();
-    super.dispose();
-  }
-
-  Widget _buildStatusText(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
-      child: Text(
-        _statusMessage,
-        key: ValueKey(_statusMessage),
-        textAlign: TextAlign.center,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
-      ),
-    );
-  }
-
-  Widget _buildServerStatusList(BuildContext context) {
-    if (_serverStatus.isEmpty) return const SizedBox.shrink();
-    final textTheme = Theme.of(context).textTheme;
-    final dimColor = Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5);
-    const successColor = Color(0xFF4CAF50);
-    const failColor = Color(0xFFEF5350);
-
-    return Column(
-      mainAxisSize: .min,
-      children: _serverStatus.entries.map((entry) {
-        final (name, connected) = entry.value;
-        final Widget statusIcon;
-        if (connected == null) {
-          statusIcon = AppIcon(Symbols.circle_rounded, size: 10, color: dimColor);
-        } else if (connected) {
-          statusIcon = const AppIcon(Symbols.check_circle_rounded, size: 14, color: successColor);
-        } else {
-          statusIcon = const AppIcon(Symbols.cancel_rounded, size: 14, color: failColor);
-        }
-        return Padding(
-          key: ValueKey(entry.key),
-          padding: const EdgeInsets.symmetric(vertical: 2),
-          child: Row(
-            mainAxisSize: .min,
-            children: [
-              statusIcon,
-              const SizedBox(width: 8),
-              Text(name, style: textTheme.bodySmall?.copyWith(color: dimColor)),
-            ],
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const coralColor = Color(0xFFE5A00D);
-    final height = MediaQuery.sizeOf(context).height;
-    // The stacked layout below hangs its two rows off fixed ±170/180 offsets from the middle, which
-    // needs roughly 700 logical pixels of height. A car at a large interface scale — and a phone in
-    // landscape — has less than that, and the rows would collide or fall outside the Stack's clip.
-    if (height < 700) {
-      return ColoredBox(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(
-                    'assets/plex_chevron.svg',
-                    width: 160,
-                    height: 160,
-                    theme: const SvgTheme(currentColor: coralColor),
-                  ),
-                  _buildStatusText(context),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: _serverStatus.isEmpty
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2, color: coralColor),
-                          )
-                        : _buildServerStatusList(context),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    return ColoredBox(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Stack(
-        children: [
-          Center(
-            child: SvgPicture.asset(
-              'assets/plex_chevron.svg',
-              width: 288,
-              height: 288,
-              theme: const SvgTheme(currentColor: coralColor),
-            ),
-          ),
-          Positioned(left: 0, right: 0, bottom: height * 0.5 - 170, child: _buildStatusText(context)),
-          Positioned(
-            left: 0,
-            right: 0,
-            top: height * 0.5 + 180,
-            child: Center(
-              child: _serverStatus.isEmpty
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: coralColor),
-                    )
-                  : _buildServerStatusList(context),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => ColoredBox(
+    color: Theme.of(context).scaffoldBackgroundColor,
+    child: const SizedBox.expand(),
+  );
 }

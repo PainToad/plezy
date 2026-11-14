@@ -169,11 +169,32 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
+    PlatformDetector.debugSetIsDesktopOSOverride(false);
+    addTearDown(() => PlatformDetector.debugSetIsDesktopOSOverride(null));
     resetSharedPreferencesForTest();
     SettingsService.resetForTesting();
     TvDetectionService.debugSetAppleTVOverride(null);
     TvDetectionService.setForceTVSync(false);
     LocaleSettings.setLocaleSync(AppLocale.en);
+  });
+
+  testWidgets('desktop libraries remain peer destinations with the folder preference closed', (tester) async {
+    PlatformDetector.debugSetIsDesktopOSOverride(true);
+    await SettingsService.getInstance();
+    await SettingsService.instance.write(SettingsService.librariesSectionExpanded, false);
+    final movies = _library(id: 'movies', title: 'Movies', serverId: ServerId('server'), serverName: 'Server');
+    String? selected;
+    await _pumpBasicRail(
+      tester,
+      libraries: [movies],
+      alwaysExpanded: true,
+      onLibrarySelected: (key) => selected = key,
+    );
+    expect(find.widgetWithText(NavigationRailItem, 'Libraries'), findsNothing);
+    final movieItem = find.widgetWithText(NavigationRailItem, 'Movies');
+    expect(movieItem, findsOneWidget);
+    await tester.tap(movieItem);
+    expect(selected, movies.globalKey);
   });
 
   testWidgets('closed TV rail is slim and keeps primary icons centered', (tester) async {
@@ -1015,3 +1036,4 @@ void main() {
     expect(parentBuilds, 1);
   });
 }
+
