@@ -8,7 +8,6 @@ import 'package:shared_preferences_foundation/shared_preferences_foundation.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material show ThemeMode;
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
@@ -99,7 +98,6 @@ import 'utils/orientation_helper.dart';
 import 'utils/watch_state_notifier.dart';
 import 'i18n/app_locale_utils.dart';
 import 'i18n/strings.g.dart';
-import 'widgets/app_icon.dart';
 import 'widgets/app_system_ui_style.dart';
 import 'focus/input_mode_tracker.dart';
 import 'focus/key_event_utils.dart';
