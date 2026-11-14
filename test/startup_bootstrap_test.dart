@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:drift/drift.dart' show ApplyInterceptor, QueryExecutor, QueryExecutorUser, QueryInterceptor;
+import 'package:drift/drift.dart'
+    show ApplyInterceptor, QueryExecutor, QueryExecutorUser, QueryInterceptor;
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -37,7 +38,10 @@ final class _OpenTrackingInterceptor extends QueryInterceptor {
   var closed = false;
 
   @override
-  Future<bool> ensureOpen(QueryExecutor executor, QueryExecutorUser user) async {
+  Future<bool> ensureOpen(
+    QueryExecutor executor,
+    QueryExecutorUser user,
+  ) async {
     ensureOpenCalls++;
     final failure = this.failure;
     if (failure != null) throw failure;
@@ -48,7 +52,11 @@ final class _OpenTrackingInterceptor extends QueryInterceptor {
   }
 
   @override
-  Future<int> runUpdate(QueryExecutor executor, String statement, List<Object?> args) {
+  Future<int> runUpdate(
+    QueryExecutor executor,
+    String statement,
+    List<Object?> args,
+  ) {
     final updateFailure = this.updateFailure;
     if (updateFailure != null) throw updateFailure;
     return executor.runUpdate(statement, args);
@@ -62,26 +70,32 @@ final class _OpenTrackingInterceptor extends QueryInterceptor {
 }
 
 void main() {
-  testWidgets('renders a Flutter frame before starting the initialization gate', (tester) async {
-    final completion = Completer<int>();
-    var bootstrapWasMounted = false;
+  testWidgets(
+    'renders a Flutter frame before starting the initialization gate',
+    (tester) async {
+      final completion = Completer<int>();
+      var bootstrapWasMounted = false;
 
-    await tester.pumpWidget(
-      StartupBootstrap<int>(
-        initialize: () {
-          bootstrapWasMounted = find.byKey(startupBootstrapProgressKey).evaluate().isNotEmpty;
-          return completion.future;
-        },
-        buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
-      ),
-    );
+      await tester.pumpWidget(
+        StartupBootstrap<int>(
+          initialize: () {
+            bootstrapWasMounted = find
+                .byKey(startupBootstrapProgressKey)
+                .evaluate()
+                .isNotEmpty;
+            return completion.future;
+          },
+          buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
+        ),
+      );
 
-    expect(bootstrapWasMounted, isTrue);
-    expect(find.byKey(startupBootstrapProgressKey), findsOneWidget);
+      expect(bootstrapWasMounted, isTrue);
+      expect(find.byKey(startupBootstrapProgressKey), findsOneWidget);
 
-    completion.complete(1);
-    await tester.pump();
-  });
+      completion.complete(1);
+      await tester.pump();
+    },
+  );
 
   // The window behind Flutter already holds the launch colour: on Android
   // `PlezyActivity` restores the persisted one and the television resource
@@ -92,7 +106,9 @@ void main() {
   const launchScreen = Color(0xFF123456);
 
   Future<int> windowPixel(WidgetTester tester) async {
-    final boundary = tester.renderObject<RenderRepaintBoundary>(find.byKey(windowKey));
+    final boundary = tester.renderObject<RenderRepaintBoundary>(
+      find.byKey(windowKey),
+    );
     late ByteData bytes;
     await tester.runAsync(() async {
       final image = await boundary.toImage();
@@ -100,7 +116,12 @@ void main() {
       image.dispose();
     });
     // Top-left corner in rawRgba: outside the centred progress indicator.
-    return Color.fromARGB(bytes.getUint8(3), bytes.getUint8(0), bytes.getUint8(1), bytes.getUint8(2)).toARGB32();
+    return Color.fromARGB(
+      bytes.getUint8(3),
+      bytes.getUint8(0),
+      bytes.getUint8(1),
+      bytes.getUint8(2),
+    ).toARGB32();
   }
 
   Widget overLaunchScreen(Widget child) => RepaintBoundary(
@@ -108,9 +129,12 @@ void main() {
     child: ColoredBox(color: launchScreen, child: child),
   );
 
-  ThemeData bootstrapTheme(WidgetTester tester) => Theme.of(tester.element(find.byKey(startupBootstrapProgressKey)));
+  ThemeData bootstrapTheme(WidgetTester tester) =>
+      Theme.of(tester.element(find.byKey(startupBootstrapProgressKey)));
 
-  testWidgets('the loading frame leaves the platform launch screen visible', (tester) async {
+  testWidgets('the loading frame leaves the platform launch screen visible', (
+    tester,
+  ) async {
     final completion = Completer<int>();
 
     await tester.pumpWidget(
@@ -132,27 +156,35 @@ void main() {
     await tester.pump();
   });
 
-  testWidgets('the loading frame paints a background where nothing is behind Flutter', (tester) async {
-    final completion = Completer<int>();
+  testWidgets(
+    'the loading frame paints a background where nothing is behind Flutter',
+    (tester) async {
+      final completion = Completer<int>();
 
-    await tester.pumpWidget(
-      overLaunchScreen(
-        StartupBootstrap<int>(
-          initialize: () => completion.future,
-          buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
-          lightTheme: monoTheme(MonoPalette.light),
-          darkTheme: monoTheme(MonoPalette.dark),
+      await tester.pumpWidget(
+        overLaunchScreen(
+          StartupBootstrap<int>(
+            initialize: () => completion.future,
+            buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
+            lightTheme: monoTheme(MonoPalette.light),
+            darkTheme: monoTheme(MonoPalette.dark),
+          ),
         ),
-      ),
-    );
+      );
 
-    expect(await windowPixel(tester), monoTheme(MonoPalette.light).scaffoldBackgroundColor.toARGB32());
+      expect(
+        await windowPixel(tester),
+        monoTheme(MonoPalette.light).scaffoldBackgroundColor.toARGB32(),
+      );
 
-    completion.complete(1);
-    await tester.pump();
-  });
+      completion.complete(1);
+      await tester.pump();
+    },
+  );
 
-  testWidgets('the failure screen stays opaque over the launch screen', (tester) async {
+  testWidgets('the failure screen stays opaque over the launch screen', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       overLaunchScreen(
         StartupBootstrap<int>(
@@ -167,10 +199,15 @@ void main() {
     await tester.pump();
 
     expect(find.byKey(startupBootstrapFailureKey), findsOneWidget);
-    expect(await windowPixel(tester), monoTheme(MonoPalette.light).scaffoldBackgroundColor.toARGB32());
+    expect(
+      await windowPixel(tester),
+      monoTheme(MonoPalette.light).scaffoldBackgroundColor.toARGB32(),
+    );
   });
 
-  testWidgets('adopts the persisted theme instead of platform brightness', (tester) async {
+  testWidgets('adopts the persisted theme instead of platform brightness', (
+    tester,
+  ) async {
     // What a Fire TV or Shield reports: no system dark-mode toggle, so
     // ThemeMode.system resolves light while the app's own TV default is OLED.
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
@@ -189,7 +226,10 @@ void main() {
       ),
     );
 
-    expect(bootstrapTheme(tester).scaffoldBackgroundColor, monoTheme(MonoPalette.light).scaffoldBackgroundColor);
+    expect(
+      bootstrapTheme(tester).scaffoldBackgroundColor,
+      monoTheme(MonoPalette.light).scaffoldBackgroundColor,
+    );
 
     resolved.complete((
       themeMode: ThemeProvider.materialThemeModeFor(MonoPalette.oled),
@@ -200,7 +240,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(bootstrapTheme(tester).brightness, Brightness.dark);
-    expect(bootstrapTheme(tester).scaffoldBackgroundColor, const Color(0xFF000000));
+    expect(
+      bootstrapTheme(tester).scaffoldBackgroundColor,
+      const Color(0xFF000000),
+    );
 
     completion.complete(1);
     await tester.pump();
@@ -210,60 +253,71 @@ void main() {
     (settings.ThemeMode.ember, Brightness.light),
     (settings.ThemeMode.paper, Brightness.dark),
   ]) {
-    testWidgets('adopts the persisted ${mode.name} preset whatever the platform brightness', (tester) async {
-      tester.platformDispatcher.platformBrightnessTestValue = platformBrightness;
-      addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+    testWidgets(
+      'adopts the persisted ${mode.name} preset whatever the platform brightness',
+      (tester) async {
+        tester.platformDispatcher.platformBrightnessTestValue =
+            platformBrightness;
+        addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
 
-      final resolved = Completer<StartupThemeResolution>();
+        final resolved = Completer<StartupThemeResolution>();
+        final completion = Completer<int>();
+
+        await tester.pumpWidget(
+          StartupBootstrap<int>(
+            initialize: () => completion.future,
+            buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
+            lightTheme: monoTheme(MonoPalette.light),
+            darkTheme: monoTheme(MonoPalette.dark),
+            resolveTheme: () => resolved.future,
+          ),
+        );
+
+        final palette = ThemeProvider.paletteFor(mode)!;
+        resolved.complete((
+          themeMode: ThemeProvider.materialThemeModeFor(palette),
+          lightTheme: ThemeProvider.lightThemeFor(palette),
+          darkTheme: ThemeProvider.darkThemeFor(palette),
+        ));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 400));
+
+        expect(bootstrapTheme(tester).brightness, palette.brightness);
+        expect(bootstrapTheme(tester).scaffoldBackgroundColor, palette.bg);
+
+        completion.complete(1);
+        await tester.pump();
+      },
+    );
+  }
+
+  testWidgets(
+    'a theme preference that cannot be read does not block the gate',
+    (tester) async {
       final completion = Completer<int>();
 
       await tester.pumpWidget(
         StartupBootstrap<int>(
           initialize: () => completion.future,
           buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
-          lightTheme: monoTheme(MonoPalette.light),
-          darkTheme: monoTheme(MonoPalette.dark),
-          resolveTheme: () => resolved.future,
+          resolveTheme: () async => throw const FormatException('unreadable'),
         ),
       );
-
-      final palette = ThemeProvider.paletteFor(mode)!;
-      resolved.complete((
-        themeMode: ThemeProvider.materialThemeModeFor(palette),
-        lightTheme: ThemeProvider.lightThemeFor(palette),
-        darkTheme: ThemeProvider.darkThemeFor(palette),
-      ));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 400));
 
-      expect(bootstrapTheme(tester).brightness, palette.brightness);
-      expect(bootstrapTheme(tester).scaffoldBackgroundColor, palette.bg);
+      expect(find.byKey(startupBootstrapProgressKey), findsOneWidget);
 
-      completion.complete(1);
-      await tester.pump();
-    });
-  }
+      completion.complete(3);
+      // The blank startup surface no longer schedules animation frames. Flush
+      // initialization and then render the frame scheduled by its completion.
+      await tester.pumpAndSettle();
+      expect(find.text('ready 3'), findsOneWidget);
+    },
+  );
 
-  testWidgets('a theme preference that cannot be read does not block the gate', (tester) async {
-    final completion = Completer<int>();
-
-    await tester.pumpWidget(
-      StartupBootstrap<int>(
-        initialize: () => completion.future,
-        buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
-        resolveTheme: () async => throw const FormatException('unreadable'),
-      ),
-    );
-    await tester.pump();
-
-    expect(find.byKey(startupBootstrapProgressKey), findsOneWidget);
-
-    completion.complete(3);
-    await tester.pump();
-    expect(find.text('ready 3'), findsOneWidget);
-  });
-
-  testWidgets('replaces bootstrap UI with the initialized app on success', (tester) async {
+  testWidgets('replaces bootstrap UI with the initialized app on success', (
+    tester,
+  ) async {
     final completion = Completer<int>();
 
     await tester.pumpWidget(
@@ -280,10 +334,15 @@ void main() {
     expect(find.byKey(startupBootstrapProgressKey), findsNothing);
   });
 
-  testWidgets('names the failing phase instead of showing a bare error', (tester) async {
+  testWidgets('names the failing phase instead of showing a bare error', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       StartupBootstrap<int>(
-        initialize: () async => throw const StartupPhaseException(StartupPhase.database, FormatException('boom')),
+        initialize: () async => throw const StartupPhaseException(
+          StartupPhase.database,
+          FormatException('boom'),
+        ),
         buildApp: (_, value) => Text('ready $value'),
       ),
     );
@@ -297,7 +356,9 @@ void main() {
     expect(find.textContaining('FormatException'), findsOneWidget);
   });
 
-  testWidgets('the failure screen lays out text in the app language', (tester) async {
+  testWidgets('the failure screen lays out text in the app language', (
+    tester,
+  ) async {
     // Every Text inherits the app's Localizations locale, which selects CJK
     // glyph forms; Flutter's en-US default drew Chinese with Japanese glyphs on
     // Windows (#2752).
@@ -312,10 +373,17 @@ void main() {
     );
     await tester.pump();
 
-    final failureText = find.descendant(of: find.byKey(startupBootstrapFailureKey), matching: find.byType(RichText));
+    final failureText = find.descendant(
+      of: find.byKey(startupBootstrapFailureKey),
+      matching: find.byType(RichText),
+    );
     expect(
       tester.renderObject<RenderParagraph>(failureText.first).locale,
-      const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'TW'),
+      const Locale.fromSubtags(
+        languageCode: 'zh',
+        scriptCode: 'Hant',
+        countryCode: 'TW',
+      ),
     );
     final context = tester.element(find.byKey(startupBootstrapRetryKey));
     expect(
@@ -354,7 +422,10 @@ void main() {
     await tester.pumpWidget(
       StartupBootstrap<int>(
         key: const Key('repairable'),
-        initialize: () async => throw CorruptPreferenceStoreException(const FormatException('bad'), StackTrace.current),
+        initialize: () async => throw CorruptPreferenceStoreException(
+          const FormatException('bad'),
+          StackTrace.current,
+        ),
         buildApp: (_, value) => Text('ready $value'),
       ),
     );
@@ -362,7 +433,9 @@ void main() {
     expect(find.byKey(startupFailureRepairKey), findsOneWidget);
   });
 
-  testWidgets('re-runs initialization after a successful repair', (tester) async {
+  testWidgets('re-runs initialization after a successful repair', (
+    tester,
+  ) async {
     var attempts = 0;
     var repairCalls = 0;
 
@@ -371,7 +444,10 @@ void main() {
         initialize: () async {
           attempts++;
           if (attempts == 1) {
-            throw CorruptPreferenceStoreException(const FormatException('bad'), StackTrace.current);
+            throw CorruptPreferenceStoreException(
+              const FormatException('bad'),
+              StackTrace.current,
+            );
           }
           return 7;
         },
@@ -400,7 +476,10 @@ void main() {
       StartupBootstrap<int>(
         initialize: () async {
           attempts++;
-          throw CorruptPreferenceStoreException(const FormatException('bad'), StackTrace.current);
+          throw CorruptPreferenceStoreException(
+            const FormatException('bad'),
+            StackTrace.current,
+          );
         },
         buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
         repair: (_, _, _) async => StartupRepairResult.none,
@@ -416,7 +495,9 @@ void main() {
     expect(find.byKey(startupBootstrapFailureKey), findsOneWidget);
   });
 
-  testWidgets('a repair that needs a restart parks the app instead of retrying', (tester) async {
+  testWidgets('a repair that needs a restart parks the app instead of retrying', (
+    tester,
+  ) async {
     // The repair seeds the salvaged credentials straight to disk and leaves
     // this process's store closed, because the plugin still holds the bad
     // document. Re-running the gate would reopen onto that stale map and the
@@ -428,7 +509,10 @@ void main() {
       StartupBootstrap<int>(
         initialize: () async {
           attempts++;
-          throw CorruptPreferenceStoreException(const FormatException('bad'), StackTrace.current);
+          throw CorruptPreferenceStoreException(
+            const FormatException('bad'),
+            StackTrace.current,
+          );
         },
         buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
         repair: (_, _, _) async => StartupRepairResult.restart,
@@ -448,137 +532,167 @@ void main() {
     expect(find.byKey(startupFailureRestartKey), findsOneWidget);
   });
 
-  testWidgets('the restart state survives and still allows uploading the diagnostic', (tester) async {
-    await tester.pumpWidget(
-      StartupBootstrap<int>(
-        initialize: () async => throw CorruptPreferenceStoreException(const FormatException('bad'), StackTrace.current),
-        buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
-        repair: (_, _, _) async => StartupRepairResult.restart,
-      ),
-    );
-    await tester.pump();
-    await tester.tap(find.byKey(startupFailureRepairKey));
-    await tester.pump();
-    await tester.pump();
+  testWidgets(
+    'the restart state survives and still allows uploading the diagnostic',
+    (tester) async {
+      await tester.pumpWidget(
+        StartupBootstrap<int>(
+          initialize: () async => throw CorruptPreferenceStoreException(
+            const FormatException('bad'),
+            StackTrace.current,
+          ),
+          buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
+          repair: (_, _, _) async => StartupRepairResult.restart,
+        ),
+      );
+      await tester.pump();
+      await tester.tap(find.byKey(startupFailureRepairKey));
+      await tester.pump();
+      await tester.pump();
 
-    // Copy and Upload stay live — the whole point of the failure screen is
-    // that a stuck user can still get the diagnostic out.
-    expect(find.byKey(startupFailureCopyKey), findsOneWidget);
-    expect(find.byKey(startupFailureUploadKey), findsOneWidget);
-  });
+      // Copy and Upload stay live — the whole point of the failure screen is
+      // that a stuck user can still get the diagnostic out.
+      expect(find.byKey(startupFailureCopyKey), findsOneWidget);
+      expect(find.byKey(startupFailureUploadKey), findsOneWidget);
+    },
+  );
 
-  testWidgets('repair receives a context below the bootstrap MaterialApp that can show its dialogs', (tester) async {
-    // Regression: _repair used to pass the gate State's own context, which
-    // sits above the bootstrap MaterialApp — no Navigator, no
-    // MaterialLocalizations — so the consent dialog threw and the Repair
-    // button on the startup-failure screen could never work.
-    await tester.pumpWidget(
-      StartupBootstrap<int>(
-        initialize: () async => throw CorruptPreferenceStoreException(const FormatException('bad'), StackTrace.current),
-        buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
-        repair: (context, _, _) async {
-          final confirmed = await showConfirmDialog(
-            context,
-            title: t.startup.repairTitle,
-            message: 'the cost',
-            confirmText: t.startup.repairConfirm,
-          );
-          return confirmed ? StartupRepairResult.retry : StartupRepairResult.none;
-        },
-      ),
-    );
-    await tester.pump();
+  testWidgets(
+    'repair receives a context below the bootstrap MaterialApp that can show its dialogs',
+    (tester) async {
+      // Regression: _repair used to pass the gate State's own context, which
+      // sits above the bootstrap MaterialApp — no Navigator, no
+      // MaterialLocalizations — so the consent dialog threw and the Repair
+      // button on the startup-failure screen could never work.
+      await tester.pumpWidget(
+        StartupBootstrap<int>(
+          initialize: () async => throw CorruptPreferenceStoreException(
+            const FormatException('bad'),
+            StackTrace.current,
+          ),
+          buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
+          repair: (context, _, _) async {
+            final confirmed = await showConfirmDialog(
+              context,
+              title: t.startup.repairTitle,
+              message: 'the cost',
+              confirmText: t.startup.repairConfirm,
+            );
+            return confirmed
+                ? StartupRepairResult.retry
+                : StartupRepairResult.none;
+          },
+        ),
+      );
+      await tester.pump();
 
-    await tester.tap(find.byKey(startupFailureRepairKey));
-    await tester.pumpAndSettle();
+      await tester.tap(find.byKey(startupFailureRepairKey));
+      await tester.pumpAndSettle();
 
-    expect(tester.takeException(), isNull);
-    expect(find.text(t.startup.repairTitle), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      expect(find.text(t.startup.repairTitle), findsOneWidget);
 
-    // The dialog is live, not just painted: cancelling resolves the repair
-    // and hands the failure screen back.
-    await tester.tap(find.text(t.common.cancel));
-    await tester.pumpAndSettle();
+      // The dialog is live, not just painted: cancelling resolves the repair
+      // and hands the failure screen back.
+      await tester.tap(find.text(t.common.cancel));
+      await tester.pumpAndSettle();
 
-    expect(find.text(t.startup.repairTitle), findsNothing);
-    expect(find.byKey(startupBootstrapFailureKey), findsOneWidget);
-  });
+      expect(find.text(t.startup.repairTitle), findsNothing);
+      expect(find.byKey(startupBootstrapFailureKey), findsOneWidget);
+    },
+  );
 
-  testWidgets('a repair that throws reports the failure via the bootstrap snackbar without throwing', (tester) async {
-    // Regression: the catch used the same above-MaterialApp context for
-    // showErrorSnackBar, so reporting the repair failure threw a second
-    // exception (no ScaffoldMessenger). The gate's own MaterialApp must carry
-    // the snackbar — rootScaffoldMessengerKey is not mounted during bootstrap.
-    await tester.pumpWidget(
-      StartupBootstrap<int>(
-        initialize: () async => throw CorruptPreferenceStoreException(const FormatException('bad'), StackTrace.current),
-        buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
-        repair: (_, _, _) async => throw StateError('repair blew up'),
-      ),
-    );
-    await tester.pump();
+  testWidgets(
+    'a repair that throws reports the failure via the bootstrap snackbar without throwing',
+    (tester) async {
+      // Regression: the catch used the same above-MaterialApp context for
+      // showErrorSnackBar, so reporting the repair failure threw a second
+      // exception (no ScaffoldMessenger). The gate's own MaterialApp must carry
+      // the snackbar — rootScaffoldMessengerKey is not mounted during bootstrap.
+      await tester.pumpWidget(
+        StartupBootstrap<int>(
+          initialize: () async => throw CorruptPreferenceStoreException(
+            const FormatException('bad'),
+            StackTrace.current,
+          ),
+          buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
+          repair: (_, _, _) async => throw StateError('repair blew up'),
+        ),
+      );
+      await tester.pump();
 
-    await tester.tap(find.byKey(startupFailureRepairKey));
-    await tester.pump();
-    await tester.pump();
+      await tester.tap(find.byKey(startupFailureRepairKey));
+      await tester.pump();
+      await tester.pump();
 
-    expect(tester.takeException(), isNull);
-    expect(find.text(t.startup.repairFailed), findsOneWidget);
-    expect(find.byKey(startupBootstrapFailureKey), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      expect(find.text(t.startup.repairFailed), findsOneWidget);
+      expect(find.byKey(startupBootstrapFailureKey), findsOneWidget);
 
-    // Let the snackbar's dismiss timer elapse so the test ends clean.
-    await tester.pump(AppDurations.snackBarLong);
-    await tester.pumpAndSettle();
-  });
+      // Let the snackbar's dismiss timer elapse so the test ends clean.
+      await tester.pump(AppDurations.snackBarLong);
+      await tester.pumpAndSettle();
+    },
+  );
 
-  testWidgets('persists the failure so it can be reported once the reporter is up', (tester) async {
-    // Not reported inline: the earliest gate phases run before crash
-    // reporting exists, so an inline capture would reach a no-op hub and be
-    // discarded. The record is held for `flushPendingStartupFailure` (#1732).
-    StartupDiagnosticsStore.resetForTesting();
-    addTearDown(StartupDiagnosticsStore.resetForTesting);
+  testWidgets(
+    'persists the failure so it can be reported once the reporter is up',
+    (tester) async {
+      // Not reported inline: the earliest gate phases run before crash
+      // reporting exists, so an inline capture would reach a no-op hub and be
+      // discarded. The record is held for `flushPendingStartupFailure` (#1732).
+      StartupDiagnosticsStore.resetForTesting();
+      addTearDown(StartupDiagnosticsStore.resetForTesting);
 
-    await tester.pumpWidget(
-      StartupBootstrap<int>(
-        initialize: () async => throw const StartupPhaseException(StartupPhase.storage, 'nope'),
-        buildApp: (_, value) => Text('ready $value'),
-      ),
-    );
-    await tester.pump();
+      await tester.pumpWidget(
+        StartupBootstrap<int>(
+          initialize: () async =>
+              throw const StartupPhaseException(StartupPhase.storage, 'nope'),
+          buildApp: (_, value) => Text('ready $value'),
+        ),
+      );
+      await tester.pump();
 
-    expect(StartupDiagnosticsStore.pending?.phase, StartupPhase.storage);
-    expect(StartupDiagnosticsStore.pending?.reported, isFalse);
-  });
+      expect(StartupDiagnosticsStore.pending?.phase, StartupPhase.storage);
+      expect(StartupDiagnosticsStore.pending?.reported, isFalse);
+    },
+  );
 
-  testWidgets('retry clears the failed generation and can commit a later success', (tester) async {
-    final retryCompletion = Completer<int>();
-    var attempts = 0;
+  testWidgets(
+    'retry clears the failed generation and can commit a later success',
+    (tester) async {
+      final retryCompletion = Completer<int>();
+      var attempts = 0;
 
-    await tester.pumpWidget(
-      StartupBootstrap<int>(
-        initialize: () {
-          attempts++;
-          if (attempts == 1) return Future<int>.error(StateError('first attempt'));
-          return retryCompletion.future;
-        },
-        buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
-      ),
-    );
-    await tester.pump();
+      await tester.pumpWidget(
+        StartupBootstrap<int>(
+          initialize: () {
+            attempts++;
+            if (attempts == 1)
+              return Future<int>.error(StateError('first attempt'));
+            return retryCompletion.future;
+          },
+          buildApp: (_, value) => MaterialApp(home: Text('ready $value')),
+        ),
+      );
+      await tester.pump();
 
-    await tester.tap(find.byKey(startupBootstrapRetryKey));
-    await tester.pump();
-    expect(attempts, 2);
-    expect(find.byKey(startupBootstrapProgressKey), findsOneWidget);
+      await tester.tap(find.byKey(startupBootstrapRetryKey));
+      await tester.pump();
+      expect(attempts, 2);
+      expect(find.byKey(startupBootstrapProgressKey), findsOneWidget);
 
-    retryCompletion.complete(42);
-    await tester.pump();
+      retryCompletion.complete(42);
+      await tester.pump();
 
-    expect(find.text('ready 42'), findsOneWidget);
-    expect(find.byKey(startupBootstrapFailureKey), findsNothing);
-  });
+      expect(find.text('ready 42'), findsOneWidget);
+      expect(find.byKey(startupBootstrapFailureKey), findsNothing);
+    },
+  );
 
-  testWidgets('discards a completion from a disposed bootstrap generation', (tester) async {
+  testWidgets('discards a completion from a disposed bootstrap generation', (
+    tester,
+  ) async {
     final completion = Completer<int>();
     final discarded = <int>[];
 
@@ -598,170 +712,199 @@ void main() {
     expect(find.text('ready 9'), findsNothing);
   });
 
-  test('storage-full lazy database open discards native work before retrying', () async {
-    resetSharedPreferencesForTest();
-    final tempDir = await Directory.systemTemp.createTemp('plezy_startup_storage_full_');
-    final file = File('${tempDir.path}/plezy_downloads.db');
-    final prefs = await BaseSharedPreferencesService.sharedCache();
-    final failedOpen = _OpenTrackingInterceptor(
-      failure: const FileSystemException('write failed: No space left on device'),
-    );
-    final successfulOpen = _OpenTrackingInterceptor();
-    AppDatabase? seeded;
-    AppDatabase? resultDatabase;
-
-    try {
-      seeded = AppDatabase.forTesting(NativeDatabase(file));
-      await seeded.insertDownload(
-        serverId: ServerId('srv'),
-        ratingKey: 'active',
-        globalKey: 'srv:active',
-        type: 'movie',
-        status: DownloadStatus.downloading.index,
+  test(
+    'storage-full lazy database open discards native work before retrying',
+    () async {
+      resetSharedPreferencesForTest();
+      final tempDir = await Directory.systemTemp.createTemp(
+        'plezy_startup_storage_full_',
       );
-      await seeded.updateBgTaskId('srv:active', 'native-task');
-      await seeded.addToQueue(mediaGlobalKey: 'srv:active');
-      await seeded.insertDownload(
-        serverId: ServerId('srv'),
-        ratingKey: 'complete',
-        globalKey: 'srv:complete',
-        type: 'movie',
-        status: DownloadStatus.completed.index,
+      final file = File('${tempDir.path}/plezy_downloads.db');
+      final prefs = await BaseSharedPreferencesService.sharedCache();
+      final failedOpen = _OpenTrackingInterceptor(
+        failure: const FileSystemException(
+          'write failed: No space left on device',
+        ),
       );
-      await seeded.close();
-      seeded = null;
+      final successfulOpen = _OpenTrackingInterceptor();
+      AppDatabase? seeded;
+      AppDatabase? resultDatabase;
 
+      try {
+        seeded = AppDatabase.forTesting(NativeDatabase(file));
+        await seeded.insertDownload(
+          serverId: ServerId('srv'),
+          ratingKey: 'active',
+          globalKey: 'srv:active',
+          type: 'movie',
+          status: DownloadStatus.downloading.index,
+        );
+        await seeded.updateBgTaskId('srv:active', 'native-task');
+        await seeded.addToQueue(mediaGlobalKey: 'srv:active');
+        await seeded.insertDownload(
+          serverId: ServerId('srv'),
+          ratingKey: 'complete',
+          globalKey: 'srv:complete',
+          type: 'movie',
+          status: DownloadStatus.completed.index,
+        );
+        await seeded.close();
+        seeded = null;
+
+        var openAttempts = 0;
+        var recoveries = 0;
+        final bootstrap = await openAppDatabaseWithDownloadRecovery(
+          openDatabase: () {
+            return AppDatabase.open(
+              isTvos: false,
+              databaseFile: file,
+              preferences: prefs,
+              executorFactory: (databaseFile) {
+                openAttempts++;
+                final interceptor = openAttempts == 1
+                    ? failedOpen
+                    : successfulOpen;
+                return NativeDatabase(databaseFile).interceptWith(interceptor);
+              },
+            );
+          },
+          recoverNativeDownloads: () async {
+            expect(failedOpen.closed, isTrue);
+            recoveries++;
+          },
+          storageFullMessage: 'Storage full',
+        );
+        resultDatabase = bootstrap.database;
+
+        final active = await resultDatabase.getDownloadedMedia('srv:active');
+        final complete = await resultDatabase.getDownloadedMedia(
+          'srv:complete',
+        );
+        expect(
+          bootstrap.recoveryOutcome,
+          TvosDatabaseRecoveryOutcome.notApplicable,
+        );
+        expect(openAttempts, 2);
+        expect(recoveries, 1);
+        expect(failedOpen.ensureOpenCalls, 1);
+        expect(successfulOpen.ensureOpenCalls, greaterThanOrEqualTo(1));
+        expect(successfulOpen.ensureOpenCompleted, isTrue);
+        expect(active?.status, DownloadStatus.failed.index);
+        expect(active?.bgTaskId, isNull);
+        expect(active?.errorMessage, 'Storage full');
+        expect(complete?.status, DownloadStatus.completed.index);
+        expect(
+          await resultDatabase.select(resultDatabase.downloadQueue).get(),
+          isEmpty,
+        );
+        expect(await resultDatabase.customSelect('SELECT 1').get(), isNotEmpty);
+      } finally {
+        await resultDatabase?.close();
+        await seeded?.close();
+        await tempDir.delete(recursive: true);
+      }
+    },
+  );
+
+  test(
+    'post-recovery download failure closes the reopened database before rethrowing',
+    () async {
+      resetSharedPreferencesForTest();
+      final tempDir = await Directory.systemTemp.createTemp(
+        'plezy_startup_recovery_update_failure_',
+      );
+      final file = File('${tempDir.path}/plezy_downloads.db');
+      final prefs = await BaseSharedPreferencesService.sharedCache();
+      final failedOpen = _OpenTrackingInterceptor(
+        failure: const FileSystemException(
+          'write failed: No space left on device',
+        ),
+      );
+      final updateError = StateError('injected post-recovery update failure');
+      final reopened = _OpenTrackingInterceptor(updateFailure: updateError);
+      AppDatabase? seeded;
+
+      try {
+        seeded = AppDatabase.forTesting(NativeDatabase(file));
+        await seeded.insertDownload(
+          serverId: ServerId('srv'),
+          ratingKey: 'active',
+          globalKey: 'srv:active',
+          type: 'movie',
+          status: DownloadStatus.downloading.index,
+        );
+        await seeded.close();
+        seeded = null;
+
+        var openAttempts = 0;
+        final open = openAppDatabaseWithDownloadRecovery(
+          openDatabase: () {
+            return AppDatabase.open(
+              isTvos: false,
+              databaseFile: file,
+              preferences: prefs,
+              executorFactory: (databaseFile) {
+                openAttempts++;
+                final interceptor = openAttempts == 1 ? failedOpen : reopened;
+                return NativeDatabase(databaseFile).interceptWith(interceptor);
+              },
+            );
+          },
+          recoverNativeDownloads: () async {},
+          storageFullMessage: 'Storage full',
+        );
+
+        await expectLater(open, throwsA(same(updateError)));
+        expect(openAttempts, 2);
+        expect(reopened.closed, isTrue);
+      } finally {
+        await seeded?.close();
+        await tempDir.delete(recursive: true);
+      }
+    },
+  );
+
+  test(
+    'non-storage lazy database-open errors bypass download recovery',
+    () async {
+      resetSharedPreferencesForTest();
+      final tempDir = await Directory.systemTemp.createTemp(
+        'plezy_startup_open_error_',
+      );
+      final file = File('${tempDir.path}/plezy_downloads.db');
+      final prefs = await BaseSharedPreferencesService.sharedCache();
+      final error = StateError('injected database setup failure');
+      final failedOpen = _OpenTrackingInterceptor(failure: error);
       var openAttempts = 0;
       var recoveries = 0;
-      final bootstrap = await openAppDatabaseWithDownloadRecovery(
-        openDatabase: () {
-          return AppDatabase.open(
-            isTvos: false,
-            databaseFile: file,
-            preferences: prefs,
-            executorFactory: (databaseFile) {
-              openAttempts++;
-              final interceptor = openAttempts == 1 ? failedOpen : successfulOpen;
-              return NativeDatabase(databaseFile).interceptWith(interceptor);
-            },
-          );
-        },
-        recoverNativeDownloads: () async {
-          expect(failedOpen.closed, isTrue);
-          recoveries++;
-        },
-        storageFullMessage: 'Storage full',
-      );
-      resultDatabase = bootstrap.database;
 
-      final active = await resultDatabase.getDownloadedMedia('srv:active');
-      final complete = await resultDatabase.getDownloadedMedia('srv:complete');
-      expect(bootstrap.recoveryOutcome, TvosDatabaseRecoveryOutcome.notApplicable);
-      expect(openAttempts, 2);
-      expect(recoveries, 1);
-      expect(failedOpen.ensureOpenCalls, 1);
-      expect(successfulOpen.ensureOpenCalls, greaterThanOrEqualTo(1));
-      expect(successfulOpen.ensureOpenCompleted, isTrue);
-      expect(active?.status, DownloadStatus.failed.index);
-      expect(active?.bgTaskId, isNull);
-      expect(active?.errorMessage, 'Storage full');
-      expect(complete?.status, DownloadStatus.completed.index);
-      expect(await resultDatabase.select(resultDatabase.downloadQueue).get(), isEmpty);
-      expect(await resultDatabase.customSelect('SELECT 1').get(), isNotEmpty);
-    } finally {
-      await resultDatabase?.close();
-      await seeded?.close();
-      await tempDir.delete(recursive: true);
-    }
-  });
+      try {
+        final open = openAppDatabaseWithDownloadRecovery(
+          openDatabase: () {
+            return AppDatabase.open(
+              isTvos: false,
+              databaseFile: file,
+              preferences: prefs,
+              executorFactory: (databaseFile) {
+                openAttempts++;
+                return NativeDatabase(databaseFile).interceptWith(failedOpen);
+              },
+            );
+          },
+          recoverNativeDownloads: () async {
+            recoveries++;
+          },
+          storageFullMessage: 'Storage full',
+        );
 
-  test('post-recovery download failure closes the reopened database before rethrowing', () async {
-    resetSharedPreferencesForTest();
-    final tempDir = await Directory.systemTemp.createTemp('plezy_startup_recovery_update_failure_');
-    final file = File('${tempDir.path}/plezy_downloads.db');
-    final prefs = await BaseSharedPreferencesService.sharedCache();
-    final failedOpen = _OpenTrackingInterceptor(
-      failure: const FileSystemException('write failed: No space left on device'),
-    );
-    final updateError = StateError('injected post-recovery update failure');
-    final reopened = _OpenTrackingInterceptor(updateFailure: updateError);
-    AppDatabase? seeded;
-
-    try {
-      seeded = AppDatabase.forTesting(NativeDatabase(file));
-      await seeded.insertDownload(
-        serverId: ServerId('srv'),
-        ratingKey: 'active',
-        globalKey: 'srv:active',
-        type: 'movie',
-        status: DownloadStatus.downloading.index,
-      );
-      await seeded.close();
-      seeded = null;
-
-      var openAttempts = 0;
-      final open = openAppDatabaseWithDownloadRecovery(
-        openDatabase: () {
-          return AppDatabase.open(
-            isTvos: false,
-            databaseFile: file,
-            preferences: prefs,
-            executorFactory: (databaseFile) {
-              openAttempts++;
-              final interceptor = openAttempts == 1 ? failedOpen : reopened;
-              return NativeDatabase(databaseFile).interceptWith(interceptor);
-            },
-          );
-        },
-        recoverNativeDownloads: () async {},
-        storageFullMessage: 'Storage full',
-      );
-
-      await expectLater(open, throwsA(same(updateError)));
-      expect(openAttempts, 2);
-      expect(reopened.closed, isTrue);
-    } finally {
-      await seeded?.close();
-      await tempDir.delete(recursive: true);
-    }
-  });
-
-  test('non-storage lazy database-open errors bypass download recovery', () async {
-    resetSharedPreferencesForTest();
-    final tempDir = await Directory.systemTemp.createTemp('plezy_startup_open_error_');
-    final file = File('${tempDir.path}/plezy_downloads.db');
-    final prefs = await BaseSharedPreferencesService.sharedCache();
-    final error = StateError('injected database setup failure');
-    final failedOpen = _OpenTrackingInterceptor(failure: error);
-    var openAttempts = 0;
-    var recoveries = 0;
-
-    try {
-      final open = openAppDatabaseWithDownloadRecovery(
-        openDatabase: () {
-          return AppDatabase.open(
-            isTvos: false,
-            databaseFile: file,
-            preferences: prefs,
-            executorFactory: (databaseFile) {
-              openAttempts++;
-              return NativeDatabase(databaseFile).interceptWith(failedOpen);
-            },
-          );
-        },
-        recoverNativeDownloads: () async {
-          recoveries++;
-        },
-        storageFullMessage: 'Storage full',
-      );
-
-      await expectLater(open, throwsA(same(error)));
-      expect(failedOpen.ensureOpenCalls, 1);
-      expect(failedOpen.closed, isTrue);
-      expect(openAttempts, 1);
-      expect(recoveries, 0);
-    } finally {
-      await tempDir.delete(recursive: true);
-    }
-  });
+        await expectLater(open, throwsA(same(error)));
+        expect(failedOpen.ensureOpenCalls, 1);
+        expect(failedOpen.closed, isTrue);
+        expect(openAttempts, 1);
+        expect(recoveries, 0);
+      } finally {
+        await tempDir.delete(recursive: true);
+      }
+    },
+  );
 }

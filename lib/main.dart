@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Directory, Platform, ProcessInfo;
 import 'dart:ui' show AppExitResponse;
+
 import 'package:flutter/foundation.dart';
 // ignore: depend_on_referenced_packages
 import 'package:shared_preferences_foundation/shared_preferences_foundation.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+
 import 'connection/connection.dart';
 import 'connection/connection_bootstrap.dart';
 import 'connection/connection_registry.dart';
@@ -49,8 +51,10 @@ import 'utils/platform_detector.dart';
 import 'utils/pointer_scroll_axis.dart';
 import 'services/apple_tv_remote_touch_service.dart';
 import 'services/discord_rpc_service.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+
 import 'services/image_cache_service.dart';
 import 'services/app_icon/app_icon_service.dart';
 import 'services/gamepad_service.dart';
@@ -77,7 +81,9 @@ import 'services/download_manager_service.dart';
 import 'services/pip_service.dart';
 import 'services/download_storage_service.dart';
 import 'services/connectivity_probe.dart';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+
 import 'services/jellyfin_api_cache.dart';
 import 'services/plex_api_cache.dart';
 import 'database/app_database.dart';
@@ -97,10 +103,14 @@ import 'widgets/app_icon.dart';
 import 'widgets/app_system_ui_style.dart';
 import 'focus/input_mode_tracker.dart';
 import 'focus/key_event_utils.dart';
+
 import 'package:intl/date_symbol_data_local.dart';
+
 import 'utils/navigation_transitions.dart';
 import 'utils/log_redaction_manager.dart';
+
 import 'package:package_info_plus/package_info_plus.dart';
+
 import 'utils/android_exit_diagnostics.dart';
 import 'utils/storage_failure.dart';
 import 'services/base_shared_preferences_service.dart';
@@ -111,8 +121,12 @@ import 'utils/dialogs.dart';
 import 'widgets/dialog_action_button.dart';
 import 'widgets/startup_failure_view.dart';
 
-const bool _enableSentry = bool.fromEnvironment('ENABLE_SENTRY', defaultValue: false);
-const String _sentryDsn = 'https://6a1a6ef8c72140099b2798973c1bfb2f@bugs.plezy.app/1';
+const bool _enableSentry = bool.fromEnvironment(
+  'ENABLE_SENTRY',
+  defaultValue: false,
+);
+const String _sentryDsn =
+    'https://6a1a6ef8c72140099b2798973c1bfb2f@bugs.plezy.app/1';
 const String gitCommit = String.fromEnvironment('GIT_COMMIT');
 const String _sentryEnvironment = String.fromEnvironment('SENTRY_ENVIRONMENT');
 const String _sentryDist = String.fromEnvironment('SENTRY_DIST');
@@ -124,7 +138,9 @@ bool _zeroOffsetPointerGuardInstalled = false;
 
 void _installZeroOffsetPointerGuard() {
   if (_zeroOffsetPointerGuardInstalled || !Platform.isIOS) return;
-  GestureBinding.instance.pointerRouter.addGlobalRoute(_absorbZeroOffsetPointerEvent);
+  GestureBinding.instance.pointerRouter.addGlobalRoute(
+    _absorbZeroOffsetPointerEvent,
+  );
   _zeroOffsetPointerGuardInstalled = true;
 }
 
@@ -190,7 +206,8 @@ void _bootstrapApp() {
         databaseRecoveryOutcome: dependencies.databaseRecoveryOutcome,
       ),
       discard: (dependencies) => dependencies.appDatabase.close(),
-      onCommitted: (dependencies) => _startNonessentialInitialization(dependencies.settings),
+      onCommitted: (dependencies) =>
+          _startNonessentialInitialization(dependencies.settings),
       lightTheme: monoTheme(MonoPalette.light),
       darkTheme: monoTheme(MonoPalette.dark),
       resolveTheme: _resolveStartupTheme,
@@ -219,10 +236,18 @@ void _bootstrapApp() {
 /// never flashes the fallback. That fallback is the same TV-aware default.
 Future<StartupThemeResolution> _resolveStartupTheme() async {
   final settings = await SettingsService.getInstance();
-  await TvDetectionService.getInstance(forceTv: settings.read(SettingsService.forceTvMode));
-  final palette = ThemeProvider.resolveStored(settings, unlocked: SupporterService.startupUnlocked(settings)).palette;
+  await TvDetectionService.getInstance(
+    forceTv: settings.read(SettingsService.forceTvMode),
+  );
+  final palette = ThemeProvider.resolveStored(
+    settings,
+    unlocked: SupporterService.startupUnlocked(settings),
+  ).palette;
   ThemeProvider.applyWindowChromeBrightness(
-    ThemeProvider.isDarkFor(palette, WidgetsBinding.instance.platformDispatcher.platformBrightness),
+    ThemeProvider.isDarkFor(
+      palette,
+      WidgetsBinding.instance.platformDispatcher.platformBrightness,
+    ),
   );
   return (
     themeMode: ThemeProvider.materialThemeModeFor(palette),
@@ -264,18 +289,30 @@ Future<void> _optionalGatePhase(
   // Keep a handler on the original future. `timeout` abandons the work rather
   // than cancelling it, so a late failure would otherwise land as an unhandled
   // async error long after the gate moved on.
-  final work = Future<void>.sync(step).catchError((Object error, StackTrace stackTrace) {
-    appLogger.w('Optional startup phase "${phase.id}" failed', error: error, stackTrace: stackTrace);
+  final work = Future<void>.sync(step).catchError((
+    Object error,
+    StackTrace stackTrace,
+  ) {
+    appLogger.w(
+      'Optional startup phase "${phase.id}" failed',
+      error: error,
+      stackTrace: stackTrace,
+    );
   });
   try {
     await work.timeout(timeout);
   } on TimeoutException {
-    appLogger.w('Optional startup phase "${phase.id}" did not finish in ${timeout.inSeconds}s; continuing without it');
+    appLogger.w(
+      'Optional startup phase "${phase.id}" did not finish in ${timeout.inSeconds}s; continuing without it',
+    );
   }
 }
 
 Future<_StartupDependencies> _initializeApplication() async {
-  final settings = await _gatePhase(StartupPhase.preferences, SettingsService.getInstance);
+  final settings = await _gatePhase(
+    StartupPhase.preferences,
+    SettingsService.getInstance,
+  );
   setLoggerLevel(settings.read(SettingsService.enableDebugLogging));
 
   if (_enableSentry) {
@@ -295,8 +332,10 @@ Future<_StartupDependencies> _initializeApplication() async {
       await SentryFlutter.init((options) {
         options.dsn = _sentryDsn;
         options.release = _sentryRelease();
-        if (nativeDatabasePath != null) options.nativeDatabasePath = nativeDatabasePath;
-        if (_sentryEnvironment.isNotEmpty) options.environment = _sentryEnvironment;
+        if (nativeDatabasePath != null)
+          options.nativeDatabasePath = nativeDatabasePath;
+        if (_sentryEnvironment.isNotEmpty)
+          options.environment = _sentryEnvironment;
         if (_sentryDist.isNotEmpty) options.dist = _sentryDist;
         options.tracesSampleRate = 0;
         options.attachStacktrace = true;
@@ -344,7 +383,11 @@ Future<String?> _sentryNativeDatabasePath() async {
     final directory = await getApplicationSupportDirectory();
     return p.join(directory.path, 'sentry-native');
   } catch (error, stackTrace) {
-    appLogger.d('Sentry native database location unavailable', error: error, stackTrace: stackTrace);
+    appLogger.d(
+      'Sentry native database location unavailable',
+      error: error,
+      stackTrace: stackTrace,
+    );
     return null;
   }
 }
@@ -353,7 +396,9 @@ const startupBootstrapProgressKey = Key('startup-bootstrap-progress');
 
 /// Human-readable build label for a failure record, primed off the critical
 /// path by [_primeDiagnosticsVersion].
-String _diagnosticsVersion = gitCommit.isEmpty ? 'unknown' : gitCommit.substring(0, gitCommit.length.clamp(0, 7));
+String _diagnosticsVersion = gitCommit.isEmpty
+    ? 'unknown'
+    : gitCommit.substring(0, gitCommit.length.clamp(0, 7));
 
 /// Resolves the package version for diagnostics without putting it in the gate.
 ///
@@ -364,16 +409,23 @@ String _diagnosticsVersion = gitCommit.isEmpty ? 'unknown' : gitCommit.substring
 Future<void> _primeDiagnosticsVersion() async {
   try {
     final info = await PackageInfo.fromPlatform();
-    final commit = gitCommit.isEmpty ? '' : ' (${gitCommit.substring(0, gitCommit.length.clamp(0, 7))})';
+    final commit = gitCommit.isEmpty
+        ? ''
+        : ' (${gitCommit.substring(0, gitCommit.length.clamp(0, 7))})';
     _diagnosticsVersion = '${info.version}+${info.buildNumber}$commit';
   } catch (error, stackTrace) {
-    appLogger.d('Could not resolve the package version for diagnostics', error: error, stackTrace: stackTrace);
+    appLogger.d(
+      'Could not resolve the package version for diagnostics',
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 }
 
 /// Platform label for a failure record. Deliberately coarse — enough to
 /// triage a report, never enough to identify a machine.
-String _diagnosticsPlatform() => '${Platform.operatingSystem} ${Platform.operatingSystemVersion}';
+String _diagnosticsPlatform() =>
+    '${Platform.operatingSystem} ${Platform.operatingSystemVersion}';
 
 /// Whether an in-app repair can address [error].
 ///
@@ -383,12 +435,16 @@ String _diagnosticsPlatform() => '${Platform.operatingSystem} ${Platform.operati
 /// be worse than offering nothing.
 bool _isRepairable(Object error) {
   final cause = StartupPhaseException.unwrap(error);
-  return cause is CorruptPreferenceStoreException || cause is UnreadableSensitivePreferenceException;
+  return cause is CorruptPreferenceStoreException ||
+      cause is UnreadableSensitivePreferenceException;
 }
 
 /// Default [StartupBootstrap.describeFailure].
 @visibleForTesting
-StartupFailureRecord describeStartupFailure(Object error, StackTrace stackTrace) => StartupFailureRecord.fromError(
+StartupFailureRecord describeStartupFailure(
+  Object error,
+  StackTrace stackTrace,
+) => StartupFailureRecord.fromError(
   error: error,
   stackTrace: stackTrace,
   appVersion: _diagnosticsVersion,
@@ -432,7 +488,10 @@ Future<void> flushPendingStartupFailure({
   final record = await StartupDiagnosticsStore.peekPersisted();
   if (record == null || record.reported) return;
 
-  final optedIn = crashReportingEnabled ?? SettingsService.instanceOrNull?.read(SettingsService.crashReporting) ?? true;
+  final optedIn =
+      crashReportingEnabled ??
+      SettingsService.instanceOrNull?.read(SettingsService.crashReporting) ??
+      true;
   final canEverReport = reportingCompiledIn ?? _enableSentry;
   if (!optedIn || !canEverReport) {
     // Deliberate suppression, not a delivery failure. Marking it reported is
@@ -451,7 +510,9 @@ Future<void> flushPendingStartupFailure({
   if (!(reporterReady ?? _crashReporterReady)) {
     // Kept on disk deliberately: `consumePrevious` retains an unreported
     // record so the next launch can try again.
-    appLogger.d('Startup failure kept for the next launch: crash reporting is not initialised');
+    appLogger.d(
+      'Startup failure kept for the next launch: crash reporting is not initialised',
+    );
     return;
   }
 
@@ -459,13 +520,19 @@ Future<void> flushPendingStartupFailure({
     final id = await (send ?? _captureStartupFailure)(record);
     if (id == const SentryId.empty()) {
       // A no-op hub, a disabled client, or an event dropped in `beforeSend`.
-      appLogger.d('Startup failure was not accepted by the crash reporter; keeping it for the next launch');
+      appLogger.d(
+        'Startup failure was not accepted by the crash reporter; keeping it for the next launch',
+      );
       return;
     }
     await StartupDiagnosticsStore.markReported(record);
   } catch (error, stackTrace) {
     // Leave it unreported so the next launch tries again.
-    appLogger.d('Could not report the startup failure', error: error, stackTrace: stackTrace);
+    appLogger.d(
+      'Could not report the startup failure',
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 }
 
@@ -502,8 +569,11 @@ Future<StartupRepairResult> repairStartupStorage(
   Object error,
 ) async {
   final cause = StartupPhaseException.unwrap(error);
-  final unreadableKey = cause is UnreadableSensitivePreferenceException ? cause.key : null;
-  final reopenSafe = cause is! CorruptPreferenceStoreException || cause.reopenSafe;
+  final unreadableKey = cause is UnreadableSensitivePreferenceException
+      ? cause.key
+      : null;
+  final reopenSafe =
+      cause is! CorruptPreferenceStoreException || cause.reopenSafe;
 
   // Name the real cost before touching anything, not the usual one. Servers
   // and profiles survive a repair only because their tokens are ciphertext in
@@ -519,21 +589,30 @@ Future<StartupRepairResult> repairStartupStorage(
   final confirmed = await showConfirmDialog(
     context,
     title: t.startup.repairTitle,
-    message: repairConsentMessage(oneCredential: unreadableKey != null, signInsSurvive: signInsSurvive),
+    message: repairConsentMessage(
+      oneCredential: unreadableKey != null,
+      signInsSurvive: signInsSurvive,
+    ),
     confirmText: t.startup.repairConfirm,
     isDestructive: true,
   );
   if (!confirmed || !context.mounted) return StartupRepairResult.none;
 
   final outcome = unreadableKey != null
-      ? await BaseSharedPreferencesService.dropUnreadableCredential(unreadableKey)
-      : await BaseSharedPreferencesService.repairCorruptStore(reopenSafe: reopenSafe);
+      ? await BaseSharedPreferencesService.dropUnreadableCredential(
+          unreadableKey,
+        )
+      : await BaseSharedPreferencesService.repairCorruptStore(
+          reopenSafe: reopenSafe,
+        );
   // The repair replaced or dropped entries in the backing store, so the vault's
   // memoized key and its ciphertext -> plaintext cache now describe a store
   // that no longer exists. Drop both before anything reads a credential again,
   // or a repaired install could keep serving pre-repair plaintext.
   CredentialVault.invalidateCache();
-  final result = outcome.requiresRestart ? StartupRepairResult.restart : StartupRepairResult.retry;
+  final result = outcome.requiresRestart
+      ? StartupRepairResult.restart
+      : StartupRepairResult.retry;
   if (!context.mounted) return result;
 
   await showRepairOutcomeDialog(context, outcome);
@@ -558,9 +637,16 @@ Future<StartupRepairResult> repairStartupStorage(
 /// and get one cautious sentence in both branches rather than a promise
 /// borrowed from a value that does not govern them.
 @visibleForTesting
-String repairConsentMessage({required bool oneCredential, required bool signInsSurvive}) => [
-  oneCredential ? t.startup.repairBodyOneCredential : t.startup.repairBodyCommon,
-  signInsSurvive ? t.startup.repairBodySignInsKept : t.startup.repairBodySignInsLost,
+String repairConsentMessage({
+  required bool oneCredential,
+  required bool signInsSurvive,
+}) => [
+  oneCredential
+      ? t.startup.repairBodyOneCredential
+      : t.startup.repairBodyCommon,
+  signInsSurvive
+      ? t.startup.repairBodySignInsKept
+      : t.startup.repairBodySignInsLost,
   t.startup.repairBodySessionsUncertain,
 ].join('\n\n');
 
@@ -593,21 +679,43 @@ Future<void> showRepairOutcomeDialog(
     builder: (dialogContext) => StatefulBuilder(
       builder: (dialogContext, setDialogState) {
         return AlertDialog(
-          title: Text(outcome.requiresRestart ? t.startup.repairNeedsRestart : t.startup.repairSucceeded),
+          title: Text(
+            outcome.requiresRestart
+                ? t.startup.repairNeedsRestart
+                : t.startup.repairSucceeded,
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(outcome.vaultKeySalvaged ? t.startup.repairKeptSignIns : t.startup.repairLostSignIns),
-              if (outcome.sessionsAffected) ...[const SizedBox(height: 8), Text(t.startup.repairLostSessions)],
+              Text(
+                outcome.vaultKeySalvaged
+                    ? t.startup.repairKeptSignIns
+                    : t.startup.repairLostSignIns,
+              ),
+              if (outcome.sessionsAffected) ...[
+                const SizedBox(height: 8),
+                Text(t.startup.repairLostSessions),
+              ],
               if (backupPath != null && !deleted) ...[
                 const SizedBox(height: 16),
-                Text(t.startup.backupTitle, style: Theme.of(dialogContext).textTheme.titleSmall),
+                Text(
+                  t.startup.backupTitle,
+                  style: Theme.of(dialogContext).textTheme.titleSmall,
+                ),
                 const SizedBox(height: 4),
-                SelectableText(backupPath, style: const TextStyle(fontFamily: 'monospace', fontSize: 12)),
+                SelectableText(
+                  backupPath,
+                  style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                ),
                 if (outcome.backupHoldsCredentials) ...[
                   const SizedBox(height: 4),
-                  Text(t.startup.backupWarning, style: TextStyle(color: Theme.of(dialogContext).colorScheme.error)),
+                  Text(
+                    t.startup.backupWarning,
+                    style: TextStyle(
+                      color: Theme.of(dialogContext).colorScheme.error,
+                    ),
+                  ),
                 ],
                 const SizedBox(height: 8),
                 DialogActionButton(
@@ -621,7 +729,10 @@ Future<void> showRepairOutcomeDialog(
                   },
                 ),
               ],
-              if (deleted) ...[const SizedBox(height: 8), Text(t.startup.backupDeleted)],
+              if (deleted) ...[
+                const SizedBox(height: 8),
+                Text(t.startup.backupDeleted),
+              ],
             ],
           ),
           actions: [
@@ -639,7 +750,11 @@ Future<void> showRepairOutcomeDialog(
 }
 
 /// Theme the startup frames adopt once the persisted preference is readable.
-typedef StartupThemeResolution = ({material.ThemeMode themeMode, ThemeData lightTheme, ThemeData darkTheme});
+typedef StartupThemeResolution = ({
+  material.ThemeMode themeMode,
+  ThemeData lightTheme,
+  ThemeData darkTheme,
+});
 
 /// Mounts a Flutter-owned startup frame before invoking the asynchronous
 /// initialization gate. The generic seam keeps frame ordering, failure, and
@@ -668,7 +783,8 @@ class StartupBootstrap<T> extends StatefulWidget {
 
   /// Reduces a thrown error to the allowlisted record the failure screen,
   /// the persisted diagnostic and the crash report all share.
-  final StartupFailureRecord Function(Object error, StackTrace stackTrace) describeFailure;
+  final StartupFailureRecord Function(Object error, StackTrace stackTrace)
+  describeFailure;
 
   /// Offers the user a consented repair for a recoverable failure and reports
   /// what the gate may do next. [StartupRepairResult.retry] re-runs
@@ -679,7 +795,12 @@ class StartupBootstrap<T> extends StatefulWidget {
   /// (never the gate `State`'s context, which sits above it), so dialogs and
   /// snackbars can resolve a `Navigator`, `MaterialLocalizations` and
   /// `ScaffoldMessenger` from it.
-  final Future<StartupRepairResult> Function(BuildContext context, StartupFailureRecord record, Object error)? repair;
+  final Future<StartupRepairResult> Function(
+    BuildContext context,
+    StartupFailureRecord record,
+    Object error,
+  )?
+  repair;
 
   final ThemeData? lightTheme;
   final ThemeData? darkTheme;
@@ -747,7 +868,11 @@ class _StartupBootstrapState<T> extends State<StartupBootstrap<T>> {
       if (!mounted) return;
       setState(() => _resolvedTheme = resolved);
     } catch (error, stackTrace) {
-      appLogger.d('Could not resolve the persisted startup theme', error: error, stackTrace: stackTrace);
+      appLogger.d(
+        'Could not resolve the persisted startup theme',
+        error: error,
+        stackTrace: stackTrace,
+      );
     }
   }
 
@@ -783,7 +908,10 @@ class _StartupBootstrapState<T> extends State<StartupBootstrap<T>> {
       // `headline` is the sanitised rendering; the raw error is deliberately
       // not passed, because `FormatException.toString()` embeds an excerpt of
       // whatever document failed to parse.
-      appLogger.e('Startup initialization failed: ${failure.headline}', stackTrace: stackTrace);
+      appLogger.e(
+        'Startup initialization failed: ${failure.headline}',
+        stackTrace: stackTrace,
+      );
       // Persist first: this record is the only thing that survives the
       // process. On Windows there is no log file and no console for a
       // double-clicked release build.
@@ -806,16 +934,24 @@ class _StartupBootstrapState<T> extends State<StartupBootstrap<T>> {
   /// is above that `MaterialApp` and has no `Navigator`,
   /// `MaterialLocalizations` or `ScaffoldMessenger`, so the repair dialogs and
   /// the failure snackbar would all throw when built from it.
-  Future<void> _repair(BuildContext context, StartupFailureRecord failure) async {
+  Future<void> _repair(
+    BuildContext context,
+    StartupFailureRecord failure,
+  ) async {
     final repair = widget.repair;
     final error = _failureError;
-    if (repair == null || error == null || _repairing || _restartRequired) return;
+    if (repair == null || error == null || _repairing || _restartRequired)
+      return;
     setState(() => _repairing = true);
     var result = StartupRepairResult.none;
     try {
       result = await repair(context, failure, error);
     } catch (error, stackTrace) {
-      appLogger.e('Startup storage repair failed', error: error, stackTrace: stackTrace);
+      appLogger.e(
+        'Startup storage repair failed',
+        error: error,
+        stackTrace: stackTrace,
+      );
       if (context.mounted) showErrorSnackBar(context, t.startup.repairFailed);
     }
     if (!mounted) return;
@@ -830,7 +966,10 @@ class _StartupBootstrapState<T> extends State<StartupBootstrap<T>> {
     try {
       await widget.discard?.call(value);
     } catch (error, stackTrace) {
-      appLogger.e('Failed to dispose an uncommitted startup result (${error.runtimeType})', stackTrace: stackTrace);
+      appLogger.e(
+        'Failed to dispose an uncommitted startup result (${error.runtimeType})',
+        stackTrace: stackTrace,
+      );
     }
   }
 
@@ -873,7 +1012,9 @@ class _StartupBootstrapState<T> extends State<StartupBootstrap<T>> {
           busy: _initializing || _repairing,
           restartRequired: _restartRequired,
           onRetry: () => unawaited(_initialize()),
-          onRepair: failure.repairable && widget.repair != null ? () => _repair(context, failure) : null,
+          onRepair: failure.repairable && widget.repair != null
+              ? () => _repair(context, failure)
+              : null,
         ),
       );
     }
@@ -883,7 +1024,9 @@ class _StartupBootstrapState<T> extends State<StartupBootstrap<T>> {
     // the whole gate, so painting a theme guessed from platform brightness is
     // what turned a black Android TV splash into a flashbang (#1833).
     return Scaffold(
-      backgroundColor: widget.transparentWhileLoading ? Colors.transparent : null,
+      backgroundColor: widget.transparentWhileLoading
+          ? Colors.transparent
+          : null,
       body: const SizedBox.expand(key: startupBootstrapProgressKey),
     );
   }
@@ -923,8 +1066,11 @@ Future<AppDatabaseBootstrap> openAppDatabaseWithDownloadRecovery({
   await recoverNativeDownloads();
   final bootstrap = await openDatabase();
   try {
-    final failedKeys = await bootstrap.database.failActiveDownloadsForStorageFull(storageFullMessage);
-    appLogger.w('Recovered startup after storage exhaustion; stopped ${failedKeys.length} active download(s)');
+    final failedKeys = await bootstrap.database
+        .failActiveDownloadsForStorageFull(storageFullMessage);
+    appLogger.w(
+      'Recovered startup after storage exhaustion; stopped ${failedKeys.length} active download(s)',
+    );
     return bootstrap;
   } catch (_) {
     // The caller only takes ownership once this helper returns, so the freshly
@@ -934,13 +1080,17 @@ Future<AppDatabaseBootstrap> openAppDatabaseWithDownloadRecovery({
   }
 }
 
-Future<_StartupDependencies> _initializeStartup(SettingsService settings) async {
+Future<_StartupDependencies> _initializeStartup(
+  SettingsService settings,
+) async {
   final startupWatch = Stopwatch()..start();
   var lastStartupMarkMs = 0;
   void markStartupPhase(String phase) {
     if (!kProfileMode) return;
     final elapsedMs = startupWatch.elapsedMilliseconds;
-    appLogger.i('Startup phase $phase: ${elapsedMs - lastStartupMarkMs}ms (total ${elapsedMs}ms)');
+    appLogger.i(
+      'Startup phase $phase: ${elapsedMs - lastStartupMarkMs}ms (total ${elapsedMs}ms)',
+    );
     lastStartupMarkMs = elapsedMs;
   }
 
@@ -948,7 +1098,9 @@ Future<_StartupDependencies> _initializeStartup(SettingsService settings) async 
   // Started first so the store walk overlaps the phases below. Every request
   // to a user-entered server verifies against the result, so it is awaited
   // before any client can exist (#2339); the load itself never throws.
-  final userAuthorities = Platform.isAndroid ? CertificateTrust.loadUserAuthorities() : null;
+  final userAuthorities = Platform.isAndroid
+      ? CertificateTrust.loadUserAuthorities()
+      : null;
   try {
     // Slang builds the base locale eagerly, so `t` already resolves before
     // this runs; a failure here degrades to English rather than no app.
@@ -974,25 +1126,39 @@ Future<_StartupDependencies> _initializeStartup(SettingsService settings) async 
     // three have a working sync fallback, so a detection failure is not fatal.
     await _optionalGatePhase(StartupPhase.deviceCapabilities, () async {
       await (
-        TvDetectionService.getInstance(forceTv: settings.read(SettingsService.forceTvMode)),
-        DevicePerformance.getInstance(override: settings.read(SettingsService.visualEffects)),
+        TvDetectionService.getInstance(
+          forceTv: settings.read(SettingsService.forceTvMode),
+        ),
+        DevicePerformance.getInstance(
+          override: settings.read(SettingsService.visualEffects),
+        ),
         VideoDecodeCapabilities.getInstance(),
       ).wait;
     });
 
     if (userAuthorities != null) {
-      await _optionalGatePhase(StartupPhase.certificateTrust, () => userAuthorities);
+      await _optionalGatePhase(
+        StartupPhase.certificateTrust,
+        () => userAuthorities,
+      );
     }
 
-    final storage = await _gatePhase(StartupPhase.storage, StorageService.getInstance);
+    final storage = await _gatePhase(
+      StartupPhase.storage,
+      StorageService.getInstance,
+    );
     markStartupPhase('platform-services');
 
-    AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.databaseOpenStarted);
+    AndroidExitDiagnostics.markStartupPhase(
+      AndroidStartupPhase.databaseOpenStarted,
+    );
     final databaseBootstrap = await _gatePhase(
       StartupPhase.database,
       () => openAppDatabaseWithDownloadRecovery(
-        openDatabase: () => AppDatabase.open(isTvos: PlatformDetector.isAppleTV()),
-        recoverNativeDownloads: DownloadManagerService.discardInterruptedNativeDownloadsAfterStorageFailure,
+        openDatabase: () =>
+            AppDatabase.open(isTvos: PlatformDetector.isAppleTV()),
+        recoverNativeDownloads: DownloadManagerService
+            .discardInterruptedNativeDownloadsAfterStorageFailure,
         storageFullMessage: t.downloads.storageFull,
       ),
     );
@@ -1000,7 +1166,10 @@ Future<_StartupDependencies> _initializeStartup(SettingsService settings) async 
     AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.databaseReady);
     markStartupPhase('database-recovery');
 
-    await _optionalGatePhase(StartupPhase.imageCache, () async => DevicePerformance.applyImageCacheBudget());
+    await _optionalGatePhase(
+      StartupPhase.imageCache,
+      () async => DevicePerformance.applyImageCacheBudget(),
+    );
 
     markStartupPhase('image-cache');
 
@@ -1023,17 +1192,29 @@ void _startNonessentialInitialization(SettingsService settings) {
 
   void bestEffort(String name, FutureOr<void> Function() action) {
     unawaited(
-      afterFirstAppFrame.then((_) => action()).catchError((Object error, StackTrace stackTrace) {
-        appLogger.e('$name startup task failed (${error.runtimeType})', stackTrace: stackTrace);
+      afterFirstAppFrame.then((_) => action()).catchError((
+        Object error,
+        StackTrace stackTrace,
+      ) {
+        appLogger.e(
+          '$name startup task failed (${error.runtimeType})',
+          stackTrace: stackTrace,
+        );
       }),
     );
   }
 
   bestEffort(
     'Date formatting',
-    () => initializeDateFormatting(settings.read(SettingsService.appLocale).intlLocaleName, null),
+    () => initializeDateFormatting(
+      settings.read(SettingsService.appLocale).intlLocaleName,
+      null,
+    ),
   );
-  bestEffort('Download storage', () => DownloadStorageService.instance.initialize(settings));
+  bestEffort(
+    'Download storage',
+    () => DownloadStorageService.instance.initialize(settings),
+  );
   bestEffort('Trackers', TrackerCoordinator.instance.initialize);
 
   bestEffort('Legacy image cache cleanup', () async {
@@ -1054,14 +1235,16 @@ void _startNonessentialInitialization(SettingsService settings) {
 
   bestEffort('Fullscreen monitor', () async {
     FullscreenStateManager().startMonitoring();
-    if (PlatformDetector.isDesktopOS() && settings.read(SettingsService.startInFullscreen)) {
+    if (PlatformDetector.isDesktopOS() &&
+        settings.read(SettingsService.startInFullscreen)) {
       await FullscreenStateManager().enterFullscreen();
     }
   });
 
   bestEffort('Gamepad', () {
     GamepadService.instance.start();
-    if (PlatformDetector.isAppleTV()) AppleTvRemoteTouchService.instance.start();
+    if (PlatformDetector.isAppleTV())
+      AppleTvRemoteTouchService.instance.start();
   });
 
   if (PlatformDetector.isDesktopOS()) {
@@ -1084,12 +1267,20 @@ void _startNonessentialInitialization(SettingsService settings) {
 
 Future<void> _logEnvironmentDiagnostics() async {
   final packageInfo = await PackageInfo.fromPlatform();
-  final commitSuffix = gitCommit.isNotEmpty ? ' (${gitCommit.substring(0, 7)})' : '';
+  final commitSuffix = gitCommit.isNotEmpty
+      ? ' (${gitCommit.substring(0, 7)})'
+      : '';
   String renderer = '';
   if (Platform.isAndroid) {
-    final rendererName = await const MethodChannel('com.plezy/theme').invokeMethod<String>('getRenderer');
+    final rendererName = await const MethodChannel(
+      'com.plezy/theme',
+    ).invokeMethod<String>('getRenderer');
     renderer = ' [$rendererName]';
-    await Future.sync(() => Sentry.configureScope((scope) => scope.setTag('renderer', rendererName ?? 'unknown')));
+    await Future.sync(
+      () => Sentry.configureScope(
+        (scope) => scope.setTag('renderer', rendererName ?? 'unknown'),
+      ),
+    );
   }
   appLogger.i(
     'Plezy v${packageInfo.version}+${packageInfo.buildNumber}$commitSuffix$renderer'
@@ -1110,14 +1301,18 @@ Breadcrumb? _beforeBreadcrumb(Breadcrumb? breadcrumb, Hint _) {
   if (message == null && (data == null || data.isEmpty)) return breadcrumb;
 
   if (message != null) breadcrumb.message = LogRedactionManager.redact(message);
-  if (data != null) breadcrumb.data = data.map((k, v) => MapEntry(k, v is String ? LogRedactionManager.redact(v) : v));
+  if (data != null)
+    breadcrumb.data = data.map(
+      (k, v) => MapEntry(k, v is String ? LogRedactionManager.redact(v) : v),
+    );
   return breadcrumb;
 }
 
 FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
   // Drop event if user opted out of crash reporting.
   final instance = SettingsService.instanceOrNull;
-  if (instance != null && !instance.read(SettingsService.crashReporting)) return null;
+  if (instance != null && !instance.read(SettingsService.crashReporting))
+    return null;
 
   // Drop unactionable errors
   final exceptions = event.exceptions;
@@ -1126,17 +1321,22 @@ FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
       final v = e.value;
       final lowerValue = v?.toLowerCase();
       // Windows file-lock errors from cache manager cleanup
-      if (e.type == 'FileSystemException' && v != null && v.contains('plexImageCache') && v.contains('errno = 32')) {
+      if (e.type == 'FileSystemException' &&
+          v != null &&
+          v.contains('plexImageCache') &&
+          v.contains('errno = 32')) {
         return true;
       }
       if (e.type == 'FileSystemException' &&
           lowerValue != null &&
           lowerValue.contains('cached_network_image_ce') &&
-          (lowerValue.contains('lock failed') || lowerValue.contains('writefrom failed'))) {
+          (lowerValue.contains('lock failed') ||
+              lowerValue.contains('writefrom failed'))) {
         return true;
       }
       // Linux without DBus/NetworkManager
-      if (e.type == 'DBusServiceUnknownException' || (v != null && v.contains('system_bus_socket'))) {
+      if (e.type == 'DBusServiceUnknownException' ||
+          (v != null && v.contains('system_bus_socket'))) {
         return true;
       }
       // Device out of disk space
@@ -1146,7 +1346,10 @@ FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
       // Benign EventChannel teardown race: the engine replies this when a
       // 'cancel' lands after the stream is already gone, and the framework
       // reports it via FlutterError — nothing was ever wrong user-side.
-      if (e.type == 'PlatformException' && v != null && v.contains('No active stream to cancel')) return true;
+      if (e.type == 'PlatformException' &&
+          v != null &&
+          v.contains('No active stream to cancel'))
+        return true;
       // Discord RPC errors when Discord is not running
       if (e.type == 'DiscordStateException') return true;
       return false;
@@ -1166,7 +1369,9 @@ FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
   // Enrich TimeoutException with operation name + duration as tags/fingerprint.
   // value format: "TimeoutException after 0:00:05.000000: <operation> timed out"
   if (exceptions != null) {
-    final timeoutException = exceptions.where((e) => e.type == 'TimeoutException').firstOrNull;
+    final timeoutException = exceptions
+        .where((e) => e.type == 'TimeoutException')
+        .firstOrNull;
     if (timeoutException != null) {
       final value = timeoutException.value ?? '';
       final colonIdx = value.indexOf(': ');
@@ -1174,11 +1379,14 @@ FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
       final operation = message.endsWith(' timed out')
           ? message.substring(0, message.length - ' timed out'.length)
           : null;
-      final durationMatch = RegExp(r'after (\d+:\d{2}:\d{2}\.\d+)').firstMatch(value);
+      final durationMatch = RegExp(
+        r'after (\d+:\d{2}:\d{2}\.\d+)',
+      ).firstMatch(value);
 
       final tags = event.tags ??= {};
       if (operation != null) tags['timeout.operation'] = operation;
-      if (durationMatch != null) tags['timeout.duration'] = durationMatch.group(1)!;
+      if (durationMatch != null)
+        tags['timeout.duration'] = durationMatch.group(1)!;
       event.fingerprint = ['TimeoutException', ?operation];
     }
   }
@@ -1190,7 +1398,11 @@ FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
       final message = b.message;
       final data = b.data;
       if (message != null) b.message = LogRedactionManager.redact(message);
-      if (data != null) b.data = data.map((k, v) => MapEntry(k, v is String ? LogRedactionManager.redact(v) : v));
+      if (data != null)
+        b.data = data.map(
+          (k, v) =>
+              MapEntry(k, v is String ? LogRedactionManager.redact(v) : v),
+        );
     }
   }
 
@@ -1217,7 +1429,9 @@ void _registerAppLicenses() {
 /// the source commit mpv-build pins (versions.json `spatialaudiobridge`).
 void _registerSpatialAudioLicenses() {
   LicenseRegistry.addLicense(() async* {
-    final notices = await rootBundle.loadString('assets/licenses/SpatialAudioBridge.txt');
+    final notices = await rootBundle.loadString(
+      'assets/licenses/SpatialAudioBridge.txt',
+    );
     yield LicenseEntryWithLineBreaks(const ['SpatialAudioBridge'], notices);
   });
 }
@@ -1278,7 +1492,10 @@ void _registerShaderLicenses() {
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 @visibleForTesting
-bool shouldEnterOfflineModeAfterStartupBind({required bool bindingSucceeded, required bool hasOnlineServers}) {
+bool shouldEnterOfflineModeAfterStartupBind({
+  required bool bindingSucceeded,
+  required bool hasOnlineServers,
+}) {
   return !bindingSucceeded && !hasOnlineServers;
 }
 
@@ -1288,9 +1505,15 @@ bool shouldEnterOfflineModeAfterStartupBind({required bool bindingSucceeded, req
 /// [shouldEnterOfflineModeAfterStartupBind] still keeps the launch online
 /// when a server already connected.
 @visibleForTesting
-Future<bool> awaitStartupBindSettle(Future<bool> settle, {required bool hasNetwork}) {
+Future<bool> awaitStartupBindSettle(
+  Future<bool> settle, {
+  required bool hasNetwork,
+}) {
   if (hasNetwork) return settle;
-  return settle.timeout(MediaServerTimeouts.noNetworkStartupBind, onTimeout: () => false);
+  return settle.timeout(
+    MediaServerTimeouts.noNetworkStartupBind,
+    onTimeout: () => false,
+  );
 }
 
 /// Top-level PIN prompt used by [ActiveProfileBinder] when it runs above the
@@ -1301,7 +1524,11 @@ Future<bool> awaitStartupBindSettle(Future<bool> settle, {required bool hasNetwo
 Future<String?> _rootPinPrompt(Profile profile, {String? errorMessage}) {
   final ctx = rootNavigatorKey.currentContext;
   if (ctx == null) return Future.value(null);
-  return showPinEntryDialog(ctx, profile.displayName, errorMessage: errorMessage);
+  return showPinEntryDialog(
+    ctx,
+    profile.displayName,
+    errorMessage: errorMessage,
+  );
 }
 
 /// Applies the profile a deep link names once the app is running, from the
@@ -1313,17 +1540,20 @@ class _RootDeepLinkProfileHost implements DeepLinkProfileHost {
   BuildContext? get _context => rootNavigatorKey.currentState?.overlay?.context;
 
   @override
-  List<Profile> get profiles => _context?.read<ActiveProfileProvider>().profiles ?? const [];
+  List<Profile> get profiles =>
+      _context?.read<ActiveProfileProvider>().profiles ?? const [];
 
   @override
-  String? get activeProfileId => _context?.read<ActiveProfileProvider>().activeId;
+  String? get activeProfileId =>
+      _context?.read<ActiveProfileProvider>().activeId;
 
   @override
   Future<bool> switchTo(Profile profile) async {
     // Playback leaves first so its final progress report still carries the
     // outgoing profile's token.
     final coordinator = PlaybackCoordinator.instance;
-    if (!await coordinator.stopVideoAndExit()) await coordinator.shutdownVideo();
+    if (!await coordinator.stopVideoAndExit())
+      await coordinator.shutdownVideo();
     final context = _context;
     if (context == null || !context.mounted) return false;
     return switchProfileFromUi(context, profile);
@@ -1415,7 +1645,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       (_) => _downloadManager.recoverInterruptedDownloads(),
     );
 
-    _offlineWatchSyncService = OfflineWatchSyncService(database: _appDatabase, serverManager: _serverManager);
+    _offlineWatchSyncService = OfflineWatchSyncService(
+      database: _appDatabase,
+      serverManager: _serverManager,
+    );
 
     _connections = ConnectionRegistry(_appDatabase);
     _profileConnections = ProfileConnectionRegistry(_appDatabase);
@@ -1441,12 +1674,13 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> _shutdownForExit() => _shutdownFuture ??= _runShutdownForExit().timeout(
-    const Duration(seconds: 15),
-    onTimeout: () {
-      appLogger.w('Application exit teardown exceeded its deadline');
-    },
-  );
+  Future<void> _shutdownForExit() =>
+      _shutdownFuture ??= _runShutdownForExit().timeout(
+        const Duration(seconds: 15),
+        onTimeout: () {
+          appLogger.w('Application exit teardown exceeded its deadline');
+        },
+      );
 
   Future<void> _runShutdownForExit() async {
     // Hide the window before anything else so the exit reads as an instant
@@ -1459,16 +1693,26 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       try {
         await windowManager.hide().timeout(const Duration(seconds: 1));
       } catch (e, st) {
-        appLogger.w('Failed to hide window before exit teardown', error: e, stackTrace: st);
+        appLogger.w(
+          'Failed to hide window before exit teardown',
+          error: e,
+          stackTrace: st,
+        );
       }
     }
 
     // The player owns the backend session. Flush it while its client and
     // native position still exist, before unrelated cleanup can delay exit.
     try {
-      await PlaybackCoordinator.instance.shutdownVideo().timeout(const Duration(seconds: 3));
+      await PlaybackCoordinator.instance.shutdownVideo().timeout(
+        const Duration(seconds: 3),
+      );
     } catch (e, st) {
-      appLogger.w('Video shutdown did not complete before exit', error: e, stackTrace: st);
+      appLogger.w(
+        'Video shutdown did not complete before exit',
+        error: e,
+        stackTrace: st,
+      );
     }
 
     _syncDebounce?.cancel();
@@ -1482,9 +1726,15 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     // their own watched semantics need the terminal report before the process
     // goes away. Bounded — a hung tracker must not hold the app open.
     try {
-      await TrackerCoordinator.instance.stopPlayback().timeout(const Duration(seconds: 3));
+      await TrackerCoordinator.instance.stopPlayback().timeout(
+        const Duration(seconds: 3),
+      );
     } catch (e, st) {
-      appLogger.w('Tracker shutdown did not complete before exit', error: e, stackTrace: st);
+      appLogger.w(
+        'Tracker shutdown did not complete before exit',
+        error: e,
+        stackTrace: st,
+      );
     }
     TrackerCoordinator.instance.cancelInFlight();
 
@@ -1542,10 +1792,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       period = const Duration(seconds: 30);
     } else if (Platform.isAndroid) {
       final totalMem = DevicePerformance.totalMemBytes;
-      threshold = totalMem != null ? (totalMem * 0.45).round().clamp(512 << 20, 1536 << 20) : 1 << 30;
+      threshold = totalMem != null
+          ? (totalMem * 0.45).round().clamp(512 << 20, 1536 << 20)
+          : 1 << 30;
       // Decode bursts can spike RSS in seconds on low-end boxes; the read
       // itself is an in-process syscall, cheap enough for a short period.
-      period = DevicePerformance.isLowEndHardware ? const Duration(seconds: 15) : const Duration(seconds: 30);
+      period = DevicePerformance.isLowEndHardware
+          ? const Duration(seconds: 15)
+          : const Duration(seconds: 30);
     } else {
       return; // iOS/tvOS: jetsam pressure arrives via didHaveMemoryPressure.
     }
@@ -1559,7 +1813,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       // cooldown, re-evict only if RSS kept climbing past the last eviction.
       if (cache.currentSizeBytes < (8 << 20)) return;
       final now = DateTime.now();
-      final inCooldown = now.difference(_lastRssEviction) < const Duration(seconds: 60);
+      final inCooldown =
+          now.difference(_lastRssEviction) < const Duration(seconds: 60);
       if (inCooldown && rss <= _lastEvictionRss) return;
       _lastRssEviction = now;
       _lastEvictionRss = rss;
@@ -1585,7 +1840,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   /// * A tracker write-queue flush whenever the network comes back at all,
   ///   metered included: tracker history writes are internet calls, so they can
   ///   land while media servers are still unreachable and the app stays offline.
-  void _startConnectivitySyncTrigger(DownloadProvider downloadProvider, OfflineModeProvider offlineModeProvider) {
+  void _startConnectivitySyncTrigger(
+    DownloadProvider downloadProvider,
+    OfflineModeProvider offlineModeProvider,
+  ) {
     _removeConnectivitySyncListener();
     _lastConnectivityWasWifi = offlineModeProvider.hasWifiOrEthernet;
     _lastConnectivityHadNetwork = offlineModeProvider.hasNetworkConnection;
@@ -1604,7 +1862,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         unawaited(TrackerCoordinator.instance.flushWriteQueue());
       }
       if (movedOntoWifi) {
-        appLogger.d('Connectivity moved onto WiFi/Ethernet — triggering sync pass');
+        appLogger.d(
+          'Connectivity moved onto WiFi/Ethernet — triggering sync pass',
+        );
         _autoDeleteAndSync(downloadProvider);
       }
     };
@@ -1642,8 +1902,11 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       await downloadProvider.refreshMetadataFromCache();
       final activeGlobalKey = VideoPlayerScreenState.activeGlobalKey;
       final settings = SettingsService.instanceOrNull;
-      if (settings != null && settings.read(SettingsService.autoRemoveWatchedDownloads)) {
-        final deleted = await downloadProvider.autoDeleteWatchedDownloads(activeGlobalKey: activeGlobalKey);
+      if (settings != null &&
+          settings.read(SettingsService.autoRemoveWatchedDownloads)) {
+        final deleted = await downloadProvider.autoDeleteWatchedDownloads(
+          activeGlobalKey: activeGlobalKey,
+        );
         if (deleted.isNotEmpty) {
           final msg = deleted.length == 1
               ? t.messages.autoRemovedWatchedDownload(title: deleted.first)
@@ -1655,16 +1918,32 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       if (targetKeys != null) {
         for (final key in targetKeys) {
           if (!downloadProvider.hasSyncRule(key)) continue;
-          final result = await downloadProvider.executeSyncRuleFor(key, _serverManager);
+          final result = await downloadProvider.executeSyncRuleFor(
+            key,
+            _serverManager,
+          );
           if (result != null && result.queuedCount > 0) {
             final title = result.title ?? t.common.unknown;
-            showMainSnackBar(t.downloads.syncedNewEpisodes(count: '1', title: '$title (${result.queuedCount})'));
+            showMainSnackBar(
+              t.downloads.syncedNewEpisodes(
+                count: '1',
+                title: '$title (${result.queuedCount})',
+              ),
+            );
           }
         }
       } else {
-        final synced = await downloadProvider.executeSyncRules(_serverManager, force: force);
+        final synced = await downloadProvider.executeSyncRules(
+          _serverManager,
+          force: force,
+        );
         if (synced.isNotEmpty) {
-          showMainSnackBar(t.downloads.syncedNewEpisodes(count: synced.length.toString(), title: synced.first));
+          showMainSnackBar(
+            t.downloads.syncedNewEpisodes(
+              count: synced.length.toString(),
+              title: synced.first,
+            ),
+          );
         }
       }
     } finally {
@@ -1768,7 +2047,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ),
         ChangeNotifierProvider(
           create: (context) {
-            _serverManager.onJellyfinConnectionUpdated = context.read<ConnectionRegistry>().upsert;
+            _serverManager.onJellyfinConnectionUpdated = context
+                .read<ConnectionRegistry>()
+                .upsert;
             return MultiServerProvider(_serverManager, _aggregationService);
           },
         ),
@@ -1778,7 +2059,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               _serverManager,
               multiServerProvider: context.read<MultiServerProvider>(),
             );
-            provider.initialize(); // Initialize immediately so statusStream listener is ready
+            provider
+                .initialize(); // Initialize immediately so statusStream listener is ready
             return provider;
           },
           update: (_, multiServerProvider, previous) {
@@ -1820,14 +2102,20 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         // Download provider. Downloads are shared, but sync rules are scoped to
         // the active profile and reload when the profile changes.
         ChangeNotifierProxyProvider<ActiveProfileProvider, DownloadProvider>(
-          create: (context) => DownloadProvider(downloadManager: _downloadManager, database: _appDatabase),
+          create: (context) => DownloadProvider(
+            downloadManager: _downloadManager,
+            database: _appDatabase,
+          ),
           update: (context, activeProfile, previous) {
             final provider = previous!;
             provider.setActiveProfileId(activeProfile.activeId);
             return provider;
           },
         ),
-        ChangeNotifierProxyProvider<ActiveProfileProvider, OfflineWatchSyncService>(
+        ChangeNotifierProxyProvider<
+          ActiveProfileProvider,
+          OfflineWatchSyncService
+        >(
           create: (context) {
             final offlineModeProvider = context.read<OfflineModeProvider>();
             final downloadProvider = context.read<DownloadProvider>();
@@ -1838,7 +2126,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               // has hydrated (locals + cached home users) — a transient
               // count of 1 mid-load would permanently mis-adopt pre-profile
               // watch actions.
-              availableProfileCount: activeProfile.isInitialized ? activeProfile.profiles.length : null,
+              availableProfileCount: activeProfile.isInitialized
+                  ? activeProfile.profiles.length
+                  : null,
             );
 
             // Offline-sync drain replays a batch of queued watch actions without
@@ -1851,11 +2141,16 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             // only re-evaluate rules that actually cover the watched item —
             // leaves unrelated collection/playlist rules alone. Debounced so
             // binge-watching coalesces into one pass.
-            _watchStateSubscription = WatchStateNotifier().stream.listen((event) {
+            _watchStateSubscription = WatchStateNotifier().stream.listen((
+              event,
+            ) {
               if (event.changeType != WatchStateChangeType.watched) return;
-              if (VideoPlayerScreenState.activeGlobalKey == event.globalKey) return;
+              if (VideoPlayerScreenState.activeGlobalKey == event.globalKey)
+                return;
 
-              _pendingSyncKeys.addAll(downloadProvider.syncRuleKeysForWatchEvent(event));
+              _pendingSyncKeys.addAll(
+                downloadProvider.syncRuleKeysForWatchEvent(event),
+              );
 
               _syncDebounce?.cancel();
               _syncDebounce = Timer(const Duration(seconds: 5), () {
@@ -1865,25 +2160,36 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               });
             });
 
-            _startConnectivitySyncTrigger(downloadProvider, offlineModeProvider);
+            _startConnectivitySyncTrigger(
+              downloadProvider,
+              offlineModeProvider,
+            );
 
             // Thread the offline flag into services so queue/resume paths can
             // short-circuit instead of hitting the network and failing.
             downloadProvider.setOfflineSource(offlineModeProvider);
 
-            _offlineWatchSyncService.startConnectivityMonitoring(offlineModeProvider);
+            _offlineWatchSyncService.startConnectivityMonitoring(
+              offlineModeProvider,
+            );
             return _offlineWatchSyncService;
           },
           update: (_, activeProfile, previous) {
             final provider = previous!;
             provider.setActiveProfileId(
               activeProfile.activeId,
-              availableProfileCount: activeProfile.isInitialized ? activeProfile.profiles.length : null,
+              availableProfileCount: activeProfile.isInitialized
+                  ? activeProfile.profiles.length
+                  : null,
             );
             return provider;
           },
         ),
-        ChangeNotifierProxyProvider2<OfflineWatchSyncService, DownloadProvider, OfflineWatchProvider>(
+        ChangeNotifierProxyProvider2<
+          OfflineWatchSyncService,
+          DownloadProvider,
+          OfflineWatchProvider
+        >(
           create: (context) => OfflineWatchProvider(
             syncService: context.read<OfflineWatchSyncService>(),
             downloadProvider: context.read<DownloadProvider>(),
@@ -1895,7 +2201,11 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         // survives navigation, and so a profile switch clears the cache in one
         // place. The repository is exposed separately because UI reads it
         // directly; the controller owns and disposes it.
-        ChangeNotifierProxyProvider2<ActiveProfileProvider, ConnectionRegistry, AccountPreferencesController>(
+        ChangeNotifierProxyProvider2<
+          ActiveProfileProvider,
+          ConnectionRegistry,
+          AccountPreferencesController
+        >(
           create: (_) => AccountPreferencesController(),
           update: (context, activeProfile, connections, previous) {
             final controller = previous!;
@@ -1908,9 +2218,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             return controller;
           },
         ),
-        ProxyProvider<AccountPreferencesController, AccountPreferencesRepository>(
-          update: (_, controller, _) => controller.repository,
-        ),
+        ProxyProvider<
+          AccountPreferencesController,
+          AccountPreferencesRepository
+        >(update: (_, controller, _) => controller.repository),
         // App-global: a Supporter purchase belongs to the store account on this
         // device, not to a profile.
         ChangeNotifierProvider(
@@ -1920,7 +2231,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             return supporter;
           },
         ),
-        ChangeNotifierProvider(create: (context) => ThemeProvider(supporter: context.read<SupporterService>())),
+        ChangeNotifierProvider(
+          create: (context) =>
+              ThemeProvider(supporter: context.read<SupporterService>()),
+        ),
         // Shader presets are app-global — deliberately outside the
         // profile-scoped session in ProfileSessionScreen.
         ChangeNotifierProvider(create: (context) => ShaderProvider()),
@@ -1929,7 +2243,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ChangeNotifierProvider(
           lazy: false,
           create: (context) {
-            final appIcons = AppIconService(supporter: context.read<SupporterService>());
+            final appIcons = AppIconService(
+              supporter: context.read<SupporterService>(),
+            );
             unawaited(appIcons.refresh());
             return appIcons;
           },
@@ -1977,15 +2293,20 @@ class _AppShell extends StatelessWidget {
                     // The app language, not Flutter's en-US default: every
                     // Text inherits it as the locale that selects CJK glyph
                     // forms, and Material's own strings follow it.
-                    locale: TranslationProvider.of(context).locale.localizationsLocale,
+                    locale: TranslationProvider.of(
+                      context,
+                    ).locale.localizationsLocale,
                     supportedLocales: supportedLocalizationsLocales,
-                    localizationsDelegates: GlobalMaterialLocalizations.delegates,
+                    localizationsDelegates:
+                        GlobalMaterialLocalizations.delegates,
                     theme: themeProvider.lightTheme,
                     darkTheme: themeProvider.darkTheme,
                     themeMode: themeProvider.materialThemeMode,
                     navigatorKey: rootNavigatorKey,
                     navigatorObservers: [BackKeySuppressorObserver()],
-                    home: SetupScreen(databaseRecoveryOutcome: databaseRecoveryOutcome),
+                    home: SetupScreen(
+                      databaseRecoveryOutcome: databaseRecoveryOutcome,
+                    ),
                     // Siri Remote select + gamepad A report as
                     // LogicalKeyboardKey.{select,gameButtonA} which aren't
                     // in Flutter's default shortcut set — Material-level
@@ -1994,17 +2315,23 @@ class _AppShell extends StatelessWidget {
                     // select on tvOS activates the focused widget.
                     shortcuts: <ShortcutActivator, Intent>{
                       ...WidgetsApp.defaultShortcuts,
-                      const SingleActivator(LogicalKeyboardKey.select): const ActivateIntent(),
-                      const SingleActivator(LogicalKeyboardKey.gameButtonA): const ActivateIntent(),
-                      const SingleActivator(LogicalKeyboardKey.goBack): const DismissIntent(),
-                      const SingleActivator(LogicalKeyboardKey.browserBack): const DismissIntent(),
-                      const SingleActivator(LogicalKeyboardKey.gameButtonB): const DismissIntent(),
+                      const SingleActivator(LogicalKeyboardKey.select):
+                          const ActivateIntent(),
+                      const SingleActivator(LogicalKeyboardKey.gameButtonA):
+                          const ActivateIntent(),
+                      const SingleActivator(LogicalKeyboardKey.goBack):
+                          const DismissIntent(),
+                      const SingleActivator(LogicalKeyboardKey.browserBack):
+                          const DismissIntent(),
+                      const SingleActivator(LogicalKeyboardKey.gameButtonB):
+                          const DismissIntent(),
                     },
                     builder: (context, child) {
                       final shell = rootShell(child);
                       if (!agentControlEnabled) return shell;
                       return AgentControlScope(
-                        commandContext: () => rootNavigatorKey.currentState?.overlay?.context,
+                        commandContext: () =>
+                            rootNavigatorKey.currentState?.overlay?.context,
                         child: shell,
                       );
                     },
@@ -2034,18 +2361,24 @@ Widget rootShell(Widget? child) {
           child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Platform.isMacOS
-              ? ListenableBuilder(
-                  listenable: FullscreenStateManager(),
-                  child: child,
-                  builder: (context, content) => ColoredBox(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: FullscreenStateManager().isFullscreen ? 0 : 52),
-                      child: MediaQuery.removePadding(context: context, removeTop: true, child: content!),
+                ? ListenableBuilder(
+                    listenable: FullscreenStateManager(),
+                    child: child,
+                    builder: (context, content) => ColoredBox(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: FullscreenStateManager().isFullscreen ? 0 : 52,
+                        ),
+                        child: MediaQuery.removePadding(
+                          context: context,
+                          removeTop: true,
+                          child: content!,
+                        ),
+                      ),
                     ),
-                  ),
-                )
-              : child,
+                  )
+                : child,
           ),
         ),
       ),
@@ -2071,7 +2404,11 @@ class FormFactorScale extends StatelessWidget {
     // Keep the existing Apple TV path independent of settings so its 2×
     // behavior and overscan handling remain unchanged.
     if (PlatformDetector.isAppleTV()) {
-      return _scaledSurface(child: child, scale: _appleTvScale, zeroInsets: true);
+      return _scaledSurface(
+        child: child,
+        scale: _appleTvScale,
+        zeroInsets: true,
+      );
     }
     if (!PlatformDetector.isAutomotive()) return child;
 
@@ -2083,14 +2420,22 @@ class FormFactorScale extends StatelessWidget {
     final insetChild = SafeArea(top: false, bottom: false, child: child);
     return SettingValueBuilder<double>(
       pref: SettingsService.automotiveUiScale,
-      builder: (context, scale, _) => _scaledSurface(child: insetChild, scale: scale, zeroInsets: false),
+      builder: (context, scale, _) =>
+          _scaledSurface(child: insetChild, scale: scale, zeroInsets: false),
     );
   }
 
-  Widget _scaledSurface({required Widget child, required double scale, required bool zeroInsets}) {
+  Widget _scaledSurface({
+    required Widget child,
+    required double scale,
+    required bool zeroInsets,
+  }) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final logicalSize = Size(constraints.maxWidth / scale, constraints.maxHeight / scale);
+        final logicalSize = Size(
+          constraints.maxWidth / scale,
+          constraints.maxHeight / scale,
+        );
         final outerQ = MediaQuery.of(context);
         // tvOS reports conservative overscan insets (~60pt top/bottom,
         // ~90pt left/right). Modern TVs don't overscan, so treat them as
@@ -2117,9 +2462,15 @@ class FormFactorScale extends StatelessWidget {
                   size: logicalSize,
                   devicePixelRatio: outerQ.devicePixelRatio * scale,
                   padding: zeroInsets ? .zero : outerQ.padding * (1 / scale),
-                  viewPadding: zeroInsets ? .zero : outerQ.viewPadding * (1 / scale),
-                  viewInsets: zeroInsets ? .zero : outerQ.viewInsets * (1 / scale),
-                  systemGestureInsets: zeroInsets ? .zero : outerQ.systemGestureInsets * (1 / scale),
+                  viewPadding: zeroInsets
+                      ? .zero
+                      : outerQ.viewPadding * (1 / scale),
+                  viewInsets: zeroInsets
+                      ? .zero
+                      : outerQ.viewInsets * (1 / scale),
+                  systemGestureInsets: zeroInsets
+                      ? .zero
+                      : outerQ.systemGestureInsets * (1 / scale),
                 ),
                 child: child,
               ),
@@ -2147,7 +2498,8 @@ class SetupScreen extends StatefulWidget {
   final TvosDatabaseRecoveryOutcome databaseRecoveryOutcome;
   final bool initializeAuthServices;
   @visibleForTesting
-  final FutureOr<void> Function(BuildContext context, String message)? debugRecoveryRequiredRouter;
+  final FutureOr<void> Function(BuildContext context, String message)?
+  debugRecoveryRequiredRouter;
 
   @override
   State<SetupScreen> createState() => _SetupScreenState();
@@ -2155,7 +2507,6 @@ class SetupScreen extends StatefulWidget {
 
 class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
   bool _enteringOffline = false;
-
 
   @override
   void initState() {
@@ -2180,7 +2531,12 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     unawaited(
       Navigator.pushReplacement(
         context,
-        fadeRoute(ProfileSessionScreen(isOfflineMode: true, initialPromptHandled: initialPromptHandled)),
+        fadeRoute(
+          ProfileSessionScreen(
+            isOfflineMode: true,
+            initialPromptHandled: initialPromptHandled,
+          ),
+        ),
       ),
     );
   }
@@ -2241,7 +2597,9 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
           serverManager: serverManager,
         ).pruneUnreferencedJellyfinConnections();
         if (pruned > 0) {
-          appLogger.i('Setup: pruned $pruned unreferenced MediaBrowser connection${pruned == 1 ? '' : 's'}');
+          appLogger.i(
+            'Setup: pruned $pruned unreferenced MediaBrowser connection${pruned == 1 ? '' : 's'}',
+          );
         }
         // Provider initialization starts before this screen runs the legacy
         // migration. Reload after bootstrap so copied Plex Home users and the
@@ -2257,11 +2615,22 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     // below. It never skips connecting: `none` means "no internet-capable
     // adapter", and a loopback or LAN-without-WAN server is still reachable
     // (#2505).
-    unawaited(Sentry.addBreadcrumb(Breadcrumb(message: 'Checking network connectivity', category: 'setup')));
-    final hasNetwork = !(await ConnectivityProbe.check()).contains(ConnectivityResult.none);
+    unawaited(
+      Sentry.addBreadcrumb(
+        Breadcrumb(message: 'Checking network connectivity', category: 'setup'),
+      ),
+    );
+    final hasNetwork = !(await ConnectivityProbe.check()).contains(
+      ConnectivityResult.none,
+    );
 
     unawaited(
-      Sentry.addBreadcrumb(Breadcrumb(message: 'Network check done: hasNetwork=$hasNetwork', category: 'setup')),
+      Sentry.addBreadcrumb(
+        Breadcrumb(
+          message: 'Network check done: hasNetwork=$hasNetwork',
+          category: 'setup',
+        ),
+      ),
     );
 
     _setStatus(t.common.loadingServers);
@@ -2275,35 +2644,50 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     final List<Connection> allConnections;
     try {
       allConnections = await connectionRegistry.list();
-      AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.credentialsLoaded);
+      AndroidExitDiagnostics.markStartupPhase(
+        AndroidStartupPhase.credentialsLoaded,
+      );
     } catch (e, st) {
       // Defence-in-depth: a DB-open failure here used to propagate
       // uncaught and strand the splash forever (#1022). Route to auth so
       // the user is never trapped, and surface to Sentry so an unknown
       // regression doesn't go silent.
-      appLogger.e('Setup: failed to load connections; returning to auth', error: e, stackTrace: st);
+      appLogger.e(
+        'Setup: failed to load connections; returning to auth',
+        error: e,
+        stackTrace: st,
+      );
       unawaited(Sentry.captureException(e, stackTrace: st));
       if (mounted) {
-        unawaited(Navigator.pushReplacement(context, fadeRoute(const AuthScreen())));
+        unawaited(
+          Navigator.pushReplacement(context, fadeRoute(const AuthScreen())),
+        );
       }
       return;
     }
 
     if (allConnections.isEmpty) {
       if (mounted) {
-        unawaited(Navigator.pushReplacement(context, fadeRoute(const AuthScreen())));
+        unawaited(
+          Navigator.pushReplacement(context, fadeRoute(const AuthScreen())),
+        );
       }
       return;
     }
 
     if (!mounted) return;
 
-    final plexCount = allConnections.whereType<PlexAccountConnection>().fold<int>(0, (n, c) => n + c.servers.length);
-    final mediaBrowserCount = allConnections.whereType<JellyfinConnection>().length;
+    final plexCount = allConnections
+        .whereType<PlexAccountConnection>()
+        .fold<int>(0, (n, c) => n + c.servers.length);
+    final mediaBrowserCount = allConnections
+        .whereType<JellyfinConnection>()
+        .length;
     unawaited(
       Sentry.addBreadcrumb(
         Breadcrumb(
-          message: 'Handing off to MainScreen with $plexCount Plex + $mediaBrowserCount MediaBrowser server(s)',
+          message:
+              'Handing off to MainScreen with $plexCount Plex + $mediaBrowserCount MediaBrowser server(s)',
           category: 'setup',
         ),
       ),
@@ -2325,8 +2709,12 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     if (!mounted) return;
 
     if (activeProfile.active == null && activeProfile.profiles.isEmpty) {
-      appLogger.w('Setup: stored connections exist but no profiles resolved after bootstrap; returning to auth');
-      unawaited(Navigator.pushReplacement(context, fadeRoute(const AuthScreen())));
+      appLogger.w(
+        'Setup: stored connections exist but no profiles resolved after bootstrap; returning to auth',
+      );
+      unawaited(
+        Navigator.pushReplacement(context, fadeRoute(const AuthScreen())),
+      );
       return;
     }
 
@@ -2339,13 +2727,16 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     await deepLinks.fetchInitialLink();
     if (!mounted) return;
     final linkProfile = deepLinks.claimStartupProfile(activeProfile.profiles);
-    final linkSwitches = linkProfile != null && linkProfile.id != activeProfile.activeId;
+    final linkSwitches =
+        linkProfile != null && linkProfile.id != activeProfile.activeId;
     var linkApplied = linkProfile != null && !linkSwitches;
     try {
       // Start only after the active profile snapshot is hydrated. Without a
       // network the initial bind stays PIN-free: plex.tv cannot verify a PIN,
       // and the capped wait below would navigate out from under the dialog.
-      AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.bindingStarted);
+      AndroidExitDiagnostics.markStartupPhase(
+        AndroidStartupPhase.bindingStarted,
+      );
       binder.start(allowInitialPinPrompt: hasNetwork);
 
       if (linkSwitches) {
@@ -2362,17 +2753,24 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
       // chosen profile's bind is settled.
       final settings = await SettingsService.getInstance();
       if (!mounted) return;
-      final hasNoActive = activeProfile.active == null && activeProfile.profiles.isNotEmpty;
+      final hasNoActive =
+          activeProfile.active == null && activeProfile.profiles.isNotEmpty;
       final shouldPrompt =
-          !linkApplied && (linkSwitches || hasNoActive || activeProfile.requiresSelectionOnOpen(settings));
+          !linkApplied &&
+          (linkSwitches ||
+              hasNoActive ||
+              activeProfile.requiresSelectionOnOpen(settings));
 
       var bindingSucceeded = activeProfile.lastBindingSucceeded;
       if (shouldPrompt) {
-        await Navigator.of(
-          context,
-        ).push(MaterialPageRoute(builder: (_) => const ProfileSwitchScreen(requireSelection: true)));
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const ProfileSwitchScreen(requireSelection: true),
+          ),
+        );
         if (!mounted) return;
-        bindingSucceeded = activeProfile.active != null && activeProfile.lastBindingSucceeded;
+        bindingSucceeded =
+            activeProfile.active != null && activeProfile.lastBindingSucceeded;
       } else if (!linkSwitches) {
         // Now wait for the binder to settle. This is the media-server client
         // race: per-server status flips on the splash list as each client comes
@@ -2380,16 +2778,24 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
         // or fail). Eliminates the "Failed to load discover content: No servers
         // available" race the old eager-navigate flow caused. Without a network
         // the wait is capped so airplane mode reaches the offline shell fast.
-        bindingSucceeded = await awaitStartupBindSettle(activeProfile.awaitBindingSettle(), hasNetwork: hasNetwork);
+        bindingSucceeded = await awaitStartupBindSettle(
+          activeProfile.awaitBindingSettle(),
+          hasNetwork: hasNetwork,
+        );
         if (!mounted) return;
       }
-      AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.bindingSettled);
+      AndroidExitDiagnostics.markStartupPhase(
+        AndroidStartupPhase.bindingSettled,
+      );
 
       if (shouldEnterOfflineModeAfterStartupBind(
         bindingSucceeded: bindingSucceeded,
-        hasOnlineServers: _serverManagerFromContext().onlineServerIds.isNotEmpty,
+        hasOnlineServers:
+            _serverManagerFromContext().onlineServerIds.isNotEmpty,
       )) {
-        appLogger.w('Setup: no servers online after startup bind; starting offline mode');
+        appLogger.w(
+          'Setup: no servers online after startup bind; starting offline mode',
+        );
         await _enterOfflineMode(initialPromptHandled: linkApplied);
         return;
       }
@@ -2405,7 +2811,11 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
       unawaited(
         Navigator.pushReplacement(
           context,
-          fadeRoute(ProfileSessionScreen(initialPromptHandled: shouldPrompt || linkApplied)),
+          fadeRoute(
+            ProfileSessionScreen(
+              initialPromptHandled: shouldPrompt || linkApplied,
+            ),
+          ),
         ),
       );
     } finally {
@@ -2413,7 +2823,8 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     }
   }
 
-  MultiServerManager _serverManagerFromContext() => context.read<MultiServerProvider>().serverManager;
+  MultiServerManager _serverManagerFromContext() =>
+      context.read<MultiServerProvider>().serverManager;
 
   @override
   Widget build(BuildContext context) => ColoredBox(
