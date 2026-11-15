@@ -24,6 +24,9 @@ class PlezyFlutterViewController: FlutterViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    // Match the launch screen until Flutter paints its first themed frame.
+    view.backgroundColor = UIColor(named: "LaunchBackground")
+
     let channel = FlutterMethodChannel(name: "com.plezy/iphone_duo", binaryMessenger: binaryMessenger)
     channel.setMethodCallHandler { [weak self] call, result in
       self?.handle(call, result: result)
